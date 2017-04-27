@@ -57,5 +57,31 @@
             android:src="?attr/colorPrimary" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/setting_tv_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/selector_item"
+            android:clickable="true"
+            android:drawableRight="@drawable/ic_keyboard_arrow_right"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/list_item_height"
+            android:text="使用反馈" />
+
+        <ImageView
+            android:layout_width="@dimen/list_item_height"
+            android:layout_height="@dimen/list_item_height"
+            android:layout_marginTop="@dimen/list_item_negative_height"
+            android:padding="10dp"
+            android:src="@drawable/ic_help_outline"
+            android:tint="@color/blueLight" />
+    </LinearLayout>
+
 
 </LinearLayout>

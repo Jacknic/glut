@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.activity.FeedbackActivity;
+import com.jacknic.glut.utils.ActivityUtil;
 import com.jacknic.glut.utils.Config;
 
 
@@ -37,6 +39,13 @@ public class BasicSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ColorsDialogFragment.launch(getActivity(), Config.SETTING_COLOR_INDEX);
+            }
+        });
+        TextView tv_feedback = (TextView) fragment.findViewById(R.id.setting_tv_feedback);
+        tv_feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtil.lunchActivity(getContext(), FeedbackActivity.class);
             }
         });
         return fragment;
