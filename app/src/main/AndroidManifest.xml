@@ -16,6 +16,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="TA_APPKEY"
+            android:value="Aqc1105763654" />
+        <meta-data
+            android:name="InstallChannel"
+            android:value="应用宝" />
+
+        <provider
+            android:name="com.tencent.mid.api.MidProvider"
+            android:authorities="com.jacknic.glut.TENCENT.MID.V3"
+            android:exported="true" />
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
@@ -52,6 +64,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BrowserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FeedbackActivity"
             android:screenOrientation="portrait" />
     </application>
 
