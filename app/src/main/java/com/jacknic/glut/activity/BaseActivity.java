@@ -1,0 +1,75 @@
+package com.jacknic.glut.activity;
+
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+
+import com.jacknic.glut.R;
+import com.jacknic.glut.utils.ActivityUtil;
+import com.jacknic.glut.utils.Config;
+
+
+/**
+ * Activity基类
+ */
+
+public class BaseActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        selectTheme();
+        super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * 设置主题
+     */
+    protected void selectTheme() {
+        SharedPreferences setting = getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
+        int theme_id = setting.getInt(Config.SETTING_THEME_INDEX, 4);
+        setTheme(Config.THEME_LIST[theme_id]);
+    }
+
+    /**
+     * 设置沉浸式状态栏
+     */
+    protected void setStatusView() {
+        // 设置状态栏透明
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 添加 statusView 到布局中
+            ViewGroup decorView = (ViewGroup) getWindow().getDecorView();
+            // 设置根布局的参数
+            ViewGroup rootView = (ViewGroup) ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
+            rootView.setFitsSystemWindows(true);
+            rootView.setClipToPadding(true);
+            // 获得状态栏高度
+            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+            int statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+            LayoutInflater layoutInflater = getLayoutInflater();
+            View status = layoutInflater.inflate(R.layout.status_bar, decorView, false);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight);
+            status.setLayoutParams(params);
+            decorView.addView(status);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ActivityUtil.activities.push(this);
+    }
+
+    @Override
+    public void finish() {
+        ActivityUtil.activities.remove(this);
+        super.finish();
+    }
+}

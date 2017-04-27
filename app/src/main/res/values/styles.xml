@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+
+    <!-- 默认黑色主题. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/black</item>
+    </style>
+    <!-- 蓝色主题. -->
+    <style name="AppTheme.blue" parent="AppTheme">
+        <item name="colorPrimary">@color/blueLight</item>
+    </style>
+    <!-- 橙色主题. -->
+    <style name="AppTheme.orange" parent="AppTheme">
+        <item name="colorPrimary">@color/orange</item>
+    </style>
+    <!-- 深橙色主题. -->
+    <style name="AppTheme.orangeDeep" parent="AppTheme">
+        <item name="colorPrimary">@color/orangeDeep</item>
+    </style>
+    <!-- 天蓝色主题. -->
+    <style name="AppTheme.blueLight" parent="AppTheme">
+        <item name="colorPrimary">@color/blueLight</item>
+    </style>
+    <!-- 红色主题. -->
+    <style name="AppTheme.red" parent="AppTheme">
+        <item name="colorPrimary">@color/red</item>
+    </style>
+    <!-- 粉红色主题. -->
+    <style name="AppTheme.pink" parent="AppTheme">
+        <item name="colorPrimary">@color/pink</item>
+    </style>
+    <!-- 绿色主题. -->
+    <style name="AppTheme.green" parent="AppTheme">
+        <item name="colorPrimary">@color/green</item>
+    </style>
+    <!-- 淡绿色主题. -->
+    <style name="AppTheme.greenLight" parent="AppTheme">
+        <item name="colorPrimary">@color/greenLight</item>
+    </style>
+    <!-- 棕色主题. -->
+    <style name="AppTheme.brown" parent="AppTheme">
+        <item name="colorPrimary">@color/brown</item>
+    </style>
+    <!-- 深黄色主题. -->
+    <style name="AppTheme.amber" parent="AppTheme">
+        <item name="colorPrimary">@color/amber</item>
+    </style>
+    <!-- 青色主题. -->
+    <style name="AppTheme.cyan" parent="AppTheme">
+        <item name="colorPrimary">@color/cyan</item>
+    </style>
+    <!-- 茶绿色主题. -->
+    <style name="AppTheme.teal" parent="AppTheme">
+        <item name="colorPrimary">@color/teal</item>
+    </style>
+    <!-- 紫色主题. -->
+    <style name="AppTheme.purple" parent="AppTheme">
+        <item name="colorPrimary">@color/purple</item>
+    </style>
+    <!-- 深紫色主题. -->
+    <style name="AppTheme.purpleDeep" parent="AppTheme">
+        <item name="colorPrimary">@color/purpleDeep</item>
+    </style>
+    <!-- 暗紫色主题. -->
+    <style name="AppTheme.indigo" parent="AppTheme">
+        <item name="colorPrimary">@color/indigo</item>
+    </style>
+
+</resources>

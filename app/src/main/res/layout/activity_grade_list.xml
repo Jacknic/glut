@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/press"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:background="?attr/colorPrimary"
+        android:gravity="center_vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/item_score_course_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="课程名称"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/item_score_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="24dp"
+            android:text="成绩"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="学年：" />
+
+            <Spinner
+                android:id="@+id/sp_select_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="学期：" />
+
+            <Spinner
+                android:id="@+id/sp_select_semester"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_getGrade"
+            android:layout_width="56dp"
+            android:layout_height="46dp"
+            android:clickable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_search"
+            android:textColor="@color/white"
+            android:tint="?attr/colorPrimary" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv_grade_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
