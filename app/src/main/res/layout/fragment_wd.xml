@@ -1,0 +1,238 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryBackground"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/round_bg_white"
+                android:gravity="center"
+                android:padding="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/jw_iv_header_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_account_circle"
+                        android:tint="?attr/colorPrimary" />
+
+                    <ImageView
+                        android:id="@+id/jw_iv_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:contentDescription="头像" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/jw_tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/primaryBackgroundTran"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/jw_tv_className"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/white" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:background="?attr/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/jw_tv_sid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--阴影效果图-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:rotation="180"
+            android:src="@drawable/bg_shadow" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+            <!--学籍信息-->
+            <TextView
+                android:id="@+id/tv_xueji"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="学籍信息" />
+
+            <ImageView
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="-50dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_school"
+                android:tint="@color/teal" />
+            <!--/学籍信息-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/list_item_height"
+                android:background="@color/press">
+
+            </View>
+
+            <!--学业进度-->
+            <TextView
+                android:id="@+id/tv_xueye"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="学业进度" />
+
+            <ImageView
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="@dimen/list_item_negative_height"
+                android:padding="10dp"
+                android:src="@drawable/ic_assignment_turned_in"
+                android:tint="@color/blueLight" />
+            <!--/学业进度-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/list_item_height"
+                android:background="@color/press">
+
+            </View>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_kaoshi"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="考试安排" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="@dimen/list_item_negative_height"
+                android:padding="10dp"
+                android:src="@drawable/ic_border_color"
+                android:tint="@color/pink" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/list_item_height"
+                android:background="@color/press">
+
+            </View>
+
+
+            <TextView
+                android:id="@+id/tv_chengji"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="成绩查询" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="@dimen/list_item_negative_height"
+                android:padding="10dp"
+
+                android:src="@drawable/ic_check_circle"
+                android:tint="@color/green" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <Button
+                android:id="@+id/setting_btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:background="@drawable/selector_item_red"
+                android:text="重新登录"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
