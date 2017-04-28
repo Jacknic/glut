@@ -20,5 +20,6 @@ public class App extends android.app.Application {
         OkGo.getInstance().getOkHttpClientBuilder().followRedirects(false);
         OkGo.getInstance().setCookieStore(new PersistentCookieStore());
         StatService.setContext(this);
+        StatService.registerActivityLifecycleCallbacks(this);
     }
 }

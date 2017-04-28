@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import com.jacknic.glut.R;
 import com.jacknic.glut.utils.ActivityUtil;
 import com.jacknic.glut.utils.Config;
-import com.tencent.stat.StatService;
 
 
 /**
@@ -72,17 +71,5 @@ public class BaseActivity extends AppCompatActivity {
     public void finish() {
         ActivityUtil.activities.remove(this);
         super.finish();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(this);
     }
 }

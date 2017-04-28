@@ -114,7 +114,6 @@ public class ExamListActivity extends BaseActivity {
      * 登录验证
      */
     private void login() {
-        Toast.makeText(ExamListActivity.this, "登录验证..", Toast.LENGTH_SHORT).show();
         final AlertDialog login_dialog = LoginDialog.getLoginDialog(this, new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {

@@ -266,9 +266,14 @@ public class LoginActivity extends BaseActivity {
                         } finally {
                             file.delete();
                         }
-                        getStudyProcess();
+
                     }
 
+                    @Override
+                    public void onAfter(File file, Exception e) {
+                        super.onAfter(file, e);
+                        getStudyProcess();
+                    }
                 };
                 OkGo.get("http://202.193.80.58:81/academic/manager/studentinfo/showStudentImage.jsp").execute(fileCallback);
             }
@@ -290,6 +295,12 @@ public class LoginActivity extends BaseActivity {
                         } catch (IOException e) {
                             Log.d("okgo.get", "读写错误、无法写入学业进度信息");
                         }
+
+                    }
+
+                    @Override
+                    public void onAfter(String s, Exception e) {
+                        super.onAfter(s, e);
                         getWeekInfo();
                     }
                 });
