@@ -38,7 +38,8 @@ public class FeedbackActivity extends BaseActivity {
                 String txt_content = et_feedback.getText().toString().trim();
                 if (!TextUtils.isEmpty(txt_content)) {
                     Properties content = new Properties();
-                    StatService.trackCustomKVEvent(FeedbackActivity.this, "110", content);
+                    content.put("反馈", txt_content);
+                    StatService.trackCustomKVEvent(FeedbackActivity.this, "feedback", content);
                     Toast.makeText(FeedbackActivity.this, "感谢你的反馈！", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
