@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,9 +42,8 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
     private ImageView iv_yue_refresh;
     SharedPreferences prefer_cw;
     private String sid;
-    private String studentid;
+    private String student_id;
     private View fragment;
-    private ImageView iv_bid_copy;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         if (toLogin != null) return toLogin;
         fragment = inflater.inflate(R.layout.fragment_cw, container, false);
         sid = prefer_cw.getString("sid", "");
-        studentid = prefer_cw.getString("studentid", "");
+        student_id = prefer_cw.getString("student_id", "");
         initViews();
         getInfo();
         getYue();
@@ -61,7 +63,7 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
      * 获取财务信息
      */
     private void getInfo() {
-        OkGo.get(Config.getQueryUrlCW("getinfo", studentid))
+        OkGo.get(Config.getQueryUrlCW("getinfo", student_id))
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String res_json, Call call, Response response) {
@@ -139,7 +141,7 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
             }
         });
 
-        iv_bid_copy = (ImageView) fragment.findViewById(R.id.cw_iv_bid_copy);
+        ImageView iv_bid_copy = (ImageView) fragment.findViewById(R.id.cw_iv_bid_copy);
         iv_bid_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,7 +202,44 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
                 intent.setAction(urls[3]);
                 break;
         }
-        getContext().startActivity(intent);
+        long last_login = prefer_cw.getLong("last_login", 0);
+        boolean is_logged = (System.currentTimeMillis() - last_login) < 30 * 60 * 1000;
+        if (!is_logged) {
+            autoLogin(intent);
+        } else {
+            System.out.println("已经登录");
+            getContext().startActivity(intent);
+        }
+    }
+
+    /**
+     * 自动登录认证
+     */
+    private void autoLogin(final Intent intent) {
+        String sid = prefer_cw.getString(Config.SID, "");
+        String password = prefer_cw.getString(Config.PASSWORD, "");
+        WebView webView = new WebView(getContext());
+        final boolean[] is_first = {true};
+        final String url_login = "http://cwwsjf.glut.edu.cn:8088/ChargeOnline/Mblogin.aspx";
+        WebViewClient client = new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                //登录后会自动重定向，如果不是首次请求，则直接打开activity
+                if (is_first[0]) {
+                    is_first[0] = false;
+                } else {
+                    getContext().startActivity(intent);
+                    prefer_cw.edit().putLong("last_login", System.currentTimeMillis()).apply();
+                    System.out.println("自动登录");
+                }
+            }
+        };
+        webView.setWebViewClient(client);
+        //没有这串字符，服务器不认
+        String verify_data = "__VIEWSTATE=%2FwEPDwULLTEwNjM4MzI3MjgPZBYCAgMPZBYGAgEPDxYCHgRUZXh0BSTmoYLmnpfnkIblt6XlpKflrablnKjnur%2FnvLTotLnns7vnu59kZAIDDw8WAh4ISW1hZ2VVcmwFEy4uL0ltYWdlcy9nbGxnMS5qcGdkZAIHDw9kFgIeC3BsYWNlaG9sZGVyBR7or7fovpPlhaXlrablj7fmiJbmlZnogYzlt6Xlj7dkZFElQr7KH1tVZ4fs2N5Slzf0gCyz&__EVENTVALIDATION=%2FwEWBAKOjd%2BuBgKG9I6XCALMk9PkCQKPyPndBajnmCtFlbdPXLRktFdGqf5v8hD%2F&logon=%E7%99%BB%C2%A0%E5%BD%95&";
+        //post请求登录
+        webView.postUrl(url_login, (verify_data + String.format("TextBox_SID=%s&TextBox_Password=%s", sid, password)).getBytes());
+
     }
 
     /**

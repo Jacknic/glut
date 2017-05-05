@@ -10,7 +10,7 @@ public final class Config {
     /**
      * 财务处接口
      */
-    private static final String URL_CW_INTERFACE = "http://cwwsjf.glut.edu.cn/chargeonline/interFaceB2C.aspx?method=%s&studentid=%s";
+    private static final String URL_CW_INTERFACE = "http://cwwsjf.glut.edu.cn:8088/chargeonline/interFaceB2C.aspx?method=%s&studentid=%s";
     /**
      * 教务处登录验证码
      */
