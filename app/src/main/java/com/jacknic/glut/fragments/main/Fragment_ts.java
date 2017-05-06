@@ -3,10 +3,14 @@ package com.jacknic.glut.fragments.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,6 +46,8 @@ public class Fragment_ts extends Fragment {
     List<String> tags = new ArrayList<String>();
     private TextView tv_change_tags;
     private int tag_part = 0;
+    private FloatingActionButton ts_fab_mine;
+    private CardView cv_buttons;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,27 +65,11 @@ public class Fragment_ts extends Fragment {
         iv_search_book_shadow = (ImageView) fragment.findViewById(R.id.iv_search_book_shadow);
         iv_search_book = (ImageView) fragment.findViewById(R.id.ts_iv_search_book);
         hot_tag = (TagGroup) fragment.findViewById(R.id.hot_tag);
-
-        hot_tag.setOnTagClickListener(new TagGroup.OnTagClickListener() {
-            @Override
-            public void onTagClick(String tag) {
-                et_search_book.setText(tag.replaceFirst("\\(\\d+\\)", "").trim());
-            }
-        });
-
+        ts_fab_mine = (FloatingActionButton) fragment.findViewById(R.id.ts_fab_mine);
+        cv_buttons = (CardView) fragment.findViewById(R.id.ts_cv_buttons);
         tv_change_tags = (TextView) fragment.findViewById(R.id.ts_tv_change_tag_list);
-        tv_change_tags.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tags.size() == 0) {
-                    getTags();
-                } else {
-                    showTags();
-                }
-            }
-        });
-
     }
+
 
     /**
      * 显示标签
@@ -110,10 +100,31 @@ public class Fragment_ts extends Fragment {
                 }
             }
         });
-
-
+        ts_fab_mine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.scale_fade_in);
+                if (cv_buttons.getVisibility() == View.VISIBLE) {
+                    anim = AnimationUtils.loadAnimation(getContext(), R.anim.scale_fade_out);
+                    cv_buttons.setVisibility(View.GONE);
+                } else {
+                    cv_buttons.setVisibility(View.VISIBLE);
+                }
+                anim.setDuration(300L);
+                cv_buttons.startAnimation(anim);
+            }
+        });
         iv_search_book.setOnClickListener(listener);
-        iv_search_book.getRootView().setOnClickListener(listener);
+        fragment.setOnClickListener(listener);
+        tv_change_tags.setOnClickListener(listener);
+        hot_tag.setOnClickListener(listener);
+        hot_tag.setOnTagClickListener(new TagGroup.OnTagClickListener() {
+            @Override
+            public void onTagClick(String tag) {
+                hot_tag.callOnClick();
+                et_search_book.setText(tag.replaceFirst("\\(\\d+\\)", "").trim());
+            }
+        });
 
     }
 
@@ -121,13 +132,24 @@ public class Fragment_ts extends Fragment {
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.ts_iv_search_book) {
-                Intent intent = new Intent(getContext(), BrowserActivity.class);
-                intent.setAction("http://202.193.80.181:8081/search?xc=3&kw=" + et_search_book.getText().toString());
+            switch (v.getId()) {
+                case R.id.ts_iv_search_book:
+                    Intent intent = new Intent(getContext(), BrowserActivity.class);
+                    intent.setAction("http://202.193.80.181:8081/search?xc=3&kw=" + et_search_book.getText().toString());
 //                Snackbar.make(fragment, "搜索图书: " + et_search_book.getText(), Snackbar.LENGTH_SHORT).show();
-                getActivity().startActivity(intent);
+                    getActivity().startActivity(intent);
+                    break;
+                case R.id.ts_tv_change_tag_list:
+                    if (tags.size() == 0) {
+                        getTags();
+                    } else {
+                        showTags();
+                    }
+                    break;
             }
-            et_search_book.clearFocus();
+            if (cv_buttons.getVisibility() == View.VISIBLE) {
+                ts_fab_mine.callOnClick();
+            }
         }
     };
 

@@ -107,8 +107,8 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/ts_ll_buttons"
+        <android.support.v7.widget.CardView
+            android:id="@+id/ts_cv_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/ts_fab_mine"
@@ -118,15 +118,14 @@
             android:layout_toStartOf="@+id/ts_fab_mine"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="1dp"
-            android:visibility="gone">
-            <!--没空做这部分了-->
+            android:visibility="gone"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_ts_bg_white_5dp"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="80dp"
@@ -143,14 +142,17 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/selector_item"
                             android:clickable="true"
-                            android:padding="20dp"
+                            android:paddingBottom="25dp"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:paddingTop="20dp"
                             android:src="@drawable/ic_dashboard"
                             android:tint="@color/green" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-20dp"
+                            android:layout_marginTop="-22dp"
                             android:gravity="center"
                             android:text="借阅" />
                     </LinearLayout>
@@ -175,21 +177,24 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/selector_item"
                             android:clickable="true"
-                            android:padding="20dp"
+                            android:paddingBottom="25dp"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:paddingTop="20dp"
                             android:src="@drawable/ic_turned_in"
                             android:tint="@color/blue" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-20dp"
+                            android:layout_marginTop="-22dp"
                             android:gravity="center"
                             android:text="历史" />
                     </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/ts_fab_mine"
@@ -199,11 +204,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:clickable="true"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/ic_book"
             android:tint="@color/white"
-            android:visibility="gone"
             app:backgroundTint="?attr/colorPrimary"
-            app:fabSize="mini"
             app:rippleColor="?attr/colorPrimary" />
     </RelativeLayout>
 

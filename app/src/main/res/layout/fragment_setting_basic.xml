@@ -1,87 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/press"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_height"
-        android:layout_marginTop="15dp"
+        android:layout_height="match_parent"
+        android:background="@color/press"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/setting_tv_select_theme_color"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/selector_item"
-            android:clickable="true"
-            android:drawableRight="@drawable/ic_keyboard_arrow_right"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/list_item_height"
-            android:text="主题颜色" />
-
-        <ImageView
-            android:id="@+id/setting_iv_select_theme_color"
-            android:layout_width="@dimen/list_item_height"
             android:layout_height="@dimen/list_item_height"
-            android:layout_marginTop="@dimen/list_item_negative_height"
-            android:padding="10dp"
-            android:src="?attr/colorPrimary" />
-    </LinearLayout>
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_height"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
+            <TextView
+                android:id="@+id/setting_tv_select_theme_color"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="主题颜色" />
 
-        <TextView
-            android:id="@+id/setting_tv_select_btn_color"
+            <ImageView
+                android:id="@+id/setting_iv_select_theme_color"
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="@dimen/list_item_negative_height"
+                android:padding="10dp"
+                android:src="?attr/colorPrimary" />
+        </LinearLayout>
+
+        <include layout="@layout/div_line" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/selector_item"
-            android:clickable="true"
-            android:drawableRight="@drawable/ic_keyboard_arrow_right"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/list_item_height"
-            android:text="按钮颜色" />
-
-        <ImageView
-            android:id="@+id/setting_iv_select_btn_color"
-            android:layout_width="@dimen/list_item_height"
             android:layout_height="@dimen/list_item_height"
-            android:layout_marginTop="@dimen/list_item_negative_height"
-            android:padding="10dp"
-            android:src="?attr/colorPrimary" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_height"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
+            <TextView
+                android:id="@+id/setting_tv_select_btn_color"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="按钮颜色" />
 
-        <TextView
-            android:id="@+id/setting_tv_feedback"
+            <ImageView
+                android:id="@+id/setting_iv_select_btn_color"
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="@dimen/list_item_negative_height"
+                android:padding="10dp"
+                android:src="?attr/colorPrimary" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/selector_item"
-            android:clickable="true"
-            android:drawableRight="@drawable/ic_keyboard_arrow_right"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/list_item_height"
-            android:text="使用反馈" />
-
-        <ImageView
-            android:layout_width="@dimen/list_item_height"
             android:layout_height="@dimen/list_item_height"
-            android:layout_marginTop="@dimen/list_item_negative_height"
-            android:padding="10dp"
-            android:src="@drawable/ic_help_outline"
-            android:tint="@color/blueLight" />
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/setting_tv_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="使用反馈" />
+
+            <ImageView
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="@dimen/list_item_negative_height"
+                android:padding="10dp"
+                android:src="@drawable/ic_comment"
+                android:tint="@color/blueLight" />
+        </LinearLayout>
+
+        <include layout="@layout/div_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_height"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/setting_tv_feedbackDeal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="反馈进度" />
+
+            <ImageView
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="@dimen/list_item_negative_height"
+                android:padding="10dp"
+                android:src="@drawable/ic_help_outline"
+                android:tint="@color/cyan" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_height"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/setting_tv_checkUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="检查更新" />
+
+            <ImageView
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="@dimen/list_item_negative_height"
+                android:padding="10dp"
+                android:src="@drawable/ic_update"
+                android:tint="@color/greenLight" />
+        </LinearLayout>
+
+
     </LinearLayout>
-
-
-</LinearLayout>
+</ScrollView>

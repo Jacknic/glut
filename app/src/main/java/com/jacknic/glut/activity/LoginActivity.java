@@ -155,7 +155,6 @@ public class LoginActivity extends BaseActivity {
                             editor.putBoolean(Config.LOGIN_FLAG, true);
                             editor.apply();
                             ActivityUtil.lunchActivity(LoginActivity.this, MainActivity.class);
-                            ActivityUtil.cleanActivities();
                             finish();
                         } else {
                             iv_show_pwd.callOnClick();
@@ -337,6 +336,7 @@ public class LoginActivity extends BaseActivity {
                         editor.putBoolean(Config.LOGIN_FLAG, true);
                         editor.apply();
                         ActivityUtil.lunchActivity(LoginActivity.this, MainActivity.class);
+                        ActivityUtil.finishAllActivity();
                         login_dialog.dismiss();
                     }
                 };

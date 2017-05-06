@@ -82,7 +82,8 @@ public class SettingActivity extends BaseActivity {
         if (is_refresh) {
             prefer_setting.edit().putBoolean(Config.SETTING_IS_REFRESH, false).apply();
             ActivityUtil.lunchActivity(this, MainActivity.class);
-            ActivityUtil.cleanActivities();
+            ActivityUtil.finishAllActivity();
+            finish();
         }
         super.onBackPressed();
     }

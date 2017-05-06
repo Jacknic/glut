@@ -131,7 +131,7 @@ public class CourseTableView extends LinearLayout {
                     mHorizontalWeekLayout.addView(l);
                     TextView mWeekName = new TextView(getContext());
                     mWeekName.setTextColor(getResources().getColor(R.color.primaryDark));
-                    mWeekName.setWidth(((getViewWidth() - dip2px(TimeTableNumWidth))) / WEEKNUM);
+                    mWeekName.setWidth(((getViewWidth() - dip2px(TimeTableNumWidth) - 2 * 6)) / WEEKNUM);
                     mWeekName.setHeight(dip2px(TimeTableWeekNameHeight));
                     mWeekName.setGravity(Gravity.CENTER);
                     mWeekName.setTextSize(14);
@@ -149,7 +149,7 @@ public class CourseTableView extends LinearLayout {
                     //添加
                     LinearLayout mLayout = getTimeTableView(mListMon, i);
                     mLayout.setOrientation(VERTICAL);
-                    ViewGroup.LayoutParams linearParams = new ViewGroup.LayoutParams((getViewWidth() - dip2px(20)) / WEEKNUM, LayoutParams.MATCH_PARENT);
+                    ViewGroup.LayoutParams linearParams = new ViewGroup.LayoutParams((getViewWidth() - dip2px(TimeTableNumWidth) - 2 * 6) / WEEKNUM, LayoutParams.MATCH_PARENT);
                     mLayout.setLayoutParams(linearParams);
                     mLayout.setWeightSum(1);
                     mVerticalWeekLayout.addView(mLayout);
@@ -191,7 +191,6 @@ public class CourseTableView extends LinearLayout {
             mTime.setWidth(dip2px(TimeTableHeight));
             mStartView.addView(mTime);
             mStartView.addView(getWeekTransverseLine());
-            final int num = i;
             //这里可以处理空白处点击添加课表
 //            mTime.setOnClickListener(new OnClickListener() {
 //                @Override

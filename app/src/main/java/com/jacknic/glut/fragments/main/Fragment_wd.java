@@ -1,14 +1,11 @@
 package com.jacknic.glut.fragments.main;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.activity.StartActivity;
+import com.jacknic.glut.activity.SettingActivity;
 import com.jacknic.glut.activity.educational.ExamListActivity;
 import com.jacknic.glut.activity.educational.GradeListActivity;
 import com.jacknic.glut.activity.educational.ProcessActivity;
 import com.jacknic.glut.activity.educational.StudentInfoActivity;
-import com.jacknic.glut.model.CourseDBHelper;
 import com.jacknic.glut.utils.ActivityUtil;
 import com.jacknic.glut.utils.Config;
 import com.jacknic.glut.utils.ImageUtil;
-import com.lzy.okgo.OkGo;
 
 import java.io.File;
 
@@ -58,7 +53,7 @@ public class Fragment_wd extends Fragment implements View.OnClickListener {
         findAndSetOnclick(R.id.tv_chengji);
         findAndSetOnclick(R.id.tv_xueye);
         findAndSetOnclick(R.id.tv_xueji);
-        findAndSetOnclick(R.id.setting_btn_logout);
+        findAndSetOnclick(R.id.tv_setting);
         iv_header = (ImageView) fragment.findViewById(R.id.jw_iv_header);
         ImageView iv_header_bg = (ImageView) fragment.findViewById(R.id.jw_iv_header_bg);
         if (!isShowHeadImg) {
@@ -127,54 +122,11 @@ public class Fragment_wd extends Fragment implements View.OnClickListener {
             case R.id.tv_chengji:
                 ActivityUtil.lunchActivity(getContext(), GradeListActivity.class);
                 break;
-            case R.id.setting_btn_logout:
-                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                        .setTitle("确定重新登录?")
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                logout();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .create();
-                alertDialog.show();
+            case R.id.tv_setting:
+                ActivityUtil.lunchActivity(getContext(), SettingActivity.class);
                 break;
 
         }
 
-    }
-
-    /**
-     * 清除登录信息
-     */
-    private void logout() {
-        SQLiteDatabase.deleteDatabase(getContext().getDatabasePath(CourseDBHelper.DATABASE_NAME));
-        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
-        SharedPreferences prefer_cw = getContext().getSharedPreferences(Config.PREFER_CW, Context.MODE_PRIVATE);
-        prefer_cw.edit().clear().apply();
-        File filesDir = getContext().getFilesDir();
-        deleteFile(filesDir);
-        prefer_jw.edit().putBoolean(Config.LOGIN_FLAG, false).apply();
-        OkGo.getInstance().getCookieJar().getCookieStore().removeAllCookie();
-        ActivityUtil.cleanActivities();
-        ActivityUtil.lunchActivity(getContext(), StartActivity.class);
-        getActivity().finish();
-    }
-
-    /**
-     * 递归删除文件
-     *
-     * @param file 文件
-     */
-    private void deleteFile(File file) {
-        if (file.isDirectory()) {
-            for (File fileItem : file.listFiles()) {
-                deleteFile(fileItem);
-            }
-            file.delete();
-        } else {
-            file.delete();
-        }
     }
 }
