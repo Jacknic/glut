@@ -40,7 +40,7 @@ public class FeedbackActivity extends BaseActivity {
                     Properties content = new Properties();
                     content.put("反馈", txt_content);
                     StatService.trackCustomKVEvent(FeedbackActivity.this, "feedback", content);
-                    Toast.makeText(FeedbackActivity.this, "感谢你的反馈！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FeedbackActivity.this, "感谢你的反馈！在反馈进度可查看最新进展", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     Toast.makeText(FeedbackActivity.this, "反馈内容不能为空！", Toast.LENGTH_SHORT).show();

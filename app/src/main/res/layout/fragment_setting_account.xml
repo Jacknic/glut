@@ -36,8 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_item_height"
         android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -55,6 +54,26 @@
             android:layout_marginTop="-50dp"
             android:background="@drawable/selector_item_red"
             android:text="清除"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <Button
+            android:id="@+id/setting_btn_clear_all"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_height"
+            android:layout_gravity="end"
+            android:background="@drawable/selector_item_red"
+            android:text="重新登录"
             android:textColor="@color/white" />
 
     </LinearLayout>

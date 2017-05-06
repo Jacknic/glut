@@ -62,14 +62,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        ActivityUtil.activities.push(this);
+    protected void onPause() {
+        ActivityUtil.pushActivity(this);
+        super.onPause();
     }
 
     @Override
     public void finish() {
-        ActivityUtil.activities.remove(this);
+        ActivityUtil.removeActivity(this);
         super.finish();
     }
 }

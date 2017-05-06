@@ -209,7 +209,6 @@
                 android:text="成绩查询" />
 
             <ImageView
-                android:id="@+id/imageView"
                 android:layout_width="@dimen/list_item_height"
                 android:layout_height="@dimen/list_item_height"
                 android:layout_marginTop="@dimen/list_item_negative_height"
@@ -223,15 +222,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp">
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/setting_btn_logout"
+            <TextView
+                android:id="@+id/tv_setting"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/list_item_height"
-                android:background="@drawable/selector_item_red"
-                android:text="重新登录"
-                android:textColor="@color/white" />
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/list_item_height"
+                android:text="设置" />
+
+            <ImageView
+                android:layout_width="@dimen/list_item_height"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginTop="@dimen/list_item_negative_height"
+                android:padding="10dp"
+                android:src="@drawable/ic_settings"
+                android:tint="@color/blueLight" />
         </LinearLayout>
 
     </LinearLayout>

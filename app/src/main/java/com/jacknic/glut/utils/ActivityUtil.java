@@ -11,10 +11,6 @@ import java.util.Stack;
  */
 
 public class ActivityUtil {
-    /**
-     * Activity栈
-     */
-    public static Stack<Activity> activities = new Stack<>();
 
     /**
      * 启动Activity
@@ -27,12 +23,49 @@ public class ActivityUtil {
         context.startActivity(intent);
     }
 
+    private static Stack<Activity> activityStack = new Stack<>();
+
     /**
-     * 清除栈
+     * 单一实例
      */
-    public static void cleanActivities() {
-        while (!activities.empty()) {
-            activities.pop().finish();
+    public static Stack<Activity> getActivityStack() {
+        return activityStack;
+    }
+
+    /**
+     * 添加Activity到堆栈
+     */
+    public static void pushActivity(Activity activity) {
+        activityStack.push(activity);
+    }
+
+    /**
+     * 堆栈移除Activity
+     */
+    public static void removeActivity(Activity activity) {
+        activityStack.remove(activity);
+    }
+
+
+    /**
+     * 结束所有Activity
+     */
+    public static void finishAllActivity() {
+        while (activityStack.size() != 0) {
+            activityStack.pop().finish();
+        }
+        activityStack.clear();
+    }
+
+    /**
+     * 退出应用程序
+     */
+    public static void appExit(Activity activity) {
+        try {
+            finishAllActivity();
+            activity.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

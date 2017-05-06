@@ -42,14 +42,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             R.id.bottom_tabs_tv_mine,
     };
     private int select_index = 0;//按钮选中位置
-    private ImageView iv_setting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv_toolbar_titlt = (TextView) findViewById(R.id.tv_toolbar_title);
-        iv_setting = (ImageView) findViewById(R.id.iv_setting);
         tv_toolbar_titlt.setText(((TextView) findViewById(tabs_tv[select_index])).getText());
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         page_container = (ViewPager) findViewById(R.id.page_container);
@@ -66,13 +64,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             ImageView imageView = (ImageView) findViewById(iv_id);
             imageView.setOnClickListener(this);
         }
-        iv_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityUtil.lunchActivity(MainActivity.this, SettingActivity.class);
-            }
-        });
-
     }
 
     /**
@@ -128,11 +119,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             }
         }
-        if (select_index == fragments.size() - 1) {
-            iv_setting.setVisibility(View.VISIBLE);
-        } else {
-            iv_setting.setVisibility(View.GONE);
-        }
         ImageView imageView = (ImageView) findViewById(tabs_iv[select_index]);
         TextView textView = (TextView) findViewById(tabs_tv[select_index]);
         tv_toolbar_titlt.setText(textView.getText());
@@ -158,9 +144,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             Toast.makeText(MainActivity.this, "再次返回退出应用", Toast.LENGTH_SHORT).show();
             is_exit = true;
         } else {
-            ActivityUtil.cleanActivities();
-            finish();
-            System.exit(0);
+            this.overridePendingTransition(R.anim.scale_fade_out, R.anim.scale_fade_out);
+            ActivityUtil.appExit(this);
         }
     }
 

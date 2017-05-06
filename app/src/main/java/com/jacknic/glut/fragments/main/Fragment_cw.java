@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,7 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         if (toLogin != null) return toLogin;
         fragment = inflater.inflate(R.layout.fragment_cw, container, false);
         sid = prefer_cw.getString("sid", "");
-        student_id = prefer_cw.getString("student_id", "");
+        student_id = prefer_cw.getString(Config.STUDENTID, "");
         initViews();
         getInfo();
         getYue();
@@ -145,10 +146,13 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         iv_bid_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
                 TextView tv_card_no = (TextView) fragment.findViewById(R.id.cw_tv_card_no);
-                cm.setPrimaryClip(ClipData.newPlainText("text", tv_card_no.getText()));
-                Toast.makeText(getContext(), "复制银行卡号成功，可粘贴使用", Toast.LENGTH_SHORT).show();
+                CharSequence text_card_no = tv_card_no.getText();
+                if (!TextUtils.isEmpty(text_card_no)) {
+                    ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setPrimaryClip(ClipData.newPlainText("text", text_card_no));
+                    Toast.makeText(getContext(), "复制银行卡号成功，可粘贴使用", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -228,9 +232,9 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
                 if (is_first[0]) {
                     is_first[0] = false;
                 } else {
-                    getContext().startActivity(intent);
                     prefer_cw.edit().putLong("last_login", System.currentTimeMillis()).apply();
                     System.out.println("自动登录");
+                    getContext().startActivity(intent);
                 }
             }
         };
