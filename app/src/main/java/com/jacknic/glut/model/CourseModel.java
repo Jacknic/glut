@@ -1,15 +1,24 @@
 package com.jacknic.glut.model;
 
+import android.text.TextUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jacknic.glut.R;
 import com.jacknic.glut.beans.course.CourseBean;
 import com.jacknic.glut.beans.course.CourseInfoBean;
+import com.jacknic.glut.utils.Func;
+import com.lzy.okgo.OkGo;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +41,15 @@ public class CourseModel {
      */
     public ArrayList<CourseBean> getCourses() {
         ArrayList<CourseBean> courseList = new ArrayList<>();
+        InputStream in_course_arrange = OkGo.getContext().getResources().openRawResource(R.raw.course_arrange);
+        StringBuilder stringBuilder = new StringBuilder();
+        Scanner scanner = new Scanner(in_course_arrange);
+        while (scanner.hasNext()) {
+            stringBuilder.append(scanner.nextLine()).append("\n");
+        }
+        scanner.close();
+        JSONObject json_course_arrange = JSON.parseObject(stringBuilder.toString());
+        System.out.println(json_course_arrange);
         Elements courses = document.getElementsByClass("infolist_tab").first().select(".infolist_common");
         int year = getSchoolYear();
         int semester = getSemester();
@@ -102,44 +120,48 @@ public class CourseModel {
                             break;
                     }
                     course.setDayOfWeek(dayOf);
-                    Pattern p = Pattern.compile("(\\d+)(-)?(\\d+)?(\\D)?周");
-                    Matcher m = p.matcher(week);
-                    if (m.find()) {
-                        String start = m.group(1);
-                        System.out.println("开始周：" + start);
-                        String end = m.group(3) == null ? start : m.group(3);
-                        System.out.println("结束周：" + end);
-                        String everyWeek = m.group(4);
-                        int weekType = 0;
-                        if ("单".equals(everyWeek)) {
-                            weekType = 1;
-                        } else if ("双".equals(everyWeek)) {
-                            weekType = 2;
-                        }
-                        StringBuilder smp = new StringBuilder(" ");
-                        if (start != null) {
-                            if (weekType == 0) {
-                                for (int begin = Integer.parseInt(start); begin <= Integer.parseInt(end); begin++) {
-                                    smp.append(begin).append(" ");
+                    Pattern p = Pattern.compile("(\\d+)(-)?(\\d+)?(\\D)?");
+                    String[] week_details = week.split(",");
+                    StringBuilder smp = new StringBuilder(" ");
+                    for (String week_detail : week_details) {
+                        Matcher m = p.matcher(week_detail);
+                        if (m.find()) {
+                            String start = m.group(1);
+                            System.out.println("开始周：" + start);
+                            String end = m.group(3) == null ? start : m.group(3);
+                            System.out.println("结束周：" + end);
+                            String everyWeek = m.group(4);
+                            int weekType = 0;
+                            if ("单".equals(everyWeek)) {
+                                weekType = 1;
+                            } else if ("双".equals(everyWeek)) {
+                                weekType = 2;
+                            }
+                            if (start != null) {
+                                if (weekType == 0) {
+                                    for (int begin = Func.getInt(start, 0); begin <= Func.getInt(end, begin); begin++) {
+                                        smp.append(begin).append(" ");
+                                    }
+                                } else {
+                                    for (int begin = Integer.parseInt(start); begin <= Integer.parseInt(end); begin += 2) {
+                                        smp.append(begin).append(" ");
+                                    }
                                 }
                             } else {
-                                for (int begin = Integer.parseInt(start); begin <= Integer.parseInt(end); begin += 2) {
-                                    smp.append(begin).append(" ");
-                                }
+                                smp.append("0").append(" ");
                             }
-                        } else {
-                            smp.append("0").append(" ");
+                            course.setWeekType(weekType);
                         }
+
                         System.out.println("周数排序是： " + smp.toString());
                         course.setSmartPeriod(smp.toString());
-                        course.setWeekType(weekType);
                     }
-                    String courseArrangement = tr.child(2).text();
-                    Pattern ap = Pattern.compile("(\\d+)[-、](\\d+)");
-                    Matcher am = ap.matcher(courseArrangement);
-                    if (am.find()) {
-                        course.setStartSection(Integer.valueOf(am.group(1)));
-                        course.setEndSection(Integer.valueOf(am.group(2)));
+                    String courseArrangement = tr.child(2).text().trim();
+                    String arrange_value = json_course_arrange.getString(courseArrangement);
+                    if (!TextUtils.isEmpty(arrange_value)) {
+                        String[] course_startAndEnd = arrange_value.split(",");
+                        course.setStartSection(Func.getInt(course_startAndEnd[0], 0));
+                        course.setEndSection(Func.getInt(course_startAndEnd[1], 0));
                     }
                     String classRoom = tr.child(3).text();
                     course.setClassRoom(classRoom);

@@ -109,7 +109,7 @@ public class GradeListActivity extends BaseActivity {
      * 用户登录
      */
     private void login() {
-        final AlertDialog loginDialog = LoginDialog.getLoginDialog(this, new AbsCallbackWrapper() {
+        final AlertDialog loginDialog = LoginDialog.getLoginJw(this, new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
                 getGrade();

@@ -15,4 +15,5 @@
     <string name="error_login_fail">用户名或密码有误</string>
     <string name="search_book_hint">搜索图书</string>
     <string name="about_this_app">关于此应用</string>
+    <string name="title_activity_borrow">BorrowActivity</string>
 </resources>

@@ -1,9 +1,9 @@
 package com.jacknic.glut.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +18,7 @@ import com.jacknic.glut.beans.course.CourseBean;
 import com.jacknic.glut.beans.course.CourseInfoBean;
 import com.jacknic.glut.model.CourseInfoDbModel;
 import com.jacknic.glut.utils.Config;
+import com.jacknic.glut.utils.Func;
 import com.lzy.okgo.OkGo;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import java.util.List;
 public class CourseTableView extends LinearLayout {
     private final int START = 0;
     //最大节数
-    public final int MAXNUM = 12;
+    public final int MAXNUM = 14;
     //显示到星期几
     public final int WEEKNUM = 7;
     //单个View高度
@@ -48,6 +49,7 @@ public class CourseTableView extends LinearLayout {
     int colorNum = 0;
     //数据源
     private List<CourseBean> mListTimeTable = new ArrayList<>();
+    private boolean hasNoonCourse = false;
 
     public CourseTableView(Context context) {
         super(context);
@@ -106,7 +108,7 @@ public class CourseTableView extends LinearLayout {
                         mNum.setHeight(dip2px(TimeTableHeight));
                         mNum.setWidth(dip2px(TimeTableNumWidth));
                         mNum.setTextSize(14);
-                        mNum.setText(j + "");
+                        mNum.setText(Func.courseIndexToStr(j));
                         mMonday.addView(mNum);
                         mMonday.addView(getWeekTransverseLine());
                     }
@@ -142,6 +144,9 @@ public class CourseTableView extends LinearLayout {
                     List<CourseBean> mListMon = new ArrayList<>();
                     //遍历出星期1~7的课表
                     for (CourseBean courseBean : mListTimeTable) {
+                        if (courseBean.getStartSection() == 5 || courseBean.getStartSection() == 6) {
+                            hasNoonCourse = true;
+                        }
                         if (courseBean.getDayOfWeek() == i) {
                             mListMon.add(courseBean);
                         }
@@ -181,10 +186,10 @@ public class CourseTableView extends LinearLayout {
         return wm.getDefaultDisplay().getWidth();
     }
 
-    private View addStartView(int startnum, final int week, final int start) {
+    private View addStartView(int startNum, final int week, final int start) {
         final LinearLayout mStartView = new LinearLayout(getContext());
         mStartView.setOrientation(VERTICAL);
-        for (int i = 1; i < startnum; i++) {
+        for (int i = 1; i < startNum; i++) {
             TextView mTime = new TextView(getContext());
             mTime.setGravity(Gravity.CENTER);
             mTime.setHeight(dip2px(TimeTableHeight));
@@ -207,28 +212,28 @@ public class CourseTableView extends LinearLayout {
      * 星期一到星期天的课表
      *
      * @param courses
-     * @param week
+     * @param DayOfWeek
      * @return
      */
-    private LinearLayout getTimeTableView(List<CourseBean> courses, int week) {
+    private LinearLayout getTimeTableView(List<CourseBean> courses, int DayOfWeek) {
         LinearLayout mTimeTableView = new LinearLayout(getContext());
         mTimeTableView.setOrientation(VERTICAL);
-        int modesize = courses.size();
-        if (modesize <= 0) {
-            mTimeTableView.addView(addStartView(MAXNUM + 1, week, 0));
+        int modelSize = courses.size();
+        if (modelSize <= 0) {
+            mTimeTableView.addView(addStartView(MAXNUM + 1, DayOfWeek, 0));
         } else {
-            for (int i = 0; i < modesize; i++) {
+            for (int i = 0; i < modelSize; i++) {
                 if (i == 0) {
                     //添加的0到开始节数的空格
-                    mTimeTableView.addView(addStartView(courses.get(0).getStartSection(), week, 0));
+                    mTimeTableView.addView(addStartView(courses.get(0).getStartSection(), DayOfWeek, 0));
                     mTimeTableView.addView(getMode(courses.get(0)));
                 } else if (courses.get(i).getStartSection() - courses.get(i - 1).getStartSection() > 0) {
                     //填充
-                    mTimeTableView.addView(addStartView(courses.get(i).getStartSection() - courses.get(i - 1).getEndSection(), week, courses.get(i - 1).getEndSection()));
+                    mTimeTableView.addView(addStartView(courses.get(i).getStartSection() - courses.get(i - 1).getEndSection(), DayOfWeek, courses.get(i - 1).getEndSection()));
                     mTimeTableView.addView(getMode(courses.get(i)));
                 }
-                if (i + 1 == modesize) {
-                    mTimeTableView.addView(addStartView(MAXNUM - courses.get(i).getEndSection(), week, courses.get(i).getEndSection()));
+                if (i + 1 == modelSize) {
+                    mTimeTableView.addView(addStartView(MAXNUM - courses.get(i).getEndSection(), DayOfWeek, courses.get(i).getEndSection()));
                 }
             }
         }
@@ -266,20 +271,9 @@ public class CourseTableView extends LinearLayout {
         course.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("课程详情");
                 CourseInfoDbModel infoDbModel = new CourseInfoDbModel(OkGo.getContext());
                 CourseInfoBean courseInfo = infoDbModel.getCourseInfo(courseBean.getCourseNum());
-                System.out.println("获取到的数据：" + courseInfo);
-                infoDbModel.close();
-                builder.setMessage(
-                        "课程名称：" + courseBean.getCourseName() + "\n"
-                                + "上课地点：" + courseBean.getClassRoom() + "\n"
-                                + "老师：" + courseInfo.getTeacher() + "\n"
-                                + "上课周数：" + courseBean.getWeek() + "\n"
-                                + "课程绩点：" + courseInfo.getGrade() + "\n"
-                );
-                builder.show();
+                CourseDialog.getDialog((Activity) getContext(), courseBean, courseInfo).show();
             }
         });
         return course;

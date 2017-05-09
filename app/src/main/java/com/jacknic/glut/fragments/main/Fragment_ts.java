@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +15,8 @@ import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BrowserActivity;
+import com.jacknic.glut.activity.library.BorrowActivity;
+import com.jacknic.glut.utils.ActivityUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -47,7 +46,6 @@ public class Fragment_ts extends Fragment {
     private TextView tv_change_tags;
     private int tag_part = 0;
     private FloatingActionButton ts_fab_mine;
-    private CardView cv_buttons;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,7 +64,6 @@ public class Fragment_ts extends Fragment {
         iv_search_book = (ImageView) fragment.findViewById(R.id.ts_iv_search_book);
         hot_tag = (TagGroup) fragment.findViewById(R.id.hot_tag);
         ts_fab_mine = (FloatingActionButton) fragment.findViewById(R.id.ts_fab_mine);
-        cv_buttons = (CardView) fragment.findViewById(R.id.ts_cv_buttons);
         tv_change_tags = (TextView) fragment.findViewById(R.id.ts_tv_change_tag_list);
     }
 
@@ -100,24 +97,9 @@ public class Fragment_ts extends Fragment {
                 }
             }
         });
-        ts_fab_mine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.scale_fade_in);
-                if (cv_buttons.getVisibility() == View.VISIBLE) {
-                    anim = AnimationUtils.loadAnimation(getContext(), R.anim.scale_fade_out);
-                    cv_buttons.setVisibility(View.GONE);
-                } else {
-                    cv_buttons.setVisibility(View.VISIBLE);
-                }
-                anim.setDuration(300L);
-                cv_buttons.startAnimation(anim);
-            }
-        });
+        ts_fab_mine.setOnClickListener(listener);
         iv_search_book.setOnClickListener(listener);
-        fragment.setOnClickListener(listener);
         tv_change_tags.setOnClickListener(listener);
-        hot_tag.setOnClickListener(listener);
         hot_tag.setOnTagClickListener(new TagGroup.OnTagClickListener() {
             @Override
             public void onTagClick(String tag) {
@@ -146,9 +128,9 @@ public class Fragment_ts extends Fragment {
                         showTags();
                     }
                     break;
-            }
-            if (cv_buttons.getVisibility() == View.VISIBLE) {
-                ts_fab_mine.callOnClick();
+                case R.id.ts_fab_mine:
+                    ActivityUtil.lunchActivity(getContext(), BorrowActivity.class);
+                    break;
             }
         }
     };

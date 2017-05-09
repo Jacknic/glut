@@ -3,6 +3,7 @@ package com.jacknic.glut.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -80,6 +81,8 @@ public class BrowserActivity extends BaseActivity {
      * 初始化视图控件
      */
     private void initViews() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         TextView toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
         ImageView iv_setting = (ImageView) findViewById(R.id.iv_setting);
         iv_setting.setVisibility(View.VISIBLE);
@@ -88,7 +91,7 @@ public class BrowserActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 RotateAnimation rotateAnimation = new RotateAnimation(0, 360 * 2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                rotateAnimation.setDuration(1000L);
+                rotateAnimation.setDuration(800L);
                 v.startAnimation(rotateAnimation);
                 webView.reload();
             }
