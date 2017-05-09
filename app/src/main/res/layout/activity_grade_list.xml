@@ -72,6 +72,7 @@
             android:id="@+id/iv_getGrade"
             android:layout_width="56dp"
             android:layout_height="46dp"
+            android:background="@drawable/selector_item"
             android:clickable="true"
             android:padding="10dp"
             android:src="@drawable/ic_search"

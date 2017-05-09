@@ -5,12 +5,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--用于崩溃信息收集-->
+    <!-- 用于崩溃信息收集 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <!--/用于崩溃信息收集-->
+
+    <!-- /用于崩溃信息收集 -->
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -22,7 +23,7 @@
             android:value="Aqc1105763654" />
         <meta-data
             android:name="InstallChannel"
-            android:value="应用宝" />
+            android:value="${INSTALL_CHANNEL}" />
 
         <provider
             android:name="com.tencent.mid.api.MidProvider"
@@ -69,6 +70,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.library.BorrowActivity"
             android:screenOrientation="portrait" />
     </application>
 

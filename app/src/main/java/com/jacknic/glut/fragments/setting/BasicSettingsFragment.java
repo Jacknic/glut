@@ -70,7 +70,6 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
             OkGo.get("https://raw.githubusercontent.com/Jacknic/glut/master/version.json").readTimeOut(15000L).execute(new StringCallback() {
                 @Override
                 public void onSuccess(String s, Call call, Response response) {
-//                    System.out.println(s);
                     int appVersionCode = packageInfo.versionCode;
                     System.out.println("应用的版本号：" + appVersionCode);
                     VersionBean versionBean;
@@ -93,7 +92,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
                                     }).create();
                             alertDialog.show();
                         } else {
-                            Toast.makeText(getContext(), "已是最新版本", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "已是最新版本 " + packageInfo.versionName, Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         Toast.makeText(getContext(), "检查更新失败！", Toast.LENGTH_SHORT).show();

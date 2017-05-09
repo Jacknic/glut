@@ -75,7 +75,7 @@ public class LoginActivity extends BaseActivity {
         tv_toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
         setStatusView();
         flag = getIntent().getIntExtra("flag", 0);
-        int[] tips_id = new int[]{R.string.txt_jw, R.string.txt_financial, R.string.txt_library,};
+        int[] tips_id = new int[]{R.string.txt_jw, R.string.txt_financial};
         tv_toolbar_title.setText("登录" + getString(tips_id[flag]));
         if (flag == Config.LOGIN_FLAG_JW) {
             showCaptcha();
@@ -120,20 +120,11 @@ public class LoginActivity extends BaseActivity {
                     case Config.LOGIN_FLAG_CW:
                         login_cw();
                         break;
-                    case Config.LOGIN_FLAG_TS:
-                        login_ts();
-                        break;
                 }
             }
         });
     }
 
-    /**
-     * 登录到图书
-     * <br/>暂时不做这部分
-     */
-    private void login_ts() {
-    }
 
     /**
      * 登录到财务处

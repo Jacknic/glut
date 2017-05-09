@@ -114,7 +114,7 @@ public class ExamListActivity extends BaseActivity {
      * 登录验证
      */
     private void login() {
-        final AlertDialog login_dialog = LoginDialog.getLoginDialog(this, new AbsCallbackWrapper() {
+        final AlertDialog login_dialog = LoginDialog.getLoginJw(this, new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
                 getDataPre();

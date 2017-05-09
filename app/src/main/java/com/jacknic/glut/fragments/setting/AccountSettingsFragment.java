@@ -20,6 +20,8 @@ import com.lzy.okgo.OkGo;
 
 import java.io.File;
 
+import okhttp3.HttpUrl;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -63,8 +65,10 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
                                 logout();
                                 break;
                         }
-                        SharedPreferences setting = getActivity().getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
-                        setting.edit().putBoolean(Config.SETTING_IS_REFRESH, true).apply();
+                        if (v.getId() != R.id.setting_btn_clear_all) {
+                            SharedPreferences setting = getActivity().getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
+                            setting.edit().putBoolean(Config.SETTING_IS_REFRESH, true).apply();
+                        }
                     }
                 }).create();
         dialog.show();
@@ -83,7 +87,8 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
      * 清除图书信息
      */
     private void clear_ts() {
-
+        OkGo.getInstance().getCookieJar().getCookieStore().removeCookie(HttpUrl.parse("http://202.193.80.181:8080"));
+        getContext().getSharedPreferences(Config.PREFER_TS, Context.MODE_PRIVATE).edit().clear().apply();
     }
 
     /**
