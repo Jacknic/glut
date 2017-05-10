@@ -27,6 +27,7 @@ import com.jacknic.glut.model.CourseModel;
 import com.jacknic.glut.model.StudentInfoModel;
 import com.jacknic.glut.utils.ActivityUtil;
 import com.jacknic.glut.utils.Config;
+import com.jacknic.glut.utils.Func;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.BitmapCallback;
@@ -79,6 +80,9 @@ public class LoginActivity extends BaseActivity {
         tv_toolbar_title.setText("登录" + getString(tips_id[flag]));
         if (flag == Config.LOGIN_FLAG_JW) {
             showCaptcha();
+        } else {
+            // 只剩财务了
+            et_password.setHint("默认密码，身份证号后6位");
         }
         iv_show_pwd = (ImageView) findViewById(R.id.iv_show_pwd);
         //显示、隐藏密码
@@ -320,7 +324,7 @@ public class LoginActivity extends BaseActivity {
                         //获取最后周数
                         Element ele_lastWeek = document.select(".week table tbody tr td").last();
                         String str_lastWeek = ele_lastWeek.text();
-                        int lastWeek = Pattern.matches("\\d+", str_lastWeek) ? Integer.parseInt(str_lastWeek) : 25;
+                        int lastWeek = Func.getInt(str_lastWeek, 30);
                         editor.putInt(Config.JW_WEEK_END, lastWeek);
                         Log.d("week", "当前周数" + str_week);
                         Log.d("week", "最后一周" + str_lastWeek);

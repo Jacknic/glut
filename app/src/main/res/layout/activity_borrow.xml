@@ -7,6 +7,16 @@
 
     <include layout="@layout/toolbar" />
 
+    <TextView
+        android:id="@+id/ts_tv_empty_tips"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_item"
+        android:clickable="true"
+        android:padding="5dp"
+        android:text="未查询到借阅信息，轻点屏幕刷新"
+        android:visibility="gone" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ts_rl_borrow_list"
         android:layout_width="match_parent"

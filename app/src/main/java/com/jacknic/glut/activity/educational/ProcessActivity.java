@@ -2,16 +2,12 @@ package com.jacknic.glut.activity.educational;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
+import com.jacknic.glut.adapter.StudyProcessAdapter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,7 +17,6 @@ import org.jsoup.select.Elements;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 学业进度
@@ -60,40 +55,3 @@ public class ProcessActivity extends BaseActivity {
     }
 }
 
-/**
- * 学业进度适配器
- */
-class StudyProcessAdapter extends BaseAdapter {
-    private List<String> dataList;
-
-    public StudyProcessAdapter(List<String> dataList) {
-        this.dataList = dataList;
-    }
-
-    @Override
-    public int getCount() {
-        return dataList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return dataList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_study_process, parent, false);
-        GridView.LayoutParams params = new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT);
-        TextView tv = (TextView) linearLayout.findViewById(R.id.item_text);
-        String text = dataList.get(position);
-        if ("通过".equals(text)) tv.setTextColor(parent.getResources().getColor(R.color.green));
-        tv.setText(text);
-        linearLayout.setLayoutParams(params);
-        return linearLayout;
-    }
-}
