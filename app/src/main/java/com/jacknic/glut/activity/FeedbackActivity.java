@@ -29,7 +29,7 @@ public class FeedbackActivity extends BaseActivity {
         setContentView(R.layout.activity_feedback);
         setStatusView();
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
-        title.setText("反馈");
+        title.setText("用户反馈");
         et_feedback = (EditText) findViewById(R.id.fb_et_feedback);
         btn_submit = (Button) findViewById(R.id.fb_btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {

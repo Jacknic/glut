@@ -116,16 +116,17 @@ public class Fragment_kc extends Fragment {
                 if (tab != null) {
                     tab.select();
                 }
-                Animation rota = new RotateAnimation(-135, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                int degree = -135;
                 if (ll_select_time.getVisibility() == View.VISIBLE) {
                     ll_select_time.setVisibility(View.GONE);
                     v.setRotation(0f);
                 } else {
                     v.setRotation(45f);
-                    rota = new RotateAnimation(135, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                     ll_select_time.setVisibility(View.VISIBLE);
-
+                    degree = 135;
                 }
+                RotateAnimation rota = new RotateAnimation(degree, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rota.setFillAfter(true);
                 rota.setDuration(500L);
                 v.startAnimation(rota);
                 showSelect();

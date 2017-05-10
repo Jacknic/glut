@@ -77,7 +77,7 @@
                 android:drawableRight="@drawable/ic_keyboard_arrow_right"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/list_item_height"
-                android:text="使用反馈" />
+                android:text="用户反馈" />
 
             <ImageView
                 android:layout_width="@dimen/list_item_height"

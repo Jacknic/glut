@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.jacknic.glut.R;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -76,19 +79,7 @@ public class BorrowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            /**
-                             * 续借
-                             */
-                            OkGo.post("http://202.193.80.181:8080/opac/loan/doRenew")
-                                    .params("barcodeList", book_no)
-                                    .params("furl", "/opac/loan/renewList")
-                                    .execute(new StringCallback() {
-                                        @Override
-                                        public void onSuccess(String s, Call call, Response response) {
-                                            Activity activity = (Activity) inflater.getContext();
-                                            activity.findViewById(R.id.iv_setting).callOnClick();
-                                        }
-                                    });
+                            renew(book_no);
                         }
                     }).create();
             view.findViewById(R.id.item_book_borrow).setOnClickListener(new View.OnClickListener() {
@@ -101,6 +92,30 @@ public class BorrowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             String str_borrow_date = element.child(7).text();
             setText(R.id.item_book_borrow_date, "借出时间: " + str_borrow_date);
             setText(R.id.item_book_return_date, "应还时间: " + element.child(8).text());
+        }
+
+        /**
+         * 续借
+         */
+        private void renew(String book_no) {
+
+            OkGo.post("http://202.193.80.181:8080/opac/loan/doRenew")
+                    .params("barcodeList", book_no)
+                    .params("furl", "/opac/loan/renewList")
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(String s, Call call, Response response) {
+                            Activity activity = (Activity) inflater.getContext();
+                            activity.findViewById(R.id.iv_setting).callOnClick();
+                            Document document = Jsoup.parse(s);
+                            Element content = document.getElementById("content");
+                            AlertDialog alertDialog = new AlertDialog.Builder(activity)
+                                    .setPositiveButton(android.R.string.ok, null)
+                                    .setMessage(Html.fromHtml(content.html()))
+                                    .create();
+                            alertDialog.show();
+                        }
+                    });
         }
     }
 }

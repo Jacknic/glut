@@ -41,11 +41,9 @@ public class CourseInfoDbModel {
      */
     public CourseInfoBean getCourseInfo(String course_num) {
         CourseInfoBean courseInfoBean = new CourseInfoBean();
-        System.out.println("课程号为" + course_num);
         Cursor cursor = database.query(TABLE_NAME, null, "courseNum = ?",
                 new String[]{course_num}, null, null, null);
         while (cursor.moveToNext()) {
-            System.out.println("有数据=-=-=-=-=-=-=-=-=");
             courseInfoBean.setId(cursor.getInt(0));
             courseInfoBean.setSchoolYearStart(cursor.getInt(1));
             courseInfoBean.setSemester(cursor.getInt(2));
