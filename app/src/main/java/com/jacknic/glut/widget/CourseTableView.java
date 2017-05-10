@@ -42,8 +42,8 @@ public class CourseTableView extends LinearLayout {
     private final int TimeTableLineHeight = 2;
     private final int TimeTableNumWidth = 20;
     private final int TimeTableWeekNameHeight = 30;
-    private LinearLayout mHorizontalWeekLayout;//第一行的星期显示
-    private LinearLayout mVerticalWeekLayout;//课程格子
+    private LinearLayout mWeekNamesLayout;//第一行的星期显示
+    private LinearLayout mCourseNumLayout;//课程格子
     private String[] weekName = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
     public String[] colorStr = new String[20];
     int colorNum = 0;
@@ -77,12 +77,24 @@ public class CourseTableView extends LinearLayout {
      * 绘制控件
      */
     private void initView() {
-        mHorizontalWeekLayout = new LinearLayout(getContext());
-        mHorizontalWeekLayout.setOrientation(HORIZONTAL);
-        mHorizontalWeekLayout.setBackgroundColor(getResources().getColor(R.color.white));
-        mVerticalWeekLayout = new LinearLayout(getContext());
-        mVerticalWeekLayout.setOrientation(HORIZONTAL);
+        mWeekNamesLayout = new LinearLayout(getContext());
+        mWeekNamesLayout.setOrientation(HORIZONTAL);
+        mWeekNamesLayout.setBackgroundColor(getResources().getColor(R.color.white));
+        mCourseNumLayout = new LinearLayout(getContext());
+        mCourseNumLayout.setOrientation(HORIZONTAL);
+        hasNoonCourse = false;
         for (int i = 0; i <= WEEKNUM; i++) {
+            List<CourseBean> mListMon = new ArrayList<>();
+            //逐个获取一周每天的课程安排
+            for (CourseBean courseBean : mListTimeTable) {
+                if (courseBean.getStartSection() == 5 || courseBean.getStartSection() == 6) {
+                    hasNoonCourse = true;
+                }
+                //放入星期列表
+                if (courseBean.getDayOfWeek() == i) {
+                    mListMon.add(courseBean);
+                }
+            }
             switch (i) {
                 //表头周数、星期一到星期天
                 case 0:
@@ -93,12 +105,12 @@ public class CourseTableView extends LinearLayout {
                     mTime.setTextColor(getResources().getColor(R.color.pink));
                     mTime.setHeight(dip2px(TimeTableWeekNameHeight));
                     mTime.setWidth((dip2px(TimeTableNumWidth)));
-                    mHorizontalWeekLayout.addView(mTime);
+                    mWeekNamesLayout.addView(mTime);
 
-                    //绘制1~MAXNUM
+                    //绘制1~MAXNUM，课程左部节数序号
                     LinearLayout mMonday = new LinearLayout(getContext());
                     mMonday.setBackgroundColor(getResources().getColor(R.color.white));
-                    ViewGroup.LayoutParams mm = new ViewGroup.LayoutParams(dip2px(TimeTableNumWidth), dip2px(MAXNUM * TimeTableHeight) + MAXNUM * 2);
+                    ViewGroup.LayoutParams mm = new ViewGroup.LayoutParams(dip2px(TimeTableNumWidth), ViewGroup.LayoutParams.WRAP_CONTENT);
                     mMonday.setLayoutParams(mm);
                     mMonday.setOrientation(VERTICAL);
                     for (int j = 1; j <= MAXNUM; j++) {
@@ -110,9 +122,20 @@ public class CourseTableView extends LinearLayout {
                         mNum.setTextSize(14);
                         mNum.setText(Func.courseIndexToStr(j));
                         mMonday.addView(mNum);
-                        mMonday.addView(getWeekTransverseLine());
+                        View weekTransverseLine = getWeekTransverseLine();
+                        if (!hasNoonCourse && (j == 5 || j == 6)) {
+                            if (j == 5) {
+                                mNum.setText("中");
+                                weekTransverseLine.setVisibility(GONE);
+                            }
+                            if (j == 6) mNum.setText("午");
+                            mNum.setHeight(dip2px(TimeTableHeight) / 2);
+
+                            mNum.setVisibility(GONE);
+                        }
+                        mMonday.addView(weekTransverseLine);
                     }
-                    mVerticalWeekLayout.addView(mMonday);
+                    mCourseNumLayout.addView(mMonday);
                     break;
                 case 1:
                 case 2:
@@ -121,7 +144,7 @@ public class CourseTableView extends LinearLayout {
                 case 5:
                 case 6:
                 case 7:
-                    // 设置显示星期一 到星期天
+                    // 设置表头显示星期一到星期天
                     LinearLayout mHoriView = new LinearLayout(getContext());
                     mHoriView.setGravity(Gravity.CENTER);
                     mHoriView.setOrientation(VERTICAL);
@@ -130,7 +153,7 @@ public class CourseTableView extends LinearLayout {
                     l.setWidth(2);
                     l.setBackgroundColor(getResources().getColor(R.color.cary));
                     //星期分割线
-                    mHorizontalWeekLayout.addView(l);
+                    mWeekNamesLayout.addView(l);
                     TextView mWeekName = new TextView(getContext());
                     mWeekName.setTextColor(getResources().getColor(R.color.primaryDark));
                     mWeekName.setWidth(((getViewWidth() - dip2px(TimeTableNumWidth) - 2 * 6)) / WEEKNUM);
@@ -139,39 +162,30 @@ public class CourseTableView extends LinearLayout {
                     mWeekName.setTextSize(14);
                     mWeekName.setText(weekName[i - 1]);
                     mHoriView.addView(mWeekName);
-                    mHorizontalWeekLayout.addView(mHoriView);
+                    mWeekNamesLayout.addView(mHoriView);
 
-                    List<CourseBean> mListMon = new ArrayList<>();
-                    //遍历出星期1~7的课表
-                    for (CourseBean courseBean : mListTimeTable) {
-                        if (courseBean.getStartSection() == 5 || courseBean.getStartSection() == 6) {
-                            hasNoonCourse = true;
-                        }
-                        if (courseBean.getDayOfWeek() == i) {
-                            mListMon.add(courseBean);
-                        }
-                    }
-                    //添加
+                    //绘制课表
                     LinearLayout mLayout = getTimeTableView(mListMon, i);
                     mLayout.setOrientation(VERTICAL);
-                    ViewGroup.LayoutParams linearParams = new ViewGroup.LayoutParams((getViewWidth() - dip2px(TimeTableNumWidth) - 2 * 6) / WEEKNUM, LayoutParams.MATCH_PARENT);
+                    ViewGroup.LayoutParams linearParams = new ViewGroup.LayoutParams((getViewWidth() - dip2px(TimeTableNumWidth) - 2 * 6) / WEEKNUM, LayoutParams.WRAP_CONTENT);
                     mLayout.setLayoutParams(linearParams);
                     mLayout.setWeightSum(1);
-                    mVerticalWeekLayout.addView(mLayout);
+                    mCourseNumLayout.addView(mLayout);
                     break;
 
                 default:
                     break;
             }
             TextView l = new TextView(getContext());
-            l.setHeight(dip2px(TimeTableHeight * MAXNUM) + MAXNUM * 2);
-            l.setWidth(2);
+            l.setLayoutParams(new ViewGroup.LayoutParams(2, ViewGroup.LayoutParams.MATCH_PARENT));
+//            l.setHeight(dip2px(TimeTableHeight * MAXNUM) + MAXNUM * 2);
+//            l.setWidth(2);
             l.setBackgroundColor(getResources().getColor(R.color.primaryBackgroundTran));
-            mVerticalWeekLayout.addView(l);
+            mCourseNumLayout.addView(l);
         }
-        addView(mHorizontalWeekLayout);
+        addView(mWeekNamesLayout);
         addView(getWeekTransverseLine());
-        addView(mVerticalWeekLayout);
+        addView(mCourseNumLayout);
         addView(getWeekTransverseLine());
     }
 
@@ -186,16 +200,30 @@ public class CourseTableView extends LinearLayout {
         return wm.getDefaultDisplay().getWidth();
     }
 
-    private View addStartView(int startNum, final int week, final int start) {
+    /**
+     * 绘制空白格子
+     *
+     * @param count 格子个数
+     * @param week  第几周
+     * @param start 课程开头
+     * @return
+     */
+    private View addStartView(int count, final int week, final int start) {
         final LinearLayout mStartView = new LinearLayout(getContext());
         mStartView.setOrientation(VERTICAL);
-        for (int i = 1; i < startNum; i++) {
+        for (int i = 1; i < count; i++) {
             TextView mTime = new TextView(getContext());
             mTime.setGravity(Gravity.CENTER);
             mTime.setHeight(dip2px(TimeTableHeight));
             mTime.setWidth(dip2px(TimeTableHeight));
             mStartView.addView(mTime);
-            mStartView.addView(getWeekTransverseLine());
+            View transverseLine = getWeekTransverseLine();
+            if (!hasNoonCourse && (start + i == 5 || start + i == 6)) {
+                mTime.setHeight(dip2px(TimeTableHeight) / 2);
+                if (start + i == 6) transverseLine.setVisibility(GONE);
+                mTime.setVisibility(GONE);
+            }
+            mStartView.addView(transverseLine);
             //这里可以处理空白处点击添加课表
 //            mTime.setOnClickListener(new OnClickListener() {
 //                @Override
@@ -216,12 +244,19 @@ public class CourseTableView extends LinearLayout {
      * @return
      */
     private LinearLayout getTimeTableView(List<CourseBean> courses, int DayOfWeek) {
+        // 每日课表为一条竖线布局
         LinearLayout mTimeTableView = new LinearLayout(getContext());
         mTimeTableView.setOrientation(VERTICAL);
         int modelSize = courses.size();
         if (modelSize <= 0) {
-            mTimeTableView.addView(addStartView(MAXNUM + 1, DayOfWeek, 0));
+            //如果没有数据，全部填充空白格子
+            int add = 1;
+            if (!hasNoonCourse) {
+                add = 0;
+            }
+            mTimeTableView.addView(addStartView(MAXNUM + add, DayOfWeek, 0));
         } else {
+            //有数据遍历数据
             for (int i = 0; i < modelSize; i++) {
                 if (i == 0) {
                     //添加的0到开始节数的空格
@@ -233,6 +268,7 @@ public class CourseTableView extends LinearLayout {
                     mTimeTableView.addView(getMode(courses.get(i)));
                 }
                 if (i + 1 == modelSize) {
+                    //剩下的补空白格子
                     mTimeTableView.addView(addStartView(MAXNUM - courses.get(i).getEndSection(), DayOfWeek, courses.get(i).getEndSection()));
                 }
             }
