@@ -34,7 +34,7 @@ public class StartActivity extends BaseActivity {
             public void run() {
                 start();
             }
-        }, 500);
+        }, 400);
     }
 
     /**
