@@ -71,7 +71,7 @@ public class ImageUtil {
 
         if (widthOrg > edgeLength && heightOrg > edgeLength) {
             //压缩到一个最小长度是edgeLength的bitmap
-            int longerEdge = (int) (edgeLength * Math.max(widthOrg, heightOrg) / Math.min(widthOrg, heightOrg));
+            int longerEdge = edgeLength * Math.max(widthOrg, heightOrg) / Math.min(widthOrg, heightOrg);
             int scaledWidth = widthOrg > heightOrg ? longerEdge : edgeLength;
             int scaledHeight = widthOrg > heightOrg ? edgeLength : longerEdge;
             Bitmap scaledBitmap;

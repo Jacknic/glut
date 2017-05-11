@@ -15,3 +15,24 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#保持所有
+#-keep class *.** { *; }
+
+-dontwarn okio.**
+##-keep class android.** { *; }
+##-keep class com.android.support.** { *; }
+
+#保持bean以免注解被混淆
+-keep class com.jacknic.glut.beans.** { *; }
+#-keep class com.jacknic.glut.fragments.** { *; }
+#-keep class com.jacknic.glut.widget.** { *; }
+
+#第三方jar包不混淆
+-keep class com.tencent.** { *; }
+-keep class com.lzy.okgo.** { *; }
+-keep class okhttp3.** { *; }
+-keep class okio.** { *; }
+-keep class com.alibaba.fastjson.** { *; }
+-keep class org.jsoup.** { *; }
+-keep class me.gujun.** { *; }
