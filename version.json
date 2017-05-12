@@ -1,8 +1,8 @@
-{
-  "date": "2017-5-4",
-  "versionCode": 1,
-  "versionName": "1.0",
-  "downloadUrl": "http://117.177.223.155/imtt.dd.qq.com/16891/F158BFA19910A5B0E1B5B87498D0AA14.apk?fsname=com.jacknic.glut_1.0_1.apk",
-  "info": "版本更新信息",
+﻿{
+  "date": "2017-5-12",
+  "versionCode": 2,
+  "versionName": "2.0",
+  "downloadUrl": "http://117.177.223.156/imtt.dd.qq.com/16891/51F3F86B05563AA62D890075A3CCB273.apk?fsname=com.jacknic.glut.apk",
+  "info": "版本更新信息:\n1. 财务处自动登录 \n2.修改课程详情对话框、调整页面结构、优化用户界面\n  3. 修复中午课程遗漏问题，修复爬取课程缺漏的问题 \n 4. 改进图书借阅查询与续借\n 5. apk文件瘦身,更小更轻盈",
   "remark": "该文件用于应用版本检测更新！"
 }
