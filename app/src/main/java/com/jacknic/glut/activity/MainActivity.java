@@ -11,12 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.fragments.main.Fragment_cw;
-import com.jacknic.glut.fragments.main.Fragment_kc;
-import com.jacknic.glut.fragments.main.Fragment_ts;
-import com.jacknic.glut.fragments.main.Fragment_wd;
-import com.jacknic.glut.utils.ActivityUtil;
-import com.jacknic.glut.utils.Config;
+import com.jacknic.glut.util.ActivityUtil;
+import com.jacknic.glut.util.Config;
+import com.jacknic.glut.view.fragment.main.Fragment_cw;
+import com.jacknic.glut.view.fragment.main.Fragment_kc;
+import com.jacknic.glut.view.fragment.main.Fragment_ts;
+import com.jacknic.glut.view.fragment.main.Fragment_wd;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -71,10 +71,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     private void initFragments() {
         fragments = new ArrayList<>();
-        fragments.add(Fragment_kc.newInstance());
-        fragments.add(Fragment_cw.newInstance());
-        fragments.add(Fragment_ts.newInstance());
-        fragments.add(Fragment_wd.newInstance());
+        fragments.add(new Fragment_kc());
+        fragments.add(new Fragment_cw());
+        fragments.add(new Fragment_ts());
+        fragments.add(new Fragment_wd());
         FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

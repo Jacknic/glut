@@ -19,15 +19,15 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.R;
-import com.jacknic.glut.beans.course.CourseBean;
-import com.jacknic.glut.beans.course.CourseInfoBean;
-import com.jacknic.glut.model.CourseDbModel;
-import com.jacknic.glut.model.CourseInfoDbModel;
 import com.jacknic.glut.model.CourseModel;
 import com.jacknic.glut.model.StudentInfoModel;
-import com.jacknic.glut.utils.ActivityUtil;
-import com.jacknic.glut.utils.Config;
-import com.jacknic.glut.utils.Func;
+import com.jacknic.glut.model.dao.CourseDao;
+import com.jacknic.glut.model.dao.CourseInfoDao;
+import com.jacknic.glut.model.entity.CourseEntity;
+import com.jacknic.glut.model.entity.CourseInfoEntity;
+import com.jacknic.glut.util.ActivityUtil;
+import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.BitmapCallback;
@@ -204,22 +204,20 @@ public class LoginActivity extends BaseActivity {
                         editor.putString(Config.PASSWORD, et_password.getText().toString());
                         editor.apply();
                         //插入课表
-                        ArrayList<CourseBean> courses = courseModel.getCourses();
-                        CourseDbModel courseDbModel = new CourseDbModel(OkGo.getContext());
-                        for (CourseBean course : courses) {
+                        ArrayList<CourseEntity> courses = courseModel.getCourses();
+                        CourseDao courseDao = new CourseDao();
+                        for (CourseEntity course : courses) {
 //                            Log.d("log", course.toString());
-                            courseDbModel.insertCourse(course);
+                            courseDao.insertCourse(course);
                         }
                         login_dialog.setMessage("获取课表...");
-                        courseDbModel.close();
                         //课表信息
-                        CourseInfoDbModel infoDbModel = new CourseInfoDbModel(getApplicationContext());
-                        for (CourseInfoBean courseInfoBean : courseModel.getCourseInfoList()) {
-                            System.out.println(courseInfoBean);
-                            infoDbModel.insertCourseInfo(courseInfoBean);
+                        CourseInfoDao infoDbModel = new CourseInfoDao();
+                        for (CourseInfoEntity courseInfoEntity : courseModel.getCourseInfoList()) {
+                            System.out.println(courseInfoEntity);
+                            infoDbModel.insertCourseInfo(courseInfoEntity);
                         }
-                        infoDbModel.close();
-//                        ArrayList<CourseInfoBean> courseInfoList =
+//                        ArrayList<CourseInfoEntity> courseInfoList =
 
                         getStudentInfo();
                     }

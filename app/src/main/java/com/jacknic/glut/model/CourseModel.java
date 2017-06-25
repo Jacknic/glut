@@ -5,9 +5,9 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.R;
-import com.jacknic.glut.beans.course.CourseBean;
-import com.jacknic.glut.beans.course.CourseInfoBean;
-import com.jacknic.glut.utils.Func;
+import com.jacknic.glut.model.entity.CourseEntity;
+import com.jacknic.glut.model.entity.CourseInfoEntity;
+import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
 
 import org.jsoup.Jsoup;
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 public class CourseModel {
     private Document document;
-    private ArrayList<CourseInfoBean> courseInfoList = new ArrayList<>();
+    private ArrayList<CourseInfoEntity> courseInfoList = new ArrayList<>();
 
     public CourseModel(String dom) {
         document = Jsoup.parse(dom);
@@ -39,8 +39,8 @@ public class CourseModel {
      *
      * @return 课程条目列表
      */
-    public ArrayList<CourseBean> getCourses() {
-        ArrayList<CourseBean> courseList = new ArrayList<>();
+    public ArrayList<CourseEntity> getCourses() {
+        ArrayList<CourseEntity> courseList = new ArrayList<>();
         InputStream in_course_arrange = OkGo.getContext().getResources().openRawResource(R.raw.course_arrange);
         StringBuilder stringBuilder = new StringBuilder();
         Scanner scanner = new Scanner(in_course_arrange);
@@ -54,7 +54,7 @@ public class CourseModel {
         int year = getSchoolYear();
         int semester = getSemester();
         for (Element e : courses) {
-            CourseBean course = null;
+            CourseEntity course = null;
             String number = e.child(0).text();
             String order = e.child(1).text();
             String name = e.child(2).text();
@@ -63,14 +63,13 @@ public class CourseModel {
             String type = e.child(5).text();
             String method = e.child(6).text();
             String test = e.child(7).text();
-            CourseInfoBean courseInfo = new CourseInfoBean();
+            CourseInfoEntity courseInfo = new CourseInfoEntity();
             courseInfo.setCourseNum(number);
             courseInfo.setCourseName(name);
             courseInfo.setGrade(grade);
             courseInfo.setSemester(semester);
             courseInfo.setSchoolYearStart(year);
             courseInfo.setTeacher(teacher);
-            courseInfo.setId(Integer.parseInt(order));
             courseInfoList.add(courseInfo);
 
             Elements info = e.child(9).getElementsByTag("tr");
@@ -79,7 +78,7 @@ public class CourseModel {
 
             /*无教学时间地点的情况*/
             if (info.size() == 0) {
-                course = new CourseBean();
+                course = new CourseEntity();
                 course.setSchoolStartYear(year);
                 course.setSemester(semester);
                 course.setCourseNum(number);
@@ -88,7 +87,7 @@ public class CourseModel {
             } else {
             /*有教学时间地点的情况*/
                 for (Element tr : info) {
-                    course = new CourseBean();
+                    course = new CourseEntity();
                     course.setSchoolStartYear(year);
                     course.setSemester(semester);
                     course.setCourseNum(number);
@@ -212,7 +211,7 @@ public class CourseModel {
      *
      * @return 信息列表
      */
-    public ArrayList<CourseInfoBean> getCourseInfoList() {
+    public ArrayList<CourseInfoEntity> getCourseInfoList() {
         return courseInfoList;
     }
 }

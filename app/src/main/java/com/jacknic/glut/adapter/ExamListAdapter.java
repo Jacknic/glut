@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.beans.educational.ExamInfoBean;
+import com.jacknic.glut.bean.ExamInfoBean;
 
 import java.util.ArrayList;
 import java.util.List;

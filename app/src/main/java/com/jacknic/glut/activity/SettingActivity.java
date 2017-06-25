@@ -10,11 +10,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.fragments.setting.AboutSettingsFragment;
-import com.jacknic.glut.fragments.setting.AccountSettingsFragment;
-import com.jacknic.glut.fragments.setting.BasicSettingsFragment;
-import com.jacknic.glut.utils.ActivityUtil;
-import com.jacknic.glut.utils.Config;
+import com.jacknic.glut.util.ActivityUtil;
+import com.jacknic.glut.util.Config;
+import com.jacknic.glut.view.fragment.setting.AboutSettingsFragment;
+import com.jacknic.glut.view.fragment.setting.AccountSettingsFragment;
+import com.jacknic.glut.view.fragment.setting.BasicSettingsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

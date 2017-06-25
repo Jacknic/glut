@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.jacknic.glut.beans.course.CourseBean;
-import com.jacknic.glut.utils.Config;
+import com.jacknic.glut.model.entity.CourseEntity;
+import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.DataBase;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -63,8 +64,8 @@ public class LoginModel_jw {
         StringCallback stringCallback = new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                /**
-                 * 登录成功后执行的操作
+                /*
+                  登录成功后执行的操作
                  */
                 SharedPreferences.Editor editor = prefer_jw.edit();
                 editor.putString(Config.SID, sid);
@@ -74,11 +75,10 @@ public class LoginModel_jw {
                 editor.putInt(Config.JW_SCHOOL_YEAR, courseModel.getSchoolYear());
                 editor.putInt(Config.JW_SEMESTER, courseModel.getSemester());
                 editor.apply();
-                ArrayList<CourseBean> courses = courseModel.getCourses();
-                CourseDbModel courseDbModel = new CourseDbModel(OkGo.getContext());
-                for (CourseBean course : courses) {
+                ArrayList<CourseEntity> courses = courseModel.getCourses();
+                for (CourseEntity course : courses) {
 //                            Log.d("log", course.toString());
-                    courseDbModel.insertCourse(course);
+                    DataBase.getDaoSession().getCourseEntityDao().insert(course);
                 }
                 if (callback != null) {
                     callback.onSuccess(s, call, response);

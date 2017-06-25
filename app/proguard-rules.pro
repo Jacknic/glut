@@ -25,8 +25,8 @@
 
 #保持bean以免注解被混淆
 -keep class com.jacknic.glut.beans.** { *; }
-#-keep class com.jacknic.glut.fragments.** { *; }
-#-keep class com.jacknic.glut.widget.** { *; }
+#-keep class com.jacknic.glut.view.fragments.** { *; }
+#-keep class com.jacknic.glut.view.widget.** { *; }
 
 #第三方jar包不混淆
 -keep class com.tencent.** { *; }

@@ -3,8 +3,8 @@ package com.jacknic.glut.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.jacknic.glut.beans.educational.StudentInfoBean;
-import com.jacknic.glut.utils.Config;
+import com.jacknic.glut.bean.StudentInfoBean;
+import com.jacknic.glut.util.Config;
 import com.lzy.okgo.OkGo;
 
 import org.jsoup.Jsoup;
