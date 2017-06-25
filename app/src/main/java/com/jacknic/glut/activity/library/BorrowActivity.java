@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.BorrowListAdapter;
-import com.jacknic.glut.widget.LoginDialog;
+import com.jacknic.glut.view.widget.LoginDialog;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;

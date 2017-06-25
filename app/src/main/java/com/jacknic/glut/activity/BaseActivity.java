@@ -12,8 +12,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.utils.ActivityUtil;
-import com.jacknic.glut.utils.Config;
+import com.jacknic.glut.util.ActivityUtil;
+import com.jacknic.glut.util.Config;
 
 
 /**

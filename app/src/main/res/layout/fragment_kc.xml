@@ -57,7 +57,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/lv_select_week"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:layout_weight="1"
             app:tabGravity="center"
             app:tabIndicatorColor="@color/white"
@@ -67,14 +67,35 @@
 
         <ImageView
             android:id="@+id/kc_iv_course_setting"
-            android:layout_width="42dp"
+            android:layout_width="56dp"
             android:layout_height="match_parent"
-            android:background="@drawable/selector_item_tran"
-            android:padding="8dp"
-            android:src="@drawable/ic_edit_location"
+            android:padding="20dp"
+            android:src="@drawable/ic_edit"
             android:tint="@color/white" />
 
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/kc_tv_month"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="月份"
+            android:textSize="10sp" />
+
+        <GridView
+            android:id="@+id/kc_gv_weekName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:choiceMode="singleChoice"
+            android:numColumns="7" />
     </LinearLayout>
 
     <ScrollView
@@ -84,13 +105,12 @@
         android:overScrollMode="ifContentScrolls"
         android:scrollbars="none">
 
-
-        <com.jacknic.glut.widget.CourseTableView
+        <com.jacknic.glut.view.widget.CourseTableView
             android:id="@+id/table_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" />
 
-        </com.jacknic.glut.widget.CourseTableView>
     </ScrollView>
+
 </LinearLayout>

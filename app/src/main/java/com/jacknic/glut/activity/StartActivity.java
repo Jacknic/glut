@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.WindowManager;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.utils.Config;
+import com.jacknic.glut.util.Config;
 
 import java.util.Timer;
 import java.util.TimerTask;

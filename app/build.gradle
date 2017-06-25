@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
@@ -43,6 +43,7 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.56.android'
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
+    compile 'org.greenrobot:greendao:3.2.2'
     testCompile 'junit:junit:4.12'
     compile files('libs/mta-android-stat-sdk-2.3.0_20161221-jdk1.6.jar')
     compile files('libs/mid-core-sdk-3.7.1.jar')

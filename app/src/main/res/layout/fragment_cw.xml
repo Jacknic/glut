@@ -1,552 +1,577 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cw_refreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:overScrollMode="never"
-    android:scrollbars="none">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primaryBackground"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:background="?attr/colorPrimary"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/cw_iv_yue_refresh"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/ic_autorenew"
-                    android:tint="@color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:paddingLeft="10dp"
-                    android:text="一卡通余额（元）"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/cw_tv_yktye"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="0.00"
-                    android:textColor="@color/white"
-                    android:textSize="36dp" />
-            </LinearLayout>
-
-        </LinearLayout>
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/cw_iv_jyjl"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/selector_item"
-                    android:clickable="true"
-                    android:paddingBottom="20dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:src="@drawable/ic_receipt"
-                    android:tint="@color/cyan" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="-23dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:paddingBottom="5dp"
-                    android:text="交易记录"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/cw_iv_jfxm"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/selector_item"
-                    android:clickable="true"
-                    android:paddingBottom="20dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:src="@drawable/ic_assignment"
-                    android:tint="@color/blue" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="-23dp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:paddingBottom="5dp"
-                    android:text="学费项目"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/cw_iv_jfmx"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/selector_item"
-                    android:clickable="true"
-                    android:paddingBottom="20dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:src="@drawable/ic_description"
-                    android:tint="@color/pink" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="-23dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:paddingBottom="5dp"
-                    android:text="缴费明细"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/cw_iv_yktcz"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/selector_item"
-                    android:clickable="true"
-                    android:paddingBottom="20dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:src="@drawable/ic_monetization_on"
-                    android:tint="@color/green" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="-23dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:paddingBottom="5dp"
-                    android:text="一卡通充值"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/white"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:layout_gravity="center_vertical"
+                android:layout_height="140dp"
+                android:background="?attr/colorPrimary"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="@dimen/list_item_height"
-                    android:layout_height="@dimen/list_item_height"
-                    android:padding="13dp"
-
-                    android:src="@drawable/ic_portrait"
-                    android:tint="@color/pink" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="姓名"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/cw_tv_name"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="15dp"
-                    android:text="" />
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:text="一卡通余额（元）"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/cw_tv_yktye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="15dp"
+                        android:text="0.00"
+                        android:textColor="@color/white"
+                        android:textSize="36dp" />
+                </LinearLayout>
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:alpha="0.3"
-                android:background="@color/cary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
+                android:layout_height="64dp"
                 android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="@dimen/list_item_height"
-                    android:layout_height="@dimen/list_item_height"
-                    android:padding="13dp"
-
-                    android:src="@drawable/ic_person_pin_circle"
-                    android:tint="@color/red" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="学号"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/cw_tv_number"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="15dp"
-                    android:text="" />
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/cw_iv_jyjl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_item"
+                        android:clickable="true"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:src="@drawable/ic_receipt"
+                        android:tint="@color/cyan" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:alpha="0.3"
-                android:background="@color/cary" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:text="交易记录"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/list_item_height"
-                    android:layout_height="@dimen/list_item_height"
-                    android:padding="13dp"
-                    android:src="@drawable/ic_contacts"
-                    android:tint="@color/blueLight" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="年级"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/cw_tv_grade"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="15dp" />
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/cw_iv_jfxm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_item"
+                        android:clickable="true"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:src="@drawable/ic_assignment"
+                        android:tint="@color/blue" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:alpha="0.3"
-                android:background="@color/cary" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="5dp"
+                        android:text="学费项目"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/list_item_height"
-                    android:layout_height="@dimen/list_item_height"
-                    android:padding="13dp"
-                    android:src="@drawable/ic_group"
-                    android:tint="@color/pink" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="学院"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/cw_tv_college"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="15dp" />
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/cw_iv_qtjf"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/selector_item"
+                        android:clickable="true"
+                        android:paddingBottom="23dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:src="@drawable/ic_money"
+                        android:tint="#ff8d02" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:alpha="0.3"
-                android:background="@color/cary" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="5dp"
+                        android:text="其他缴费"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="@dimen/list_item_height"
-                    android:layout_height="@dimen/list_item_height"
-                    android:padding="13dp"
-                    android:src="@drawable/ic_credit_card"
-                    android:tint="@color/cyan" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="银行卡号"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/cw_tv_card_no"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:maxLines="1" />
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/cw_iv_bid_copy"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/selector_item"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_content_copy"
-                    android:tint="@color/cyan" />
+                    <ImageView
+                        android:id="@+id/cw_iv_jfmx"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_item"
+                        android:clickable="true"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:src="@drawable/ic_description"
+                        android:tint="@color/pink" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingBottom="5dp"
+                        android:text="缴费明细"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/cw_iv_yktcz"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_item"
+                        android:clickable="true"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:src="@drawable/ic_monetization_on"
+                        android:tint="@color/green" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingBottom="5dp"
+                        android:text="一卡通充值"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:alpha="0.3"
-                android:background="@color/cary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:layout_width="@dimen/list_item_height"
-                    android:layout_height="@dimen/list_item_height"
-                    android:padding="13dp"
-                    android:src="@drawable/ic_attach_money"
-                    android:tint="@color/orange" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_gravity="center_vertical"
-                    android:text="已交费用"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/cw_tv_yjfy"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="15dp"
-                    android:textColor="@color/orange" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:alpha="0.3"
-                android:background="@color/cary" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/list_item_height"
-                    android:layout_height="@dimen/list_item_height"
-                    android:padding="13dp"
-                    android:src="@drawable/ic_local_atm"
-                    android:tint="@color/green" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_gravity="center_vertical"
-                    android:text="贷款金额"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/cw_tv_dkje"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="15dp"
-                    android:textColor="@color/orange" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:alpha="0.3"
-                android:background="@color/cary" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/list_item_height"
-                    android:layout_height="@dimen/list_item_height"
-                    android:padding="13dp"
-                    android:src="@drawable/ic_watch_later"
-                    android:tint="@color/blue" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="贷款到账"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/cw_tv_dkdz"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="15dp" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:alpha="0.3"
-                android:background="@color/cary" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp">
+                android:orientation="vertical">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_height"
                     android:layout_gravity="center_vertical"
-                    android:text="备注: " />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/cw_tv_remark"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="@dimen/list_item_height"
+                        android:layout_height="@dimen/list_item_height"
+                        android:padding="13dp"
+                        android:src="@drawable/ic_portrait"
+                        android:tint="@color/pink" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="姓名"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/cw_tv_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="15dp"
+                        android:text="" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:alpha="0.3"
+                    android:background="@color/cary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_height"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/list_item_height"
+                        android:layout_height="@dimen/list_item_height"
+                        android:padding="13dp"
+
+                        android:src="@drawable/ic_person_pin_circle"
+                        android:tint="@color/red" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="学号"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/cw_tv_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="15dp"
+                        android:text="" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:alpha="0.3"
+                    android:background="@color/cary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_height"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/list_item_height"
+                        android:layout_height="@dimen/list_item_height"
+                        android:padding="13dp"
+                        android:src="@drawable/ic_contacts"
+                        android:tint="@color/blueLight" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="年级"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/cw_tv_grade"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="15dp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:alpha="0.3"
+                    android:background="@color/cary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_height"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/list_item_height"
+                        android:layout_height="@dimen/list_item_height"
+                        android:padding="13dp"
+                        android:src="@drawable/ic_group"
+                        android:tint="@color/pink" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="学院"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/cw_tv_college"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="15dp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:alpha="0.3"
+                    android:background="@color/cary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_height"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="@dimen/list_item_height"
+                        android:layout_height="@dimen/list_item_height"
+                        android:padding="13dp"
+                        android:src="@drawable/ic_credit_card"
+                        android:tint="@color/cyan" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="银行卡号"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/cw_tv_card_no"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:maxLines="1" />
+
+                    <ImageView
+                        android:id="@+id/cw_iv_bid_copy"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_item"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_content_copy"
+                        android:tint="@color/cyan" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:alpha="0.3"
+                    android:background="@color/cary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
-            </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:alpha="0.3"
-                android:background="@color/cary" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/list_item_height"
+                        android:layout_height="@dimen/list_item_height"
+                        android:padding="13dp"
+                        android:src="@drawable/ic_attach_money"
+                        android:tint="@color/orange" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_gravity="center_vertical"
+                        android:text="已交费用"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/cw_tv_yjfy"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="15dp"
+                        android:textColor="@color/orange" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:alpha="0.3"
+                    android:background="@color/cary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/list_item_height"
+                        android:layout_height="@dimen/list_item_height"
+                        android:padding="13dp"
+                        android:src="@drawable/ic_local_atm"
+                        android:tint="@color/green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_gravity="center_vertical"
+                        android:text="贷款金额"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/cw_tv_dkje"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="15dp"
+                        android:textColor="@color/orange" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:alpha="0.3"
+                    android:background="@color/cary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_height"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/list_item_height"
+                        android:layout_height="@dimen/list_item_height"
+                        android:padding="13dp"
+                        android:src="@drawable/ic_watch_later"
+                        android:tint="@color/blue" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="贷款到账"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/cw_tv_dkdz"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="15dp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:alpha="0.3"
+                    android:background="@color/cary" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_height"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="备注: " />
+
+                    <TextView
+                        android:id="@+id/cw_tv_remark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:alpha="0.3"
+                    android:background="@color/cary" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>
