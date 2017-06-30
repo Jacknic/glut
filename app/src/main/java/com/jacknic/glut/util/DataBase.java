@@ -2,8 +2,8 @@ package com.jacknic.glut.util;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.jacknic.glut.bean.course.DaoMaster;
-import com.jacknic.glut.bean.course.DaoSession;
+import com.jacknic.glut.model.entity.DaoMaster;
+import com.jacknic.glut.model.entity.DaoSession;
 import com.lzy.okgo.OkGo;
 
 

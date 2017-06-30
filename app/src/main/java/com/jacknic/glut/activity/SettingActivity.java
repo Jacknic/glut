@@ -78,9 +78,9 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        boolean is_refresh = prefer_setting.getBoolean(Config.SETTING_IS_REFRESH, false);
+        boolean is_refresh = prefer_setting.getBoolean(Config.IS_REFRESH, false);
         if (is_refresh) {
-            prefer_setting.edit().putBoolean(Config.SETTING_IS_REFRESH, false).apply();
+            prefer_setting.edit().putBoolean(Config.IS_REFRESH, false).apply();
             ActivityUtil.lunchActivity(this, MainActivity.class);
             ActivityUtil.finishAllActivity();
             finish();

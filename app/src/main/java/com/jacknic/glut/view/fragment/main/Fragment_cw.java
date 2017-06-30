@@ -53,7 +53,7 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         if (toLogin != null) return toLogin;
         fragment = inflater.inflate(R.layout.fragment_cw, container, false);
         sid = prefer_cw.getString("sid", "");
-        student_id = prefer_cw.getString(Config.STUDENTID, "");
+        student_id = prefer_cw.getString(Config.STUDENT_ID, "");
         initViews();
         getInfo();
         getYue();
@@ -126,13 +126,13 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         ImageView iv_jfxm = (ImageView) fragment.findViewById(R.id.cw_iv_jfxm);
         ImageView iv_jfmx = (ImageView) fragment.findViewById(R.id.cw_iv_jfmx);
         ImageView iv_djfy = (ImageView) fragment.findViewById(R.id.cw_iv_yktcz);
-        ImageView iv_qtjf = (ImageView) fragment.findViewById(R.id.cw_iv_qtjf);
+        ImageView iv_cwzx = (ImageView) fragment.findViewById(R.id.cw_iv_cwzx);
 
         iv_jyjl.setOnClickListener(this);
         iv_djfy.setOnClickListener(this);
         iv_jfmx.setOnClickListener(this);
         iv_jfxm.setOnClickListener(this);
-        iv_qtjf.setOnClickListener(this);
+        iv_cwzx.setOnClickListener(this);
 
         refreshLayout = (SwipeRefreshLayout) fragment.findViewById(R.id.cw_refreshLayout);
         refreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_blue_bright), getResources().getColor(android.R.color.holo_green_light),
@@ -184,8 +184,8 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
                 "http://cwwsjf.glut.edu.cn:8088/chargeonline/MborderList.aspx",
                 //学费项目
                 "http://cwwsjf.glut.edu.cn:8088/chargeonline/MbstudentChargeItems.aspx",
-                //其他缴费
-                "http://cwwsjf.glut.edu.cn:8088/chargeonline/MbotherCharge.aspx",
+                //财务处主页
+                "http://cwwsjf.glut.edu.cn:8088/chargeonline/Mbindex.aspx",
                 //缴费明细
                 "http://cwwsjf.glut.edu.cn:8088/chargeonline/MbchargeDetail.aspx",
                 //一卡通充值
@@ -199,7 +199,7 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
             case R.id.cw_iv_jfxm:
                 intent.setAction(urls[1]);
                 break;
-            case R.id.cw_iv_qtjf:
+            case R.id.cw_iv_cwzx:
                 intent.setAction(urls[2]);
                 break;
             case R.id.cw_iv_jfmx:

@@ -106,7 +106,7 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         SharedPreferences setting = getActivity().getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
-        setting.edit().putInt(which, position).putBoolean(Config.SETTING_IS_REFRESH, true).apply();
+        setting.edit().putInt(which, position).putBoolean(Config.IS_REFRESH, true).apply();
         ImageView iv_select_theme_color = (ImageView) getActivity().findViewById(R.id.setting_iv_select_theme_color);
         ImageView iv_select_btn_color = (ImageView) getActivity().findViewById(R.id.setting_iv_select_btn_color);
         int theme_index = setting.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);

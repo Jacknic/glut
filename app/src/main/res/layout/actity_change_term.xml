@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ListView
+        android:id="@+id/ch_lv_terms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:choiceMode="singleChoice" />
+
+    <TextView
+        android:id="@+id/ch_tv_import_term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/btn_selector_blue"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="导入新学期"
+        android:textColor="@color/white" />
+</LinearLayout>

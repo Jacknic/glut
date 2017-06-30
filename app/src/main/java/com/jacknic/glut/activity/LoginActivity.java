@@ -138,13 +138,19 @@ public class LoginActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        JSONObject json = JSONObject.parseObject(s);
+                        JSONObject json = null;
+                        try {
+                            json = JSONObject.parseObject(s);
+                        } catch (Exception e) {
+                            Toast.makeText(LoginActivity.this, "连接服务器失败", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         Integer result = json.getInteger("result");
                         String msg = json.getString("msg");
                         if (result == 0) {
                             SharedPreferences prefer_cw = getSharedPreferences(Config.PREFER_CW, MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefer_cw.edit();
-                            editor.putString(Config.STUDENTID, msg);
+                            editor.putString(Config.STUDENT_ID, msg);
                             editor.putString(Config.SID, et_sid.getText().toString());
                             editor.putString(Config.PASSWORD, et_password.getText().toString());
                             editor.putBoolean(Config.LOGIN_FLAG, true);
@@ -155,13 +161,16 @@ public class LoginActivity extends BaseActivity {
                             iv_show_pwd.callOnClick();
                             Toast.makeText(LoginActivity.this, getString(R.string.error_login_fail), Toast.LENGTH_SHORT).show();
                         }
-                        login_dialog.dismiss();
                     }
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         Toast.makeText(LoginActivity.this, "连接服务器失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onAfter(String s, Exception e) {
                         login_dialog.dismiss();
                     }
                 });
@@ -190,7 +199,7 @@ public class LoginActivity extends BaseActivity {
              * 获取课表
              */
             private void getCourses() {
-                OkGo.get("http://202.193.80.58:81/academic/student/currcourse/currcourse.jsdo").execute(new StringCallback() {
+                OkGo.get(Config.URL_JW_COURSE).execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         /**
