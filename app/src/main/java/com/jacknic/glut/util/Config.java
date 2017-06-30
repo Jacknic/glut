@@ -20,10 +20,13 @@ public final class Config {
      */
     public static final String URL_JW_LOGIN_CHECK = "http://202.193.80.58:81/academic/j_acegi_security_check";
     /**
+     * 课表链接
+     */
+    public static final String URL_JW_COURSE = "http://202.193.80.58:81/academic/student/currcourse/currcourse.jsdo";
+    /**
      * 教务处登录验证码检验
      */
     public static final String URL_JW_CAPTCHA_CHECK = "http://202.193.80.58:81/academic/checkCaptcha.do?captchaCode=";
-    public static final String MSG_CANNOT_GET = "获取信息失败！";
 
     /**
      * 财务
@@ -51,7 +54,7 @@ public final class Config {
     public static final int SETTING_THEME_COLOR_INDEX = 4;//默认蓝色主题样式
     public static final String SETTING_THEME_INDEX = "theme_index";
     public static final String SETTING_COLOR_INDEX = "color_index";
-    public static final String SETTING_IS_REFRESH = "is_refresh";
+    public static final String IS_REFRESH = "is_refresh";
 
 
     /**
@@ -61,7 +64,7 @@ public final class Config {
     /**
      * 当前周存入时间
      */
-    public static final String JW_YEAR_WEEK_OLD = "week_select_time";
+    public static final String JW_YEAR_WEEK_OLD = "year_week_old";
     /**
      * 教务最后一周
      */
@@ -93,7 +96,7 @@ public final class Config {
     /**
      * 财务sid
      */
-    public static final String STUDENTID = "studentid";
+    public static final String STUDENT_ID = "studentid";
     /**
      * 配色数组
      */

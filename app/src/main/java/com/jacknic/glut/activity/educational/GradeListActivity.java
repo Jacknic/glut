@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.GradeListAdapter;
-import com.jacknic.glut.view.widget.LoginDialog;
+import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
@@ -109,7 +109,7 @@ public class GradeListActivity extends BaseActivity {
      * 用户登录
      */
     private void login() {
-        final AlertDialog loginDialog = LoginDialog.getLoginJw(this, new AbsCallbackWrapper() {
+        final AlertDialog loginDialog = Dialogs.getLoginJw(this, new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
                 getGrade();

@@ -68,7 +68,7 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
                         }
                         if (v.getId() != R.id.setting_btn_clear_all) {
                             SharedPreferences setting = getActivity().getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
-                            setting.edit().putBoolean(Config.SETTING_IS_REFRESH, true).apply();
+                            setting.edit().putBoolean(Config.IS_REFRESH, true).apply();
                         }
                     }
                 }).create();

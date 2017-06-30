@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.BorrowListAdapter;
-import com.jacknic.glut.view.widget.LoginDialog;
+import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
@@ -98,7 +98,7 @@ public class BorrowActivity extends BaseActivity {
             public void onError(Call call, Response response, Exception e) {
                 super.onError(call, response, e);
                 if (response != null) {
-                    AlertDialog loginTs = LoginDialog.getLoginTs(BorrowActivity.this, new AbsCallbackWrapper() {
+                    AlertDialog loginTs = Dialogs.getLoginTs(BorrowActivity.this, new AbsCallbackWrapper() {
                         @Override
                         public void onAfter(Object o, Exception e) {
                             getRenewList();

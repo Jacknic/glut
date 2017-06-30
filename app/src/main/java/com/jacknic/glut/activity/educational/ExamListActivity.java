@@ -15,7 +15,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.ExamListAdapter;
 import com.jacknic.glut.bean.ExamInfoBean;
-import com.jacknic.glut.view.widget.LoginDialog;
+import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
@@ -114,7 +114,7 @@ public class ExamListActivity extends BaseActivity {
      * 登录验证
      */
     private void login() {
-        final AlertDialog login_dialog = LoginDialog.getLoginJw(this, new AbsCallbackWrapper() {
+        final AlertDialog login_dialog = Dialogs.getLoginJw(this, new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
                 getDataPre();

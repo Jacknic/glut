@@ -178,8 +178,11 @@ public class CourseModel {
      */
     public int getSchoolYear() {
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        Element years = document.select("select[name='year'] option").get(0);
-        String str_year = years.text();
+        Elements years = document.select("select[name='year'] option[selected]");
+        if (years.size() == 0) {
+            years = document.select("select[name='year'] option");
+        }
+        String str_year = years.get(0).text();
         try {
             year = Integer.parseInt(str_year);
         } catch (Exception ignored) {
@@ -195,11 +198,16 @@ public class CourseModel {
      */
     public int getSemester() {
         int semester = 1;
-        Element years = document.select("select[name='term'] option").get(0);
-        String str_semester = years.text();
+        Elements terms = document.select("select[name='term'] option[selected]");
+        if (terms.size() == 0) {
+            terms = document.select("select[name='term'] option");
+        }
+        String str_semester = terms.get(0).val();
+        System.out.println("-----=-=-=-=-=-=-=当前的学期" + str_semester);
         try {
             semester = Integer.parseInt(str_semester);
         } catch (Exception ignored) {
+            ignored.printStackTrace();
         }
         return semester;
     }

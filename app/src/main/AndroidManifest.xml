@@ -67,6 +67,10 @@
             android:name=".activity.educational.GradeListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.educational.ChangeTermActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".activity.BrowserActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -75,6 +79,15 @@
         <activity
             android:name=".activity.library.BorrowActivity"
             android:screenOrientation="portrait" />
+
+        <receiver
+            android:name=".model.NetworkChangeBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

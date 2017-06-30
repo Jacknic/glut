@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +110,7 @@ public class BorrowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Element content = document.getElementById("content");
                             AlertDialog alertDialog = new AlertDialog.Builder(activity)
                                     .setPositiveButton(android.R.string.ok, null)
-                                    .setMessage(Html.fromHtml(content.html()))
+                                    .setMessage(content.text())
                                     .create();
                             alertDialog.show();
                         }

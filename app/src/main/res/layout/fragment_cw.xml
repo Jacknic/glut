@@ -40,12 +40,12 @@
 
                     <TextView
                         android:id="@+id/cw_tv_yktye"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="15dp"
                         android:text="0.00"
                         android:textColor="@color/white"
-                        android:textSize="36dp" />
+                        android:textSize="56sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -85,7 +85,7 @@
                         android:paddingBottom="5dp"
                         android:text="交易记录"
                         android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -115,7 +115,7 @@
                         android:paddingBottom="5dp"
                         android:text="学费项目"
                         android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -125,7 +125,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/cw_iv_qtjf"
+                        android:id="@+id/cw_iv_cwzx"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
@@ -146,9 +146,9 @@
                         android:layout_alignParentBottom="true"
                         android:gravity="center_horizontal"
                         android:paddingBottom="5dp"
-                        android:text="其他缴费"
+                        android:text="财务中心"
                         android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -178,7 +178,7 @@
                         android:paddingBottom="5dp"
                         android:text="缴费明细"
                         android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -208,7 +208,7 @@
                         android:paddingBottom="5dp"
                         android:text="一卡通充值"
                         android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
                 </RelativeLayout>
 
             </LinearLayout>
