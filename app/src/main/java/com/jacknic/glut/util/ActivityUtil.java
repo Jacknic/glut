@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.lzy.okgo.OkGo;
+
 import java.util.Stack;
 
 /**
@@ -63,6 +65,8 @@ public class ActivityUtil {
     public static void appExit(Activity activity) {
         try {
             finishAllActivity();
+            //取消所有请求
+            OkGo.getInstance().cancelAll();
             activity.finish();
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
@@ -20,6 +19,7 @@ import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.request.BaseRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -43,6 +43,7 @@ public class GradeListActivity extends BaseActivity {
     private Spinner sp_year;
     private Spinner sp_semester;
     private ArrayList<String> years;
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,9 +69,11 @@ public class GradeListActivity extends BaseActivity {
         }
         ArrayAdapter<String> adapter_years = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, years);
         sp_year.setAdapter(adapter_years);
+        sp_year.setSelection(1);
         ArrayAdapter<String> adapter_semesters = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, semesters);
         sp_semester.setAdapter(adapter_semesters);
-
+        sp_semester.setSelection(calendar.get(Calendar.MONTH) > Calendar.SEPTEMBER ? 2 : 1);
+        snackbar = Snackbar.make(rlv_grade_list, "数据获取中...", Snackbar.LENGTH_INDEFINITE);
         ImageView iv_getGrade = (ImageView) findViewById(R.id.iv_getGrade);
         iv_getGrade.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,13 +81,14 @@ public class GradeListActivity extends BaseActivity {
                 showGrade();
             }
         });
+        iv_getGrade.callOnClick();
     }
 
     /**
      * 获取成绩
      */
     private void getGrade() {
-        OkGo.get("http://202.193.80.58:81/academic/student/currcourse/currcourse.jsdo").execute(
+        OkGo.get("http://202.193.80.58:81/academic/showHeader.do").execute(
                 new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
@@ -96,7 +100,6 @@ public class GradeListActivity extends BaseActivity {
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
 //                        toLogin(GradeListActivity.this);
-                        Toast.makeText(GradeListActivity.this, "需要登录验证", Toast.LENGTH_SHORT).show();
                         login();
                     }
                 }
@@ -109,7 +112,7 @@ public class GradeListActivity extends BaseActivity {
      * 用户登录
      */
     private void login() {
-        final AlertDialog loginDialog = Dialogs.getLoginJw(this, new AbsCallbackWrapper() {
+        AlertDialog loginDialog = Dialogs.getLoginJw(this, new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
                 getGrade();
@@ -121,13 +124,24 @@ public class GradeListActivity extends BaseActivity {
     //获取所有成绩
     private void getAllGrade() {
         if (grade_list == null) {
-            Snackbar.make(rlv_grade_list, "数据获取中...", Snackbar.LENGTH_LONG).show();
+
             OkGo.get("http://202.193.80.58:81/academic/manager/score/studentOwnScore.do?year=&term=&para=0&sortColumn=&Submit=%E6%9F%A5%E8%AF%A2").execute(new StringCallback() {
+                @Override
+                public void onBefore(BaseRequest request) {
+                    snackbar.show();
+                }
+
                 @Override
                 public void onSuccess(String s, Call call, Response response) {
                     Document document = Jsoup.parse(s);
                     grade_list = document.select("table.datalist tr");
                     showGrade();
+                }
+
+                @Override
+                public void onAfter(String s, Exception e) {
+                    snackbar.setDuration(Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                 }
             });
         }
@@ -183,10 +197,11 @@ public class GradeListActivity extends BaseActivity {
 
             }
             if (select_list.size() == 0) {
-                Snackbar.make(rlv_grade_list, "成绩列表为空...", Snackbar.LENGTH_SHORT).show();
+                snackbar.setText("成绩列表为空...");
             } else {
-                Snackbar.make(rlv_grade_list, select_list.size() + "条成绩信息", Snackbar.LENGTH_SHORT).show();
+                snackbar.setText(select_list.size() + "条成绩信息");
             }
+            snackbar.show();
             select_list.add(0, grade_list.first());
             rlv_grade_list.setAdapter(new GradeListAdapter(GradeListActivity.this, select_list));
         }

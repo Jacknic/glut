@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -45,19 +44,37 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
     private String student_id;
     private View fragment;
     private SwipeRefreshLayout refreshLayout;
+    private boolean isLogin;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         prefer_cw = getContext().getSharedPreferences(Config.PREFER_CW, Context.MODE_PRIVATE);
-        View toLogin = check(inflater, container);
-        if (toLogin != null) return toLogin;
         fragment = inflater.inflate(R.layout.fragment_cw, container, false);
-        sid = prefer_cw.getString("sid", "");
-        student_id = prefer_cw.getString(Config.STUDENT_ID, "");
+        isLogin = prefer_cw.getBoolean(Config.LOGIN_FLAG, false);
         initViews();
+        if (!isLogin) {
+            fragment.findViewById(R.id.cw_tv_yktye).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toLogin();
+                }
+            });
+            return fragment;
+        }
+        sid = prefer_cw.getString(Config.SID, "");
+        student_id = prefer_cw.getString(Config.STUDENT_ID, "");
         getInfo();
         getYue();
         return fragment;
+    }
+
+    /**
+     * 登录财务处
+     */
+    private void toLogin() {
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.putExtra("flag", Config.LOGIN_FLAG_CW);
+        getContext().startActivity(intent);
     }
 
     /**
@@ -94,31 +111,6 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * 检查用户是否已经登录
-     *
-     * @param inflater
-     * @param container
-     * @return
-     */
-    @Nullable
-    private View check(LayoutInflater inflater, ViewGroup container) {
-        boolean isLogin = prefer_cw.getBoolean("login_flag", false);
-        if (!isLogin) {
-            View view = inflater.inflate(R.layout.tips, container, false);
-            view.findViewById(R.id.touch_to_login).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
-                    intent.putExtra("flag", Config.LOGIN_FLAG_CW);
-                    getContext().startActivity(intent);
-                }
-            });
-            return view;
-        }
-        return null;
-    }
-
-    /**
      * 初始化视图
      */
     private void initViews() {
@@ -140,9 +132,17 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getYue();
-                getInfo();
+                if (!isLogin) {
+                    toLogin();
+                    refreshLayout.setRefreshing(false);
+                } else {
+                    getYue();
+                    getInfo();
+                }
+
             }
+
+
         });
         ImageView iv_bid_copy = (ImageView) fragment.findViewById(R.id.cw_iv_bid_copy);
         iv_bid_copy.setOnClickListener(new View.OnClickListener() {

@@ -29,6 +29,12 @@ public final class Config {
     public static final String URL_JW_CAPTCHA_CHECK = "http://202.193.80.58:81/academic/checkCaptcha.do?captchaCode=";
 
     /**
+     * 教务运行周地址
+     */
+    public static final String URL_JW_CALENDAR = "http://202.193.80.58:81/academic/calendarinfo/viewCalendarInfo.do";
+
+
+    /**
      * 财务
      */
     public static final String PREFER_CW = "prefer_cw";

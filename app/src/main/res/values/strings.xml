@@ -7,13 +7,11 @@
     <string name="password">密码</string>
     <string name="action_sign_in">登录</string>
 
-    <string name="txt_info">信息</string>
     <string name="txt_library">图书</string>
     <string name="txt_mine">我的</string>
-    <string name="txt_financial">财务</string>
+    <string name="txt_cw">财务</string>
     <string name="txt_jw">教务</string>
     <string name="error_login_fail">用户名或密码有误</string>
     <string name="search_book_hint">搜索图书</string>
     <string name="about_this_app">关于此应用</string>
-    <string name="title_activity_borrow">BorrowActivity</string>
 </resources>

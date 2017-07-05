@@ -1,13 +1,16 @@
 package com.jacknic.glut.activity.library;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -16,6 +19,8 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.BorrowListAdapter;
+import com.jacknic.glut.model.LoginModel;
+import com.jacknic.glut.util.Config;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -72,7 +77,6 @@ public class BorrowActivity extends BaseActivity {
 
             @Override
             public void onBefore(BaseRequest request) {
-                super.onBefore(request);
                 make.show();
             }
 
@@ -96,20 +100,19 @@ public class BorrowActivity extends BaseActivity {
 
             @Override
             public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
                 if (response != null) {
-                    AlertDialog loginTs = Dialogs.getLoginTs(BorrowActivity.this, new AbsCallbackWrapper() {
-                        @Override
-                        public void onAfter(Object o, Exception e) {
-                            getRenewList();
-                        }
-                    });
-                    loginTs.show();
                     // 自动登录
                     if (isAuto) {
-                        Window window = loginTs.getWindow();
-                        if (window != null) window.findViewById(R.id.btn_login).callOnClick();
-                        isAuto = false;
+                        autoLogin();
+                    } else {
+                        //登录图书对话框
+                        AlertDialog loginTs = Dialogs.getLoginTs(BorrowActivity.this, new AbsCallbackWrapper() {
+                            @Override
+                            public void onAfter(Object o, Exception e) {
+                                getRenewList();
+                            }
+                        });
+                        loginTs.show();
                     }
 
                 } else {
@@ -124,5 +127,26 @@ public class BorrowActivity extends BaseActivity {
                 top_setting.clearAnimation();
             }
         });
+    }
+
+    /**
+     * 自动登录
+     */
+    private void autoLogin() {
+        isAuto = false;
+        Log.d("ts 图书", "autoLogin: 自动登录图书馆");
+        SharedPreferences prefer_cw = OkGo.getContext().getSharedPreferences(Config.PREFER_CW, Context.MODE_PRIVATE);
+        String sid = prefer_cw.getString(Config.SID, "");
+        String password = prefer_cw.getString(Config.PASSWORD, "");
+        if (!TextUtils.isEmpty(sid) && !TextUtils.isEmpty(password)) {
+            LoginModel.loginTs(sid, password, new AbsCallbackWrapper() {
+                @Override
+                public void onAfter(Object o, Exception e) {
+                    getRenewList();
+                }
+            });
+        } else {
+            getRenewList();
+        }
     }
 }

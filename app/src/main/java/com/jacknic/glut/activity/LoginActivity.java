@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -17,36 +16,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.R;
-import com.jacknic.glut.model.CourseModel;
-import com.jacknic.glut.model.StudentInfoModel;
-import com.jacknic.glut.model.dao.CourseDao;
-import com.jacknic.glut.model.dao.CourseInfoDao;
-import com.jacknic.glut.model.entity.CourseEntity;
-import com.jacknic.glut.model.entity.CourseInfoEntity;
+import com.jacknic.glut.model.EduInfoModel;
+import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.util.ActivityUtil;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.BitmapCallback;
-import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.callback.StringCallback;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -63,6 +45,8 @@ public class LoginActivity extends BaseActivity {
     private final SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
     private ImageView iv_show_pwd;
     private AlertDialog login_dialog;
+    private EduInfoModel eduInfoModel = new EduInfoModel();
+    private boolean loginSuccess;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +60,7 @@ public class LoginActivity extends BaseActivity {
         tv_toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
         setStatusView();
         flag = getIntent().getIntExtra("flag", 0);
-        int[] tips_id = new int[]{R.string.txt_jw, R.string.txt_financial};
+        int[] tips_id = new int[]{R.string.txt_jw, R.string.txt_cw};
         tv_toolbar_title.setText("登录" + getString(tips_id[flag]));
         if (flag == Config.LOGIN_FLAG_JW) {
             showCaptcha();
@@ -109,6 +93,7 @@ public class LoginActivity extends BaseActivity {
                         .setCancelable(false)
                         .create();
                 login_dialog.show();
+                //12秒超时设置
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
@@ -134,46 +119,33 @@ public class LoginActivity extends BaseActivity {
      * 登录到财务处
      */
     private void login_cw() {
-        OkGo.post(Config.getQueryUrlCW("login", "0") + String.format("&sid=%s&spassword=%s", et_sid.getText().toString(), et_password.getText().toString()))
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        JSONObject json = null;
-                        try {
-                            json = JSONObject.parseObject(s);
-                        } catch (Exception e) {
-                            Toast.makeText(LoginActivity.this, "连接服务器失败", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        Integer result = json.getInteger("result");
-                        String msg = json.getString("msg");
-                        if (result == 0) {
-                            SharedPreferences prefer_cw = getSharedPreferences(Config.PREFER_CW, MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefer_cw.edit();
-                            editor.putString(Config.STUDENT_ID, msg);
-                            editor.putString(Config.SID, et_sid.getText().toString());
-                            editor.putString(Config.PASSWORD, et_password.getText().toString());
-                            editor.putBoolean(Config.LOGIN_FLAG, true);
-                            editor.apply();
-                            ActivityUtil.lunchActivity(LoginActivity.this, MainActivity.class);
-                            finish();
-                        } else {
-                            iv_show_pwd.callOnClick();
-                            Toast.makeText(LoginActivity.this, getString(R.string.error_login_fail), Toast.LENGTH_SHORT).show();
-                        }
-                    }
+        final String sid = et_sid.getText().toString();
+        final String password = et_password.getText().toString();
+        AbsCallback callback = new StringCallback() {
+            /**
+             * 登录成功后进行的操作
+             */
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                ActivityUtil.lunchActivity(LoginActivity.this, MainActivity.class);
+                finish();
+            }
 
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        Toast.makeText(LoginActivity.this, "连接服务器失败", Toast.LENGTH_SHORT).show();
-                    }
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                iv_show_pwd.callOnClick();
+                Toast.makeText(LoginActivity.this, "登录失败！", Toast.LENGTH_SHORT).show();
+            }
 
-                    @Override
-                    public void onAfter(String s, Exception e) {
-                        login_dialog.dismiss();
-                    }
-                });
+            @Override
+            public void onAfter(String s, Exception e) {
+                if (login_dialog.isShowing()) {
+                    login_dialog.dismiss();
+                }
+            }
+        };
+        //登录
+        LoginModel.loginCw(sid, password, callback);
     }
 
     /**
@@ -184,190 +156,105 @@ public class LoginActivity extends BaseActivity {
         String sid = et_sid.getText().toString();
         String password = et_password.getText().toString();
         String captcha = et_captcha.getText().toString();
-//        登录操作
-        OkGo.post(Config.URL_JW_LOGIN_CHECK)
-                .params("groupId", "")
-                .params("j_username", sid)
-                .params("j_password", password)
-                .params("j_captcha", captcha).execute(new AbsCallbackWrapper<Object>() {
+        LoginModel.loginJW(sid, password, captcha, new StringCallback() {
+
             @Override
-            public void onError(Call call, Response response, Exception e) {
-                getCourses();
+            public void onSuccess(String s, Call call, Response response) {
+                SharedPreferences.Editor editor = prefer_jw.edit();
+                editor.putString(Config.SID, et_sid.getText().toString());
+                editor.putString(Config.PASSWORD, et_password.getText().toString());
+                editor.apply();
+                loginSuccess = true;
             }
 
-            /**
-             * 获取课表
-             */
-            private void getCourses() {
-                OkGo.get(Config.URL_JW_COURSE).execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        /**
-                         * 登录成功后执行的操作
-                         */
-                        SharedPreferences.Editor editor = prefer_jw.edit();
-                        CourseModel courseModel = new CourseModel(s);
-                        editor.putInt(Config.JW_SCHOOL_YEAR, courseModel.getSchoolYear());
-                        editor.putInt(Config.JW_SEMESTER, courseModel.getSemester());
-                        editor.putString(Config.SID, et_sid.getText().toString());
-                        editor.putString(Config.PASSWORD, et_password.getText().toString());
-                        editor.apply();
-                        //插入课表
-                        ArrayList<CourseEntity> courses = courseModel.getCourses();
-                        CourseDao courseDao = new CourseDao();
-                        for (CourseEntity course : courses) {
-//                            Log.d("log", course.toString());
-                            courseDao.insertCourse(course);
-                        }
-                        login_dialog.setMessage("获取课表...");
-                        //课表信息
-                        CourseInfoDao infoDbModel = new CourseInfoDao();
-                        for (CourseInfoEntity courseInfoEntity : courseModel.getCourseInfoList()) {
-                            System.out.println(courseInfoEntity);
-                            infoDbModel.insertCourseInfo(courseInfoEntity);
-                        }
-//                        ArrayList<CourseInfoEntity> courseInfoList =
-
-                        getStudentInfo();
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        iv_captcha.callOnClick();
-                        iv_show_pwd.callOnClick();
-                        login_dialog.dismiss();
-                        Snackbar snackbar = Snackbar.make(et_sid, "登录失败!请检查输入信息", Snackbar.LENGTH_SHORT);
-                        snackbar.show();
-                    }
-                });
-            }
-
-            /**
-             * 获取教务空间头像
-             */
-            private void getHeaderImg() {
-                FileCallback fileCallback = new FileCallback() {
-                    @Override
-                    public void onSuccess(File file, Call call, Response response) {
-                        login_dialog.setMessage("获取头像...");
-                        try {
-                            Log.d("week", "------------------------------------------------");
-                            Log.d("week", "获取头像");
-                            String sid = prefer_jw.getString(Config.SID, "0");
-                            File appPath = OkGo.getContext().getFilesDir();
-                            File image = new File(appPath, sid + ".jpg");
-                            FileInputStream fin = new FileInputStream(file);
-                            FileOutputStream fout = new FileOutputStream(image);
-                            System.out.println("源文件路径" + file.getAbsolutePath());
-                            System.out.println("源文件大小" + file.length());
-                            fin.getChannel().transferTo(0, fin.getChannel().size(), fout.getChannel());
-                            Log.d("week", "文件保存路径" + image.getAbsolutePath());
-                        } catch (IOException e) {
-                            Log.e("week", "获取学生头像失败");
-                        } finally {
-                            file.delete();
-                        }
-
-                    }
-
-                    @Override
-                    public void onAfter(File file, Exception e) {
-                        super.onAfter(file, e);
-                        getStudyProcess();
-                    }
-                };
-                OkGo.get("http://202.193.80.58:81/academic/manager/studentinfo/showStudentImage.jsp").execute(fileCallback);
-            }
-
-            /**
-             * 获取学业进度
-             */
-            private void getStudyProcess() {
-                login_dialog.setMessage("获取学业进度...");
-                OkGo.get("http://202.193.80.58:81/academic/manager/score/studentStudyProcess.do").execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        Document document = Jsoup.parse(s);
-                        Element table = document.select("table.datalist").get(0);
-                        File study_process = new File(getFilesDir(), "study_process");
-                        try {
-                            FileOutputStream fout = new FileOutputStream(study_process, false);
-                            fout.write(table.toString().getBytes());
-                        } catch (IOException e) {
-                            Log.d("okgo.get", "读写错误、无法写入学业进度信息");
-                        }
-
-                    }
-
-                    @Override
-                    public void onAfter(String s, Exception e) {
-                        super.onAfter(s, e);
-                        getWeekInfo();
-                    }
-                });
-            }
-
-            /**
-             * 获取教学运行周的情况
-             */
-            private void getWeekInfo() {
-                StringCallback stringCallback = new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        SharedPreferences.Editor editor = prefer_jw.edit();
-                        Document document = Jsoup.parse(s);
-                        login_dialog.setMessage("获取运行周...");
-                        //获取当前周数
-                        Element curweek = document.select(".curweek strong").get(0);
-                        String str_week = curweek.text();
-                        int week = Pattern.matches("\\d+", str_week) ? Integer.parseInt(str_week) : 1;
-                        editor.putInt(Config.JW_WEEK_SELECT, week);
-                        Calendar calendar_now = Calendar.getInstance();
-                        int year_week_old = calendar_now.get(Calendar.WEEK_OF_YEAR);
-                        if (calendar_now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                            year_week_old -= 1;
-                        }
-                        editor.putInt(Config.JW_YEAR_WEEK_OLD, year_week_old);
-                        //获取最后周数
-                        Element ele_lastWeek = document.select(".week table tbody tr td").last();
-                        String str_lastWeek = ele_lastWeek.text();
-                        int lastWeek = Func.getInt(str_lastWeek, 30);
-                        editor.putInt(Config.JW_WEEK_END, lastWeek);
-                        Log.d("week", "当前周数" + str_week);
-                        Log.d("week", "最后一周" + str_lastWeek);
-                        editor.putBoolean(Config.LOGIN_FLAG, true);
-                        editor.apply();
-                        ActivityUtil.lunchActivity(LoginActivity.this, MainActivity.class);
-                        ActivityUtil.finishAllActivity();
-                        login_dialog.dismiss();
-                    }
-                };
-                OkGo.get("http://202.193.80.58:81/academic/calendarinfo/viewCalendarInfo.do").execute(stringCallback);
-            }
-
-            /**
-             * 获取学生信息
-             */
-            private void getStudentInfo() {
-                StringCallback stringCallback = new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        login_dialog.setMessage("获取学生信息...");
-                        StudentInfoModel infoModel = new StudentInfoModel();
-                        infoModel.saveToPrefer(infoModel.getStudentInfo(s));
-                    }
-
-                    @Override
-                    public void onAfter(String s, Exception e) {
-                        getHeaderImg();
-                    }
-                };
-                OkGo.get(Config.URL_JW_STUDENT_INFO).execute(stringCallback);
+            @Override
+            public void onAfter(String s, Exception e) {
+                if (loginSuccess) {
+                    getCourses();
+                } else {
+                    iv_captcha.callOnClick();
+                    iv_show_pwd.callOnClick();
+                    login_dialog.dismiss();
+                    Snackbar snackbar = Snackbar.make(et_sid, "登录失败!请检查输入信息", Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
             }
         });
 
     }
 
+    /**
+     * 获取课表
+     */
+    private void getCourses() {
+        login_dialog.setMessage("获取课表...");
+        AbsCallback callback = new AbsCallbackWrapper() {
+            @Override
+            public void onAfter(Object o, Exception e) {
+                getStudentInfo();
+            }
+        };
+        eduInfoModel.getCourses(callback);
+    }
+
+    /**
+     * 获取学生信息
+     */
+    private void getStudentInfo() {
+        login_dialog.setMessage("获取学生信息...");
+        AbsCallback callback = new AbsCallbackWrapper() {
+            @Override
+            public void onAfter(Object s, Exception e) {
+                getHeaderImg();
+            }
+        };
+        eduInfoModel.getStudentInfo(callback);
+    }
+
+    /**
+     * 获取教务空间头像
+     */
+    private void getHeaderImg() {
+        login_dialog.setMessage("获取用户头像...");
+        AbsCallback callback = new AbsCallbackWrapper() {
+            @Override
+            public void onAfter(Object o, Exception e) {
+                getStudyProcess();
+            }
+        };
+        eduInfoModel.getHeaderImg(callback);
+    }
+
+    /**
+     * 获取学业进度
+     */
+    private void getStudyProcess() {
+        login_dialog.setMessage("获取学业进度...");
+        AbsCallbackWrapper callbackWrapper = new AbsCallbackWrapper() {
+            @Override
+            public void onAfter(Object o, Exception e) {
+                getWeekInfo();
+            }
+        };
+        eduInfoModel.getStudyProcess(callbackWrapper);
+    }
+
+
+    /**
+     * 获取教学运行周的情况
+     */
+    private void getWeekInfo() {
+        login_dialog.setMessage("获取运行周...");
+        AbsCallback callback = new AbsCallbackWrapper() {
+            @Override
+            public void onAfter(Object o, Exception e) {
+                ActivityUtil.lunchActivity(LoginActivity.this, MainActivity.class);
+                ActivityUtil.finishAllActivity();
+                login_dialog.dismiss();
+            }
+        };
+        eduInfoModel.getWeekInfo(callback);
+    }
 
     /**
      * 显示验证码
@@ -434,4 +321,3 @@ public class LoginActivity extends BaseActivity {
         });
     }
 }
-

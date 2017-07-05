@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
@@ -99,7 +98,6 @@ public class ExamListActivity extends BaseActivity {
                         public void onError(Call call, Response response, Exception e) {
                             super.onError(call, response, e);
                             login();
-                            Toast.makeText(ExamListActivity.this, "需要登录验证", Toast.LENGTH_SHORT).show();
                         }
                     }
             );

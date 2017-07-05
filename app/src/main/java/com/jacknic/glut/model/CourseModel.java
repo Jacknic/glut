@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 public class CourseModel {
     private Document document;
     private ArrayList<CourseInfoEntity> courseInfoList = new ArrayList<>();
+    private boolean read = false;//表示是否已解析过DOM
 
     public CourseModel(String dom) {
         document = Jsoup.parse(dom);
@@ -41,6 +42,7 @@ public class CourseModel {
      */
     public ArrayList<CourseEntity> getCourses() {
         ArrayList<CourseEntity> courseList = new ArrayList<>();
+        read = true;
         InputStream in_course_arrange = OkGo.getContext().getResources().openRawResource(R.raw.course_arrange);
         StringBuilder stringBuilder = new StringBuilder();
         Scanner scanner = new Scanner(in_course_arrange);
@@ -220,6 +222,7 @@ public class CourseModel {
      * @return 信息列表
      */
     public ArrayList<CourseInfoEntity> getCourseInfoList() {
+        if (!read) getCourses();
         return courseInfoList;
     }
 }
