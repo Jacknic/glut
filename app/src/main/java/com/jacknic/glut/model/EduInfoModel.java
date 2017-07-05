@@ -2,12 +2,16 @@ package com.jacknic.glut.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.jacknic.glut.model.dao.CourseDao;
+import com.jacknic.glut.model.dao.CourseInfoDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.DataBase;
+import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -27,88 +31,58 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * 登录到教务处
+ * 教务系统信息获取
  */
 
-public class LoginModel_jw {
-    private String sid;
-    private String password;
-    private final SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
-
+public class EduInfoModel {
+    private SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
 
     /**
-     * 登录到教务处并执行相应流程
-     *
-     * @param sid      学号
-     * @param password 密码
-     * @param captcha  验证码
+     * 获取课表
      */
-    public void login(String sid, String password, String captcha, StringCallback callback) {
-        this.sid = sid;
-        this.password = password;
-//        登录操作
-        OkGo.post(Config.URL_JW_LOGIN_CHECK)
-                .params("groupId", "")
-                .params("j_username", sid)
-                .params("j_password", password)
-                .params("j_captcha", captcha).execute(callback);
-    }
-
-
-    /**
-     * 获取课程信息
-     *
-     * @return 请求
-     */
-    public void getCourses(final StringCallback callback) {
-        StringCallback stringCallback = new StringCallback() {
+    public void getCourses(@NonNull final AbsCallback callback) {
+        OkGo.get(Config.URL_JW_COURSE).execute(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                /*
-                  登录成功后执行的操作
-                 */
-                SharedPreferences.Editor editor = prefer_jw.edit();
-                editor.putString(Config.SID, sid);
-                editor.putString(Config.PASSWORD, password);
-                editor.putBoolean(Config.LOGIN_FLAG, true);
                 CourseModel courseModel = new CourseModel(s);
+                SharedPreferences.Editor editor = prefer_jw.edit();
                 editor.putInt(Config.JW_SCHOOL_YEAR, courseModel.getSchoolYear());
                 editor.putInt(Config.JW_SEMESTER, courseModel.getSemester());
                 editor.apply();
+                //插入课表
                 ArrayList<CourseEntity> courses = courseModel.getCourses();
-                for (CourseEntity course : courses) {
-//                            Log.d("log", course.toString());
-                    DataBase.getDaoSession().getCourseEntityDao().insert(course);
-                }
-                if (callback != null) {
-                    callback.onSuccess(s, call, response);
-                }
+                new CourseDao().insertCourses(courses);
+                //课表信息
+                new CourseInfoDao().insertCourseInfoList(courseModel.getCourseInfoList());
+                callback.onSuccess(s, call, response);
             }
 
             @Override
             public void onError(Call call, Response response, Exception e) {
-                if (callback != null) {
-                    callback.onError(call, response, e);
-                }
-                super.onError(call, response, e);
+                callback.onError(call, response, e);
             }
-        };
-        OkGo.get("http://202.193.80.58:81/academic/student/currcourse/currcourse.jsdo").execute(callback);
+
+            @Override
+            public void onAfter(String s, Exception e) {
+                callback.onAfter(s, e);
+            }
+        });
     }
 
     /**
      * 获取教务空间头像
      */
-    public void getHeaderImg(final FileCallback callback) {
+    public void getHeaderImg(@NonNull final AbsCallback callback) {
+        String sid = prefer_jw.getString(Config.SID, "0");
+        File appPath = OkGo.getContext().getFilesDir();
+        final File image = new File(appPath, sid + ".jpg");
+        System.out.println("image的位置是" + image.getAbsolutePath());
         FileCallback fileCallback = new FileCallback() {
             @Override
             public void onSuccess(File file, Call call, Response response) {
                 try {
                     Log.d("week", "------------------------------------------------");
                     Log.d("week", "获取头像");
-                    String sid = prefer_jw.getString(Config.SID, "0");
-                    File appPath = OkGo.getContext().getFilesDir();
-                    File image = new File(appPath, sid + ".jpg");
                     FileInputStream fin = new FileInputStream(file);
                     FileOutputStream fout = new FileOutputStream(image);
                     System.out.println("源文件路径" + file.getAbsolutePath());
@@ -117,30 +91,53 @@ public class LoginModel_jw {
                     Log.d("week", "文件保存路径" + image.getAbsolutePath());
                 } catch (IOException e) {
                     Log.e("week", "获取学生头像失败");
-                } finally {
-                    file.delete();
-                }
-                if (callback != null) {
-                    callback.onSuccess(file, call, response);
                 }
             }
 
             @Override
-            public void onError(Call call, Response response, Exception e) {
-                if (callback != null) {
-                    callback.onError(call, response, e);
-                }
-                super.onError(call, response, e);
+            public void onAfter(File file, Exception e) {
+                callback.onAfter(file, e);
+                file.delete();
             }
         };
         OkGo.get("http://202.193.80.58:81/academic/manager/studentinfo/showStudentImage.jsp").execute(fileCallback);
     }
 
     /**
+     * 获取学业进度
+     */
+    public void getStudyProcess(@NonNull final AbsCallback callback) {
+        OkGo.get("http://202.193.80.58:81/academic/manager/score/studentStudyProcess.do").execute(new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                Document document = Jsoup.parse(s);
+                Element table = document.select("table.datalist").get(0);
+                File study_process = new File(OkGo.getContext().getFilesDir(), "study_process");
+                try {
+                    FileOutputStream fout = new FileOutputStream(study_process, false);
+                    fout.write(table.toString().getBytes());
+                } catch (IOException e) {
+                    Log.d("okgo.get", "读写错误、无法写入学业进度信息");
+                }
+                callback.onSuccess(s, call, response);
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                callback.onError(call, response, e);
+            }
+
+            @Override
+            public void onAfter(String s, Exception e) {
+                callback.onAfter(s, e);
+            }
+        });
+    }
+
+    /**
      * 获取教学运行周的情况
      */
-
-    public void getWeekInfo(final StringCallback callback) {
+    public void getWeekInfo(@NonNull final AbsCallback callback) {
         StringCallback stringCallback = new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
@@ -160,52 +157,49 @@ public class LoginModel_jw {
                 //获取最后周数
                 Element ele_lastWeek = document.select(".week table tbody tr td").last();
                 String str_lastWeek = ele_lastWeek.text();
-                int lastWeek = Pattern.matches("\\d+", str_lastWeek) ? Integer.parseInt(str_lastWeek) : 25;
+                int lastWeek = Func.getInt(str_lastWeek, 30);
                 editor.putInt(Config.JW_WEEK_END, lastWeek);
                 Log.d("week", "当前周数" + str_week);
                 Log.d("week", "最后一周" + str_lastWeek);
+                editor.putBoolean(Config.LOGIN_FLAG, true);
                 editor.apply();
-                if (callback != null) {
-                    callback.onSuccess(s, call, response);
-                }
+                callback.onSuccess(s, call, response);
             }
 
             @Override
             public void onError(Call call, Response response, Exception e) {
-                if (callback != null) {
-                    callback.onError(call, response, e);
-                }
-                super.onError(call, response, e);
+                callback.onError(call, response, e);
+            }
+
+            @Override
+            public void onAfter(String s, Exception e) {
+                callback.onAfter(s, e);
             }
         };
-        OkGo.get("http://202.193.80.58:81/academic/calendarinfo/viewCalendarInfo.do").execute(stringCallback);
+        OkGo.get(Config.URL_JW_CALENDAR).execute(stringCallback);
     }
 
     /**
      * 获取学生信息
      */
-    private void getStudentInfo(final StringCallback callback) {
+    public void getStudentInfo(@NonNull final AbsCallback callback) {
         StringCallback stringCallback = new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                SharedPreferences.Editor editor = prefer_jw.edit();
-                Log.d("okok", s);
-                Document dom = Jsoup.parse(s);
-                editor.apply();
-                if (callback != null) {
-                    callback.onSuccess(s, call, response);
-                }
+                StudentInfoModel infoModel = new StudentInfoModel();
+                infoModel.saveToPrefer(infoModel.getStudentInfo(s));
             }
 
             @Override
             public void onError(Call call, Response response, Exception e) {
-                if (callback != null) {
-                    callback.onError(call, response, e);
-                }
-                super.onError(call, response, e);
+                callback.onError(call, response, e);
+            }
+
+            @Override
+            public void onAfter(String s, Exception e) {
+                callback.onAfter(s, e);
             }
         };
-        OkGo.get(Config.URL_JW_STUDENT_INFO).setCallback(stringCallback);
+        OkGo.get(Config.URL_JW_STUDENT_INFO).execute(stringCallback);
     }
-
 }

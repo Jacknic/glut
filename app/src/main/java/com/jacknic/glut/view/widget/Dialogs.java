@@ -16,9 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.util.Config;
@@ -26,13 +26,11 @@ import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.BitmapCallback;
-import com.lzy.okgo.callback.StringCallback;
 
 import java.util.Calendar;
 
 import okhttp3.Call;
 import okhttp3.Response;
-import okhttp3.internal.Util;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -58,6 +56,7 @@ public class Dialogs {
         return dialog;
     }
 
+    //设置文本
     private static void findAndSet(View parent, @IdRes int id, String text) {
         TextView textView = (TextView) parent.findViewById(id);
         textView.setText(text);
@@ -172,11 +171,7 @@ public class Dialogs {
                 String password = et_password.getText().toString();
                 String captcha = et_captcha.getText().toString();
                 //  登录操作
-                OkGo.post(Config.URL_JW_LOGIN_CHECK)
-                        .params("groupId", "")
-                        .params("j_username", sid)
-                        .params("j_password", password)
-                        .params("j_captcha", captcha).execute(callback);
+                LoginModel.loginJW(sid, password, captcha, callback);
                 dialog.dismiss();
             }
         });
@@ -223,38 +218,8 @@ public class Dialogs {
             public void onClick(View v) {
                 final String sid = et_sid.getText().toString();
                 final String password = et_password.getText().toString();
-                //  登录操作
-                OkGo.post("http://202.193.80.181:8080/opac/reader/doLogin")
-                        .params("rdid", sid)
-                        .params("rdPasswd", Util.md5Hex(password))
-                        .params("returnUrl", "")
-                        .params("password", "")
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(String s, Call call, Response response) {
-                                iv_show_pwd.callOnClick();
-                                callback.onError(call, response, new Exception("登录失败"));
-                                Toast.makeText(activity, "登录失败", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onError(Call call, Response response, Exception e) {
-                                super.onError(call, response, e);
-                                if (response != null && "http://202.193.80.181:8080/opac/reader/space".equals(response.header("location"))) {
-                                    Toast.makeText(activity, "登录成功", Toast.LENGTH_SHORT).show();
-                                    prefer_ts.edit().putString(Config.SID, sid).putString(Config.PASSWORD, password).apply();
-                                    callback.onSuccess(call, call, response);
-                                }
-                                callback.onError(call, response, e);
-                            }
-
-                            @Override
-                            public void onAfter(String s, Exception e) {
-                                super.onAfter(s, e);
-                                dialog.dismiss();
-                                callback.onAfter(s, e);
-                            }
-                        });
+                LoginModel.loginTs(sid, password, callback);
+                dialog.dismiss();
             }
         });
         return dialog;

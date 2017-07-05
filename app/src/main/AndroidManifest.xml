@@ -35,7 +35,7 @@
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.StartActivity"
             android:label="@string/app_name"
@@ -69,7 +69,7 @@
         <activity
             android:name=".activity.educational.ChangeTermActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.BrowserActivity"
             android:screenOrientation="portrait" />

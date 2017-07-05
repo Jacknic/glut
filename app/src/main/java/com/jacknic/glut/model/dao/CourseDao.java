@@ -67,11 +67,6 @@ public class CourseDao {
                 .where(groupBy)
                 .orderDesc(CourseEntityDao.Properties.SchoolStartYear, CourseEntityDao.Properties.Semester)
                 .list();
-        System.out.println("-------------------------------------------------");
-        for (CourseEntity courseEntity : courseEntities) {
-            System.out.println(courseEntity);
-        }
-        System.out.println("-------------------------------------------------");
         return courseEntities;
     }
 

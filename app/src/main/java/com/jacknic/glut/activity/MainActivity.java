@@ -24,7 +24,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView tv_toolbar_titlt;
+    private TextView tv_toolbar_title;
     private ViewPager page_container;
     private ArrayList<Fragment> fragments;
     //按钮图标ID
@@ -47,8 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tv_toolbar_titlt = (TextView) findViewById(R.id.tv_toolbar_title);
-        tv_toolbar_titlt.setText(((TextView) findViewById(tabs_tv[select_index])).getText());
+        tv_toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         page_container = (ViewPager) findViewById(R.id.page_container);
         initFragments();
@@ -121,7 +120,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         ImageView imageView = (ImageView) findViewById(tabs_iv[select_index]);
         TextView textView = (TextView) findViewById(tabs_tv[select_index]);
-        tv_toolbar_titlt.setText(textView.getText());
+        tv_toolbar_title.setText(textView.getText());
         int color_index = getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE).getInt(Config.SETTING_COLOR_INDEX, Config.SETTING_THEME_COLOR_INDEX);
         int color = getResources().getColor(Config.colors[color_index]);
         page_container.setCurrentItem(select_index, false);
@@ -130,19 +129,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    private boolean is_exit = false;
+    private boolean exit = false;
 
     @Override
     public void onBackPressed() {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                is_exit = false;
+                exit = false;
             }
         }, 2000);
-        if (!is_exit) {
+        if (!exit) {
             Toast.makeText(MainActivity.this, "再次返回退出应用", Toast.LENGTH_SHORT).show();
-            is_exit = true;
+            exit = true;
         } else {
             this.overridePendingTransition(R.anim.scale_fade_out, R.anim.scale_fade_out);
             ActivityUtil.appExit(this);

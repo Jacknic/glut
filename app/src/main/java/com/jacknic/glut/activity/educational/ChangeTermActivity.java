@@ -38,8 +38,6 @@ import com.lzy.okgo.request.BaseRequest;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -159,7 +157,6 @@ public class ChangeTermActivity extends BaseActivity {
         int select_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         int select_semester = prefer_jw.getInt(Config.JW_SEMESTER, Calendar.getInstance().get(Calendar.YEAR));
 
-        String str_flag = "";
         for (CourseEntity courseEntity : termCourse) {
             Integer schoolStartYear = courseEntity.getSchoolStartYear();
             Integer semester = courseEntity.getSemester();
@@ -276,12 +273,7 @@ public class ChangeTermActivity extends BaseActivity {
                     public void onAfter(String s, Exception e) {
                         super.onAfter(s, e);
                         setTerms();
-                        new Timer().schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                snackbar.dismiss();
-                            }
-                        }, 1000L);
+                        snackbar.setDuration(Snackbar.LENGTH_SHORT);
                     }
                 });
     }

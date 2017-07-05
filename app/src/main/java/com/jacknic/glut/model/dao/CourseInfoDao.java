@@ -4,7 +4,7 @@ import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntityDao;
 import com.jacknic.glut.util.DataBase;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 课程信息
@@ -35,7 +35,7 @@ public class CourseInfoDao {
     /**
      * 插入多个
      */
-    public void insertCourseInfoList(ArrayList<CourseInfoEntity> courseInfoList) {
+    public void insertCourseInfoList(List<CourseInfoEntity> courseInfoList) {
         courseInfoEntityDao.insertInTx(courseInfoList);
     }
 }

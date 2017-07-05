@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="-20dp"
-            android:text="@string/txt_financial"
+            android:text="@string/txt_cw"
             android:textColor="@color/inactive"
             android:textSize="@dimen/bottom_tabs_textSize" />
     </LinearLayout>

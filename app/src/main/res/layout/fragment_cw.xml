@@ -42,10 +42,11 @@
                         android:id="@+id/cw_tv_yktye"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
+                        android:gravity="right"
+                        android:paddingRight="30dp"
                         android:text="0.00"
                         android:textColor="@color/white"
-                        android:textSize="56sp" />
+                        android:textSize="48sp" />
                 </LinearLayout>
 
             </LinearLayout>
