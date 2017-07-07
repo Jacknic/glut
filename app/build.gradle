@@ -18,6 +18,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    //配置数据库版本，版本升级为2
+    greendao {
+        schemaVersion 2
+    }
     //渠道打包
     productFlavors {
         // 默认调试
