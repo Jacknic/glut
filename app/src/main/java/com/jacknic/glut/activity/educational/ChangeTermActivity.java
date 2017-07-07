@@ -239,7 +239,6 @@ public class ChangeTermActivity extends BaseActivity {
 
                     @Override
                     public void onBefore(BaseRequest request) {
-                        super.onBefore(request);
                         snackbar.show();
                     }
 
@@ -260,7 +259,6 @@ public class ChangeTermActivity extends BaseActivity {
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
                         Dialogs.getLoginJw(ChangeTermActivity.this, new AbsCallbackWrapper() {
                             @Override
                             public void onAfter(Object o, Exception e) {
@@ -271,9 +269,9 @@ public class ChangeTermActivity extends BaseActivity {
 
                     @Override
                     public void onAfter(String s, Exception e) {
-                        super.onAfter(s, e);
                         setTerms();
                         snackbar.setDuration(Snackbar.LENGTH_SHORT);
+                        snackbar.show();
                     }
                 });
     }
