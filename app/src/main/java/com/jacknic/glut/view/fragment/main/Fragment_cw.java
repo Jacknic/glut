@@ -26,10 +26,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BrowserActivity;
 import com.jacknic.glut.activity.LoginActivity;
-import com.jacknic.glut.bean.FinancialInfoBean;
+import com.jacknic.glut.model.bean.FinancialInfoBean;
 import com.jacknic.glut.util.Config;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Response;

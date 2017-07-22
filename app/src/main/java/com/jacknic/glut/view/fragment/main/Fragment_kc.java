@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +25,7 @@ import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.educational.ChangeTermActivity;
+import com.jacknic.glut.adapter.WeekNameAdapter;
 import com.jacknic.glut.model.dao.CourseDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.util.ActivityUtil;
@@ -138,24 +138,24 @@ public class Fragment_kc extends Fragment {
         iv_toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TabLayout.Tab tab = tabLayout.getTabAt(week - 1);
-                if (tab != null) {
-                    tab.select();
-                }
                 int degree = -135;
                 if (ll_select_time.getVisibility() == View.VISIBLE) {
                     ll_select_time.setVisibility(View.GONE);
                     v.setRotation(0f);
+                    showSelect();
                 } else {
                     v.setRotation(45f);
                     ll_select_time.setVisibility(View.VISIBLE);
                     degree = 135;
+                    TabLayout.Tab tab = tabLayout.getTabAt(week - 1);
+                    if (tab != null) {
+                        tab.select();
+                    }
                 }
                 RotateAnimation rota = new RotateAnimation(degree, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 rota.setFillAfter(true);
                 rota.setDuration(500L);
                 v.startAnimation(rota);
-                showSelect();
             }
         });
     }
@@ -218,7 +218,6 @@ public class Fragment_kc extends Fragment {
         GridView gv_weekName = (GridView) fragment.findViewById(R.id.kc_gv_weekName);
         TextView tv_month = (TextView) fragment.findViewById(R.id.kc_tv_month);
         final Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
         calendar.add(Calendar.WEEK_OF_YEAR, addWeek);
         System.out.println("初始时间：" + calendar.getTime().toLocaleString());
         while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
@@ -231,43 +230,14 @@ public class Fragment_kc extends Fragment {
             weekdays.add(calendar.get(Calendar.DAY_OF_MONTH));
             calendar.add(Calendar.DATE, 1);
         }
-        gv_weekName.setAdapter(new BaseAdapter() {
-            private final String[] weekNames = {"一", "二", "三", "四", "五", "六", "日",};
-
-            @Override
-            public int getCount() {
-                return weekdays.size();
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return "周" + weekNames[position] + "\n" + weekdays.get(position);
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                TextView textView = new TextView(getContext());
-                String text = (String) getItem(position);
-                textView.setText(text);
-                if ((position + Calendar.MONDAY) % 7 == Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
-                    textView.setBackgroundColor(0xdddedede);
-                }
-                textView.setGravity(Gravity.CENTER);
-                return textView;
-            }
-        });
+        WeekNameAdapter weekNameAdapter = new WeekNameAdapter(weekdays);
+        gv_weekName.setAdapter(weekNameAdapter);
     }
 
     /**
      * 刷新视图
      */
     private void refresh() {
-
         boolean refresh = prefer_jw.getBoolean(Config.IS_REFRESH, false);
         if (refresh) {
             prefer_jw.edit().remove(Config.IS_REFRESH).apply();

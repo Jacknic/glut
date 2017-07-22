@@ -3,7 +3,9 @@ package com.jacknic.glut.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.jacknic.glut.bean.StudentInfoBean;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jacknic.glut.model.bean.StudentInfoBean;
 import com.jacknic.glut.util.Config;
 import com.lzy.okgo.OkGo;
 
@@ -15,11 +17,11 @@ import org.jsoup.nodes.Document;
  */
 
 public class StudentInfoModel {
+
+    private String student_info = "student_info";
+
     /**
      * 从文档中获取学生信息
-     *
-     * @param dom
-     * @return
      */
     public StudentInfoBean getStudentInfo(String dom) {
         StudentInfoBean infoBean = new StudentInfoBean();
@@ -55,44 +57,20 @@ public class StudentInfoModel {
 
     /**
      * 写入学生信息
-     *
-     * @param infoBean
      */
     public void saveToPrefer(StudentInfoBean infoBean) {
         SharedPreferences preferences = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = preferences.edit();
-        edit.putString("name", infoBean.getName());
-        edit.putString("className", infoBean.getClassName());
-        edit.putString("birthday", infoBean.getBirthday());
-        edit.putString("place", infoBean.getPlace());
-        edit.putString("id", infoBean.getId());
-        edit.putString("nation", infoBean.getNation());
-        edit.putString("role", infoBean.getRole());
-        edit.putString("level", infoBean.getLevel());
-        edit.putString("origin", infoBean.getOrigin());
-        edit.putString("score", infoBean.getScore());
+        edit.putString(student_info, JSON.toJSONString(infoBean));
         edit.apply();
     }
 
     /**
      * 获取学生信息
-     *
-     * @return
      */
     public StudentInfoBean getFromPrefer() {
-        StudentInfoBean infoBean = new StudentInfoBean();
         SharedPreferences preferences = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
-        infoBean.setSid(preferences.getString("sid", ""));
-        infoBean.setName(preferences.getString("name", ""));
-        infoBean.setClassName(preferences.getString("className", ""));
-        infoBean.setBirthday(preferences.getString("birthday", ""));
-        infoBean.setPlace(preferences.getString("place", ""));
-        infoBean.setId(preferences.getString("id", ""));
-        infoBean.setNation(preferences.getString("nation", ""));
-        infoBean.setRole(preferences.getString("role", ""));
-        infoBean.setLevel(preferences.getString("level", ""));
-        infoBean.setOrigin(preferences.getString("origin", ""));
-        infoBean.setScore(preferences.getString("score", ""));
-        return infoBean;
+        StudentInfoBean infoBean = JSONObject.parseObject(preferences.getString(student_info, ""), StudentInfoBean.class);
+        return infoBean == null ? new StudentInfoBean() : infoBean;
     }
 }

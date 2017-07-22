@@ -1,4 +1,4 @@
-package com.jacknic.glut.bean;
+package com.jacknic.glut.model.bean;
 
 
 public class ExamInfoBean {

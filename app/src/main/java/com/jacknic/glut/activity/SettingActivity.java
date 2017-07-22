@@ -3,21 +3,15 @@ package com.jacknic.glut.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.adapter.SettingPagerAdapter;
 import com.jacknic.glut.util.ActivityUtil;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.view.fragment.setting.AboutSettingsFragment;
-import com.jacknic.glut.view.fragment.setting.AccountSettingsFragment;
-import com.jacknic.glut.view.fragment.setting.BasicSettingsFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 设置
@@ -26,7 +20,6 @@ public class SettingActivity extends BaseActivity {
 
     private TabLayout tab;
     private ViewPager pager_container;
-    private final String[] tabs = new String[]{"基本设置", "账户设置", "关于"};
     private SharedPreferences prefer_setting;
 
     @Override
@@ -52,27 +45,8 @@ public class SettingActivity extends BaseActivity {
      * 设置pager
      */
     private void setPagers() {
-        final List<Fragment> settings = new ArrayList<>();
-        settings.add(new BasicSettingsFragment());
-        settings.add(new AccountSettingsFragment());
-        settings.add(new AboutSettingsFragment());
-        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return settings.get(position);
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return tabs[position];
-            }
-
-            @Override
-            public int getCount() {
-                return settings.size();
-            }
-        };
-        pager_container.setAdapter(fragmentPagerAdapter);
+        FragmentPagerAdapter settingPagerAdapter = new SettingPagerAdapter(getSupportFragmentManager());
+        pager_container.setAdapter(settingPagerAdapter);
         tab.setupWithViewPager(pager_container);
     }
 

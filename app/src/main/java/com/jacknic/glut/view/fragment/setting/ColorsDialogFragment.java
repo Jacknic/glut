@@ -5,22 +5,16 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.adapter.ColorsSelectorAdapter;
 import com.jacknic.glut.util.Config;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -31,10 +25,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class ColorsDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private String which = Config.SETTING_THEME_INDEX;
-
-    public String getWhich() {
-        return which;
-    }
 
     public void setWhich(String which) {
         this.which = which;
@@ -51,7 +41,6 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
         dialogFragment.show(context.getFragmentManager(), "ColorsDialogFragment");
     }
 
-    private Map<String, ColorDrawable> colorMap = new HashMap<String, ColorDrawable>();
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -60,7 +49,7 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
         View view = View.inflate(getActivity(), R.layout.fragment_color_dialog, null);
 
         GridView gridView = (GridView) view.findViewById(R.id.grid_colors);
-        gridView.setAdapter(new ColorsAdapter());
+        gridView.setAdapter(new ColorsSelectorAdapter(this));
         gridView.setOnItemClickListener(this);
         gridView.setOnItemLongClickListener(this);
 
@@ -68,39 +57,6 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
                 .setView(view)
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
-    }
-
-    private class ColorsAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return Config.colors.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return Config.colors[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                TextView textView = new TextView(parent.getContext());
-                textView.setHeight(100);
-                textView.setBackgroundColor(getResources().getColor(Config.colors[position]));
-                convertView = textView;
-            }
-            if (!colorMap.containsKey(String.valueOf(position)))
-                colorMap.put(String.valueOf(position), new ColorDrawable(getResources().getColor(Config.colors[position])));
-
-            return convertView;
-        }
-
     }
 
     @Override

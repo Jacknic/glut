@@ -57,7 +57,7 @@ public class ChangeTermActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.actity_change_term);
+        setContentView(R.layout.activity_change_term);
         setStatusView();
         initView();
         setTerms();

@@ -22,7 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BrowserActivity;
 import com.jacknic.glut.activity.FeedbackActivity;
-import com.jacknic.glut.bean.VersionBean;
+import com.jacknic.glut.model.bean.VersionBean;
 import com.jacknic.glut.util.ActivityUtil;
 import com.jacknic.glut.util.Config;
 import com.lzy.okgo.OkGo;

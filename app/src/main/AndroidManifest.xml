@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="TA_APPKEY"
-            android:value="Aqc1105763654" />
+            android:value="${TA_APPKEY}" />
         <meta-data
             android:name="InstallChannel"
             android:value="${INSTALL_CHANNEL}" />

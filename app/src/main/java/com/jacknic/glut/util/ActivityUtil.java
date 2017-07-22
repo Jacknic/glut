@@ -53,7 +53,7 @@ public class ActivityUtil {
      * 结束所有Activity
      */
     public static void finishAllActivity() {
-        while (activityStack.size() != 0) {
+        while (!activityStack.empty()) {
             activityStack.pop().finish();
         }
         activityStack.clear();
