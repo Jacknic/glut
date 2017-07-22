@@ -19,6 +19,8 @@ import com.jacknic.glut.activity.educational.ExamListActivity;
 import com.jacknic.glut.activity.educational.GradeListActivity;
 import com.jacknic.glut.activity.educational.ProcessActivity;
 import com.jacknic.glut.activity.educational.StudentInfoActivity;
+import com.jacknic.glut.model.StudentInfoModel;
+import com.jacknic.glut.model.bean.StudentInfoBean;
 import com.jacknic.glut.util.ActivityUtil;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.ImageUtil;
@@ -39,16 +41,15 @@ public class Fragment_wd extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         prefer_jw = getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
         String sid = prefer_jw.getString("sid", "");
-        String name = prefer_jw.getString("name", "");
-        String className = prefer_jw.getString("className", "");
+        StudentInfoBean studentInfo = new StudentInfoModel().getFromPrefer();
         boolean isShowHeadImg = prefer_jw.getBoolean("isShowHeadImg", true);
         fragment = inflater.inflate(R.layout.fragment_wd, container, false);
         TextView tv_sid = (TextView) fragment.findViewById(R.id.jw_tv_sid);
         tv_sid.setText(sid);
         TextView tv_name = (TextView) fragment.findViewById(R.id.jw_tv_name);
-        tv_name.setText(name);
+        tv_name.setText(studentInfo.getName());
         TextView tv_className = (TextView) fragment.findViewById(R.id.jw_tv_className);
-        tv_className.setText(className);
+        tv_className.setText(studentInfo.getClassName());
         findAndSetOnclick(R.id.tv_kaoshi);
         findAndSetOnclick(R.id.tv_chengji);
         findAndSetOnclick(R.id.tv_xueye);
@@ -59,20 +60,8 @@ public class Fragment_wd extends Fragment implements View.OnClickListener {
         if (!isShowHeadImg) {
             iv_header.setVisibility(View.GONE);
         }
-        iv_header_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iv_header.setVisibility(View.VISIBLE);
-                prefer_jw.edit().putBoolean("isShowHeadImg", true).apply();
-            }
-        });
-        iv_header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setVisibility(View.GONE);
-                prefer_jw.edit().putBoolean("isShowHeadImg", false).apply();
-            }
-        });
+        iv_header_bg.setOnClickListener(this);
+        iv_header.setOnClickListener(this);
         setHeaderImage(sid);
         return fragment;
     }
@@ -122,7 +111,14 @@ public class Fragment_wd extends Fragment implements View.OnClickListener {
             case R.id.tv_setting:
                 ActivityUtil.lunchActivity(getContext(), SettingActivity.class);
                 break;
-
+            case R.id.jw_iv_header:
+                v.setVisibility(View.GONE);
+                prefer_jw.edit().putBoolean("isShowHeadImg", false).apply();
+                break;
+            case R.id.jw_iv_header_bg:
+                iv_header.setVisibility(View.VISIBLE);
+                prefer_jw.edit().putBoolean("isShowHeadImg", true).apply();
+                break;
         }
 
     }

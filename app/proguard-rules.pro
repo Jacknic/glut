@@ -25,7 +25,7 @@
 
 
 #保持bean以免注解被混淆
--keep class com.jacknic.glut.bean.** { *; }
+-keep class com.jacknic.glut.model.bean.** { *; }
 -keep class com.jacknic.glut.model.dao.** { *; }
 -keep class com.jacknic.glut.model.entity.** { *; }
 

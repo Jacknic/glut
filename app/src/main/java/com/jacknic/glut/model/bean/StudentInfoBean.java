@@ -1,20 +1,33 @@
-package com.jacknic.glut.bean;
+package com.jacknic.glut.model.bean;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * 学生信息
  */
 
 public class StudentInfoBean {
+    @JSONField
     private String sid = "";//学号
+    @JSONField
     private String name = "";//姓名
+    @JSONField
     private String className = "";//班级
+    @JSONField
     private String birthday = "";//出生日期
+    @JSONField
     private String place = "";//籍贯
+    @JSONField
     private String id = "";//证件号
+    @JSONField
     private String nation = "";//民族
+    @JSONField
     private String role = "";//政治面貌
+    @JSONField
     private String level = "";//文化程度
+    @JSONField
     private String origin = "";//来源地
+    @JSONField
     private String score = "";//高考分数
 
     public String getSid() {

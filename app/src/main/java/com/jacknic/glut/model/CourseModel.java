@@ -43,14 +43,8 @@ public class CourseModel {
     public ArrayList<CourseEntity> getCourses() {
         ArrayList<CourseEntity> courseList = new ArrayList<>();
         read = true;
-        InputStream in_course_arrange = OkGo.getContext().getResources().openRawResource(R.raw.course_arrange);
-        StringBuilder stringBuilder = new StringBuilder();
-        Scanner scanner = new Scanner(in_course_arrange);
-        while (scanner.hasNext()) {
-            stringBuilder.append(scanner.nextLine()).append("\n");
-        }
-        scanner.close();
-        JSONObject json_course_arrange = JSON.parseObject(stringBuilder.toString());
+        String str_course_arrange = OkGo.getContext().getString(R.string.course_arrange);
+        JSONObject json_course_arrange = JSON.parseObject(str_course_arrange);
         System.out.println(json_course_arrange);
         Elements courses = document.getElementsByClass("infolist_tab").first().select(".infolist_common");
         int year = getSchoolYear();

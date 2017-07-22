@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.bean.ExamInfoBean;
+import com.jacknic.glut.model.bean.ExamInfoBean;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

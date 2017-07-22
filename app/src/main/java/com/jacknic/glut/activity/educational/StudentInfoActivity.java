@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
-import com.jacknic.glut.bean.StudentInfoBean;
+import com.jacknic.glut.model.bean.StudentInfoBean;
 import com.jacknic.glut.model.StudentInfoModel;
 
 import java.io.File;

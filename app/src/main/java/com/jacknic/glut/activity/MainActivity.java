@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.adapter.MainPagerAdapter;
 import com.jacknic.glut.util.ActivityUtil;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.view.fragment.main.Fragment_cw;
@@ -26,7 +27,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView tv_toolbar_title;
     private ViewPager page_container;
-    private ArrayList<Fragment> fragments;
     //按钮图标ID
     private int[] tabs_iv = new int[]{
             R.id.bottom_tabs_iv_course,
@@ -69,23 +69,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 初始化Fragment
      */
     private void initFragments() {
-        fragments = new ArrayList<>();
-        fragments.add(new Fragment_kc());
-        fragments.add(new Fragment_cw());
-        fragments.add(new Fragment_ts());
-        fragments.add(new Fragment_wd());
-        FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fragments.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return fragments.size();
-            }
-        };
-        page_container.setOffscreenPageLimit(fragments.size() - 1);
+        MainPagerAdapter pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        page_container.setOffscreenPageLimit(pagerAdapter.getCount());
         page_container.setAdapter(pagerAdapter);
         page_container.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

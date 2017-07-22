@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.ExamListAdapter;
-import com.jacknic.glut.bean.ExamInfoBean;
+import com.jacknic.glut.model.bean.ExamInfoBean;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
