@@ -11,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +19,7 @@ import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.BorrowListAdapter;
 import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.Func;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -45,18 +44,11 @@ public class BorrowActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrow);
-        setStatusView();
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         top_setting = (ImageView) findViewById(R.id.iv_setting);
-        top_setting.setVisibility(View.VISIBLE);
-        top_setting.setImageResource(R.drawable.ic_autorenew);
-        top_setting.setOnClickListener(new View.OnClickListener() {
+        Func.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RotateAnimation rotateAnimation = new RotateAnimation(0, 360 * 2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                rotateAnimation.setDuration(1000L);
-                rotateAnimation.setRepeatMode(-1);
-                v.startAnimation(rotateAnimation);
                 getRenewList();
             }
         });

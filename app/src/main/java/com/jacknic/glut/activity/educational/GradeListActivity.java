@@ -49,7 +49,6 @@ public class GradeListActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade_list);
-        setStatusView();
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("成绩查询");
         Calendar calendar = Calendar.getInstance();

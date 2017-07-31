@@ -1,6 +1,7 @@
 package com.jacknic.glut.view.fragment.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,7 +22,6 @@ import com.jacknic.glut.activity.educational.ProcessActivity;
 import com.jacknic.glut.activity.educational.StudentInfoActivity;
 import com.jacknic.glut.model.StudentInfoModel;
 import com.jacknic.glut.model.bean.StudentInfoBean;
-import com.jacknic.glut.util.ActivityUtil;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.ImageUtil;
 
@@ -97,19 +97,19 @@ public class Fragment_wd extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_kaoshi:
-                ActivityUtil.lunchActivity(getContext(), ExamListActivity.class);
+                startActivity(new Intent(getContext(), ExamListActivity.class));
                 break;
             case R.id.tv_xueji:
-                ActivityUtil.lunchActivity(getContext(), StudentInfoActivity.class);
+                startActivity(new Intent(getContext(), StudentInfoActivity.class));
                 break;
             case R.id.tv_xueye:
-                ActivityUtil.lunchActivity(getContext(), ProcessActivity.class);
+                startActivity(new Intent(getContext(), ProcessActivity.class));
                 break;
             case R.id.tv_chengji:
-                ActivityUtil.lunchActivity(getContext(), GradeListActivity.class);
+                startActivity(new Intent(getContext(), GradeListActivity.class));
                 break;
             case R.id.tv_setting:
-                ActivityUtil.lunchActivity(getContext(), SettingActivity.class);
+                startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             case R.id.jw_iv_header:
                 v.setVisibility(View.GONE);

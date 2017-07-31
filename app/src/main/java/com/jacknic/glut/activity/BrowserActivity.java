@@ -5,17 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.util.Func;
 
 /**
  * 内置浏览器
@@ -30,7 +28,6 @@ public class BrowserActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
-        setStatusView();
         initViews();
         setWebView();
         Intent intent = getIntent();
@@ -47,17 +44,7 @@ public class BrowserActivity extends BaseActivity {
         webSettings.setDisplayZoomControls(false);
         webSettings.setSupportZoom(true);
         //内置浏览控件设置
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, final String url) {
-                if (!url.startsWith("http://") && !url.startsWith("https://"))
-                    view.loadUrl("http://" + url);
-                else
-                    view.loadUrl(url);
-                return true;
-            }
-
-        });
+        webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient() {
 
             @Override
@@ -84,15 +71,9 @@ public class BrowserActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         TextView toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
-        ImageView iv_setting = (ImageView) findViewById(R.id.iv_setting);
-        iv_setting.setVisibility(View.VISIBLE);
-        iv_setting.setImageResource(R.drawable.ic_autorenew);
-        iv_setting.setOnClickListener(new View.OnClickListener() {
+        Func.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RotateAnimation rotateAnimation = new RotateAnimation(0, 360 * 2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                rotateAnimation.setDuration(800L);
-                v.startAnimation(rotateAnimation);
                 webView.reload();
             }
         });

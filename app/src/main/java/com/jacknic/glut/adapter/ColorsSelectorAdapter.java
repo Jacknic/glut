@@ -26,12 +26,12 @@ public class ColorsSelectorAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Config.colors.length;
+        return Config.COLORS.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return Config.colors[position];
+        return Config.COLORS[position];
     }
 
     @Override
@@ -44,11 +44,11 @@ public class ColorsSelectorAdapter extends BaseAdapter {
         if (convertView == null) {
             TextView textView = new TextView(parent.getContext());
             textView.setHeight(100);
-            textView.setBackgroundColor(colorsDialogFragment.getResources().getColor(Config.colors[position]));
+            textView.setBackgroundColor(colorsDialogFragment.getResources().getColor(Config.COLORS[position]));
             convertView = textView;
         }
         if (!colorMap.containsKey(String.valueOf(position)))
-            colorMap.put(String.valueOf(position), new ColorDrawable(colorsDialogFragment.getResources().getColor(Config.colors[position])));
+            colorMap.put(String.valueOf(position), new ColorDrawable(colorsDialogFragment.getResources().getColor(Config.COLORS[position])));
 
         return convertView;
     }

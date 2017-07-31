@@ -2,6 +2,7 @@ package com.jacknic.glut.view.fragment.setting;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,9 +15,10 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.activity.StartActivity;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
-import com.jacknic.glut.util.ActivityUtil;
+import com.jacknic.glut.util.ActivityManager;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
+import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
 
 import java.io.File;
@@ -103,28 +105,12 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
         clear_cw();
         clear_ts();
         File filesDir = getContext().getFilesDir();
-        deleteFile(filesDir);
+        Func.deleteFile(filesDir);
         prefer_jw.edit().putBoolean(Config.LOGIN_FLAG, false).apply();
         OkGo.getInstance().getCookieJar().getCookieStore().removeAllCookie();
-        ActivityUtil.lunchActivity(getContext(), StartActivity.class);
-        ActivityUtil.finishAllActivity();
+        startActivity(new Intent(getContext(), StartActivity.class));
+        ActivityManager.finishAll();
         getActivity().finish();
-    }
-
-    /**
-     * 递归删除文件
-     *
-     * @param file 文件
-     */
-    private void deleteFile(File file) {
-        if (file.isDirectory()) {
-            for (File fileItem : file.listFiles()) {
-                deleteFile(fileItem);
-            }
-            file.delete();
-        } else {
-            file.delete();
-        }
     }
 
 }

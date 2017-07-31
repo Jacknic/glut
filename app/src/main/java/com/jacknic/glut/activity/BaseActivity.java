@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.util.ActivityUtil;
 import com.jacknic.glut.util.Config;
 
 
@@ -29,19 +27,25 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setStatusView();
+    }
+
     /**
      * 设置主题
      */
-    protected void selectTheme() {
+    public void selectTheme() {
         SharedPreferences setting = getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
-        int theme_id = setting.getInt(Config.SETTING_THEME_INDEX, 4);
-        setTheme(Config.THEME_LIST[theme_id]);
+        int theme_index = setting.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
+        setTheme(Config.THEME_LIST[theme_index]);
     }
 
     /**
      * 设置沉浸式状态栏
      */
-    protected void setStatusView() {
+    private void setStatusView() {
         // 设置状态栏透明
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //获取主题颜色
@@ -65,17 +69,5 @@ public class BaseActivity extends AppCompatActivity {
             statusView.setBackgroundColor(primaryColor);
             decorView.addView(statusView);
         }
-    }
-
-    @Override
-    protected void onPause() {
-        ActivityUtil.pushActivity(this);
-        super.onPause();
-    }
-
-    @Override
-    public void finish() {
-        ActivityUtil.removeActivity(this);
-        super.finish();
     }
 }

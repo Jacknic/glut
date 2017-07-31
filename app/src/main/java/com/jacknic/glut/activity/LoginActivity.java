@@ -1,6 +1,7 @@
 package com.jacknic.glut.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 import com.jacknic.glut.R;
 import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.model.LoginModel;
-import com.jacknic.glut.util.ActivityUtil;
+import com.jacknic.glut.util.ActivityManager;
 import com.jacknic.glut.util.Config;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
@@ -58,7 +59,6 @@ public class LoginActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         tv_toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
-        setStatusView();
         flag = getIntent().getIntExtra("flag", 0);
         int[] tips_id = new int[]{R.string.txt_jw, R.string.txt_cw};
         tv_toolbar_title.setText("登录" + getString(tips_id[flag]));
@@ -127,7 +127,7 @@ public class LoginActivity extends BaseActivity {
              */
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                ActivityUtil.lunchActivity(LoginActivity.this, MainActivity.class);
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
 
@@ -248,8 +248,9 @@ public class LoginActivity extends BaseActivity {
         AbsCallback callback = new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
-                ActivityUtil.lunchActivity(LoginActivity.this, MainActivity.class);
-                ActivityUtil.finishAllActivity();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                ActivityManager.finishAll();
+                finish();
                 login_dialog.dismiss();
             }
         };

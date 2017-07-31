@@ -1,8 +1,6 @@
 package com.jacknic.glut.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,14 +10,9 @@ import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.MainPagerAdapter;
-import com.jacknic.glut.util.ActivityUtil;
+import com.jacknic.glut.util.ActivityManager;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.view.fragment.main.Fragment_cw;
-import com.jacknic.glut.view.fragment.main.Fragment_kc;
-import com.jacknic.glut.view.fragment.main.Fragment_ts;
-import com.jacknic.glut.view.fragment.main.Fragment_wd;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,7 +45,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         page_container = (ViewPager) findViewById(R.id.page_container);
         initFragments();
         setOnClick();
-        setStatusView();
         //  选择课程页作为默认显示页面
         findViewById(R.id.bottom_tabs_iv_course).callOnClick();
     }
@@ -107,7 +99,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         TextView textView = (TextView) findViewById(tabs_tv[select_index]);
         tv_toolbar_title.setText(textView.getText());
         int color_index = getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE).getInt(Config.SETTING_COLOR_INDEX, Config.SETTING_THEME_COLOR_INDEX);
-        int color = getResources().getColor(Config.colors[color_index]);
+        int color = getResources().getColor(Config.COLORS[color_index]);
         page_container.setCurrentItem(select_index, false);
         imageView.setColorFilter(color);
         textView.setTextColor(color);
@@ -129,7 +121,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             exit = true;
         } else {
             this.overridePendingTransition(R.anim.scale_fade_out, R.anim.scale_fade_out);
-            ActivityUtil.appExit(this);
+            ActivityManager.finishAll();
+            finish();
         }
     }
 

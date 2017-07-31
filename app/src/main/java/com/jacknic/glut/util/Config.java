@@ -106,7 +106,7 @@ public final class Config {
     /**
      * 配色数组
      */
-    public static int[] colors = {
+    public static final int[] COLORS = {
             R.color.barDark,
             R.color.purple,
             R.color.purpleDeep,
