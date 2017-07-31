@@ -1,4 +1,4 @@
-package com.jacknic.glut.model;
+package com.jacknic.glut.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

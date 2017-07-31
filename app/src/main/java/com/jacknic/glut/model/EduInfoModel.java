@@ -188,6 +188,7 @@ public class EduInfoModel {
             public void onSuccess(String s, Call call, Response response) {
                 StudentInfoModel infoModel = new StudentInfoModel();
                 infoModel.saveToPrefer(infoModel.getStudentInfo(s));
+                callback.onSuccess(s, call, response);
             }
 
             @Override

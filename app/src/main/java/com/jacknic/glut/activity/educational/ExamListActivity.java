@@ -7,13 +7,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.ExamListAdapter;
 import com.jacknic.glut.model.bean.ExamInfoBean;
+import com.jacknic.glut.util.Func;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -42,13 +42,9 @@ public class ExamListActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_list);
-        setStatusView();
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("考试安排");
-        ImageView iv_setting = (ImageView) findViewById(R.id.iv_setting);
-        iv_setting.setImageResource(R.drawable.ic_autorenew);
-        iv_setting.setVisibility(View.VISIBLE);
-        iv_setting.setOnClickListener(new View.OnClickListener() {
+        Func.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDataPre();

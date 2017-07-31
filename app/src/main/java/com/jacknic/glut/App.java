@@ -1,5 +1,6 @@
 package com.jacknic.glut;
 
+import com.jacknic.glut.util.ActivityLifecycleListener;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
 import com.tencent.stat.StatService;
@@ -21,5 +22,6 @@ public class App extends android.app.Application {
         OkGo.getInstance().setCookieStore(new PersistentCookieStore());
         StatService.setContext(this);
         StatService.registerActivityLifecycleCallbacks(this);
+        registerActivityLifecycleCallbacks(new ActivityLifecycleListener());
     }
 }

@@ -2,6 +2,7 @@ package com.jacknic.glut.view.fragment.main;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -28,7 +29,6 @@ import com.jacknic.glut.activity.educational.ChangeTermActivity;
 import com.jacknic.glut.adapter.WeekNameAdapter;
 import com.jacknic.glut.model.dao.CourseDao;
 import com.jacknic.glut.model.entity.CourseEntity;
-import com.jacknic.glut.util.ActivityUtil;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.view.widget.CourseTableView;
 import com.jacknic.glut.view.widget.Dialogs;
@@ -122,7 +122,7 @@ public class Fragment_kc extends Fragment {
         View.OnClickListener change = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityUtil.lunchActivity(getContext(), ChangeTermActivity.class);
+                startActivity(new Intent(getContext(), ChangeTermActivity.class));
                 Fragment_kc.this.fragment.invalidate();
             }
         };

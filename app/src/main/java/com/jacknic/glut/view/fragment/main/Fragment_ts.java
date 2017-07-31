@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BrowserActivity;
 import com.jacknic.glut.activity.library.BorrowActivity;
-import com.jacknic.glut.util.ActivityUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -129,7 +128,7 @@ public class Fragment_ts extends Fragment {
                     }
                     break;
                 case R.id.ts_fab_mine:
-                    ActivityUtil.lunchActivity(getContext(), BorrowActivity.class);
+                    startActivity(new Intent(getContext(), BorrowActivity.class));
                     break;
             }
         }

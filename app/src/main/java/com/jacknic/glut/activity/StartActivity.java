@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
 import com.jacknic.glut.R;
@@ -16,7 +17,7 @@ import java.util.TimerTask;
  * 启动页
  */
 
-public class StartActivity extends BaseActivity {
+public class StartActivity extends AppCompatActivity {
     SharedPreferences prefer_jw;
 
     @Override

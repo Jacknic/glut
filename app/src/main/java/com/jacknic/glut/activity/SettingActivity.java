@@ -1,5 +1,6 @@
 package com.jacknic.glut.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.SettingPagerAdapter;
-import com.jacknic.glut.util.ActivityUtil;
+import com.jacknic.glut.util.ActivityManager;
 import com.jacknic.glut.util.Config;
 
 /**
@@ -26,7 +27,6 @@ public class SettingActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        setStatusView();
         tab = (TabLayout) findViewById(R.id.setting_tab);
         pager_container = (ViewPager) findViewById(R.id.setting_pager);
         prefer_setting = getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
@@ -55,8 +55,8 @@ public class SettingActivity extends BaseActivity {
         boolean is_refresh = prefer_setting.getBoolean(Config.IS_REFRESH, false);
         if (is_refresh) {
             prefer_setting.edit().putBoolean(Config.IS_REFRESH, false).apply();
-            ActivityUtil.lunchActivity(this, MainActivity.class);
-            ActivityUtil.finishAllActivity();
+            startActivity(new Intent(this, MainActivity.class));
+            ActivityManager.finishAll();
             finish();
         }
         super.onBackPressed();

@@ -81,7 +81,7 @@
             android:screenOrientation="portrait" />
 
         <receiver
-            android:name=".model.NetworkChangeBroadcastReceiver"
+            android:name=".util.NetworkChangeBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

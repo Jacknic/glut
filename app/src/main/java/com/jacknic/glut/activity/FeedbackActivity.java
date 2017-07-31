@@ -27,7 +27,6 @@ public class FeedbackActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
-        setStatusView();
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("用户反馈");
         et_feedback = (EditText) findViewById(R.id.fb_et_feedback);

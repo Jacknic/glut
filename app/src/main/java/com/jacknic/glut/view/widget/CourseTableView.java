@@ -257,7 +257,7 @@ public class CourseTableView extends LinearLayout {
         courseView.setText(courseEntity.getCourseName() + "@" + courseEntity.getClassRoom());
         course.addView(getWeekTransverseLine());
         Drawable text_bg = getContext().getResources().getDrawable(R.drawable.round_ts_bg_white_5dp);
-        int color = Config.colors[getColorIndex(courseEntity.getCourseName())];
+        int color = Config.COLORS[getColorIndex(courseEntity.getCourseName())];
         text_bg.setColorFilter(getContext().getResources().getColor(color), PorterDuff.Mode.SRC_IN);
         text_bg.setAlpha(150);
         course.setBackgroundDrawable(text_bg);
@@ -302,9 +302,9 @@ public class CourseTableView extends LinearLayout {
     private void addTimeName(String name) {
         Integer color_index = colorMap.get(name);
         if (color_index == null) {
-            int new_index = (colorNum++) % Config.colors.length;
+            int new_index = (colorNum++) % Config.COLORS.length;
             if (new_index == 0) {
-                new_index = Config.colors.length / 2;
+                new_index = Config.COLORS.length / 2;
             }
             colorMap.put(name, new_index);
         }

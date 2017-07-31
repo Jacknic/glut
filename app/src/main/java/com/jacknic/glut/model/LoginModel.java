@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -48,22 +49,7 @@ public class LoginModel {
 
             @Override
             public void onError(Call call, Response response, Exception e) {
-                OkGo.get("http://202.193.80.58:81/academic/showHeader.do").execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        callback.onSuccess(s, call, response);
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        callback.onError(call, response, e);
-                    }
-
-                    @Override
-                    public void onAfter(String s, Exception e) {
-                        callback.onAfter(s, e);
-                    }
-                });
+                Func.checkLoginStatus(callback);
             }
         });
     }

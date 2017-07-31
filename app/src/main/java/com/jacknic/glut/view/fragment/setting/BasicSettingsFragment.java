@@ -23,7 +23,6 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BrowserActivity;
 import com.jacknic.glut.activity.FeedbackActivity;
 import com.jacknic.glut.model.bean.VersionBean;
-import com.jacknic.glut.util.ActivityUtil;
 import com.jacknic.glut.util.Config;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
@@ -48,7 +47,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
         TextView tv_select_btn_color = (TextView) fragment.findViewById(R.id.setting_tv_select_btn_color);
         SharedPreferences prefer_setting = getContext().getSharedPreferences(Config.PREFER_SETTING, Context.MODE_PRIVATE);
         int index = prefer_setting.getInt(Config.SETTING_COLOR_INDEX, 4);
-        iv_select_btn_color.setImageResource(Config.colors[index]);
+        iv_select_btn_color.setImageResource(Config.COLORS[index]);
         tv_select_theme_color.setOnClickListener(this);
         tv_select_btn_color.setOnClickListener(this);
         TextView tv_feedback = (TextView) fragment.findViewById(R.id.setting_tv_feedback);
@@ -172,7 +171,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
                 ColorsDialogFragment.launch(getActivity(), Config.SETTING_COLOR_INDEX);
                 break;
             case R.id.setting_tv_feedback:
-                ActivityUtil.lunchActivity(getContext(), FeedbackActivity.class);
+                startActivity(new Intent(getContext(), FeedbackActivity.class));
                 break;
             case R.id.setting_tv_feedbackDeal:
                 Intent intent = new Intent(getContext(), BrowserActivity.class);

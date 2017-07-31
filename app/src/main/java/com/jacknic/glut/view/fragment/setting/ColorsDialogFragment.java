@@ -66,9 +66,9 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
         ImageView iv_select_theme_color = (ImageView) getActivity().findViewById(R.id.setting_iv_select_theme_color);
         ImageView iv_select_btn_color = (ImageView) getActivity().findViewById(R.id.setting_iv_select_btn_color);
         int theme_index = setting.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
-        iv_select_theme_color.setImageResource(Config.colors[theme_index]);
+        iv_select_theme_color.setImageResource(Config.COLORS[theme_index]);
         int btn_color_index = setting.getInt(Config.SETTING_COLOR_INDEX, Config.SETTING_THEME_COLOR_INDEX);
-        iv_select_btn_color.setImageResource(Config.colors[btn_color_index]);
+        iv_select_btn_color.setImageResource(Config.COLORS[btn_color_index]);
         dismiss();
     }
 

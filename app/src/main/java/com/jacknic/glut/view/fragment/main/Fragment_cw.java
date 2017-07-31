@@ -31,9 +31,6 @@ import com.jacknic.glut.util.Config;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -228,6 +225,10 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
     private void autoLogin(final Intent intent) {
         String sid = prefer_cw.getString(Config.SID, "");
         String password = prefer_cw.getString(Config.PASSWORD, "");
+        if (TextUtils.isEmpty(sid) || TextUtils.isEmpty(password)) {
+            toLogin();
+            return;
+        }
         WebView webView = new WebView(getContext());
         final boolean[] is_first = {true};
         final String url_login = "http://cwwsjf.glut.edu.cn:8088/ChargeOnline/Mblogin.aspx";
