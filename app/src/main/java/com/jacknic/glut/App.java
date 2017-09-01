@@ -17,7 +17,10 @@ public class App extends android.app.Application {
         super.onCreate();
         OkGo.init(this);
         //配置不跳转,超时12秒
-        OkGo.getInstance().getOkHttpClientBuilder().followRedirects(false).connectTimeout(12000L, TimeUnit.MILLISECONDS);
+        OkGo.getInstance().getOkHttpClientBuilder()
+                .followRedirects(false)
+                .readTimeout(12000L, TimeUnit.MILLISECONDS)
+                .connectTimeout(12000L, TimeUnit.MILLISECONDS);
         //默认cookie存储
         OkGo.getInstance().setCookieStore(new PersistentCookieStore());
         StatService.setContext(this);

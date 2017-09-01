@@ -97,7 +97,6 @@ public class EduInfoModel {
             @Override
             public void onAfter(File file, Exception e) {
                 callback.onAfter(file, e);
-                file.delete();
             }
         };
         OkGo.get("http://202.193.80.58:81/academic/manager/studentinfo/showStudentImage.jsp").execute(fileCallback);

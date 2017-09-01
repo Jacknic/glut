@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.util.ActivityAnim;
 import com.jacknic.glut.util.Config;
 
 
@@ -25,12 +26,19 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         selectTheme();
         super.onCreate(savedInstanceState);
+        ActivityAnim.leftOut(this, false);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         setStatusView();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityAnim.rightOut(this, false);
     }
 
     /**

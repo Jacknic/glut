@@ -12,6 +12,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.MainPagerAdapter;
 import com.jacknic.glut.util.ActivityManager;
 import com.jacknic.glut.util.Config;
+import com.lzy.okgo.OkGo;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         tv_toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         page_container = (ViewPager) findViewById(R.id.page_container);
@@ -121,6 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             exit = true;
         } else {
             this.overridePendingTransition(R.anim.scale_fade_out, R.anim.scale_fade_out);
+            OkGo.getInstance().cancelAll();
             ActivityManager.finishAll();
             finish();
         }
