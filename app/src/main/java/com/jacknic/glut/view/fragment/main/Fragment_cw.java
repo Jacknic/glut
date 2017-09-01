@@ -31,6 +31,9 @@ import com.jacknic.glut.util.Config;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -85,9 +88,11 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String res_json, Call call, Response response) {
-                        if (null == res_json || "".equals(res_json)) return;
-                        String msg = JSONObject.parseObject(res_json).getString("msg");
-                        if (msg == null) {
+                        String msg = null;
+                        try {
+                            msg = JSONObject.parseObject(res_json).getString("msg");
+                        } catch (Exception e) {
+                            Log.d(this.getClass().getName(), "获取财务信息失败" + e.getMessage());
                             return;
                         }
                         FinancialInfoBean financialInfoBean = JSONObject.parseObject(msg, FinancialInfoBean.class);
@@ -138,6 +143,20 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
                 } else {
                     getYue();
                     getInfo();
+                    //10s超时设置
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (refreshLayout.isRefreshing()) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        refreshLayout.setRefreshing(false);
+                                    }
+                                });
+                            }
+                        }
+                    }, 10000L);
                 }
 
             }
@@ -260,11 +279,16 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         OkGo.get(Config.getQueryUrlCW("yikatongyue", "0") + String.format("&sid=%s", sid)).execute(new StringCallback() {
             @Override
             public void onSuccess(String res_json, Call call, Response response) {
-                JSONObject json = JSONObject.parseObject(res_json);
-                String msg = json.getString("msg");
+                JSONObject json = null;
+                try {
+                    json = JSONObject.parseObject(res_json);
+                } catch (Exception e) {
+                    Log.d(this.getClass().getName(), "获取财务数据失败");
+                    return;
+                }
                 Integer result = json.getInteger("result");
-                if (result.equals(0)) {
-                    JSONObject data = JSONObject.parseObject(msg);
+                if (result != null && result.equals(0)) {
+                    JSONObject data = json.getJSONObject("msg");
                     findAndSetText(R.id.cw_tv_yktye, data.getString("SurplusMoney"));
                 } else {
                     findAndSetText(R.id.cw_tv_yktye, "获取失败");

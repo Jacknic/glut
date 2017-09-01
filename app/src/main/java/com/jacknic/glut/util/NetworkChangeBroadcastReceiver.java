@@ -13,9 +13,6 @@ public class NetworkChangeBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int connectionCount = OkGo.getInstance().getOkHttpClient().connectionPool().connectionCount();
-        if (connectionCount > 0) {
-            OkGo.getInstance().cancelAll();
-        }
+        OkGo.getInstance().cancelAll();
     }
 }
