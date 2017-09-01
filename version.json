@@ -1,8 +1,8 @@
 ﻿{
-  "date": "2017-7-7",
-  "versionCode": 3,
-  "versionName": "3.0",
-  "downloadUrl": "http://111.47.223.154/imtt.dd.qq.com/16891/9D71434023D480123A3DA76F8DFC9EC2.apk?fsname=com.jacknic.glut.apk",
-  "info": "1. 优化用户登录验证流程，优化用户界面提升用户体验 \n  2. 新增导入新学期课表功能\n  3. 新增修改课程运行周数功能\n  4. 消灭了一些bug",
+  "date": "2017-9-1",
+  "versionCode": 4,
+  "versionName": "3.1",
+  "downloadUrl": "http://imtt.dd.qq.com/16891/4228F562003198D8259578423CEAC570.apk?fsname=com.jacknic.glut.apk",
+  "info": "1. 修复android 5.0 及更高版本不兼容Bug（文件空指针）\n  2. 增加activity跳转动画、优化用户体验",
   "remark": "/*该文件用于应用版本检测更新*/！"
 }
