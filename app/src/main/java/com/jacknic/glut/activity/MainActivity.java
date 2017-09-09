@@ -1,5 +1,6 @@
 package com.jacknic.glut.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.MainPagerAdapter;
 import com.jacknic.glut.util.ActivityManager;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
 
 import java.util.Timer;
@@ -49,6 +51,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setOnClick();
         //  选择课程页作为默认显示页面
         findViewById(R.id.bottom_tabs_iv_course).callOnClick();
+        SharedPreferences prefer_setting = getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
+        boolean auto_check_update = prefer_setting.getBoolean("auto_check_update", true);
+        if (auto_check_update) Func.checkUpdate(this, false);
     }
 
     private void setOnClick() {
