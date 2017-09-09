@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.util.Config;
+import com.tencent.stat.StatConfig;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,6 +45,7 @@ public class StartActivity extends AppCompatActivity {
     private void start() {
         boolean is_login = prefer_jw.getBoolean("login_flag", false);
         if (!is_login) {
+            StatConfig.setCustomUserId(getBaseContext(), prefer_jw.getString(Config.SID, ""));
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra("flag", Config.LOGIN_FLAG_JW);
             startActivity(intent);

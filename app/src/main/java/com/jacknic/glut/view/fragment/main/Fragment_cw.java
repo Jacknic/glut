@@ -31,6 +31,10 @@ import com.jacknic.glut.util.Config;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,6 +52,7 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
     private View fragment;
     private SwipeRefreshLayout refreshLayout;
     private boolean isLogin;
+    private boolean isFirst = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -230,7 +235,7 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         }
         long last_login = prefer_cw.getLong("last_login", 0);
         boolean is_logged = (System.currentTimeMillis() - last_login) < 30 * 60 * 1000;
-        if (!is_logged) {
+        if (!is_logged && isFirst) {
             autoLogin(intent);
         } else {
             System.out.println("已经登录");
@@ -242,33 +247,54 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
      * 自动登录认证
      */
     private void autoLogin(final Intent intent) {
-        String sid = prefer_cw.getString(Config.SID, "");
-        String password = prefer_cw.getString(Config.PASSWORD, "");
+        final String sid = prefer_cw.getString(Config.SID, "");
+        final String password = prefer_cw.getString(Config.PASSWORD, "");
         if (TextUtils.isEmpty(sid) || TextUtils.isEmpty(password)) {
             toLogin();
             return;
         }
-        WebView webView = new WebView(getContext());
-        final boolean[] is_first = {true};
         final String url_login = "http://cwwsjf.glut.edu.cn:8088/ChargeOnline/Mblogin.aspx";
-        WebViewClient client = new WebViewClient() {
+        OkGo.get(url_login).execute(new StringCallback() {
+            String state = "";
+            String validation = "";
+            String logon = "";
+
             @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                //登录后会自动重定向，如果不是首次请求，则直接打开activity
-                if (is_first[0]) {
-                    is_first[0] = false;
-                } else {
-                    prefer_cw.edit().putLong("last_login", System.currentTimeMillis()).apply();
-                    System.out.println("自动登录");
-                    getContext().startActivity(intent);
-                }
+            public void onSuccess(String s, Call call, Response response) {
+                Document document = Jsoup.parse(s);
+                Element viewstate = document.getElementById("__VIEWSTATE");
+                state = viewstate.val();
+                Element eventvalidation = document.getElementById("__EVENTVALIDATION");
+                validation = eventvalidation.val();
+                Element logon_ele = document.getElementById("logon");
+                logon = logon_ele.val();
             }
-        };
-        webView.setWebViewClient(client);
-        //没有这串字符，服务器不认
-        String verify_data = "__VIEWSTATE=%2FwEPDwULLTEwNjM4MzI3MjgPZBYCAgMPZBYGAgEPDxYCHgRUZXh0BSTmoYLmnpfnkIblt6XlpKflrablnKjnur%2FnvLTotLnns7vnu59kZAIDDw8WAh4ISW1hZ2VVcmwFEy4uL0ltYWdlcy9nbGxnMS5qcGdkZAIHDw9kFgIeC3BsYWNlaG9sZGVyBR7or7fovpPlhaXlrablj7fmiJbmlZnogYzlt6Xlj7dkZFElQr7KH1tVZ4fs2N5Slzf0gCyz&__EVENTVALIDATION=%2FwEWBAKOjd%2BuBgKG9I6XCALMk9PkCQKPyPndBajnmCtFlbdPXLRktFdGqf5v8hD%2F&logon=%E7%99%BB%C2%A0%E5%BD%95&";
-        //post请求登录
-        webView.postUrl(url_login, (verify_data + String.format("TextBox_SID=%s&TextBox_Password=%s", sid, password)).getBytes());
+
+            @Override
+            public void onAfter(String s, Exception e) {
+                WebView webView = new WebView(getContext());
+                WebViewClient client = new WebViewClient() {
+                    @Override
+                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                        //登录后会自动重定向，如果不是首次请求，则直接打开activity
+                        if (isFirst) {
+                            isFirst = false;
+                        } else {
+                            prefer_cw.edit().putLong("last_login", System.currentTimeMillis()).apply();
+                            System.out.println("自动登录");
+                            getContext().startActivity(intent);
+                        }
+                    }
+                };
+                webView.setWebViewClient(client);
+                //没有这串字符，服务器不认
+                String verify_data = String.format("__VIEWSTATE=%s&__EVENTVALIDATION=%s&TextBox_SID=%s&TextBox_Password=%s&logon=%s",
+                        state, validation, sid, password, logon);
+                //post请求登录
+                webView.postUrl(url_login, verify_data.getBytes());
+            }
+        });
+
 
     }
 

@@ -303,6 +303,7 @@ public class CourseTableView extends LinearLayout {
         Integer color_index = colorMap.get(name);
         if (color_index == null) {
             int new_index = (colorNum++) % Config.COLORS.length;
+            //不要黑色背景
             if (new_index == 0) {
                 new_index = Config.COLORS.length / 2;
             }

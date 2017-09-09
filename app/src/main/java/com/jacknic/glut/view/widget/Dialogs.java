@@ -111,8 +111,6 @@ public class Dialogs {
                 edit_jw.apply();
             }
         });
-        builder.setTitle("修改当前周");
-
         return builder;
     }
 

@@ -221,7 +221,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:paddingLeft="5dp"
-                    android:text="绩点" />
+                    android:text="学分" />
 
                 <TextView
                     android:id="@+id/dc_tv_grade"
