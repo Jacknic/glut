@@ -7,6 +7,7 @@ import com.jacknic.glut.R;
  */
 
 public final class Config {
+    public static final String[] weekNames = {"一", "二", "三", "四", "五", "六", "日",};
     /**
      * 财务处接口
      */

@@ -7,7 +7,7 @@ android {
         applicationId "com.jacknic.glut"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 3
+        versionCode 4
         manifestPlaceholders = [INSTALL_CHANNEL: "测试", TA_APPKEY: "debug"]
         versionName "3.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -49,6 +49,7 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.contrarywind:Android-PickerView:3.2.6'
     testCompile 'junit:junit:4.12'
     compile files('libs/mta-android-stat-sdk-2.3.0_20161221-jdk1.6.jar')
     compile files('libs/mid-core-sdk-3.7.1.jar')

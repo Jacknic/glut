@@ -19,7 +19,7 @@ import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.BorrowListAdapter;
 import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -38,7 +38,7 @@ public class BorrowActivity extends BaseActivity {
     private ImageView top_setting;
     private RecyclerView rl_borrow_list;
     private boolean isAuto = true;
-    private TextView tips;
+    private View tips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class BorrowActivity extends BaseActivity {
         setContentView(R.layout.activity_borrow);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         top_setting = (ImageView) findViewById(R.id.iv_setting);
-        Func.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getRenewList();
@@ -54,7 +54,7 @@ public class BorrowActivity extends BaseActivity {
         });
         title.setText("借阅查询");
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        tips = (TextView) findViewById(R.id.ts_tv_empty_tips);
+        tips = findViewById(R.id.ts_tv_empty_tips);
         rl_borrow_list = (RecyclerView) findViewById(R.id.ts_rl_borrow_list);
         rl_borrow_list.setLayoutManager(new LinearLayoutManager(BorrowActivity.this));
         getRenewList();

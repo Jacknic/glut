@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.ViewUtil;
 
 /**
  * 内置浏览器
@@ -71,7 +71,7 @@ public class BrowserActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         TextView toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
-        Func.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 webView.reload();

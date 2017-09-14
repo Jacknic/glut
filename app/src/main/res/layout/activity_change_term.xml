@@ -13,15 +13,21 @@
         android:layout_weight="1"
         android:choiceMode="singleChoice" />
 
-    <TextView
-        android:id="@+id/ch_tv_import_term"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/btn_selector_blue"
-        android:clickable="true"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="导入新学期"
-        android:textColor="@color/white" />
+        android:background="?attr/colorPrimary">
+
+
+        <TextView
+            android:id="@+id/ch_tv_import_term"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_item_tran"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="导入新课表 + "
+            android:textColor="@color/white" />
+    </LinearLayout>
 </LinearLayout>

@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wg_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#6fffffff"
+    android:minHeight="110dp"
+    android:minWidth="250dp"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:text="今日课表"
+            android:textColor="@color/blue" />
+
+        <TextView
+            android:id="@+id/tv_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="@color/blue" />
+
+        <ImageView
+            android:id="@+id/iv_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="刷新按钮"
+            android:padding="5dp"
+            android:src="@drawable/ic_autorenew"
+            android:tint="@color/blue" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_course_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_course_widget" />
+
+</LinearLayout>

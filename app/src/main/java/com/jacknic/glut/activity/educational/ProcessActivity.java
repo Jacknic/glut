@@ -12,6 +12,7 @@ import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.StudyProcessAdapter;
 import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
@@ -42,7 +43,7 @@ public class ProcessActivity extends BaseActivity {
         setContentView(R.layout.activity_process);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("学业进度");
-        Func.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refresh();
