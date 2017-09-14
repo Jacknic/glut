@@ -1,5 +1,6 @@
 package com.jacknic.glut.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -10,10 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.activity.educational.CourseListActivity;
 import com.jacknic.glut.adapter.MainPagerAdapter;
 import com.jacknic.glut.util.ActivityManager;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.UpdateUtil;
 import com.lzy.okgo.OkGo;
 
 import java.util.Timer;
@@ -38,6 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             R.id.bottom_tabs_tv_mine,
     };
     private int select_index = 0;//按钮选中位置
+    private ImageView iv_setting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +50,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tv_toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         page_container = (ViewPager) findViewById(R.id.page_container);
+        iv_setting = (ImageView) findViewById(R.id.iv_setting);
+        iv_setting.setImageResource(R.drawable.ic_all_courses);
+        iv_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CourseListActivity.class));
+            }
+        });
         initFragments();
         setOnClick();
         //  选择课程页作为默认显示页面
         findViewById(R.id.bottom_tabs_iv_course).callOnClick();
         SharedPreferences prefer_setting = getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
         boolean auto_check_update = prefer_setting.getBoolean("auto_check_update", true);
-        if (auto_check_update) Func.checkUpdate(this, false);
+        if (auto_check_update) UpdateUtil.checkUpdate(this, false);
     }
 
     private void setOnClick() {
@@ -102,6 +113,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             }
         }
+        if (select_index == 0) {
+            iv_setting.setVisibility(View.VISIBLE);
+        } else {
+            iv_setting.setVisibility(View.GONE);
+        }
         ImageView imageView = (ImageView) findViewById(tabs_iv[select_index]);
         TextView textView = (TextView) findViewById(tabs_tv[select_index]);
         tv_toolbar_title.setText(textView.getText());
@@ -133,5 +149,4 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             finish();
         }
     }
-
 }

@@ -2,6 +2,7 @@ package com.jacknic.glut.view.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,11 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.activity.educational.AddCourseActivity;
 import com.jacknic.glut.model.dao.CourseInfoDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +48,7 @@ public class CourseTableView extends LinearLayout {
     private final int TimeTableNumWidth = 20;
     private LinearLayout mCourseNumLayout;//课程格子
     private HashMap<String, Integer> colorMap = new HashMap<>();
-    private int colorNum = 1;
+    private int colorNum = getContext().getSharedPreferences(Config.PREFER_SETTING, Context.MODE_PRIVATE).getInt(Config.SETTING_COLOR_INDEX, 1) + 1;
     //数据源
     private List<CourseEntity> mListTimeTable = new ArrayList<>();
     private boolean hasNoonCourse = false;//中午是否有课
@@ -68,7 +71,6 @@ public class CourseTableView extends LinearLayout {
         mWeekline.setWidth(LayoutParams.MATCH_PARENT);
         return mWeekline;
     }
-
 
     /**
      * 绘制控件
@@ -98,7 +100,7 @@ public class CourseTableView extends LinearLayout {
                     //绘制1~MAXNUM，课程左部节数序号
                     LinearLayout mMonday = new LinearLayout(getContext());
                     mMonday.setBackgroundColor(getResources().getColor(R.color.white));
-                    ViewGroup.LayoutParams mm = new ViewGroup.LayoutParams(dip2px(TimeTableNumWidth), ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams mm = new ViewGroup.LayoutParams(ViewUtil.dip2px(TimeTableNumWidth), ViewGroup.LayoutParams.WRAP_CONTENT);
                     mMonday.setLayoutParams(mm);
                     mMonday.setOrientation(VERTICAL);
                     for (int j = 1; j <= MAXNUM; j++) {
@@ -109,8 +111,8 @@ public class CourseTableView extends LinearLayout {
                         TextView mNum = new TextView(getContext());
                         mNum.setGravity(Gravity.CENTER);
                         mNum.setTextColor(getResources().getColor(R.color.primaryDark));
-                        mNum.setHeight(dip2px(TimeTableHeight));
-                        mNum.setWidth(dip2px(TimeTableNumWidth));
+                        mNum.setHeight(ViewUtil.dip2px(TimeTableHeight));
+                        mNum.setWidth(ViewUtil.dip2px(TimeTableNumWidth));
                         mNum.setTextSize(14);
                         mNum.setText(Func.courseIndexToStr(j));
                         mMonday.addView(mNum);
@@ -130,7 +132,7 @@ public class CourseTableView extends LinearLayout {
                     //绘制课表
                     LinearLayout mLayout = getTimeTableView(mListMon, i);
                     mLayout.setOrientation(VERTICAL);
-                    ViewGroup.LayoutParams linearParams = new ViewGroup.LayoutParams((getViewWidth() - dip2px(TimeTableNumWidth) - 2 * 6) / WEEKNUM, LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams linearParams = new ViewGroup.LayoutParams((getViewWidth() - ViewUtil.dip2px(TimeTableNumWidth) - 2 * 6) / WEEKNUM, LayoutParams.WRAP_CONTENT);
                     mLayout.setLayoutParams(linearParams);
                     mLayout.setWeightSum(1);
                     mCourseNumLayout.addView(mLayout);
@@ -174,23 +176,28 @@ public class CourseTableView extends LinearLayout {
         final LinearLayout mStartView = new LinearLayout(getContext());
         mStartView.setOrientation(VERTICAL);
         for (int i = 1; i < count; i++) {
-            if (!hasNoonCourse && (start + i == 5 || start + i == 6)) {
+            final int course_now = start + i;
+            if (!hasNoonCourse && (course_now == 5 || course_now == 6)) {
                 continue;
             }
             TextView mTime = new TextView(getContext());
             mTime.setGravity(Gravity.CENTER);
-            mTime.setHeight(dip2px(TimeTableHeight));
-            mTime.setWidth(dip2px(TimeTableHeight));
+            mTime.setHeight(ViewUtil.dip2px(TimeTableHeight));
+            mTime.setWidth(ViewUtil.dip2px(TimeTableHeight));
             mStartView.addView(mTime);
             View transverseLine = getWeekTransverseLine();
             mStartView.addView(transverseLine);
             //这里可以处理空白处点击添加课表
-//            mTime.setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(getContext(), "星期" + week + "第" + (start + num) + "节", Toast.LENGTH_LONG).show();
-//                }
-//            });
+            mTime.setOnLongClickListener(new OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Intent intent = new Intent(getContext(), AddCourseActivity.class);
+                    intent.putExtra("start", course_now);
+                    intent.putExtra("weekDay", week);
+                    getContext().startActivity(intent);
+                    return false;
+                }
+            });
 
         }
         return mStartView;
@@ -246,12 +253,12 @@ public class CourseTableView extends LinearLayout {
         final LayoutInflater inflater = LayoutInflater.from(getContext());
         final LinearLayout course = (LinearLayout) inflater.inflate(R.layout.course_item, this, false);
         TextView courseView = (TextView) course.findViewById(R.id.course_item);
-        courseView.setPadding(dip2px(2), 0, dip2px(2), 0);
+        courseView.setPadding(ViewUtil.dip2px(2), 0, ViewUtil.dip2px(2), 0);
         int num = courseEntity.getEndSection() - courseEntity.getStartSection();
-        courseView.setHeight(dip2px((num + 1) * TimeTableHeight) + num * 2);
+        courseView.setHeight(ViewUtil.dip2px((num + 1) * TimeTableHeight) + num * 2);
         courseView.setTextColor(getContext().getResources().getColor(
                 android.R.color.white));
-        courseView.setWidth(dip2px(50));
+        courseView.setWidth(ViewUtil.dip2px(50));
         courseView.setTextSize(12);
         courseView.setGravity(Gravity.CENTER);
         courseView.setText(courseEntity.getCourseName() + "@" + courseEntity.getClassRoom());
@@ -277,14 +284,6 @@ public class CourseTableView extends LinearLayout {
             }
         });
         return course;
-    }
-
-    /**
-     * 转换dp
-     */
-    public int dip2px(float dpValue) {
-        float scale = getContext().getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
     }
 
     public void setTimeTable(List<CourseEntity> courses) {

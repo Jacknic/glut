@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.jacknic.glut.util.Config;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -14,7 +16,6 @@ import java.util.Calendar;
  */
 
 public class WeekNameAdapter extends BaseAdapter {
-    private final String[] weekNames = {"一", "二", "三", "四", "五", "六", "日",};
     private ArrayList<Integer> weekdays;
     private int day_of_week = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 
@@ -29,7 +30,7 @@ public class WeekNameAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return "周" + weekNames[position] + "\n" + weekdays.get(position);
+        return "周" + Config.weekNames[position] + "\n" + weekdays.get(position);
     }
 
     @Override

@@ -52,13 +52,13 @@ public class ExamListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         ViewHolder(View itemView) {
             super(itemView);
-            setIsRecyclable(false);
             tv_name = (TextView) itemView.findViewById(R.id.tv_exam_name);
             tv_time = (TextView) itemView.findViewById(R.id.tv_exam_time);
             tv_location = (TextView) itemView.findViewById(R.id.tv_exam_location);
         }
 
         void bindHolder(ExamInfoBean examInfoBean) {
+            setIsRecyclable(false);
             tv_name.setText(examInfoBean.getName());
             tv_time.setText(examInfoBean.getTime());
             tv_location.setText(examInfoBean.getLocation());

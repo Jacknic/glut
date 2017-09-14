@@ -17,7 +17,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BrowserActivity;
 import com.jacknic.glut.activity.FeedbackActivity;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.UpdateUtil;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -54,7 +54,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
         });
         TextView tv_updateTips = (TextView) fragment.findViewById(R.id.setting_tv_updateTips);
         tv_updateTips.setOnClickListener(this);
-        final PackageInfo packageInfo = Func.getPackageInfo(getActivity());
+        final PackageInfo packageInfo = UpdateUtil.getPackageInfo(getActivity());
         if (packageInfo != null) {
             String versionName = packageInfo.versionName;
             tv_checkUpdate.append(" v" + versionName);
@@ -80,7 +80,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
                 getActivity().startActivity(intent);
                 break;
             case R.id.setting_tv_checkUpdate:
-                Func.checkUpdate(getActivity(), true);
+                UpdateUtil.checkUpdate(getActivity(), true);
                 break;
             case R.id.setting_tv_updateTips:
                 Intent updateTips = new Intent(getContext(), BrowserActivity.class);

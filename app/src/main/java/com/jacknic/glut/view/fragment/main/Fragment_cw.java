@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -73,6 +74,8 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         student_id = prefer_cw.getString(Config.STUDENT_ID, "");
         getInfo();
         getYue();
+        //登录网页
+        autoLogin(null);
         return fragment;
     }
 
@@ -233,20 +236,21 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
                 intent.setAction(urls[4]);
                 break;
         }
-        long last_login = prefer_cw.getLong("last_login", 0);
-        boolean is_logged = (System.currentTimeMillis() - last_login) < 30 * 60 * 1000;
-        if (!is_logged && isFirst) {
-            autoLogin(intent);
-        } else {
-            System.out.println("已经登录");
-            getContext().startActivity(intent);
-        }
+        startActivity(intent);
+
     }
 
     /**
      * 自动登录认证
      */
-    private void autoLogin(final Intent intent) {
+    private void autoLogin(@Nullable final Intent intent) {
+        long lastLogin = prefer_cw.getLong("last_login", 0);
+        boolean isLogged = (System.currentTimeMillis() - lastLogin) < 30 * 60 * 1000;
+        if (isLogged) {
+            if (intent != null)
+                startActivity(intent);
+            return;
+        }
         final String sid = prefer_cw.getString(Config.SID, "");
         final String password = prefer_cw.getString(Config.PASSWORD, "");
         if (TextUtils.isEmpty(sid) || TextUtils.isEmpty(password)) {
@@ -262,12 +266,15 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Document document = Jsoup.parse(s);
-                Element viewstate = document.getElementById("__VIEWSTATE");
-                state = viewstate.val();
-                Element eventvalidation = document.getElementById("__EVENTVALIDATION");
-                validation = eventvalidation.val();
+                Element viewState = document.getElementById("__VIEWSTATE");
+                if (viewState != null)
+                    state = viewState.val();
+                Element eventValidation = document.getElementById("__EVENTVALIDATION");
+                if (eventValidation != null)
+                    validation = eventValidation.val();
                 Element logon_ele = document.getElementById("logon");
-                logon = logon_ele.val();
+                if (logon_ele != null)
+                    logon = logon_ele.val();
             }
 
             @Override
@@ -280,9 +287,11 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
                         if (isFirst) {
                             isFirst = false;
                         } else {
+                            view.stopLoading();
                             prefer_cw.edit().putLong("last_login", System.currentTimeMillis()).apply();
                             System.out.println("自动登录");
-                            getContext().startActivity(intent);
+                            if (intent != null)
+                                startActivity(intent);
                         }
                     }
                 };

@@ -30,6 +30,7 @@ import com.jacknic.glut.adapter.WeekNameAdapter;
 import com.jacknic.glut.model.dao.CourseDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.Func;
 import com.jacknic.glut.view.widget.CourseTableView;
 import com.jacknic.glut.view.widget.Dialogs;
 
@@ -99,17 +100,7 @@ public class Fragment_kc extends Fragment {
      * 显示当前课程周数
      */
     private void showSelect() {
-        int select_week = prefer_jw.getInt(Config.JW_WEEK_SELECT, 1);
-        Calendar calendar_now = Calendar.getInstance();
-        int year_week_old = prefer_jw.getInt(Config.JW_YEAR_WEEK_OLD, calendar_now.get(Calendar.WEEK_OF_YEAR));
-        int year_week_now = calendar_now.get(Calendar.WEEK_OF_YEAR);
-        week_now = select_week + (year_week_now - year_week_old);
-        if (year_week_now > year_week_old && calendar_now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            week_now -= 1;
-        }
-        Log.d("kc", "选择周数: " + select_week);
-        Log.d("kc", "现在周数: " + year_week_now);
-        Log.d("kc", "存储周数: " + year_week_old);
+        week_now = Func.getWeekNow();
         Log.d("kc", "实际周数: " + week_now);
         selectWeek(week_now);
         int semester = prefer_jw.getInt(Config.JW_SEMESTER, 1);
@@ -243,6 +234,7 @@ public class Fragment_kc extends Fragment {
             prefer_jw.edit().remove(Config.IS_REFRESH).apply();
             if (ll_select_time.getVisibility() == View.VISIBLE) iv_toggle.callOnClick();
             tabLayout.removeAllTabs();
+            Func.updateWidget(getContext());
             setTab();
             showSelect();
         }

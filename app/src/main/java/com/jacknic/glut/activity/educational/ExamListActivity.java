@@ -13,7 +13,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.ExamListAdapter;
 import com.jacknic.glut.model.bean.ExamInfoBean;
-import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -44,7 +44,7 @@ public class ExamListActivity extends BaseActivity {
         setContentView(R.layout.activity_exam_list);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("考试安排");
-        Func.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDataPre();

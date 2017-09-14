@@ -7,6 +7,7 @@ import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseEntityDao;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
+import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
 
 import org.greenrobot.greendao.query.WhereCondition;
@@ -52,6 +53,28 @@ public class CourseDao {
                         CourseEntityDao.Properties.EndSection.isNotNull(),
                         CourseEntityDao.Properties.Semester.eq(term))
                 .orderAsc(CourseEntityDao.Properties.DayOfWeek, CourseEntityDao.Properties.StartSection)
+                .list();
+    }
+
+    /**
+     * 获取当日课表
+     */
+    public List<CourseEntity> getCourse() {
+        SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+        Calendar calendar_now = Calendar.getInstance();
+        int week_now = Func.getWeekNow();
+        int school_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        int term = prefer_jw.getInt(Config.JW_SEMESTER, 1);
+        int weekDay = (calendar_now.get(Calendar.DAY_OF_WEEK) + 6) % 7;
+        System.out.printf("当前周%d，当前学年%d,当前学期%d,当前星期%d\n", week_now, school_year, term, weekDay);
+        return courseEntityDao.queryBuilder()
+                .where(CourseEntityDao.Properties.SmartPeriod.like("% " + week_now + " %"),
+                        CourseEntityDao.Properties.SchoolStartYear.eq(school_year),
+                        CourseEntityDao.Properties.StartSection.isNotNull(),
+                        CourseEntityDao.Properties.EndSection.isNotNull(),
+                        CourseEntityDao.Properties.DayOfWeek.eq(weekDay == 0 ? 7 : weekDay),
+                        CourseEntityDao.Properties.Semester.eq(term))
+                .orderAsc(CourseEntityDao.Properties.StartSection)
                 .list();
     }
 

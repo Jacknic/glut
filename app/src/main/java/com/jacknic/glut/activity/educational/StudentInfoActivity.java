@@ -15,6 +15,7 @@ import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.model.StudentInfoModel;
 import com.jacknic.glut.model.bean.StudentInfoBean;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
@@ -35,7 +36,7 @@ public class StudentInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_student_info);
         setTextView(R.id.tv_toolbar_title, "学籍信息");
         setStudentInfo();
-        Func.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refresh();

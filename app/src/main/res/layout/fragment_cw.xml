@@ -53,7 +53,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -67,26 +67,13 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_jyjl"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/selector_item"
-                        android:clickable="true"
-                        android:paddingBottom="20dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
+                        style="@style/CwItemsStyleImageView"
                         android:src="@drawable/ic_receipt"
                         android:tint="@color/cyan" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:paddingBottom="5dp"
-                        android:text="交易记录"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        style="@style/CwItemsStyleTextView"
+                        android:text="交易记录" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -97,26 +84,13 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_jfxm"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/selector_item"
-                        android:clickable="true"
-                        android:paddingBottom="20dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
+                        style="@style/CwItemsStyleImageView"
                         android:src="@drawable/ic_assignment"
                         android:tint="@color/blue" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center_horizontal"
-                        android:paddingBottom="5dp"
-                        android:text="学费项目"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        style="@style/CwItemsStyleTextView"
+                        android:text="学费项目" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -127,29 +101,13 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_cwzx"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/selector_item"
-                        android:clickable="true"
-                        android:paddingBottom="23dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
+                        style="@style/CwItemsStyleImageView"
                         android:src="@drawable/ic_money"
                         android:tint="#ff8d02" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center_horizontal"
-                        android:paddingBottom="5dp"
-                        android:text="财务中心"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        style="@style/CwItemsStyleTextView"
+                        android:text="财务中心" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -160,26 +118,13 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_jfmx"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/selector_item"
-                        android:clickable="true"
-                        android:paddingBottom="20dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
+                        style="@style/CwItemsStyleImageView"
                         android:src="@drawable/ic_description"
                         android:tint="@color/pink" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:paddingBottom="5dp"
-                        android:text="缴费明细"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        style="@style/CwItemsStyleTextView"
+                        android:text="缴费明细" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -190,26 +135,13 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_yktcz"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/selector_item"
-                        android:clickable="true"
-                        android:paddingBottom="20dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
+                        style="@style/CwItemsStyleImageView"
                         android:src="@drawable/ic_monetization_on"
                         android:tint="@color/green" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:paddingBottom="5dp"
-                        android:text="一卡通充值"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        style="@style/CwItemsStyleTextView"
+                        android:text="一卡通充值" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -271,7 +203,6 @@
                         android:layout_width="@dimen/list_item_height"
                         android:layout_height="@dimen/list_item_height"
                         android:padding="13dp"
-
                         android:src="@drawable/ic_person_pin_circle"
                         android:tint="@color/red" />
 
