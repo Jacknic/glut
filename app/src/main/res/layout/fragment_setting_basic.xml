@@ -166,7 +166,7 @@
                 android:drawableRight="@drawable/ic_keyboard_arrow_right"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/list_item_height"
-                android:text="检查更新" />
+                android:text="检查更新 v" />
 
             <ImageView
                 android:layout_width="@dimen/list_item_height"

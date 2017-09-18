@@ -45,12 +45,10 @@ public class Dialogs {
     public static AlertDialog.Builder getCourseInfoDialog(final Activity activity, CourseEntity courseEntity, CourseInfoEntity infoBean) {
         LayoutInflater inflater = LayoutInflater.from(activity);
         View dialogView = inflater.inflate(R.layout.dialog_course, null, false);
-        findAndSet(dialogView, R.id.dc_tv_course_name, courseEntity.getCourseName());
+        findAndSet(dialogView, R.id.dc_tv_course_name, infoBean.getCourseName());
         findAndSet(dialogView, R.id.dc_tv_classroom, courseEntity.getClassRoom());
         findAndSet(dialogView, R.id.dc_tv_teacher, infoBean.getTeacher());
-        Integer dayOfWeek = courseEntity.getDayOfWeek();
-        findAndSet(dialogView, R.id.dc_tv_weeks, courseEntity.getWeek() == null ? "" : courseEntity.getWeek()
-                + (dayOfWeek != null && dayOfWeek >= 1 ? "  星期" + Config.weekNames[dayOfWeek - 1] : ""));
+        findAndSet(dialogView, R.id.dc_tv_weeks, courseEntity.getWeek() == null ? "" : courseEntity.getWeek());
         findAndSet(dialogView, R.id.dc_tv_courses, Func.courseIndexToStr(courseEntity.getStartSection()) + "-"
                 + Func.courseIndexToStr(courseEntity.getEndSection()));
         findAndSet(dialogView, R.id.dc_tv_grade, infoBean.getGrade());

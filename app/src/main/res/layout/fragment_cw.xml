@@ -67,12 +67,12 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_jyjl"
-                        style="@style/CwItemsStyleImageView"
+                        style="@style/CwItemsImageViewStyle"
                         android:src="@drawable/ic_receipt"
                         android:tint="@color/cyan" />
 
                     <TextView
-                        style="@style/CwItemsStyleTextView"
+                        style="@style/CwItemsTextViewStyle"
                         android:text="交易记录" />
                 </RelativeLayout>
 
@@ -84,12 +84,12 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_jfxm"
-                        style="@style/CwItemsStyleImageView"
+                        style="@style/CwItemsImageViewStyle"
                         android:src="@drawable/ic_assignment"
                         android:tint="@color/blue" />
 
                     <TextView
-                        style="@style/CwItemsStyleTextView"
+                        style="@style/CwItemsTextViewStyle"
                         android:text="学费项目" />
                 </RelativeLayout>
 
@@ -101,12 +101,12 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_cwzx"
-                        style="@style/CwItemsStyleImageView"
+                        style="@style/CwItemsImageViewStyle"
                         android:src="@drawable/ic_money"
                         android:tint="#ff8d02" />
 
                     <TextView
-                        style="@style/CwItemsStyleTextView"
+                        style="@style/CwItemsTextViewStyle"
                         android:text="财务中心" />
                 </RelativeLayout>
 
@@ -118,12 +118,12 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_jfmx"
-                        style="@style/CwItemsStyleImageView"
+                        style="@style/CwItemsImageViewStyle"
                         android:src="@drawable/ic_description"
                         android:tint="@color/pink" />
 
                     <TextView
-                        style="@style/CwItemsStyleTextView"
+                        style="@style/CwItemsTextViewStyle"
                         android:text="缴费明细" />
                 </RelativeLayout>
 
@@ -135,12 +135,12 @@
 
                     <ImageView
                         android:id="@+id/cw_iv_yktcz"
-                        style="@style/CwItemsStyleImageView"
+                        style="@style/CwItemsImageViewStyle"
                         android:src="@drawable/ic_monetization_on"
                         android:tint="@color/green" />
 
                     <TextView
-                        style="@style/CwItemsStyleTextView"
+                        style="@style/CwItemsTextViewStyle"
                         android:text="一卡通充值" />
                 </RelativeLayout>
 
