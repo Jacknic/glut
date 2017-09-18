@@ -337,11 +337,12 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
 
             @Override
             public void onAfter(String s, Exception e) {
+                refreshLayout.setRefreshing(false);
+                if (getContext() == null) return;
                 Animation side_left = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
                 side_left.setDuration(500L);
                 View iv_refresh = fragment.findViewById(R.id.cw_tv_yktye);
                 iv_refresh.startAnimation(side_left);
-                refreshLayout.setRefreshing(false);
             }
         });
     }

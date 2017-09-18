@@ -36,6 +36,7 @@
                     android:id="@+id/act_course_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:background="@android:color/transparent"
                     android:hint="未填写"
                     android:paddingLeft="10dp" />
@@ -75,7 +76,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="64dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -86,13 +87,6 @@
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:text="周数" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:text="第" />
 
                 <NumberPicker
                     android:id="@+id/np_week_start"
@@ -143,7 +137,32 @@
                     android:paddingLeft="10dp"
                     android:text="地点" />
 
-                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                <EditText
+                    android:id="@+id/et_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="未填写"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:text="老师" />
+
+                <EditText
+                    android:id="@+id/et_teacher"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -166,9 +185,10 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:paddingLeft="10dp"
-                    android:text="老师" />
+                    android:text="学分" />
 
-                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                <EditText
+                    android:id="@+id/et_grade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"

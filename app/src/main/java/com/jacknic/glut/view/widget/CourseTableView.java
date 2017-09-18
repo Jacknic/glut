@@ -83,7 +83,9 @@ public class CourseTableView extends LinearLayout {
             List<CourseEntity> mListMon = new ArrayList<>();
             //逐个获取一周每天的课程安排
             for (CourseEntity courseEntity : mListTimeTable) {
-                if (courseEntity.getStartSection() == 5 || courseEntity.getStartSection() == 6) {
+                boolean startIn = courseEntity.getStartSection() == 5 || courseEntity.getStartSection() == 6;
+                boolean centerIn = courseEntity.getStartSection() <= 5 && courseEntity.getEndSection() >= 5;
+                if (startIn || centerIn) {
                     hasNoonCourse = true;
                 }
                 //放入星期列表

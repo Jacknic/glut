@@ -2,7 +2,6 @@ package com.jacknic.glut.view.fragment.setting;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
@@ -54,11 +53,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
         });
         TextView tv_updateTips = (TextView) fragment.findViewById(R.id.setting_tv_updateTips);
         tv_updateTips.setOnClickListener(this);
-        final PackageInfo packageInfo = UpdateUtil.getPackageInfo(getActivity());
-        if (packageInfo != null) {
-            String versionName = packageInfo.versionName;
-            tv_checkUpdate.append(" v" + versionName);
-        }
+        tv_checkUpdate.append(getString(R.string.versionName));
         return fragment;
     }
 

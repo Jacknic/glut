@@ -37,11 +37,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:autoLink="web"
+            android:autoLink="web|email"
             android:background="@color/white"
             android:lineSpacingExtra="6sp"
             android:padding="15dp"
             android:paddingLeft="15dp"
-            android:text="@string/about_desc" />
+            android:text="@string/about_desc"
+            android:textIsSelectable="true" />
     </ScrollView>
 </LinearLayout>
