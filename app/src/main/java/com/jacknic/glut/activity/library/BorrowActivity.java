@@ -46,6 +46,7 @@ public class BorrowActivity extends BaseActivity {
         setContentView(R.layout.activity_borrow);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         top_setting = (ImageView) findViewById(R.id.iv_setting);
+        ViewUtil.showBackIcon(this);
         ViewUtil.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

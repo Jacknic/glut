@@ -3,7 +3,6 @@ package com.jacknic.glut.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -68,9 +67,8 @@ public class BrowserActivity extends BaseActivity {
      * 初始化视图控件
      */
     private void initViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         TextView toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
+        ViewUtil.showBackIcon(this);
         ViewUtil.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

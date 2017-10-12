@@ -45,6 +45,7 @@ public class AddCourseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
+        ViewUtil.showBackIcon(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);

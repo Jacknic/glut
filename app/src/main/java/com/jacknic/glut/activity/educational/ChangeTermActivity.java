@@ -28,6 +28,7 @@ import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntityDao;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
+import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.jacknic.glut.view.widget.PickerView;
 import com.lzy.okgo.OkGo;
@@ -69,6 +70,7 @@ public class ChangeTermActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
+        ViewUtil.showBackIcon(this);
         title.setText("选择学期");
         lv_terms = (ListView) findViewById(R.id.ch_lv_terms);
         tv_import_term = (TextView) findViewById(R.id.ch_tv_import_term);

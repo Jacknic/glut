@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.GradeListAdapter;
+import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -49,6 +50,7 @@ public class GradeListActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade_list);
+        ViewUtil.showBackIcon(this);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("成绩查询");
         Calendar calendar = Calendar.getInstance();
@@ -194,7 +196,7 @@ public class GradeListActivity extends BaseActivity {
                     break;
 
             }
-            if (select_list.size() == 0) {
+            if (select_list.isEmpty()) {
                 snackbar.setText("成绩列表为空...");
             } else {
                 snackbar.setText(select_list.size() + "条成绩信息");
