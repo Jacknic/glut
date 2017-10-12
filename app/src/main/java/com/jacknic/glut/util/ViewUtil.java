@@ -1,7 +1,13 @@
 package com.jacknic.glut.util;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -33,6 +39,36 @@ public class ViewUtil {
             }
         };
         iv_setting.setOnClickListener(listener);
+    }
+
+    /**
+     * 设置工具栏返回按钮
+     */
+    public static void showBackIcon(final AppCompatActivity activity) {
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+        ActionBar supportActionBar = activity.getSupportActionBar();
+        if (supportActionBar == null && toolbar != null) {
+            activity.setSupportActionBar(toolbar);
+            supportActionBar = activity.getSupportActionBar();
+        } else {
+            return;
+        }
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayShowHomeEnabled(true);
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+            Drawable navigationIcon = toolbar.getNavigationIcon();
+            if (navigationIcon != null) {
+                //返回按钮填充白色
+                navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.DST);
+            }
+            supportActionBar.setElevation(50f);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.onBackPressed();
+                }
+            });
+        }
     }
 
     /**

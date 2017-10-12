@@ -22,6 +22,7 @@ import com.jacknic.glut.model.entity.CourseInfoEntityDao;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 
@@ -35,6 +36,7 @@ public class CourseListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_course);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
+        ViewUtil.showBackIcon(this);
         title.setText("课程列表");
         initView();
     }

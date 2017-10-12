@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.util.ViewUtil;
 import com.tencent.stat.StatService;
 
 import java.util.Properties;
@@ -29,6 +30,7 @@ public class FeedbackActivity extends BaseActivity {
         setContentView(R.layout.activity_feedback);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("用户反馈");
+        ViewUtil.showBackIcon(this);
         et_feedback = (EditText) findViewById(R.id.fb_et_feedback);
         btn_submit = (Button) findViewById(R.id.fb_btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {

@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.SettingPagerAdapter;
 import com.jacknic.glut.util.ActivityManager;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.ViewUtil;
 
 /**
  * 设置
@@ -31,14 +31,9 @@ public class SettingActivity extends BaseActivity {
         pager_container = (ViewPager) findViewById(R.id.setting_pager);
         prefer_setting = getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
         setPagers();
+        ViewUtil.showBackIcon(this);
         TextView tv_toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
-        tv_toolbar_title.setText("返回");
-        tv_toolbar_title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        tv_toolbar_title.setText("设置");
     }
 
     /**

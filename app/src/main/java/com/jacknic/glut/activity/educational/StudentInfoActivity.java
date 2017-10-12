@@ -36,6 +36,7 @@ public class StudentInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_student_info);
         setTextView(R.id.tv_toolbar_title, "学籍信息");
         setStudentInfo();
+        ViewUtil.showBackIcon(this);
         ViewUtil.showRefreshView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

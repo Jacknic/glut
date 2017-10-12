@@ -37,6 +37,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        holder.setIsRecyclable(false);
         ViewHolder itemHolder = (ViewHolder) holder;
         itemHolder.bindHolder(examInfoBeanList.get(position));
     }
@@ -58,7 +59,6 @@ public class ExamListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         void bindHolder(ExamInfoBean examInfoBean) {
-            setIsRecyclable(false);
             tv_name.setText(examInfoBean.getName());
             tv_time.setText(examInfoBean.getTime());
             tv_location.setText(examInfoBean.getLocation());
@@ -72,7 +72,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     tv_location.setTextColor(cary);
                 }
             } catch (ParseException e) {
-                Log.d("date fail", "bindHolder: 日期转换失败" + e.getLocalizedMessage());
+                Log.d("date", "bindHolder: 日期转换失败" + e.getLocalizedMessage());
             }
         }
     }
