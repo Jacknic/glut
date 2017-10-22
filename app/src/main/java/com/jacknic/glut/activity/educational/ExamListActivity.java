@@ -45,7 +45,7 @@ public class ExamListActivity extends BaseActivity {
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("考试安排");
         ViewUtil.showBackIcon(this);
-        ViewUtil.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRightImageView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDataPre();

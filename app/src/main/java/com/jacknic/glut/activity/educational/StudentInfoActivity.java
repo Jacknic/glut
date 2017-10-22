@@ -37,7 +37,7 @@ public class StudentInfoActivity extends BaseActivity {
         setTextView(R.id.tv_toolbar_title, "学籍信息");
         setStudentInfo();
         ViewUtil.showBackIcon(this);
-        ViewUtil.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRightImageView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refresh();
@@ -99,7 +99,7 @@ public class StudentInfoActivity extends BaseActivity {
                     public void onAfter(Object o, Exception e) {
                         refresh();
                     }
-                });
+                }).show();
             }
         });
     }

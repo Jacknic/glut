@@ -19,13 +19,12 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/iv_setting"
+            android:id="@+id/iv_right"
             android:layout_width="56dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:contentDescription="设置按钮"
             android:padding="18dp"
             android:src="@drawable/ic_settings"
             android:tint="@color/white"

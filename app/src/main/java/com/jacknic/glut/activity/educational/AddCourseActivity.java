@@ -3,7 +3,6 @@ package com.jacknic.glut.activity.educational;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,19 +45,17 @@ public class AddCourseActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
         ViewUtil.showBackIcon(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
-        Intent intent = getIntent();
-        int start = intent.getIntExtra("start", 1);
-        ViewUtil.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRightImageView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 save();
             }
         });
-        ImageView iv_save = (ImageView) findViewById(R.id.iv_setting);
-        iv_save.setImageResource(R.drawable.ic_add);
+        TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
+        Intent intent = getIntent();
+        int start = intent.getIntExtra("start", 1);
+        ImageView bar_iv_right = (ImageView) findViewById(R.id.iv_right);
+        bar_iv_right.setImageResource(R.drawable.ic_add);
         courseStart = start;
         courseEnd = start;
         weekDay = intent.getIntExtra("weekDay", 1);

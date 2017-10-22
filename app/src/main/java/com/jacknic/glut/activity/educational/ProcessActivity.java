@@ -44,7 +44,7 @@ public class ProcessActivity extends BaseActivity {
         ViewUtil.showBackIcon(this);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("学业进度");
-        ViewUtil.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRightImageView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refresh();

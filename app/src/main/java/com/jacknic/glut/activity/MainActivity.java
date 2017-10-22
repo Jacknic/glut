@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             R.id.bottom_tabs_tv_mine,
     };
     private int select_index = 0;//按钮选中位置
-    private ImageView iv_setting;
+    private ImageView toolbar_iv_right;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +50,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tv_toolbar_title = (TextView) findViewById(R.id.tv_toolbar_title);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         page_container = (ViewPager) findViewById(R.id.page_container);
-        iv_setting = (ImageView) findViewById(R.id.iv_setting);
-        iv_setting.setImageResource(R.drawable.ic_all_courses);
-        iv_setting.setOnClickListener(new View.OnClickListener() {
+        toolbar_iv_right = (ImageView) findViewById(R.id.iv_right);
+        toolbar_iv_right.setImageResource(R.drawable.ic_all_courses);
+        toolbar_iv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CourseListActivity.class));
@@ -114,9 +114,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
         if (select_index == 0) {
-            iv_setting.setVisibility(View.VISIBLE);
+            toolbar_iv_right.setVisibility(View.VISIBLE);
         } else {
-            iv_setting.setVisibility(View.GONE);
+            toolbar_iv_right.setVisibility(View.GONE);
         }
         ImageView imageView = (ImageView) findViewById(tabs_iv[select_index]);
         TextView textView = (TextView) findViewById(tabs_tv[select_index]);

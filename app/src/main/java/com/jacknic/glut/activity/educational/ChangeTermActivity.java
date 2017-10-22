@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -67,10 +66,8 @@ public class ChangeTermActivity extends BaseActivity {
      * 初始化控件
      */
     private void initView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         ViewUtil.showBackIcon(this);
+        TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
         title.setText("选择学期");
         lv_terms = (ListView) findViewById(R.id.ch_lv_terms);
         tv_import_term = (TextView) findViewById(R.id.ch_tv_import_term);
@@ -92,7 +89,7 @@ public class ChangeTermActivity extends BaseActivity {
         lv_terms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog dialog = new AlertDialog.Builder(ChangeTermActivity.this)
+                new AlertDialog.Builder(ChangeTermActivity.this)
                         .setMessage("当前学期修改为：" + ((TextView) view).getText())
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
@@ -120,7 +117,7 @@ public class ChangeTermActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 CourseEntity courseEntity = termCourse.get(position);
-                                delTerm(courseEntity);
+                                deleteTerm(courseEntity);
                             }
                         })
                         .setNegativeButton(android.R.string.cancel, null)
@@ -133,7 +130,7 @@ public class ChangeTermActivity extends BaseActivity {
     /**
      * 删除相同学期的所以数据记录
      */
-    private void delTerm(CourseEntity courseEntity) {
+    private void deleteTerm(CourseEntity courseEntity) {
         // 删除课程
         DataBase.getDaoSession().getCourseEntityDao().queryBuilder()
                 .where(CourseEntityDao.Properties.SchoolStartYear.eq(courseEntity.getSchoolStartYear()),

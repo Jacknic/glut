@@ -53,7 +53,8 @@
             <Spinner
                 android:id="@+id/sp_select_year"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,19 +66,10 @@
             <Spinner
                 android:id="@+id/sp_select_semester"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_getGrade"
-            android:layout_width="56dp"
-            android:layout_height="46dp"
-            android:background="@drawable/selector_item"
-            android:clickable="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_search"
-            android:textColor="@color/white"
-            android:tint="?attr/colorPrimary" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
