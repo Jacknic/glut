@@ -7,8 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -75,14 +75,20 @@ public class GradeListActivity extends BaseActivity {
         sp_semester.setAdapter(adapter_semesters);
         sp_semester.setSelection(calendar.get(Calendar.MONTH) > Calendar.SEPTEMBER ? 2 : 1);
         snackbar = Snackbar.make(rlv_grade_list, "数据获取中...", Snackbar.LENGTH_INDEFINITE);
-        ImageView iv_getGrade = (ImageView) findViewById(R.id.iv_getGrade);
-        iv_getGrade.setOnClickListener(new View.OnClickListener() {
+        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 showGrade();
             }
-        });
-        iv_getGrade.callOnClick();
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        sp_semester.setOnItemSelectedListener(onItemSelectedListener);
+        sp_year.setOnItemSelectedListener(onItemSelectedListener);
+        showGrade();
     }
 
     /**

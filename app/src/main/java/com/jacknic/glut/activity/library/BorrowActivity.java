@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -35,7 +34,7 @@ import okhttp3.Response;
 
 public class BorrowActivity extends BaseActivity {
 
-    private ImageView top_setting;
+    private ImageView bar_iv_right;
     private RecyclerView rl_borrow_list;
     private boolean isAuto = true;
     private View tips;
@@ -45,16 +44,15 @@ public class BorrowActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrow);
         TextView title = (TextView) findViewById(R.id.tv_toolbar_title);
-        top_setting = (ImageView) findViewById(R.id.iv_setting);
+        bar_iv_right = (ImageView) findViewById(R.id.iv_right);
         ViewUtil.showBackIcon(this);
-        ViewUtil.showRefreshView(this, new View.OnClickListener() {
+        ViewUtil.showRightImageView(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getRenewList();
             }
         });
         title.setText("借阅查询");
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         tips = findViewById(R.id.ts_tv_empty_tips);
         rl_borrow_list = (RecyclerView) findViewById(R.id.ts_rl_borrow_list);
         rl_borrow_list.setLayoutManager(new LinearLayoutManager(BorrowActivity.this));
@@ -82,7 +80,7 @@ public class BorrowActivity extends BaseActivity {
                     tips.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            top_setting.callOnClick();
+                            bar_iv_right.callOnClick();
                         }
                     });
                 } else {
@@ -117,7 +115,7 @@ public class BorrowActivity extends BaseActivity {
             public void onAfter(String s, Exception e) {
                 super.onAfter(s, e);
                 make.dismiss();
-                top_setting.clearAnimation();
+                bar_iv_right.clearAnimation();
             }
         });
     }

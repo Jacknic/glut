@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BrowserActivity;
@@ -41,6 +42,8 @@ import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Response;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -72,11 +75,25 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
         }
         sid = prefer_cw.getString(Config.SID, "");
         student_id = prefer_cw.getString(Config.STUDENT_ID, "");
-        getInfo();
-        getYue();
+        showData();
         //登录网页
         autoLogin(null);
         return fragment;
+    }
+
+    /**
+     * 显示数据
+     */
+    private void showData() {
+        String info = prefer_cw.getString("info", "");
+        FinancialInfoBean financialInfoBean = JSON.parseObject(info, FinancialInfoBean.class);
+        if (TextUtils.isEmpty(info) || financialInfoBean == null) {
+            getInfo();
+        } else {
+            setText(financialInfoBean);
+            Log.d(TAG, "showData: 读取缓存信息");
+        }
+        getYue();
     }
 
     /**
@@ -96,23 +113,15 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String res_json, Call call, Response response) {
-                        String msg = null;
                         try {
-                            msg = JSONObject.parseObject(res_json).getString("msg");
+                            String msg = JSONObject.parseObject(res_json).getString("msg");
+                            FinancialInfoBean financialInfoBean = JSONObject.parseObject(msg, FinancialInfoBean.class);
+                            Log.d(this.getClass().getName(), "获取最新信息");
+                            setText(financialInfoBean);
+                            prefer_cw.edit().putString("info", JSON.toJSONString(financialInfoBean)).apply();
                         } catch (Exception e) {
                             Log.d(this.getClass().getName(), "获取财务信息失败" + e.getMessage());
-                            return;
                         }
-                        FinancialInfoBean financialInfoBean = JSONObject.parseObject(msg, FinancialInfoBean.class);
-                        findAndSetText(R.id.cw_tv_name, financialInfoBean.getStudentName());
-                        findAndSetText(R.id.cw_tv_card_no, financialInfoBean.getBankId());
-                        findAndSetText(R.id.cw_tv_college, financialInfoBean.getAcademy());
-                        findAndSetText(R.id.cw_tv_dkdz, financialInfoBean.getDeferralDate());
-                        findAndSetText(R.id.cw_tv_dkje, financialInfoBean.getDeferralMoney() + "元");
-                        findAndSetText(R.id.cw_tv_grade, financialInfoBean.getGrade());
-                        findAndSetText(R.id.cw_tv_number, financialInfoBean.getSid());
-                        findAndSetText(R.id.cw_tv_remark, financialInfoBean.getRemark());
-                        findAndSetText(R.id.cw_tv_yjfy, financialInfoBean.getPayMoney() + "元");
                     }
 
                     @Override
@@ -124,20 +133,31 @@ public class Fragment_cw extends Fragment implements View.OnClickListener {
     }
 
     /**
+     * 文本控件赋值
+     *
+     * @param financialInfoBean
+     */
+    private void setText(FinancialInfoBean financialInfoBean) {
+        if (financialInfoBean == null) return;
+        findAndSetText(R.id.cw_tv_name, financialInfoBean.getStudentName());
+        findAndSetText(R.id.cw_tv_card_no, financialInfoBean.getBankId());
+        findAndSetText(R.id.cw_tv_college, financialInfoBean.getAcademy());
+        findAndSetText(R.id.cw_tv_dkdz, financialInfoBean.getDeferralDate());
+        findAndSetText(R.id.cw_tv_dkje, financialInfoBean.getDeferralMoney() + "元");
+        findAndSetText(R.id.cw_tv_grade, financialInfoBean.getGrade());
+        findAndSetText(R.id.cw_tv_number, financialInfoBean.getSid());
+        findAndSetText(R.id.cw_tv_remark, financialInfoBean.getRemark());
+        findAndSetText(R.id.cw_tv_yjfy, financialInfoBean.getPayMoney() + "元");
+    }
+
+    /**
      * 初始化视图
      */
     private void initViews() {
-        ImageView iv_jyjl = (ImageView) fragment.findViewById(R.id.cw_iv_jyjl);
-        ImageView iv_jfxm = (ImageView) fragment.findViewById(R.id.cw_iv_jfxm);
-        ImageView iv_jfmx = (ImageView) fragment.findViewById(R.id.cw_iv_jfmx);
-        ImageView iv_djfy = (ImageView) fragment.findViewById(R.id.cw_iv_yktcz);
-        ImageView iv_cwzx = (ImageView) fragment.findViewById(R.id.cw_iv_cwzx);
-
-        iv_jyjl.setOnClickListener(this);
-        iv_djfy.setOnClickListener(this);
-        iv_jfmx.setOnClickListener(this);
-        iv_jfxm.setOnClickListener(this);
-        iv_cwzx.setOnClickListener(this);
+        int[] cw_iv_ids = {R.id.cw_iv_jyjl, R.id.cw_iv_jfxm, R.id.cw_iv_jfmx, R.id.cw_iv_yktcz, R.id.cw_iv_cwzx};
+        for (int id : cw_iv_ids) {
+            fragment.findViewById(id).setOnClickListener(this);
+        }
 
         refreshLayout = (SwipeRefreshLayout) fragment.findViewById(R.id.cw_refreshLayout);
         refreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_blue_bright), getResources().getColor(android.R.color.holo_green_light),

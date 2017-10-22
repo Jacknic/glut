@@ -22,12 +22,12 @@ import com.lzy.okgo.OkGo;
 
 public class ViewUtil {
     /**
-     * 显示刷新按钮
+     * 显示工具栏右部按钮
      */
-    public static void showRefreshView(Activity activity, @NonNull final View.OnClickListener onClickListener) {
-        ImageView iv_setting = (ImageView) activity.findViewById(R.id.iv_setting);
-        iv_setting.setVisibility(View.VISIBLE);
-        iv_setting.setImageResource(R.drawable.ic_autorenew);
+    public static void showRightImageView(Activity activity, @NonNull final View.OnClickListener onClickListener) {
+        ImageView bar_iv_right = (ImageView) activity.findViewById(R.id.iv_right);
+        bar_iv_right.setVisibility(View.VISIBLE);
+        bar_iv_right.setImageResource(R.drawable.ic_autorenew);
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -38,7 +38,7 @@ public class ViewUtil {
                 v.startAnimation(rotateAnimation);
             }
         };
-        iv_setting.setOnClickListener(listener);
+        bar_iv_right.setOnClickListener(listener);
     }
 
     /**
