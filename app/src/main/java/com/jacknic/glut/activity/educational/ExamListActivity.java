@@ -60,7 +60,7 @@ public class ExamListActivity extends BaseActivity {
     /**
      * 获取数据
      */
-    void getData() {
+    private void getData() {
         OkGo.get("http://202.193.80.58:81/academic/manager/examstu/studentQueryAllExam.do?pagingNumberPerVLID=1000").execute(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {

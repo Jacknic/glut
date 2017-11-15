@@ -34,7 +34,7 @@ public class LoginModel {
      * @param password 密码
      * @param captcha  验证码
      */
-    public static void loginJW(String sid, String password, String captcha, final AbsCallback callback) {
+    public static void loginJW(final String sid, final String password, String captcha, final AbsCallback callback) {
 //        登录操作
         OkGo.post(Config.URL_JW_LOGIN_CHECK)
                 .params("groupId", "")
@@ -49,6 +49,11 @@ public class LoginModel {
 
             @Override
             public void onError(Call call, Response response, Exception e) {
+                SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefer_jw.edit();
+                editor.putString(Config.SID, sid);
+                editor.putString(Config.PASSWORD, password);
+                editor.apply();
                 Func.checkLoginStatus(callback);
             }
         });
