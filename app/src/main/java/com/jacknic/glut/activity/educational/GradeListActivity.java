@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.activity.BaseActivity;
 import com.jacknic.glut.adapter.GradeListAdapter;
+import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
@@ -27,6 +28,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -45,6 +47,7 @@ public class GradeListActivity extends BaseActivity {
     private Spinner sp_semester;
     private ArrayList<String> years;
     private Snackbar snackbar;
+    private AlertDialog loginDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,9 +78,16 @@ public class GradeListActivity extends BaseActivity {
         sp_semester.setAdapter(adapter_semesters);
         sp_semester.setSelection(calendar.get(Calendar.MONTH) > Calendar.SEPTEMBER ? 2 : 1);
         snackbar = Snackbar.make(rlv_grade_list, "数据获取中...", Snackbar.LENGTH_INDEFINITE);
+        showGrade();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("触发选择事件");
                 showGrade();
             }
 
@@ -88,43 +98,50 @@ public class GradeListActivity extends BaseActivity {
         };
         sp_semester.setOnItemSelectedListener(onItemSelectedListener);
         sp_year.setOnItemSelectedListener(onItemSelectedListener);
-        showGrade();
     }
 
     /**
      * 获取成绩
      */
     private void getGrade() {
-        OkGo.get("http://202.193.80.58:81/academic/showHeader.do").execute(
-                new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        //如果成功获取则就无需再次登录
-                        getAllGrade();
-                    }
+        snackbar.show();
+        StringCallback callback = new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                //如果成功获取则就无需再次登录
+                getAllGrade();
+            }
 
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
+            @Override
+            public void onError(Call call, Response response, Exception e) {
 //                        toLogin(GradeListActivity.this);
-                        login();
-                    }
+                if (response == null && e instanceof SocketTimeoutException) {
+                    snackbar.setText("连接服务器失败").setDuration(Snackbar.LENGTH_SHORT).show();
+                } else {
+                    login();
                 }
-        );
-
-
+            }
+        };
+        Func.checkLoginStatus(callback);
     }
 
     /**
      * 用户登录
      */
     private void login() {
-        AlertDialog loginDialog = Dialogs.getLoginJw(this, new AbsCallbackWrapper() {
-            @Override
-            public void onAfter(Object o, Exception e) {
-                getGrade();
-            }
-        });
-        loginDialog.show();
+        if (loginDialog == null) {
+            loginDialog = Dialogs.getLoginJw(this, new AbsCallbackWrapper() {
+                @Override
+                public void onAfter(Object o, Exception e) {
+                    showGrade();
+                }
+            });
+        }
+        if (loginDialog.isShowing() || isFinishing()) return;
+        else {
+            loginDialog.show();
+            snackbar.dismiss();
+        }
     }
 
     //获取所有成绩
@@ -203,7 +220,7 @@ public class GradeListActivity extends BaseActivity {
 
             }
             if (select_list.isEmpty()) {
-                snackbar.setText("成绩列表为空...");
+                snackbar.setText("该学期成绩列表为空...");
             } else {
                 snackbar.setText(select_list.size() + "条成绩信息");
             }

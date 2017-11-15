@@ -1,8 +1,8 @@
 ﻿{
-  "date": "2017-9-18",
-  "versionCode": 40,
-  "versionName": "4.0",
-  "downloadUrl": "http://imtt.dd.qq.com/16891/8C0D856A3D19C9EEDC389A031E4936AC.apk?fsname=com.jacknic.glut.apk",
-  "info": "1. 修复部分bug\n  2. 新增桌面小部件\n 3. 增加添加删除课程功能\n  4. 调整应用检查更新部分，应用更新提醒更及时\n  5. 调整部分用户界面",
-  "remark": "/*该文件用于应用版本检测更新*/！"
+  "date": "2017-11-15",
+  "versionCode": 50,
+  "versionName": "5.0",
+  "downloadUrl": "http://imtt.dd.qq.com/16891/95DEA4B624732BF74AEB24191A7E7165.apk?fsname=com.jacknic.glut.apk",
+  "info": "1.修复部分bug \n2.次级页面新增顶部返回按钮 \n3.调整部分用户界面",
+  "remark": "/*该文件用于应用版本检测更新！*/"
 }

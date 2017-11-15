@@ -7,9 +7,9 @@ android {
         applicationId "com.jacknic.glut"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 40
+        versionCode 50
         manifestPlaceholders = [INSTALL_CHANNEL: "测试", TA_APPKEY: "debug"]
-        versionName "4.0"
+        versionName "5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         /*应用版本名称*/
         resValue "string", "versionName", versionName

@@ -160,10 +160,6 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                SharedPreferences.Editor editor = prefer_jw.edit();
-                editor.putString(Config.SID, et_sid.getText().toString());
-                editor.putString(Config.PASSWORD, et_password.getText().toString());
-                editor.apply();
                 loginSuccess = true;
             }
 
@@ -280,7 +276,7 @@ public class LoginActivity extends BaseActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     if (et_captcha.getText().toString().length() == 0) return;
-                    OkGo.get(Config.URL_JW_CAPTCHA_CHECK + et_captcha.getText().toString()).execute(new StringCallback() {
+                    StringCallback checkCallback = new StringCallback() {
                         @Override
                         public void onSuccess(String s, Call call, Response response) {
                             if ("true".equalsIgnoreCase(s)) {
@@ -295,7 +291,8 @@ public class LoginActivity extends BaseActivity {
                                 Toast.makeText(LoginActivity.this, "验证码有误！", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    });
+                    };
+                    OkGo.get(Config.URL_JW_CAPTCHA_CHECK + et_captcha.getText().toString()).execute(checkCallback);
                 }
             }
         });

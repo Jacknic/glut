@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +28,7 @@ import com.jacknic.glut.util.Func;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.BitmapCallback;
+import com.lzy.okgo.callback.StringCallback;
 
 import java.util.Calendar;
 
@@ -118,7 +121,7 @@ public class Dialogs {
     /**
      * 教务登录对话框
      */
-    public static AlertDialog getLoginJw(Activity activity, final AbsCallbackWrapper callback) {
+    public static AlertDialog getLoginJw(final Activity activity, final AbsCallbackWrapper callback) {
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_login, null, false);
         SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
         String sid = prefer_jw.getString(Config.SID, "");
@@ -131,7 +134,13 @@ public class Dialogs {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setView(login_view);
         final ImageView iv_captcha = (ImageView) login_view.findViewById(R.id.iv_captcha);
-
+        final ImageView iv_check_captcha = (ImageView) login_view.findViewById(R.id.iv_check_captcha);
+        iv_check_captcha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_captcha.getText().clear();
+            }
+        });
         iv_captcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,6 +168,40 @@ public class Dialogs {
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD | 1);
                 }
                 et_password.setSelection(et_password.getText().length());
+            }
+        });
+
+        et_captcha.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() < 4) {
+                    return;
+                }
+                StringCallback checkCallback = new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        if ("true".equalsIgnoreCase(s)) {
+                            iv_check_captcha.setImageResource(R.drawable.ic_check_circle);
+                            iv_check_captcha.setColorFilter(activity.getResources().getColor(R.color.green));
+                            iv_check_captcha.setClickable(false);
+                        } else {
+                            iv_check_captcha.setImageResource(R.drawable.ic_cancel);
+                            iv_check_captcha.setColorFilter(activity.getResources().getColor(R.color.red));
+                            iv_check_captcha.setClickable(true);
+                        }
+                    }
+                };
+                OkGo.get(Config.URL_JW_CAPTCHA_CHECK + et_captcha.getText().toString()).execute(checkCallback);
             }
         });
         Button btn_login = (Button) login_view.findViewById(R.id.btn_login);
