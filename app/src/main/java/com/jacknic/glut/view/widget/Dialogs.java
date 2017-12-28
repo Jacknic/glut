@@ -266,4 +266,51 @@ public class Dialogs {
         });
         return dialog;
     }
+
+    /**
+     * 财务登录对话框
+     */
+    public static AlertDialog getLoginCw(final Activity activity, final AbsCallbackWrapper callback) {
+        LinearLayout login_view = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_login, null, false);
+        login_view.findViewById(R.id.captcha_layout).setVisibility(View.GONE);
+        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
+        String sid = prefer_jw.getString(Config.SID, "");
+        final SharedPreferences prefer_ts = activity.getSharedPreferences(Config.PREFER_TS, MODE_PRIVATE);
+        String password = prefer_ts.getString(Config.PASSWORD, "");
+        final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
+        final EditText et_password = (EditText) login_view.findViewById(R.id.et_password);
+        et_sid.setText(sid);
+        et_password.setHint("默认密码身份证后6位");
+        et_password.setText(password);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                .setView(login_view);
+        final ImageView iv_show_pwd = (ImageView) login_view.findViewById(R.id.iv_show_pwd);
+        //显示、隐藏密码
+        iv_show_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int inputType = et_password.getInputType();
+                if (inputType == (InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD | 1)) {
+                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
+                    iv_show_pwd.setColorFilter(0xff222222);
+                } else {
+                    iv_show_pwd.setColorFilter(0xffd9d9d9);
+                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD | 1);
+                }
+                et_password.setSelection(et_password.getText().length());
+            }
+        });
+        Button btn_login = (Button) login_view.findViewById(R.id.btn_login);
+        final AlertDialog dialog = builder.create();
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String sid = et_sid.getText().toString();
+                final String password = et_password.getText().toString();
+                LoginModel.loginCw(sid, password, callback);
+                dialog.dismiss();
+            }
+        });
+        return dialog;
+    }
 }

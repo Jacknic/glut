@@ -105,7 +105,6 @@ public class BorrowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         @Override
                         public void onSuccess(String s, Call call, Response response) {
                             Activity activity = (Activity) inflater.getContext();
-                            activity.findViewById(R.id.iv_right).callOnClick();
                             Document document = Jsoup.parse(s);
                             Element content = document.getElementById("content");
                             AlertDialog alertDialog = new AlertDialog.Builder(activity)

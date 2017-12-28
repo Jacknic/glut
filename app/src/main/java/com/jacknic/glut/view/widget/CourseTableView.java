@@ -2,10 +2,10 @@ package com.jacknic.glut.view.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -18,10 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.activity.educational.AddCourseActivity;
 import com.jacknic.glut.model.dao.CourseInfoDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
+import com.jacknic.glut.page.AddCoursePage;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.ViewUtil;
@@ -48,7 +48,7 @@ public class CourseTableView extends LinearLayout {
     private final int TimeTableNumWidth = 20;
     private LinearLayout mCourseNumLayout;//课程格子
     private HashMap<String, Integer> colorMap = new HashMap<>();
-    private int colorNum = getContext().getSharedPreferences(Config.PREFER_SETTING, Context.MODE_PRIVATE).getInt(Config.SETTING_COLOR_INDEX, 1) + 1;
+    private int colorNum = getContext().getSharedPreferences(Config.PREFER_SETTING, Context.MODE_PRIVATE).getInt(Config.SETTING_THEME_INDEX, 1) + 1;
     //数据源
     private List<CourseEntity> mListTimeTable = new ArrayList<>();
     private boolean hasNoonCourse = false;//中午是否有课
@@ -193,10 +193,10 @@ public class CourseTableView extends LinearLayout {
             mTime.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Intent intent = new Intent(getContext(), AddCourseActivity.class);
-                    intent.putExtra("start", course_now);
-                    intent.putExtra("weekDay", week);
-                    getContext().startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("start", course_now);
+                    bundle.putInt("weekDay", week);
+                    Func.getRootFragment((Activity) getContext()).open(new AddCoursePage(), bundle);
                     return false;
                 }
             });

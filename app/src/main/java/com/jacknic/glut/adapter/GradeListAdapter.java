@@ -20,11 +20,18 @@ import java.util.ArrayList;
  */
 public class GradeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private LayoutInflater inflater;
-    private ArrayList<Element> elements;
-    private final Element header;
+    private ArrayList<Element> elements = new ArrayList<>();
+    private Element header = new Element("<mark></mark>");
 
-    public GradeListAdapter(Context context, ArrayList<Element> elements) {
+    public GradeListAdapter(Context context) {
         inflater = LayoutInflater.from(context);
+    }
+
+    public ArrayList<Element> getElements() {
+        return elements;
+    }
+
+    public void setElements(ArrayList<Element> elements) {
         header = elements.remove(0);
         this.elements = elements;
     }

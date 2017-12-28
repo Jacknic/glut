@@ -1,35 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/tv_toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/iv_right"
-            android:layout_width="56dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="18dp"
-            android:src="@drawable/ic_settings"
-            android:tint="@color/white"
-            android:visibility="gone" />
-
-    </RelativeLayout>
-
-</android.support.v7.widget.Toolbar>
+    android:background="?attr/colorPrimary"
+    android:visibility="gone"
+    app:theme="@style/ToolbarTheme"
+    app:titleTextAppearance="@style/ToolbarTitle" />

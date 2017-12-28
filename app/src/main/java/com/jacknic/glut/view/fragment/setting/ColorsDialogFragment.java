@@ -24,20 +24,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ColorsDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    private String which = Config.SETTING_THEME_INDEX;
-
-    public void setWhich(String which) {
-        this.which = which;
-    }
-
-    public static void launch(Activity context, String which) {
+    public static void launch(Activity context) {
         Fragment fragment = context.getFragmentManager().findFragmentByTag("ColorsDialogFragment");
         if (fragment != null) {
             context.getFragmentManager().beginTransaction().remove(fragment).commit();
         }
-
         ColorsDialogFragment dialogFragment = new ColorsDialogFragment();
-        dialogFragment.setWhich(which);
         dialogFragment.show(context.getFragmentManager(), "ColorsDialogFragment");
     }
 
@@ -45,9 +37,7 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         setCancelable(true);
-
-        View view = View.inflate(getActivity(), R.layout.fragment_color_dialog, null);
-
+        View view = View.inflate(getActivity(), R.layout.frag_color_dialog, null);
         GridView gridView = (GridView) view.findViewById(R.id.grid_colors);
         gridView.setAdapter(new ColorsSelectorAdapter(this));
         gridView.setOnItemClickListener(this);
@@ -62,13 +52,11 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         SharedPreferences setting = getActivity().getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
+        String which = Config.SETTING_THEME_INDEX;
         setting.edit().putInt(which, position).putBoolean(Config.IS_REFRESH, true).apply();
         ImageView iv_select_theme_color = (ImageView) getActivity().findViewById(R.id.setting_iv_select_theme_color);
-        ImageView iv_select_btn_color = (ImageView) getActivity().findViewById(R.id.setting_iv_select_btn_color);
         int theme_index = setting.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
         iv_select_theme_color.setImageResource(Config.COLORS[theme_index]);
-        int btn_color_index = setting.getInt(Config.SETTING_COLOR_INDEX, Config.SETTING_THEME_COLOR_INDEX);
-        iv_select_btn_color.setImageResource(Config.COLORS[btn_color_index]);
         dismiss();
     }
 

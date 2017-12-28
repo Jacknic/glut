@@ -8,8 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.jacknic.glut.MainActivity;
 import com.jacknic.glut.R;
-import com.jacknic.glut.activity.StartActivity;
 import com.jacknic.glut.util.Func;
 
 import java.util.Calendar;
@@ -38,7 +38,7 @@ public class CourseWidgetProvider extends AppWidgetProvider {
         remoteViews.setOnClickPendingIntent(R.id.iv_refresh, refresh);
 
 
-        Intent openActivity = new Intent(context, StartActivity.class);
+        Intent openActivity = new Intent(context, MainActivity.class);
         PendingIntent open = PendingIntent
                 .getActivity(context, 0, openActivity, 0);
         remoteViews.setOnClickPendingIntent(R.id.wg_container, open);

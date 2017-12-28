@@ -31,54 +31,17 @@
             android:exported="true" />
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.StartActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.SettingActivity"
-            android:label="设置"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.educational.ExamListActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.educational.StudentInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.educational.ProcessActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.educational.GradeListActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.educational.ChangeTermActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.BrowserActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.FeedbackActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.library.BorrowActivity"
-            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".service.NetworkChangeBroadcastReceiver"
@@ -89,10 +52,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".activity.educational.AddCourseActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activity.educational.CourseListActivity" />
 
         <receiver android:name=".service.CourseWidgetProvider">
             <intent-filter>
