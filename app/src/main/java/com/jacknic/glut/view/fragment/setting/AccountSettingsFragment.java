@@ -12,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.activity.StartActivity;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
-import com.jacknic.glut.util.ActivityManager;
+import com.jacknic.glut.page.StartPage;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
@@ -37,7 +36,7 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragment = inflater.inflate(R.layout.fragment_setting_account, container, false);
+        fragment = inflater.inflate(R.layout.frag_setting_account, container, false);
         setOnClick();
         return fragment;
     }
@@ -108,8 +107,7 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
         Func.deleteFile(filesDir);
         prefer_jw.edit().putBoolean(Config.LOGIN_FLAG, false).apply();
         OkGo.getInstance().getCookieJar().getCookieStore().removeAllCookie();
-        startActivity(new Intent(getContext(), StartActivity.class));
-        ActivityManager.finishAll();
+        startActivity(new Intent(getContext(), StartPage.class));
         getActivity().finish();
     }
 

@@ -15,7 +15,7 @@ import com.jacknic.glut.R;
 public class AboutSettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragment = inflater.inflate(R.layout.fragment_setting_about, container, false);
+        View fragment = inflater.inflate(R.layout.frag_setting_about, container, false);
         return fragment;
     }
 

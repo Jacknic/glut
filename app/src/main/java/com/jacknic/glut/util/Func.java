@@ -1,13 +1,18 @@
 package com.jacknic.glut.util;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.jacknic.glut.MainActivity;
+import com.jacknic.glut.page.BrowserPage;
+import com.jacknic.glut.stacklibrary.RootFragment;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -139,4 +144,23 @@ public final class Func {
         Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         context.sendBroadcast(intent);
     }
+
+    /**
+     * 获取根页面
+     */
+    public static RootFragment getRootFragment(Activity activity) {
+        RootFragment rootFragment = ((MainActivity) activity).getRootFragment();
+        return rootFragment;
+    }
+
+    /**
+     * 打开网页
+     */
+    public static void openWebPage(Activity activity, String url) {
+        RootFragment rootFragment = getRootFragment(activity);
+        Bundle bundle = new Bundle();
+        bundle.putString("url", url);
+        rootFragment.open(new BrowserPage(), bundle);
+    }
+
 }

@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.jacknic.glut.MainActivity;
 import com.jacknic.glut.R;
-import com.jacknic.glut.activity.StartActivity;
 import com.jacknic.glut.model.dao.CourseDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.util.Func;
@@ -87,7 +87,7 @@ class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         rv.setTextViewText(R.id.item_tv_start_end, Func.courseIndexToStr(courseEntity.getStartSection())
                 + "-" + Func.courseIndexToStr(courseEntity.getEndSection()));
         //添加点击事件
-        rv.setOnClickFillInIntent(R.id.item_course_widget, new Intent(mContext, StartActivity.class));
+        rv.setOnClickFillInIntent(R.id.item_course_widget, new Intent(mContext, MainActivity.class));
         return rv;
     }
 

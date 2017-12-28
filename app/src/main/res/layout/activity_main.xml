@@ -6,21 +6,9 @@
 
     <include layout="@layout/toolbar" />
 
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/page_container"
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/primaryBackground"
-        android:overScrollMode="never" />
+        android:layout_height="match_parent" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_marginTop="-5dp"
-        android:alpha="0.8"
-        android:background="@drawable/bg_shadow" />
-
-    <include layout="@layout/bottom_tabs" />
 </LinearLayout>
