@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -196,7 +197,7 @@ public class CourseTableView extends LinearLayout {
                     Bundle bundle = new Bundle();
                     bundle.putInt("start", course_now);
                     bundle.putInt("weekDay", week);
-                    Func.getRootFragment((Activity) getContext()).open(new AddCoursePage(), bundle);
+                    Func.getTopFragment((FragmentActivity) getContext()).open(new AddCoursePage(), bundle);
                     return false;
                 }
             });

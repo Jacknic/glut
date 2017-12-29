@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -114,7 +115,7 @@ public class CourseFragment extends Fragment {
         View.OnClickListener change = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Func.getRootFragment(getActivity()).open(new ChangeTermPage());
+                Func.getTopFragment((FragmentActivity) getContext()).open(new ChangeTermPage());
                 CourseFragment.this.fragment.invalidate();
             }
         };

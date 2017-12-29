@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.ViewUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,6 +32,7 @@ public class StartPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_start, container, false);
+        ViewUtil.showStatusView(getRoot(), false);
         preferJw = getContext().getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
         boolean is_login = preferJw.getBoolean("login_flag", false);
         if (!is_login) {
@@ -41,7 +42,8 @@ public class StartPage extends RootFragment {
                 @Override
                 public void run() {
                     //打开主页
-                    Func.getRootFragment(getActivity()).dialogFragment(new HomePage());
+                    open(new HomePage());
+                    close(StartPage.this);
                 }
             }, 400);
         }
@@ -57,13 +59,13 @@ public class StartPage extends RootFragment {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.btn_login:
-                        RootFragment rootFragment = Func.getRootFragment(getActivity());
                         Bundle bundle = new Bundle();
                         bundle.putInt("flag", Config.LOGIN_FLAG_JW);
-                        rootFragment.open(new LoginPage(), bundle);
+                        open(new LoginPage(), bundle);
+                        close(StartPage.this);
                         break;
                     case R.id.btn_enter:
-                        Func.getRootFragment(getActivity()).dialogFragment(new HomePage());
+                        open(new HomePage());
                         preferJw.edit().putBoolean("login_flag", true).apply();
                         break;
                     default:

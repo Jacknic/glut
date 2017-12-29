@@ -3,6 +3,7 @@
 
     <!-- 默认黑色主题. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="colorPrimary">@color/black</item>
     </style>
     <!-- 蓝色主题. -->

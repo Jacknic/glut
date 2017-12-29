@@ -55,4 +55,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/mta-android-stat-sdk-2.3.0_20161221-jdk1.6.jar')
     compile files('libs/mid-core-sdk-3.7.1.jar')
+    compile 'org.greenrobot:eventbus:3.1.1'
 }
