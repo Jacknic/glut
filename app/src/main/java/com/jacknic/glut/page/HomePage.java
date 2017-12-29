@@ -147,6 +147,8 @@ public class HomePage extends RootFragment implements View.OnClickListener {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        TextView textView = (TextView) page.findViewById(tabsTv[selectIndex]);
+        ViewUtil.setTitle(getRoot(), textView.getText().toString());
         inflater.inflate(R.menu.menu_page_home, menu);
     }
 

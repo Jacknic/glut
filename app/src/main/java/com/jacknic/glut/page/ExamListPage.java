@@ -3,7 +3,6 @@ package com.jacknic.glut.page;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.ExamListAdapter;
 import com.jacknic.glut.model.bean.ExamInfoBean;
 import com.jacknic.glut.stacklibrary.RootFragment;
+import com.jacknic.glut.util.SnackBarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
@@ -37,16 +37,20 @@ import okhttp3.Response;
 
 public class ExamListPage extends RootFragment {
 
-    private RecyclerView rv_exam_list;
-    private ArrayList<ExamInfoBean> examInfoBeenList;
+    private ArrayList<ExamInfoBean> examInfoBeenList = new ArrayList<>();
+    private ExamListAdapter examListAdapter;
+    private boolean isGot = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View page = inflater.inflate(R.layout.page_exam_list, container, false);
         ViewUtil.setTitle(getRoot(), "考试安排");
-        rv_exam_list = (RecyclerView) page.findViewById(R.id.jw_rv_exam_list);
+        RecyclerView rv_exam_list = (RecyclerView) page.findViewById(R.id.jw_rv_exam_list);
         rv_exam_list.setLayoutManager(new LinearLayoutManager(getContext()));
+        examListAdapter = new ExamListAdapter(getContext(), examInfoBeenList);
+        rv_exam_list.setAdapter(examListAdapter);
+        getDataPre();
         return page;
     }
 
@@ -61,28 +65,22 @@ public class ExamListPage extends RootFragment {
                 Document document = Jsoup.parse(s);
                 Elements elements = document.select("table.datalist tr");
                 elements.remove(0);
-                examInfoBeenList = new ArrayList<ExamInfoBean>();
                 for (Element element : elements) {
                     ExamInfoBean bean = new ExamInfoBean(element.child(1).text(), element.child(2).text(), element.child(3).text());
                     examInfoBeenList.add(bean);
                 }
+                isGot = true;
                 getDataPre();
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        getDataPre();
     }
 
     /**
      * 获取数据前操作
      */
     private void getDataPre() {
-        if (examInfoBeenList == null) {
-            Snackbar.make(rv_exam_list, "数据获取中...", Snackbar.LENGTH_LONG).show();
+        if (!isGot) {
+            SnackBarTool.showShort("数据获取中...");
             OkGo.get("http://202.193.80.58:81/academic/student/currcourse/currcourse.jsdo").execute(
                     new StringCallback() {
                         @Override
@@ -99,8 +97,7 @@ public class ExamListPage extends RootFragment {
             );
 
         } else {
-            ExamListAdapter adapter = new ExamListAdapter(getContext(), examInfoBeenList);
-            rv_exam_list.setAdapter(adapter);
+            examListAdapter.notifyDataSetChanged();
         }
     }
 

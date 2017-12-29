@@ -42,8 +42,7 @@ public class StartPage extends RootFragment {
                 @Override
                 public void run() {
                     //打开主页
-                    open(new HomePage());
-                    close(StartPage.this);
+                    dialogFragment(new HomePage());
                 }
             }, 400);
         }
@@ -62,10 +61,9 @@ public class StartPage extends RootFragment {
                         Bundle bundle = new Bundle();
                         bundle.putInt("flag", Config.LOGIN_FLAG_JW);
                         open(new LoginPage(), bundle);
-                        close(StartPage.this);
                         break;
                     case R.id.btn_enter:
-                        open(new HomePage());
+                        dialogFragment(new HomePage());
                         preferJw.edit().putBoolean("login_flag", true).apply();
                         break;
                     default:

@@ -43,7 +43,7 @@ public class MainActivity extends RootActivity {
         setSupportActionBar(toolbar);
         setStatusView();
         SnackBarTool.init(this);
-        setAnim(R.anim.push_left_in, R.anim.push_right_out, R.anim.push_left_in, R.anim.push_right_out);
+        setAnim(R.anim.push_right_in, R.anim.push_left_out, R.anim.push_left_in, R.anim.push_right_out);
     }
 
 
