@@ -1,6 +1,8 @@
 package com.jacknic.glut.page;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.stacklibrary.RootFragment;
+import com.jacknic.glut.util.ViewUtil;
 
 /**
  * 内置浏览器
@@ -34,6 +37,7 @@ public class BrowserPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_browser, container, false);
+        ViewUtil.setTitle(getRoot(), "");
         initViews();
         setWebView();
         Bundle bundle = getArguments();
@@ -93,15 +97,24 @@ public class BrowserPage extends RootFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.menu_refresh, menu);
+        inflater.inflate(R.menu.menu_page_browser, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                Toast.makeText(getContext(), "浏览器页点击" + item.getItemId(), Toast.LENGTH_SHORT).show();
+                webView.reload();
                 return true;
+            case R.id.menu_back:
+                if (webView.canGoBack()) {
+                    webView.goBack();
+                }
+                return true;
+            case R.id.menu_open_with:
+                String url = webView.getUrl();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                getRoot().startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

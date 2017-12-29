@@ -38,7 +38,7 @@ public class ViewUtil {
     public static void showStatusView(Activity activity, boolean show) {
         View statusView = activity.findViewById(R.id.status_view);
         if (statusView != null) {
-            statusView.setAlpha(show ? 1F : 0.1F);
+            statusView.setAlpha(show ? 1F : 0F);
         }
     }
 }

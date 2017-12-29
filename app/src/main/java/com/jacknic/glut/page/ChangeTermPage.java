@@ -36,6 +36,8 @@ import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.BaseRequest;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -133,6 +135,7 @@ public class ChangeTermPage extends RootFragment {
      * 删除相同学期的所以数据记录
      */
     private void deleteTerm(CourseEntity courseEntity) {
+        EventBus.getDefault().post(this.getClass().getName());
         // 删除课程
         DataBase.getDaoSession().getCourseEntityDao().queryBuilder()
                 .where(CourseEntityDao.Properties.SchoolStartYear.eq(courseEntity.getSchoolStartYear()),

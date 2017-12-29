@@ -23,6 +23,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.WeekNameAdapter;
@@ -33,6 +34,8 @@ import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.view.widget.CourseTableView;
 import com.jacknic.glut.view.widget.Dialogs;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -246,5 +249,10 @@ public class CourseFragment extends Fragment {
     public void onResume() {
         super.onResume();
         refresh();
+    }
+
+    @Subscribe
+    public void onMessageEvent(String event) {
+        Toast.makeText(getActivity(), event, Toast.LENGTH_SHORT).show();
     }
 }
