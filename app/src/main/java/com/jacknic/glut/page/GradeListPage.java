@@ -2,7 +2,6 @@ package com.jacknic.glut.page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +16,12 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.GradeListAdapter;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.SnackBarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.request.BaseRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -47,7 +46,6 @@ public class GradeListPage extends RootFragment {
     private Spinner sp_year;
     private Spinner sp_semester;
     private ArrayList<String> years;
-    private Snackbar snackbar;
     private AlertDialog loginDialog;
     private View page;
     private GradeListAdapter gradeListAdapter;
@@ -87,12 +85,10 @@ public class GradeListPage extends RootFragment {
     @Override
     public void onStart() {
         super.onStart();
-        snackbar = Snackbar.make(rlv_grade_list, "数据获取中...", Snackbar.LENGTH_INDEFINITE);
         showGrade();
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("触发选择事件");
                 showGrade();
             }
 
@@ -109,7 +105,7 @@ public class GradeListPage extends RootFragment {
      * 获取成绩
      */
     private void getGrade() {
-        snackbar.show();
+        SnackBarTool.showIndefinite("数据获取中...");
         StringCallback callback = new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
@@ -121,7 +117,7 @@ public class GradeListPage extends RootFragment {
             public void onError(Call call, Response response, Exception e) {
 //                        toLogin(GradeListPage.this);
                 if (response == null && e instanceof SocketTimeoutException) {
-                    snackbar.setText("连接服务器失败").setDuration(Snackbar.LENGTH_SHORT).show();
+                    SnackBarTool.showShort("连接服务器失败");
                 } else {
                     login();
                 }
@@ -144,7 +140,7 @@ public class GradeListPage extends RootFragment {
         }
         if (!loginDialog.isShowing() && !getActivity().isFinishing()) {
             loginDialog.show();
-            snackbar.dismiss();
+            SnackBarTool.dismiss();
         }
     }
 
@@ -154,21 +150,10 @@ public class GradeListPage extends RootFragment {
 
             OkGo.get("http://202.193.80.58:81/academic/manager/score/studentOwnScore.do?year=&term=&para=0&sortColumn=&Submit=%E6%9F%A5%E8%AF%A2").execute(new StringCallback() {
                 @Override
-                public void onBefore(BaseRequest request) {
-                    snackbar.show();
-                }
-
-                @Override
                 public void onSuccess(String s, Call call, Response response) {
                     Document document = Jsoup.parse(s);
                     grade_list = document.select("table.datalist tr");
                     showGrade();
-                }
-
-                @Override
-                public void onAfter(String s, Exception e) {
-                    snackbar.setDuration(Snackbar.LENGTH_SHORT);
-                    snackbar.show();
                 }
             });
         }
@@ -224,11 +209,10 @@ public class GradeListPage extends RootFragment {
 
             }
             if (select_list.isEmpty()) {
-                snackbar.setText("该学期成绩列表为空...");
+                SnackBarTool.showShort("该学期成绩列表为空...");
             } else {
-                snackbar.setText(select_list.size() + "条成绩信息");
+                SnackBarTool.showShort(select_list.size() + "条成绩信息");
             }
-            snackbar.show();
             select_list.add(0, grade_list.first());
             gradeListAdapter.setElements(select_list);
             gradeListAdapter.notifyDataSetChanged();
@@ -238,6 +222,6 @@ public class GradeListPage extends RootFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        snackbar.dismiss();
+        SnackBarTool.dismiss();
     }
 }

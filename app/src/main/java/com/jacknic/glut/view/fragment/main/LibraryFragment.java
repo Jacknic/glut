@@ -30,7 +30,7 @@ import me.gujun.android.taggroup.TagGroup;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.jacknic.glut.util.Func.getRootFragment;
+import static com.jacknic.glut.util.Func.getTopFragment;
 
 
 /**
@@ -129,7 +129,7 @@ public class LibraryFragment extends Fragment {
                     }
                     break;
                 case R.id.ts_fab_mine:
-                    getRootFragment(getActivity()).open(new BorrowPage());
+                    getTopFragment(getActivity()).open(new BorrowPage());
                     break;
             }
         }

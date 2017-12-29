@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -21,6 +20,7 @@ import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.SnackBarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
@@ -127,7 +127,7 @@ public class LoginPage extends RootFragment {
              */
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                RootFragment rootFragment = Func.getRootFragment(getActivity());
+                RootFragment rootFragment = Func.getTopFragment(getActivity());
                 rootFragment.open(new HomePage());
             }
 
@@ -171,8 +171,7 @@ public class LoginPage extends RootFragment {
                     iv_captcha.callOnClick();
                     iv_show_pwd.callOnClick();
                     login_dialog.dismiss();
-                    Snackbar snackbar = Snackbar.make(et_sid, "登录失败!请检查输入信息", Snackbar.LENGTH_SHORT);
-                    snackbar.show();
+                    SnackBarTool.showShort("登录失败!请检查输入信息");
                 }
             }
         });
@@ -244,7 +243,7 @@ public class LoginPage extends RootFragment {
         AbsCallback callback = new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
-                Func.getRootFragment(getActivity()).dialogFragment(new HomePage());
+                open(new HomePage());
                 login_dialog.dismiss();
             }
         };

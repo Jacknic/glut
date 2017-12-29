@@ -1,12 +1,12 @@
 package com.jacknic.glut.util;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -146,18 +146,18 @@ public final class Func {
     }
 
     /**
-     * 获取根页面
+     * 获取栈顶页面
      */
-    public static RootFragment getRootFragment(Activity activity) {
-        RootFragment rootFragment = ((MainActivity) activity).getRootFragment();
-        return rootFragment;
+    public static RootFragment getTopFragment(FragmentActivity activity) {
+        RootFragment topFragment = ((MainActivity) activity).manager.getPages().peek();
+        return topFragment;
     }
 
     /**
      * 打开网页
      */
-    public static void openWebPage(Activity activity, String url) {
-        RootFragment rootFragment = getRootFragment(activity);
+    public static void openWebPage(FragmentActivity activity, String url) {
+        RootFragment rootFragment = getTopFragment(activity);
         Bundle bundle = new Bundle();
         bundle.putString("url", url);
         rootFragment.open(new BrowserPage(), bundle);

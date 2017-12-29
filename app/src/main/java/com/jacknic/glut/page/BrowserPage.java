@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -16,7 +19,6 @@ import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.stacklibrary.RootFragment;
-import com.jacknic.glut.util.ViewUtil;
 
 /**
  * 内置浏览器
@@ -78,17 +80,29 @@ public class BrowserPage extends RootFragment {
      * 初始化视图控件
      */
     private void initViews() {
-        ViewUtil.setTitle(getRoot(), "关闭");
         webView = (WebView) page.findViewById(R.id.web_view);
         progressbar = (ProgressBar) page.findViewById(R.id.progressbar);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
 
-    public void onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack();
-        } else {
-//            super.onBackPressed();
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_refresh, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_refresh:
+                Toast.makeText(getContext(), "浏览器页点击" + item.getItemId(), Toast.LENGTH_SHORT).show();
+                return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -2,7 +2,6 @@ package com.jacknic.glut.view.fragment.setting;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import com.jacknic.glut.R;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
-import com.jacknic.glut.page.StartPage;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
@@ -107,7 +105,6 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
         Func.deleteFile(filesDir);
         prefer_jw.edit().putBoolean(Config.LOGIN_FLAG, false).apply();
         OkGo.getInstance().getCookieJar().getCookieStore().removeAllCookie();
-        startActivity(new Intent(getContext(), StartPage.class));
         getActivity().finish();
     }
 

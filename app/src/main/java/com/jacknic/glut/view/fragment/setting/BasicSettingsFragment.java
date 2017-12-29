@@ -60,7 +60,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
                 ColorsDialogFragment.launch(getActivity());
                 break;
             case R.id.setting_tv_feedback:
-                RootFragment rootFragment = Func.getRootFragment(getActivity());
+                RootFragment rootFragment = Func.getTopFragment(getActivity());
                 rootFragment.open(new FeedbackPage());
                 break;
             case R.id.setting_tv_feedbackDeal:

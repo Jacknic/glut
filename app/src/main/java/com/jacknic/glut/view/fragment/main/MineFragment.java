@@ -97,7 +97,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        RootFragment rootFragment = Func.getRootFragment(getActivity());
+        RootFragment rootFragment = Func.getTopFragment(getActivity());
         switch (v.getId()) {
             case R.id.tv_kaoshi:
                 rootFragment.open(new ExamListPage());
