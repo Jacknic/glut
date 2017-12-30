@@ -22,6 +22,9 @@ import org.jsoup.select.Elements;
 import okhttp3.Call;
 import okhttp3.Response;
 
+/**
+ * 图书借阅适配器
+ */
 public class BorrowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private LayoutInflater inflater;
     private Elements elements;

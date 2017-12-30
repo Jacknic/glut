@@ -59,7 +59,7 @@ public class StudentInfoModel {
      * 写入学生信息
      */
     public void saveToPrefer(StudentInfoBean infoBean) {
-        SharedPreferences preferences = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+        SharedPreferences preferences = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = preferences.edit();
         edit.putString(student_info, JSON.toJSONString(infoBean));
         edit.apply();
@@ -69,7 +69,7 @@ public class StudentInfoModel {
      * 获取学生信息
      */
     public StudentInfoBean getFromPrefer() {
-        SharedPreferences preferences = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+        SharedPreferences preferences = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         StudentInfoBean infoBean = JSONObject.parseObject(preferences.getString(student_info, ""), StudentInfoBean.class);
         return infoBean == null ? new StudentInfoBean() : infoBean;
     }

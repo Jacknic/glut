@@ -1,5 +1,6 @@
 package com.jacknic.glut.page;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -19,7 +21,6 @@ import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.SnackBarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
@@ -41,10 +42,9 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class LoginPage extends RootFragment {
     private EditText et_sid, et_password;
-    private int flag;
     private EditText et_captcha;
     private ImageView iv_captcha;
-    private final SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
+    private final SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
     private ImageView iv_show_pwd;
     private AlertDialog login_dialog;
     private EduInfoModel eduInfoModel = new EduInfoModel();
@@ -55,18 +55,12 @@ public class LoginPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_login, container, false);
+        ViewUtil.showStatusView(getRoot(), true);
         et_sid = (EditText) page.findViewById(R.id.et_sid);
         et_password = (EditText) page.findViewById(R.id.et_password);
         et_sid.setText(prefer_jw.getString(Config.SID, ""));
-        flag = 0;//getIntent().getIntExtra("flag", 0);
-        int[] tips_id = new int[]{R.string.txt_jw, R.string.txt_cw};
-        ViewUtil.setTitle(getRoot(), "登录" + getString(tips_id[flag]));
-        if (flag == Config.LOGIN_FLAG_JW) {
-            showCaptcha();
-        } else {
-            // 只剩财务了
-            et_password.setHint("默认密码，身份证号后6位");
-        }
+        ViewUtil.setTitle(getRoot(), "登录教务");
+        showCaptcha();
         iv_show_pwd = (ImageView) page.findViewById(R.id.iv_show_pwd);
         //显示、隐藏密码
         iv_show_pwd.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +80,10 @@ public class LoginPage extends RootFragment {
         page.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(getRoot().getWindow().getDecorView().getWindowToken(), 0);
+                }
                 login_dialog = new AlertDialog.Builder(getContext())
                         .setTitle("登录中 ")
                         .setMessage("验证用户信息...")
@@ -101,52 +99,12 @@ public class LoginPage extends RootFragment {
                         }
                     }
                 }, 12000);
-                switch (flag) {
-                    case Config.LOGIN_FLAG_JW:
-                        loginJw();
-                        break;
-                    case Config.LOGIN_FLAG_CW:
-                        login_cw();
-                        break;
-                }
+                loginJw();
             }
         });
         return page;
     }
 
-
-    /**
-     * 登录到财务处
-     */
-    private void login_cw() {
-        final String sid = et_sid.getText().toString();
-        final String password = et_password.getText().toString();
-        AbsCallback callback = new StringCallback() {
-            /**
-             * 登录成功后进行的操作
-             */
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                RootFragment rootFragment = Func.getTopFragment(getActivity());
-                rootFragment.open(new HomePage());
-            }
-
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                iv_show_pwd.callOnClick();
-                Toast.makeText(getContext(), "登录失败！", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAfter(String s, Exception e) {
-                if (login_dialog.isShowing()) {
-                    login_dialog.dismiss();
-                }
-            }
-        };
-        //登录
-        LoginModel.loginCw(sid, password, callback);
-    }
 
     /**
      * 登录到教务
@@ -255,8 +213,8 @@ public class LoginPage extends RootFragment {
      */
 
     private void showCaptcha() {
-        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
-        et_password.setText(prefer_jw.getString(Config.PASSWORD, ""));
+        SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        et_password.setText(prefer.getString(Config.PASSWORD_JW, ""));
         final View captcha_layout = page.findViewById(R.id.captcha_layout);
         captcha_layout.setVisibility(View.VISIBLE);
         et_captcha = (EditText) page.findViewById(R.id.et_captcha);

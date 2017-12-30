@@ -41,7 +41,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        preferJw = getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+        preferJw = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         String sid = preferJw.getString("sid", "");
         StudentInfoBean studentInfo = new StudentInfoModel().getFromPrefer();
         boolean isShowHeadImg = preferJw.getBoolean("isShowHeadImg", true);

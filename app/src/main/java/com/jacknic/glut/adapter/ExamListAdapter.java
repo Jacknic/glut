@@ -19,6 +19,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * 考试安排适配器
+ */
 public class ExamListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private LayoutInflater inflater;
     private List<ExamInfoBean> examInfoBeanList = new ArrayList<>();

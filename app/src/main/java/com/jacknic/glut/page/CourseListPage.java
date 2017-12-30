@@ -55,7 +55,7 @@ public class CourseListPage extends RootFragment {
      */
     private void initView() {
         final ListView lv_course_list = (ListView) courseListPage.findViewById(R.id.lv_course_list);
-        SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
+        SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         int startYear = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         int semester = prefer_jw.getInt(Config.JW_SEMESTER, 1);
         final List<CourseInfoEntity> courseInfoList = DataBase.getDaoSession()
@@ -82,7 +82,7 @@ public class CourseListPage extends RootFragment {
                                         .queryBuilder()
                                         .where(CourseEntityDao.Properties.CourseNum.eq(courseInfoEntity.getCourseNum()))
                                         .buildDelete().executeDeleteWithoutDetachingEntities();
-                                SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
+                                SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
                                 prefer_jw.edit().putBoolean(Config.IS_REFRESH, true).apply();
                                 DataBase.getDaoSession().getCourseInfoEntityDao().delete(courseInfoEntity);
                                 Func.updateWidget(getContext());

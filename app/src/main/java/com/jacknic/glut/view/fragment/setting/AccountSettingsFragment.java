@@ -22,8 +22,6 @@ import java.io.File;
 
 import okhttp3.HttpUrl;
 
-import static android.content.Context.MODE_PRIVATE;
-
 
 /**
  * 账户设置
@@ -31,10 +29,12 @@ import static android.content.Context.MODE_PRIVATE;
 public class AccountSettingsFragment extends Fragment implements View.OnClickListener {
 
     private View fragment;
+    private SharedPreferences prefer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragment = inflater.inflate(R.layout.frag_setting_account, container, false);
+        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         setOnClick();
         return fragment;
     }
@@ -56,18 +56,16 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
                     public void onClick(DialogInterface dialog, int which) {
                         switch (v.getId()) {
                             case R.id.setting_btn_clear_cw:
-                                clear_cw();
+                                OkGo.getInstance().getCookieJar().getCookieStore().removeCookie(HttpUrl.parse("http://cwwsjf.glut.edu.cn:8088"));
+                                prefer.edit().remove(Config.PASSWORD_CW).remove(Config.STUDENT_ID).remove("info").apply();
                                 break;
                             case R.id.setting_btn_clear_ts:
-                                clear_ts();
+                                OkGo.getInstance().getCookieJar().getCookieStore().removeCookie(HttpUrl.parse("http://202.193.80.181:8080"));
+                                prefer.edit().remove(Config.PASSWORD_TS).apply();
                                 break;
                             case R.id.setting_btn_clear_all:
                                 logout();
                                 break;
-                        }
-                        if (v.getId() != R.id.setting_btn_clear_all) {
-                            SharedPreferences setting = getActivity().getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
-                            setting.edit().putBoolean(Config.IS_REFRESH, true).apply();
                         }
                     }
                 }).create();
@@ -76,20 +74,6 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
 
     }
 
-    /**
-     * 清除财务信息
-     */
-    private void clear_cw() {
-        getContext().getSharedPreferences(Config.PREFER_CW, Context.MODE_PRIVATE).edit().clear().apply();
-    }
-
-    /**
-     * 清除图书信息
-     */
-    private void clear_ts() {
-        OkGo.getInstance().getCookieJar().getCookieStore().removeCookie(HttpUrl.parse("http://202.193.80.181:8080"));
-        getContext().getSharedPreferences(Config.PREFER_TS, Context.MODE_PRIVATE).edit().clear().apply();
-    }
 
     /**
      * 清除登录信息
@@ -98,12 +82,9 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
         //清除数据表
         DataBase.getDaoSession().deleteAll(CourseEntity.class);
         DataBase.getDaoSession().deleteAll(CourseInfoEntity.class);
-        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
-        clear_cw();
-        clear_ts();
         File filesDir = getContext().getFilesDir();
         Func.deleteFile(filesDir);
-        prefer_jw.edit().putBoolean(Config.LOGIN_FLAG, false).apply();
+        prefer.edit().clear().apply();
         OkGo.getInstance().getCookieJar().getCookieStore().removeAllCookie();
         getActivity().finish();
     }

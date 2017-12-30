@@ -32,8 +32,8 @@ public class StartPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_start, container, false);
+        preferJw = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         ViewUtil.showStatusView(getRoot(), false);
-        preferJw = getContext().getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
         boolean is_login = preferJw.getBoolean("login_flag", false);
         if (!is_login) {
             start();
@@ -52,7 +52,7 @@ public class StartPage extends RootFragment {
     /**
      * 启动选项
      */
-    private void start() {
+    public void start() {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

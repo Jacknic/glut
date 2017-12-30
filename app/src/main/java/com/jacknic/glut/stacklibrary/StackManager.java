@@ -185,7 +185,7 @@ public class StackManager implements CloseFragment {
         if (pages.size() > 1) {
             to = pages.get(pages.size() - 2);
         }
-        if (from != null) {
+        if (from != null && from != pages.firstElement()) {
             if (to != null) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.show(to).commit();

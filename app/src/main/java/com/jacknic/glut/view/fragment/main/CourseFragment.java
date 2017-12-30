@@ -49,7 +49,7 @@ public class CourseFragment extends Fragment {
 
 
     private CourseTableView timeTableView;
-    private SharedPreferences prefer_jw;
+    private SharedPreferences prefer;
     private View fragment;
     private TabLayout tabLayout;
     private ImageView iv_course_setting;
@@ -72,7 +72,7 @@ public class CourseFragment extends Fragment {
      * 初始化控件
      */
     private void initView() {
-        prefer_jw = getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         timeTableView = (CourseTableView) fragment.findViewById(R.id.table_view);
         iv_course_setting = (ImageView) fragment.findViewById(R.id.kc_iv_course_setting);
         tabLayout = (TabLayout) fragment.findViewById(R.id.lv_select_week);
@@ -108,8 +108,8 @@ public class CourseFragment extends Fragment {
         week_now = Func.getWeekNow();
         Log.d("kc", "实际周数: " + week_now);
         selectWeek(week_now);
-        int semester = prefer_jw.getInt(Config.JW_SEMESTER, 1);
-        int school_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        int semester = prefer.getInt(Config.JW_SEMESTER, 1);
+        int school_year = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         TextView tv_school_year = (TextView) fragment.findViewById(R.id.jw_tv_school_year);
         TextView tv_semester = (TextView) fragment.findViewById(R.id.jw_tv_semester);
         tv_week.setText("第" + week_now + "周 ");
@@ -160,7 +160,7 @@ public class CourseFragment extends Fragment {
      * 设置tab滚动条
      */
     private void setTab() {
-        int end_week = prefer_jw.getInt(Config.JW_WEEK_END, 30);
+        int end_week = prefer.getInt(Config.JW_WEEK_END, 30);
         for (int i = 1; i <= end_week; i++) {
             String text = "第" + i + "周";
             SpannableString spanned = new SpannableString(text);
@@ -234,9 +234,9 @@ public class CourseFragment extends Fragment {
      * 刷新视图
      */
     private void refresh() {
-        boolean refresh = prefer_jw.getBoolean(Config.IS_REFRESH, false);
+        boolean refresh = prefer.getBoolean(Config.IS_REFRESH, false);
         if (refresh) {
-            prefer_jw.edit().remove(Config.IS_REFRESH).apply();
+            prefer.edit().remove(Config.IS_REFRESH).apply();
             if (ll_select_time.getVisibility() == View.VISIBLE) iv_toggle.callOnClick();
             tabLayout.removeAllTabs();
             Func.updateWidget(getContext());

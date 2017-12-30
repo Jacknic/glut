@@ -43,7 +43,7 @@ public class CourseDao {
      * @return 课表列表
      */
     public List<CourseEntity> getCourse(int week) {
-        SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+        SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         int school_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         int term = prefer_jw.getInt(Config.JW_SEMESTER, 1);
         return courseEntityDao.queryBuilder()
@@ -60,7 +60,7 @@ public class CourseDao {
      * 获取当日课表
      */
     public List<CourseEntity> getCourse() {
-        SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+        SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         Calendar calendar_now = Calendar.getInstance();
         int week_now = Func.getWeekNow();
         int school_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
