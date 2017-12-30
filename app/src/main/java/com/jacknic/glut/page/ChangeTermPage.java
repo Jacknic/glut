@@ -99,7 +99,7 @@ public class ChangeTermPage extends RootFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 CourseEntity courseEntity = termCourse.get(position);
-                                SharedPreferences.Editor editor = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE).edit();
+                                SharedPreferences.Editor editor = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE).edit();
                                 editor.putInt(Config.JW_SCHOOL_YEAR, courseEntity.getSchoolStartYear())
                                         .putInt(Config.JW_SEMESTER, courseEntity.getSemester())
                                         .putBoolean(Config.IS_REFRESH, true)
@@ -156,7 +156,7 @@ public class ChangeTermPage extends RootFragment {
     private List<String> getTerms() {
         termCourse = new CourseDao().getTermsCourse();
         final List<String> termList = new ArrayList<>();
-        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         int select_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         int select_semester = prefer_jw.getInt(Config.JW_SEMESTER, Calendar.getInstance().get(Calendar.YEAR));
 

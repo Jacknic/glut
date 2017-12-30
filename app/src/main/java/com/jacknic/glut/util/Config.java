@@ -36,24 +36,16 @@ public final class Config {
 
 
     /**
-     * 财务
-     */
-    public static final String PREFER_CW = "prefer_cw";
-    /**
      * 教务
      */
-    public static final String PREFER_JW = "prefer_jw";
-    /**
-     * 图书
-     */
-    public static final String PREFER_TS = "prefer_ts";
+    public static final String PREFER = "prefer";
+
 
     /**
      * 登录识别
      */
     public static final int LOGIN_FLAG_JW = 0;
     public static final int LOGIN_FLAG_CW = 1;
-    public static final int LOGIN_FLAG_TS = 2;
     /**
      * 设置
      */
@@ -84,9 +76,9 @@ public final class Config {
      */
     public static final String SID = "sid";
     /**
-     * 密码
+     * 密码(教务，财务，图书）
      */
-    public static final String PASSWORD = "password";
+    public static final String PASSWORD_JW = "password_jw", PASSWORD_CW = "password_cw", PASSWORD_TS = "password_ts";
     /**
      * 教务学期
      */

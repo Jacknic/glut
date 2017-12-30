@@ -35,7 +35,7 @@ import okhttp3.Response;
  */
 
 public class EduInfoModel {
-    private SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+    private SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
 
     /**
      * 获取课表

@@ -51,21 +51,22 @@ import static android.content.ContentValues.TAG;
  * 财务
  */
 public class FinancialFragment extends Fragment implements View.OnClickListener {
-    SharedPreferences prefer_cw;
+    SharedPreferences prefer;
     private String sid;
     private String student_id;
     private View fragment;
     private SwipeRefreshLayout refreshLayout;
-    private boolean isLogin;
+    private boolean isLogin = false;
     private boolean isFirst = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        prefer_cw = getContext().getSharedPreferences(Config.PREFER_CW, Context.MODE_PRIVATE);
         fragment = inflater.inflate(R.layout.frag_financial, container, false);
-        isLogin = prefer_cw.getBoolean(Config.LOGIN_FLAG, false);
+        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         initViews();
-        if (!isLogin) {
+        sid = prefer.getString(Config.SID, "");
+        student_id = prefer.getString(Config.STUDENT_ID, "");
+        if (TextUtils.isEmpty(sid) || TextUtils.isEmpty(student_id)) {
             fragment.findViewById(R.id.cw_tv_yktye).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,8 +74,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                 }
             });
         } else {
-            sid = prefer_cw.getString(Config.SID, "");
-            student_id = prefer_cw.getString(Config.STUDENT_ID, "");
+            isLogin = true;
             showData();
             //登录网页
             autoLogin(null);
@@ -86,7 +86,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
      * 显示数据
      */
     private void showData() {
-        String info = prefer_cw.getString("info", "");
+        String info = prefer.getString("info", "");
         FinancialInfoBean financialInfoBean = JSON.parseObject(info, FinancialInfoBean.class);
         if (TextUtils.isEmpty(info) || financialInfoBean == null) {
             getInfo();
@@ -101,13 +101,27 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
      * 登录财务处
      */
     private void toLogin() {
-        Dialogs.getLoginCw(getActivity(), new AbsCallbackWrapper()).show();
+        Dialogs.getLoginCw(getActivity(), new AbsCallbackWrapper() {
+            @Override
+            public void onSuccess(Object o, Call call, Response response) {
+                isLogin = true;
+                fragment.findViewById(R.id.cw_tv_yktye).setOnClickListener(null);
+                showData();
+                autoLogin(null);
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                Toast.makeText(getContext(), "登录财务处失败", Toast.LENGTH_SHORT).show();
+            }
+        }).show();
     }
 
     /**
      * 获取财务信息
      */
     private void getInfo() {
+        student_id = prefer.getString(Config.STUDENT_ID, "");
         OkGo.get(Config.getQueryUrlCW("getinfo", student_id))
                 .execute(new StringCallback() {
                     @Override
@@ -117,7 +131,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                             FinancialInfoBean financialInfoBean = JSONObject.parseObject(msg, FinancialInfoBean.class);
                             Log.d(this.getClass().getName(), "获取最新信息");
                             setText(financialInfoBean);
-                            prefer_cw.edit().putString("info", JSON.toJSONString(financialInfoBean)).apply();
+                            prefer.edit().putString("info", JSON.toJSONString(financialInfoBean)).apply();
                         } catch (Exception e) {
                             Log.d(this.getClass().getName(), "获取财务信息失败" + e.getMessage());
                         }
@@ -133,8 +147,6 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
 
     /**
      * 文本控件赋值
-     *
-     * @param financialInfoBean
      */
     private void setText(FinancialInfoBean financialInfoBean) {
         if (financialInfoBean == null) return;
@@ -263,15 +275,15 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
      * 自动登录认证
      */
     private void autoLogin(@Nullable final Intent intent) {
-        long lastLogin = prefer_cw.getLong("last_login", 0);
+        long lastLogin = prefer.getLong("last_login", 0);
         boolean isLogged = (System.currentTimeMillis() - lastLogin) < 30 * 60 * 1000;
         if (isLogged) {
             if (intent != null)
                 startActivity(intent);
             return;
         }
-        final String sid = prefer_cw.getString(Config.SID, "");
-        final String password = prefer_cw.getString(Config.PASSWORD, "");
+        final String sid = prefer.getString(Config.SID, "");
+        final String password = prefer.getString(Config.PASSWORD_JW, "");
         if (TextUtils.isEmpty(sid) || TextUtils.isEmpty(password)) {
             toLogin();
             return;
@@ -307,7 +319,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                             isFirst = false;
                         } else {
                             view.stopLoading();
-                            prefer_cw.edit().putLong("last_login", System.currentTimeMillis()).apply();
+                            prefer.edit().putLong("last_login", System.currentTimeMillis()).apply();
                             System.out.println("自动登录");
                             if (intent != null)
                                 startActivity(intent);

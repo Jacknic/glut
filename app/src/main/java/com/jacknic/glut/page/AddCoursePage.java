@@ -161,7 +161,7 @@ public class AddCoursePage extends RootFragment {
         EditText et_grade = (EditText) page.findViewById(R.id.et_grade);
         String grade = et_grade.getText().toString();
         String courseNum = System.currentTimeMillis() + "";
-        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
+        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         int semester = prefer_jw.getInt(Config.JW_SEMESTER, 1);
         int schoolYearStart = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         /*上课安排信息*/

@@ -71,7 +71,7 @@ public class Dialogs {
      */
     public static AlertDialog.Builder getChangeWeekDialog(Activity activity) {
         LinearLayout dialogView = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.dialog_change_week, null);
-        final SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER_JW, Context.MODE_PRIVATE);
+        final SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         int jw_week_end = prefer_jw.getInt(Config.JW_WEEK_END, 30);
         int select_week = prefer_jw.getInt(Config.JW_WEEK_SELECT, 30);
         final Calendar calendar = Calendar.getInstance();
@@ -123,9 +123,9 @@ public class Dialogs {
      */
     public static AlertDialog getLoginJw(final Activity activity, final AbsCallbackWrapper callback) {
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_login, null, false);
-        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
+        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         String sid = prefer_jw.getString(Config.SID, "");
-        String password = prefer_jw.getString(Config.PASSWORD, "");
+        String password = prefer_jw.getString(Config.PASSWORD_JW, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
         final EditText et_password = (EditText) login_view.findViewById(R.id.et_password);
         et_sid.setText(sid);
@@ -226,10 +226,10 @@ public class Dialogs {
     public static AlertDialog getLoginTs(final Activity activity, final AbsCallbackWrapper callback) {
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_login, null, false);
         login_view.findViewById(R.id.captcha_layout).setVisibility(View.GONE);
-        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
+        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         String sid = prefer_jw.getString(Config.SID, "");
-        final SharedPreferences prefer_ts = activity.getSharedPreferences(Config.PREFER_TS, MODE_PRIVATE);
-        String password = prefer_ts.getString(Config.PASSWORD, "");
+        final SharedPreferences prefer = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        String password = prefer.getString(Config.PASSWORD_TS, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
         final EditText et_password = (EditText) login_view.findViewById(R.id.et_password);
         et_sid.setText(sid);
@@ -273,10 +273,10 @@ public class Dialogs {
     public static AlertDialog getLoginCw(final Activity activity, final AbsCallbackWrapper callback) {
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_login, null, false);
         login_view.findViewById(R.id.captcha_layout).setVisibility(View.GONE);
-        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER_JW, MODE_PRIVATE);
+        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         String sid = prefer_jw.getString(Config.SID, "");
-        final SharedPreferences prefer_ts = activity.getSharedPreferences(Config.PREFER_TS, MODE_PRIVATE);
-        String password = prefer_ts.getString(Config.PASSWORD, "");
+        final SharedPreferences prefer_ts = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        String password = prefer_ts.getString(Config.PASSWORD_CW, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
         final EditText et_password = (EditText) login_view.findViewById(R.id.et_password);
         et_sid.setText(sid);

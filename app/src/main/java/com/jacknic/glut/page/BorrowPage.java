@@ -120,9 +120,9 @@ public class BorrowPage extends RootFragment {
     private void autoLogin() {
         isAuto = false;
         Log.d("ts 图书", "autoLogin: 自动登录图书馆");
-        SharedPreferences prefer_cw = OkGo.getContext().getSharedPreferences(Config.PREFER_CW, Context.MODE_PRIVATE);
-        String sid = prefer_cw.getString(Config.SID, "");
-        String password = prefer_cw.getString(Config.PASSWORD, "");
+        SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        String sid = prefer.getString(Config.SID, "");
+        String password = prefer.getString(Config.PASSWORD_TS, "");
         if (!TextUtils.isEmpty(sid) && !TextUtils.isEmpty(password)) {
             LoginModel.loginTs(sid, password, new AbsCallbackWrapper() {
                 @Override
