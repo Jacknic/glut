@@ -61,7 +61,7 @@ public class HomePage extends RootFragment implements View.OnClickListener {
         page = inflater.inflate(R.layout.page_home, container, false);
         pageContainer = (ViewPager) page.findViewById(R.id.page_container);
         actionBar = getRoot().getSupportActionBar();
-        ViewUtil.showStatusView(getRoot(), true);
+        ViewUtil.showToolbar(getRoot(), true);
         if (actionBar != null) {
             actionBar.show();
         }
@@ -125,7 +125,7 @@ public class HomePage extends RootFragment implements View.OnClickListener {
         }
         ImageView imageView = (ImageView) page.findViewById(tabsIv[selectIndex]);
         TextView textView = (TextView) page.findViewById(tabsTv[selectIndex]);
-        actionBar.setTitle(textView.getText());
+        ViewUtil.setTitle(getRoot(), textView.getText().toString());
         int color_index = getContext().getSharedPreferences(PREFER_SETTING, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
         int color = getResources().getColor(Config.COLORS[color_index]);
         pageContainer.setCurrentItem(selectIndex, true);

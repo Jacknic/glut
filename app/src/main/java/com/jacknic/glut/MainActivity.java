@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jacknic.glut.page.StartPage;
@@ -63,20 +60,6 @@ public class MainActivity extends RootActivity {
         // 设置状态栏透明
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            ViewGroup decorView = (ViewGroup) getWindow().getDecorView();
-            // 设置根布局的参数
-            ViewGroup rootView = (ViewGroup) ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
-            rootView.setFitsSystemWindows(true);
-            rootView.setClipToPadding(true);
-            // 获得状态栏高度
-            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-            int statusBarHeight = getResources().getDimensionPixelSize(resourceId);
-            //设置状态栏控件
-            View statusView = getLayoutInflater().inflate(R.layout.status_view, null);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, statusBarHeight);
-            statusView.setLayoutParams(params);
-            // 添加 statusView 到布局中
-            decorView.addView(statusView);
         }
     }
 

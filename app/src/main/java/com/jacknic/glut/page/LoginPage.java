@@ -55,7 +55,7 @@ public class LoginPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_login, container, false);
-        ViewUtil.showStatusView(getRoot(), true);
+        ViewUtil.showToolbar(getRoot(), true);
         et_sid = (EditText) page.findViewById(R.id.et_sid);
         et_password = (EditText) page.findViewById(R.id.et_password);
         et_sid.setText(prefer_jw.getString(Config.SID, ""));
