@@ -33,7 +33,7 @@ public class StartPage extends RootFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_start, container, false);
         preferJw = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        ViewUtil.showStatusView(getRoot(), false);
+        ViewUtil.showToolbar(getRoot(), false);
         boolean is_login = preferJw.getBoolean("login_flag", false);
         if (!is_login) {
             start();
@@ -79,5 +79,12 @@ public class StartPage extends RootFragment {
         TextView btnEnter = (TextView) page.findViewById(R.id.btn_enter);
         btnLogin.setOnClickListener(listener);
         btnEnter.setOnClickListener(listener);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            ViewUtil.showToolbar(getRoot(), false);
+        }
     }
 }

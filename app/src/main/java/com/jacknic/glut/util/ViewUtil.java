@@ -1,11 +1,8 @@
 package com.jacknic.glut.util;
 
-import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
-import com.jacknic.glut.R;
 import com.lzy.okgo.OkGo;
 
 /**
@@ -33,12 +30,16 @@ public class ViewUtil {
     }
 
     /**
-     * 显示状态栏视图
+     * 显示工具栏视图
      */
-    public static void showStatusView(Activity activity, boolean show) {
-        View statusView = activity.findViewById(R.id.status_view);
-        if (statusView != null) {
-            statusView.setAlpha(show ? 1F : 0.1F);
+    public static void showToolbar(AppCompatActivity activity, boolean show) {
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar != null) {
+            if (show) {
+                actionBar.show();
+            } else {
+                actionBar.hide();
+            }
         }
     }
 }
