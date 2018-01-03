@@ -49,6 +49,7 @@ public class StackManager implements CloseFragment {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(R.id.frame_container, mTargetFragment, mTargetFragment.getClass().getName())
                 .commit();
+        pages.clear();
         pages.add(mTargetFragment);
     }
 
