@@ -14,7 +14,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.ExamListAdapter;
 import com.jacknic.glut.model.bean.ExamInfoBean;
 import com.jacknic.glut.stacklibrary.RootFragment;
-import com.jacknic.glut.util.SnackBarTool;
+import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
@@ -80,7 +80,7 @@ public class ExamListPage extends RootFragment {
      */
     private void getDataPre() {
         if (!isGot) {
-            SnackBarTool.showShort("数据获取中...");
+            SnackbarTool.showShort("数据获取中...");
             OkGo.get("http://202.193.80.58:81/academic/student/currcourse/currcourse.jsdo").execute(
                     new StringCallback() {
                         @Override

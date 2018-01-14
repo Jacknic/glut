@@ -29,7 +29,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.frag_setting_basic, container, false);
         TextView tvSelectThemeColor = (TextView) fragment.findViewById(R.id.setting_tv_select_theme_color);
-        final SharedPreferences prefer_setting = getContext().getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
+        final SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         tvSelectThemeColor.setOnClickListener(this);
         TextView tvFeedback = (TextView) fragment.findViewById(R.id.setting_tv_feedback);
         tvFeedback.setOnClickListener(this);
@@ -37,13 +37,13 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
         tvFeedbackDeal.setOnClickListener(this);
         TextView tvCheckUpdate = (TextView) fragment.findViewById(R.id.setting_tv_checkUpdate);
         tvCheckUpdate.setOnClickListener(this);
-        boolean autoCheckUpdate = prefer_setting.getBoolean("auto_check_update", true);
+        boolean autoCheckUpdate = prefer.getBoolean("auto_check_update", true);
         SwitchCompat swAutoCheck = (SwitchCompat) fragment.findViewById(R.id.setting_sw_auto_check);
         swAutoCheck.setChecked(autoCheckUpdate);
         swAutoCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                prefer_setting.edit().putBoolean("auto_check_update", isChecked).apply();
+                prefer.edit().putBoolean("auto_check_update", isChecked).apply();
             }
         });
         TextView tvUpdateTips = (TextView) fragment.findViewById(R.id.setting_tv_updateTips);

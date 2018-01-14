@@ -21,7 +21,7 @@ import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.SnackBarTool;
+import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
@@ -129,7 +129,7 @@ public class LoginPage extends RootFragment {
                     iv_captcha.callOnClick();
                     iv_show_pwd.callOnClick();
                     login_dialog.dismiss();
-                    SnackBarTool.showShort("登录失败!请检查输入信息");
+                    SnackbarTool.showShort("登录失败!请检查输入信息");
                 }
             }
         });

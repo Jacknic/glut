@@ -2,8 +2,9 @@ package com.jacknic.glut.page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -13,6 +14,7 @@ import com.jacknic.glut.adapter.StudyProcessAdapter;
 import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -80,7 +82,7 @@ public class ProcessPage extends RootFragment {
      * 刷新数据
      */
     private void refresh() {
-        Snackbar.make(gv_grade_list, "刷新中...", Snackbar.LENGTH_LONG).show();
+        SnackbarTool.showShort("刷新中...");
         AbsCallbackWrapper callbackCheck = new AbsCallbackWrapper() {
             @Override
             public void onError(Call call, Response response, Exception e) {
@@ -110,10 +112,22 @@ public class ProcessPage extends RootFragment {
         new EduInfoModel().getStudyProcess(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                Snackbar.make(gv_grade_list, "刷新成功", Snackbar.LENGTH_SHORT).show();
+                SnackbarTool.showShort("刷新成功");
                 showData();
             }
         });
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_page_browser, menu);
     }
 }
 

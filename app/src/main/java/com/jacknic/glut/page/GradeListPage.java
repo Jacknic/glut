@@ -16,7 +16,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.GradeListAdapter;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Func;
-import com.jacknic.glut.util.SnackBarTool;
+import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
@@ -105,7 +105,7 @@ public class GradeListPage extends RootFragment {
      * 获取成绩
      */
     private void getGrade() {
-        SnackBarTool.showIndefinite("数据获取中...");
+        SnackbarTool.showIndefinite("数据获取中...");
         StringCallback callback = new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
@@ -117,7 +117,7 @@ public class GradeListPage extends RootFragment {
             public void onError(Call call, Response response, Exception e) {
 //                        toLogin(GradeListPage.this);
                 if (response == null && e instanceof SocketTimeoutException) {
-                    SnackBarTool.showShort("连接服务器失败");
+                    SnackbarTool.showShort("连接服务器失败");
                 } else {
                     login();
                 }
@@ -140,7 +140,7 @@ public class GradeListPage extends RootFragment {
         }
         if (!loginDialog.isShowing() && !getActivity().isFinishing()) {
             loginDialog.show();
-            SnackBarTool.dismiss();
+            SnackbarTool.dismiss();
         }
     }
 
@@ -209,9 +209,9 @@ public class GradeListPage extends RootFragment {
 
             }
             if (select_list.isEmpty()) {
-                SnackBarTool.showShort("该学期成绩列表为空...");
+                SnackbarTool.showShort("该学期成绩列表为空...");
             } else {
-                SnackBarTool.showShort(select_list.size() + "条成绩信息");
+                SnackbarTool.showShort(select_list.size() + "条成绩信息");
             }
             select_list.add(0, grade_list.first());
             gradeListAdapter.setElements(select_list);
@@ -222,6 +222,6 @@ public class GradeListPage extends RootFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        SnackBarTool.dismiss();
+        SnackbarTool.dismiss();
     }
 }

@@ -49,7 +49,6 @@ public final class Config {
     /**
      * 设置
      */
-    public static final String PREFER_SETTING = "prefer_setting";
     public static final int SETTING_THEME_COLOR_INDEX = 4;//默认蓝色主题样式
     public static final String SETTING_THEME_INDEX = "theme_index";
     public static final String IS_REFRESH = "is_refresh";

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +18,7 @@ import com.jacknic.glut.adapter.BorrowListAdapter;
 import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
@@ -65,11 +65,10 @@ public class BorrowPage extends RootFragment {
      */
     private void getRenewList() {
         OkGo.get("http://202.193.80.181:8080/opac/loan/renewList").execute(new StringCallback() {
-            private Snackbar make = Snackbar.make(rl_borrow_list, "请求中...", Snackbar.LENGTH_SHORT);
 
             @Override
             public void onBefore(BaseRequest request) {
-                make.show();
+                SnackbarTool.showShort("请求中...");
             }
 
             @Override
@@ -102,14 +101,14 @@ public class BorrowPage extends RootFragment {
                     }
 
                 } else {
-                    Snackbar.make(rl_borrow_list, "网络错误", Snackbar.LENGTH_SHORT).show();
+                    SnackbarTool.showShort("网络错误");
                 }
             }
 
             @Override
             public void onAfter(String s, Exception e) {
                 super.onAfter(s, e);
-                make.dismiss();
+                SnackbarTool.dismiss();
             }
         });
     }

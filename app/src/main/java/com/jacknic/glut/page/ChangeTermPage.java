@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +27,7 @@ import com.jacknic.glut.model.entity.CourseInfoEntityDao;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
+import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.jacknic.glut.view.widget.PickerView;
@@ -217,7 +217,7 @@ public class ChangeTermPage extends RootFragment {
                                 .where(CourseEntityDao.Properties.SchoolStartYear.eq(year), CourseEntityDao.Properties.Semester.eq(real_term))
                                 .count();
                         if (count > 0) {
-                            Snackbar.make(lvTerms, "该学期已存在", Snackbar.LENGTH_SHORT).show();
+                            SnackbarTool.showShort("该学期已存在");
                         } else {
                             importTerm(year, real_term);
                         }
@@ -238,11 +238,10 @@ public class ChangeTermPage extends RootFragment {
         int year_int = Integer.parseInt(year) - 1980;
         OkGo.get(Config.URL_JW_COURSE + String.format("?year=%s&term=%s", year_int + "", term))
                 .execute(new StringCallback() {
-                    Snackbar snackbar = Snackbar.make(lvTerms, "课表获取中...", Snackbar.LENGTH_INDEFINITE);
 
                     @Override
                     public void onBefore(BaseRequest request) {
-                        snackbar.show();
+                        SnackbarTool.showShort("课表获取中...");
                     }
 
                     @Override
@@ -250,14 +249,14 @@ public class ChangeTermPage extends RootFragment {
                         CourseModel courseModel = new CourseModel(s);
                         ArrayList<CourseEntity> courses = courseModel.getCourses();
                         if (courses.size() == 0) {
-                            snackbar.setText("暂时无法获取该学期课表");
+                            SnackbarTool.showShort("暂时无法获取该学期课表");
                             return;
                         }
                         ArrayList<CourseInfoEntity> courseInfoList = courseModel.getCourseInfoList();
                         new CourseInfoDao().insertCourseInfoList(courseInfoList);
                         CourseDao courseDao = new CourseDao();
                         courseDao.insertCourses(courses);
-                        snackbar.setText("导入课表成功");
+                        SnackbarTool.showShort("导入课表成功");
                     }
 
                     @Override
@@ -273,8 +272,6 @@ public class ChangeTermPage extends RootFragment {
                     @Override
                     public void onAfter(String s, Exception e) {
                         setTerms();
-                        snackbar.setDuration(Snackbar.LENGTH_SHORT);
-                        snackbar.show();
                     }
                 });
     }
