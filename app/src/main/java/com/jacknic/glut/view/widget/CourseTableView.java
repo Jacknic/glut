@@ -49,7 +49,7 @@ public class CourseTableView extends LinearLayout {
     private final int TimeTableNumWidth = 20;
     private LinearLayout mCourseNumLayout;//课程格子
     private HashMap<String, Integer> colorMap = new HashMap<>();
-    private int colorNum = getContext().getSharedPreferences(Config.PREFER_SETTING, Context.MODE_PRIVATE).getInt(Config.SETTING_THEME_INDEX, 1) + 1;
+    private int colorNum = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE).getInt(Config.SETTING_THEME_INDEX, 1) + 1;
     //数据源
     private List<CourseEntity> mListTimeTable = new ArrayList<>();
     private boolean hasNoonCourse = false;//中午是否有课

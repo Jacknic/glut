@@ -13,7 +13,7 @@ import com.jacknic.glut.page.StartPage;
 import com.jacknic.glut.stacklibrary.RootActivity;
 import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.SnackBarTool;
+import com.jacknic.glut.util.SnackbarTool;
 import com.lzy.okgo.OkGo;
 
 import java.util.Timer;
@@ -36,10 +36,11 @@ public class MainActivity extends RootActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         selectTheme();
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setStatusView();
-        SnackBarTool.init(this);
+        SnackbarTool.init(this);
         setAnim(R.anim.push_right_in, R.anim.push_left_out, R.anim.push_left_in, R.anim.push_right_out);
     }
 
@@ -48,7 +49,7 @@ public class MainActivity extends RootActivity {
      * 设置主题
      */
     public void selectTheme() {
-        SharedPreferences setting = getSharedPreferences(Config.PREFER_SETTING, MODE_PRIVATE);
+        SharedPreferences setting = getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         int theme_index = setting.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
         setTheme(Config.THEME_LIST[theme_index]);
     }
@@ -78,7 +79,6 @@ public class MainActivity extends RootActivity {
             Toast.makeText(MainActivity.this, "再次返回退出应用", Toast.LENGTH_SHORT).show();
             exit = true;
         } else {
-            this.overridePendingTransition(R.anim.scale_fade_out, R.anim.scale_fade_out);
             OkGo.getInstance().cancelAll();
             finish();
         }

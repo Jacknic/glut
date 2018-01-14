@@ -62,10 +62,9 @@ public class PickerView extends View {
     private Timer timer;
     private MyTimerTask mTask;
 
-    Handler updateHandler = new Handler() {
-
+    Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
+        public boolean handleMessage(Message msg) {
             if (Math.abs(mMoveLen) < SPEED) {
                 mMoveLen = 0;
                 if (mTask != null) {
@@ -73,13 +72,14 @@ public class PickerView extends View {
                     mTask = null;
                     performSelect();
                 }
-            } else
+            } else {
                 // 这里mMoveLen / Math.abs(mMoveLen)是为了保有mMoveLen的正负号，以实现上滚或下滚
                 mMoveLen = mMoveLen - mMoveLen / Math.abs(mMoveLen) * SPEED;
+            }
             invalidate();
+            return true;
         }
-
-    };
+    });
 
     public PickerView(Context context) {
         super(context);

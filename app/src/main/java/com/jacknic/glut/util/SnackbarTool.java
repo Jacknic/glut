@@ -7,10 +7,10 @@ import android.support.design.widget.Snackbar;
  * 提示条管理工具
  */
 
-public class SnackBarTool {
+public class SnackbarTool {
     private static Snackbar snackbar;
 
-    private SnackBarTool() {
+    private SnackbarTool() {
     }
 
     /**

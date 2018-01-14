@@ -159,7 +159,6 @@ public class StackManager implements CloseFragment {
         if (!context.isFinishing()) {
             FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
             transaction.remove(mTargetFragment).commit();
-            pages.pop();
         } else {
             closeAllFragment();
         }
@@ -181,12 +180,12 @@ public class StackManager implements CloseFragment {
      */
     public void onBackPressed() {
         FragmentManager fragmentManager = context.getSupportFragmentManager();
-        Fragment from = pages.peek();
+        final Fragment from = pages.pop();
         Fragment to = null;
-        if (pages.size() > 1) {
-            to = pages.get(pages.size() - 2);
+        if (pages.size() >= 1) {
+            to = pages.get(pages.size() - 1);
         }
-        if (from != null && from != pages.firstElement()) {
+        if (from != null) {
             if (to != null) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.show(to).commit();
@@ -202,7 +201,7 @@ public class StackManager implements CloseFragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        closeFragment(pages.peek());
+                        closeFragment(from);
                     }
 
                     @Override
