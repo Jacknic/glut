@@ -20,7 +20,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ import okhttp3.Response;
  */
 
 public class EduInfoModel {
-    private SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+    private SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
 
     /**
      * 获取课表
@@ -45,7 +44,7 @@ public class EduInfoModel {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 CourseModel courseModel = new CourseModel(s);
-                SharedPreferences.Editor editor = prefer_jw.edit();
+                SharedPreferences.Editor editor = prefer.edit();
                 editor.putInt(Config.JW_SCHOOL_YEAR, courseModel.getSchoolYear());
                 editor.putInt(Config.JW_SEMESTER, courseModel.getSemester());
                 editor.apply();
@@ -73,25 +72,23 @@ public class EduInfoModel {
      * 获取教务空间头像
      */
     public void getHeaderImg(@NonNull final AbsCallback callback) {
-        String sid = prefer_jw.getString(Config.SID, "0");
-        File appPath = OkGo.getContext().getFilesDir();
-        final File image = new File(appPath, sid + ".jpg");
-        System.out.println("image的位置是" + image.getAbsolutePath());
-        FileCallback fileCallback = new FileCallback() {
+        String sid = prefer.getString(Config.SID, "0");
+        File filesDir = OkGo.getContext().getFilesDir();
+        FileCallback fileCallback = new FileCallback(filesDir.getAbsolutePath(), sid + ".jpg") {
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                System.err.println("获取头像产生了错误----");
+                System.err.println("err" + e.getMessage());
+                super.onError(call, response, e);
+            }
+
             @Override
             public void onSuccess(File file, Call call, Response response) {
-                try {
-                    Log.d("week", "------------------------------------------------");
-                    Log.d("week", "获取头像");
-                    FileInputStream fin = new FileInputStream(file);
-                    FileOutputStream fout = new FileOutputStream(image);
-                    System.out.println("源文件路径" + file.getAbsolutePath());
-                    System.out.println("源文件大小" + file.length());
-                    fin.getChannel().transferTo(0, fin.getChannel().size(), fout.getChannel());
-                    Log.d("week", "文件保存路径" + image.getAbsolutePath());
-                } catch (IOException e) {
-                    Log.e("week", "获取学生头像失败");
-                }
+                Log.d("week", "------------------------------------------------");
+                Log.d("week", "获取头像");
+                System.out.println("源文件路径" + file.getAbsolutePath());
+                System.out.println("源文件大小" + file.length());
+                Log.d("week", "文件保存路径" + file.getAbsolutePath());
             }
 
             @Override
@@ -140,7 +137,7 @@ public class EduInfoModel {
         StringCallback stringCallback = new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                SharedPreferences.Editor editor = prefer_jw.edit();
+                SharedPreferences.Editor editor = prefer.edit();
                 Document document = Jsoup.parse(s);
                 //获取当前周数
                 Element curweek = document.select(".curweek strong").get(0);

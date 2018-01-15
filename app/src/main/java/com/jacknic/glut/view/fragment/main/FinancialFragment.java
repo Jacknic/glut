@@ -210,8 +210,12 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                 CharSequence text_card_no = tv_card_no.getText();
                 if (!TextUtils.isEmpty(text_card_no)) {
                     ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    cm.setPrimaryClip(ClipData.newPlainText("text", text_card_no));
-                    Toast.makeText(getContext(), "复制银行卡号成功，可粘贴使用", Toast.LENGTH_SHORT).show();
+                    if (cm != null) {
+                        cm.setPrimaryClip(ClipData.newPlainText("text", text_card_no));
+                        Toast.makeText(getContext(), "复制成功，可粘贴使用", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "复制失败（无法访问剪切板）", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -283,7 +287,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
             return;
         }
         final String sid = prefer.getString(Config.SID, "");
-        final String password = prefer.getString(Config.PASSWORD_JW, "");
+        final String password = prefer.getString(Config.PASSWORD_CW, "");
         if (TextUtils.isEmpty(sid) || TextUtils.isEmpty(password)) {
             toLogin();
             return;
