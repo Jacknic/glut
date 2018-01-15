@@ -2,6 +2,7 @@ package com.jacknic.glut.view.fragment.setting;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jacknic.glut.MainActivity;
 import com.jacknic.glut.R;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
@@ -84,9 +86,16 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
         DataBase.getDaoSession().deleteAll(CourseInfoEntity.class);
         File filesDir = getContext().getFilesDir();
         Func.deleteFile(filesDir);
-        prefer.edit().clear().apply();
+        String sid = prefer.getString(Config.SID, "");
+        String pwd = prefer.getString(Config.PASSWORD_JW, "");
+        SharedPreferences.Editor editor = prefer.edit();
+        editor.clear().apply();
+        editor.putString(Config.SID, sid)
+                .putString(Config.PASSWORD_JW, pwd)
+                .apply();
         OkGo.getInstance().getCookieJar().getCookieStore().removeAllCookie();
         getActivity().finish();
+        startActivity(new Intent(getContext(), MainActivity.class));
     }
 
 }

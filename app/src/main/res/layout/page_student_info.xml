@@ -40,8 +40,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="right"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_account_circle" />
+                    android:scaleType="centerCrop" />
             </LinearLayout>
 
             <include layout="@layout/div_line" />
