@@ -29,7 +29,5 @@ public class App extends android.app.Application {
         crashReporter.setEnableInstantReporting(true);
         // 开启java异常捕获
         crashReporter.setJavaCrashHandlerStatus(true);
-        // 开启Jni异常捕获
-        crashReporter.setJniNativeCrashStatus(true);
     }
 }
