@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,14 +21,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.ViewUtil;
 
 /**
  * 内置浏览器
  */
 
-public class BrowserPage extends RootFragment {
+public class BrowserPage extends Fragment {
 
     private ProgressBar progressbar;
     private WebView webView;
@@ -37,14 +37,14 @@ public class BrowserPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_browser, container, false);
-        ViewUtil.setTitle(getRoot(), "");
+        ViewUtil.setTitle(getContext(), "");
         initViews();
         setWebView();
         Bundle bundle = getArguments();
         String url = bundle.getString("url");
         if (TextUtils.isEmpty(url)) {
             Toast.makeText(getContext(), "网址为空", Toast.LENGTH_SHORT).show();
-            close();
+            getActivity().onBackPressed();
         }
         webView.loadUrl(url);
         return page;
@@ -114,7 +114,7 @@ public class BrowserPage extends RootFragment {
             case R.id.menu_open_with:
                 String url = webView.getUrl();
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                getRoot().startActivity(intent);
+                getContext().startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

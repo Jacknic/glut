@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.model.StudentInfoModel;
 import com.jacknic.glut.model.bean.StudentInfoBean;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
@@ -31,7 +31,7 @@ import okhttp3.Response;
  * 学籍信息
  */
 
-public class StudentInfoPage extends RootFragment {
+public class StudentInfoPage extends Fragment {
 
     private View page;
 
@@ -39,7 +39,7 @@ public class StudentInfoPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_student_info, container, false);
-        ViewUtil.setTitle(getRoot(), "学籍信息");
+        ViewUtil.setTitle(getContext(), "学籍信息");
         setStudentInfo();
         return page;
     }

@@ -13,9 +13,8 @@ import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.page.FeedbackPage;
-import com.jacknic.glut.stacklibrary.RootFragment;
+import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.UpdateUtil;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -60,8 +59,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
                 ColorsDialogFragment.launch(getActivity());
                 break;
             case R.id.setting_tv_feedback:
-                RootFragment rootFragment = Func.getTopFragment(getActivity());
-                rootFragment.open(new FeedbackPage());
+                PageTool.open(getContext(), new FeedbackPage());
                 break;
             case R.id.setting_tv_feedbackDeal:
                 url = "https://github.com/Jacknic/glut/blob/master/feedback.md";
@@ -74,7 +72,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
                 break;
         }
         if (!TextUtils.isEmpty(url)) {
-            Func.openWebPage(getActivity(), url);
+            PageTool.openWebPage(getActivity(), url);
         }
     }
 }

@@ -3,15 +3,12 @@ package com.jacknic.glut;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.jacknic.glut.page.StartPage;
 import com.jacknic.glut.stacklibrary.RootActivity;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.SnackbarTool;
 import com.lzy.okgo.OkGo;
@@ -20,17 +17,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends RootActivity {
-
-    private StartPage startPage;
-
-    @NonNull
-    @Override
-    public RootFragment getRootFragment() {
-        if (startPage == null) {
-            startPage = new StartPage();
-        }
-        return startPage;
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,12 +61,18 @@ public class MainActivity extends RootActivity {
                 exit = false;
             }
         }, 2000);
-        if (!exit) {
-            Toast.makeText(MainActivity.this, "再次返回退出应用", Toast.LENGTH_SHORT).show();
-            exit = true;
+        if (manager.getPages().size() <= 1) {
+            if (!exit) {
+                Toast.makeText(MainActivity.this, "再次返回退出应用", Toast.LENGTH_SHORT).show();
+                exit = true;
+            } else {
+                OkGo.getInstance().cancelAll();
+                manager.closeAllFragment();
+                finish();
+            }
         } else {
-            OkGo.getInstance().cancelAll();
-            finish();
+            manager.onBackPressed();
         }
+
     }
 }

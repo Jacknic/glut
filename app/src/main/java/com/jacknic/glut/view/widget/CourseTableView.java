@@ -6,7 +6,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -23,6 +22,7 @@ import com.jacknic.glut.model.dao.CourseInfoDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.page.AddCoursePage;
+import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.ViewUtil;
@@ -197,7 +197,7 @@ public class CourseTableView extends LinearLayout {
                     Bundle bundle = new Bundle();
                     bundle.putInt("start", course_now);
                     bundle.putInt("weekDay", week);
-                    Func.getTopFragment((FragmentActivity) getContext()).open(new AddCoursePage(), bundle);
+                    PageTool.open(getContext(), new AddCoursePage(), bundle);
                     return false;
                 }
             });

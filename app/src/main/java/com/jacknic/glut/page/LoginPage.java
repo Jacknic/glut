@@ -5,8 +5,12 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +18,11 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.model.LoginModel;
-import com.jacknic.glut.stacklibrary.RootFragment;
+import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
@@ -40,7 +43,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * 用户登录
  */
-public class LoginPage extends RootFragment {
+public class LoginPage extends Fragment {
     private EditText et_sid, et_password;
     private EditText et_captcha;
     private ImageView iv_captcha;
@@ -55,11 +58,11 @@ public class LoginPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_login, container, false);
-        ViewUtil.showToolbar(getRoot(), true);
+        ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         et_sid = (EditText) page.findViewById(R.id.et_sid);
         et_password = (EditText) page.findViewById(R.id.et_password);
         et_sid.setText(prefer_jw.getString(Config.SID, ""));
-        ViewUtil.setTitle(getRoot(), "登录教务");
+        ViewUtil.setTitle(getContext(), "登录教务");
         showCaptcha();
         iv_show_pwd = (ImageView) page.findViewById(R.id.iv_show_pwd);
         //显示、隐藏密码
@@ -82,7 +85,7 @@ public class LoginPage extends RootFragment {
             public void onClick(View v) {
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
-                    imm.hideSoftInputFromWindow(getRoot().getWindow().getDecorView().getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(((AppCompatActivity) getContext()).getWindow().getDecorView().getWindowToken(), 0);
                 }
                 login_dialog = new AlertDialog.Builder(getContext())
                         .setTitle("登录中 ")
@@ -201,7 +204,7 @@ public class LoginPage extends RootFragment {
         AbsCallback callback = new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
-                open(new HomePage());
+                PageTool.open(getContext(), new HomePage());
                 login_dialog.dismiss();
             }
         };
@@ -226,29 +229,35 @@ public class LoginPage extends RootFragment {
             }
         });
         //验证码检验监听
-        et_captcha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        et_captcha.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    if (et_captcha.getText().toString().length() == 0) return;
-                    StringCallback checkCallback = new StringCallback() {
-                        @Override
-                        public void onSuccess(String s, Call call, Response response) {
-                            if ("true".equalsIgnoreCase(s)) {
-                                iv_check_captcha.setImageResource(R.drawable.ic_check_circle);
-                                iv_check_captcha.setColorFilter(getResources().getColor(R.color.green));
-                                iv_check_captcha.setClickable(false);
-                            } else {
-                                iv_check_captcha.setImageResource(R.drawable.ic_cancel);
-                                iv_check_captcha.setColorFilter(getResources().getColor(R.color.red));
-                                iv_check_captcha.setClickable(true);
-                                iv_captcha.callOnClick();
-                                Toast.makeText(getContext(), "验证码有误！", Toast.LENGTH_SHORT).show();
-                            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et_captcha.getText().toString().length() < 4) return;
+                StringCallback checkCallback = new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        if ("true".equalsIgnoreCase(s)) {
+                            iv_check_captcha.setImageResource(R.drawable.ic_check_circle);
+                            iv_check_captcha.setColorFilter(getResources().getColor(R.color.green));
+                            iv_check_captcha.setClickable(false);
+                        } else {
+                            iv_check_captcha.setImageResource(R.drawable.ic_cancel);
+                            iv_check_captcha.setColorFilter(getResources().getColor(R.color.red));
+                            iv_check_captcha.setClickable(true);
                         }
-                    };
-                    OkGo.get(Config.URL_JW_CAPTCHA_CHECK + et_captcha.getText().toString()).execute(checkCallback);
-                }
+                    }
+                };
+                OkGo.get(Config.URL_JW_CAPTCHA_CHECK + et_captcha.getText().toString()).execute(checkCallback);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
         getCaptcha();

@@ -3,6 +3,7 @@ package com.jacknic.glut.page;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,6 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
@@ -35,7 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * 添加课程页
  */
-public class AddCoursePage extends RootFragment {
+public class AddCoursePage extends Fragment {
     int courseStart = 1;
     int courseEnd = 1;
     int weekStart = 1;
@@ -56,7 +56,7 @@ public class AddCoursePage extends RootFragment {
         courseStart = start;
         courseEnd = start;
         weekDay = bundle.getInt("weekDay", 1);
-        ViewUtil.setTitle(getRoot(), "添加课程");
+        ViewUtil.setTitle(getContext(), "添加课程");
         actCourseName = (AutoCompleteTextView) page.findViewById(R.id.act_course_name);
         List<CourseInfoEntity> courseInfoEntities = DataBase.getDaoSession().getCourseInfoEntityDao().loadAll();
         List<String> courseNames = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.jacknic.glut.page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,6 @@ import android.widget.Spinner;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.GradeListAdapter;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
@@ -39,7 +39,7 @@ import okhttp3.Response;
  * 成绩查询
  */
 
-public class GradeListPage extends RootFragment {
+public class GradeListPage extends Fragment {
 
     private Elements grade_list;
     private RecyclerView rlv_grade_list;
@@ -54,7 +54,7 @@ public class GradeListPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_grade_list, container, false);
-        ViewUtil.setTitle(getRoot(), "成绩查询");
+        ViewUtil.setTitle(getContext(), "成绩查询");
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         sp_year = (Spinner) page.findViewById(R.id.sp_select_year);

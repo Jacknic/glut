@@ -3,6 +3,7 @@ package com.jacknic.glut.page;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,13 +12,12 @@ import android.view.ViewGroup;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.SettingPagerAdapter;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.ViewUtil;
 
 /**
  * 设置
  */
-public class SettingPage extends RootFragment {
+public class SettingPage extends Fragment {
 
     private TabLayout tab;
     private ViewPager pager_container;
@@ -30,7 +30,7 @@ public class SettingPage extends RootFragment {
         tab = (TabLayout) page.findViewById(R.id.setting_tab);
         pager_container = (ViewPager) page.findViewById(R.id.setting_pager);
         setPagers();
-        ViewUtil.setTitle(getRoot(), "设置");
+        ViewUtil.setTitle(getContext(), "设置");
         return page;
 
     }

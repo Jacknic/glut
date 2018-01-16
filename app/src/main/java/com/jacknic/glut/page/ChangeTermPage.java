@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,6 @@ import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseEntityDao;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntityDao;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.SnackbarTool;
@@ -49,7 +49,7 @@ import okhttp3.Response;
  * 切换学期
  */
 
-public class ChangeTermPage extends RootFragment {
+public class ChangeTermPage extends Fragment {
 
     private TextView tvImportTerm;
     private ListView lvTerms;
@@ -72,7 +72,7 @@ public class ChangeTermPage extends RootFragment {
      * 初始化控件
      */
     private void initView() {
-        ViewUtil.setTitle(getRoot(), "选择学期");
+        ViewUtil.setTitle(getContext(), "选择学期");
         lvTerms = (ListView) page.findViewById(R.id.ch_lv_terms);
         tvImportTerm = (TextView) page.findViewById(R.id.ch_tv_import_term);
         tvImportTerm.setOnClickListener(new View.OnClickListener() {
@@ -88,12 +88,12 @@ public class ChangeTermPage extends RootFragment {
      */
     private void setTerms() {
         final List<String> termList = getTerms();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getRoot(), android.R.layout.simple_list_item_1, termList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, termList);
         lvTerms.setAdapter(adapter);
         lvTerms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                new AlertDialog.Builder(getRoot())
+                new AlertDialog.Builder(getContext())
                         .setMessage("当前学期修改为：" + ((TextView) view).getText())
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override

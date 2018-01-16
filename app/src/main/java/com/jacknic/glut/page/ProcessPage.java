@@ -2,9 +2,11 @@ package com.jacknic.glut.page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -12,7 +14,6 @@ import android.widget.GridView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.StudyProcessAdapter;
 import com.jacknic.glut.model.EduInfoModel;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
@@ -36,7 +37,7 @@ import okhttp3.Response;
  * 学业进度
  */
 
-public class ProcessPage extends RootFragment {
+public class ProcessPage extends Fragment {
 
     private GridView gv_grade_list;
 
@@ -44,7 +45,7 @@ public class ProcessPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View page = inflater.inflate(R.layout.page_process, container, false);
-        ViewUtil.setTitle(getRoot(), "学业进度");
+        ViewUtil.setTitle(getContext(), "学业进度");
         gv_grade_list = (GridView) page.findViewById(R.id.gv_grade_list);
         showData();
         return page;
@@ -127,7 +128,17 @@ public class ProcessPage extends RootFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.menu_page_browser, menu);
+        inflater.inflate(R.menu.menu_refresh, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_refresh:
+                refresh();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

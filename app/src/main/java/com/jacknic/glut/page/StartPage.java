@@ -3,6 +3,8 @@ package com.jacknic.glut.page;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.stacklibrary.RootFragment;
+import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.ViewUtil;
 
@@ -24,7 +26,7 @@ import static android.content.Context.MODE_PRIVATE;
  * 启动页
  */
 
-public class StartPage extends RootFragment {
+public class StartPage extends Fragment {
     SharedPreferences preferJw;
     private View page;
 
@@ -33,7 +35,7 @@ public class StartPage extends RootFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_start, container, false);
         preferJw = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        ViewUtil.showToolbar(getRoot(), false);
+        ViewUtil.showToolbar((AppCompatActivity) getContext(), false);
         boolean is_login = preferJw.getBoolean("login_flag", false);
         if (!is_login) {
             start();
@@ -42,7 +44,7 @@ public class StartPage extends RootFragment {
                 @Override
                 public void run() {
                     //打开主页
-                    dialogFragment(new HomePage());
+                    PageTool.jumpFragment(getContext(), new HomePage());
                 }
             }, 400);
         }
@@ -60,11 +62,11 @@ public class StartPage extends RootFragment {
                     case R.id.btn_login:
                         Bundle bundle = new Bundle();
                         bundle.putInt("flag", Config.LOGIN_FLAG_JW);
-                        open(new LoginPage(), bundle);
+                        PageTool.open(getContext(), new LoginPage(), bundle);
                         break;
                     case R.id.btn_enter:
-                        dialogFragment(new HomePage());
-                        preferJw.edit().putBoolean("login_flag", true).apply();
+                        PageTool.jumpFragment(getContext(), new HomePage());
+//                        preferJw.edit().putBoolean("login_flag", true).apply();
                         break;
                     default:
                         break;
@@ -72,9 +74,9 @@ public class StartPage extends RootFragment {
             }
         };
         View startBtns = page.findViewById(R.id.start_btns);
-        startBtns.setVisibility(View.VISIBLE);
-        Animation loadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.push_right_in);
+        Animation loadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         startBtns.startAnimation(loadAnimation);
+        startBtns.setVisibility(View.VISIBLE);
         TextView btnLogin = (TextView) page.findViewById(R.id.btn_login);
         TextView btnEnter = (TextView) page.findViewById(R.id.btn_enter);
         btnLogin.setOnClickListener(listener);
@@ -84,7 +86,7 @@ public class StartPage extends RootFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
-            ViewUtil.showToolbar(getRoot(), false);
+            ViewUtil.showToolbar((AppCompatActivity) getContext(), false);
         }
     }
 }
