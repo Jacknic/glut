@@ -3,7 +3,6 @@ package com.jacknic.glut.page;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +35,7 @@ import static com.jacknic.glut.util.Config.SETTING_THEME_INDEX;
  * 起始页
  */
 
-public class HomePage extends Fragment implements View.OnClickListener {
+public class HomePage extends BasePage implements View.OnClickListener {
 
     private View page;
     private ViewPager pageContainer;
@@ -136,15 +135,10 @@ public class HomePage extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         TextView textView = (TextView) page.findViewById(tabsTv[selectIndex]);
         ViewUtil.setTitle(getContext(), textView.getText().toString());
+        menu.clear();
         inflater.inflate(R.menu.menu_page_home, menu);
     }
 

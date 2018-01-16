@@ -61,7 +61,7 @@ public class StartPage extends Fragment {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.btn_login:
+                    case R.id.tv_login:
                         Bundle bundle = new Bundle();
                         bundle.putInt("flag", Config.LOGIN_FLAG_JW);
                         PageTool.open(getContext(), new LoginPage(), bundle);
@@ -79,7 +79,7 @@ public class StartPage extends Fragment {
         Animation loadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         startBtns.startAnimation(loadAnimation);
         startBtns.setVisibility(View.VISIBLE);
-        TextView btnLogin = (TextView) page.findViewById(R.id.btn_login);
+        TextView btnLogin = (TextView) page.findViewById(R.id.tv_login);
         TextView btnEnter = (TextView) page.findViewById(R.id.btn_enter);
         btnLogin.setOnClickListener(listener);
         btnEnter.setOnClickListener(listener);

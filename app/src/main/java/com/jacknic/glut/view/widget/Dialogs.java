@@ -12,7 +12,6 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -204,9 +203,8 @@ public class Dialogs {
                 OkGo.get(Config.URL_JW_CAPTCHA_CHECK + et_captcha.getText().toString()).execute(checkCallback);
             }
         });
-        Button btn_login = (Button) login_view.findViewById(R.id.btn_login);
         final AlertDialog dialog = builder.create();
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        login_view.findViewById(R.id.tv_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String sid = et_sid.getText().toString();
@@ -253,9 +251,8 @@ public class Dialogs {
                 et_password.setSelection(et_password.getText().length());
             }
         });
-        Button btn_login = (Button) login_view.findViewById(R.id.btn_login);
         final AlertDialog dialog = builder.create();
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        login_view.findViewById(R.id.tv_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String sid = et_sid.getText().toString();
@@ -300,9 +297,8 @@ public class Dialogs {
                 et_password.setSelection(et_password.getText().length());
             }
         });
-        Button btn_login = (Button) login_view.findViewById(R.id.btn_login);
         final AlertDialog dialog = builder.create();
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        login_view.findViewById(R.id.tv_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String sid = et_sid.getText().toString();

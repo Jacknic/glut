@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,7 +29,7 @@ import java.util.Properties;
  *
  */
 
-public class BrowserPage extends Fragment {
+public class BrowserPage extends BasePage {
 
     private ProgressBar progressbar;
     private WebView webView;
@@ -109,11 +108,13 @@ public class BrowserPage extends Fragment {
     }
 
     @Override
+    void refresh() {
+        webView.reload();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_refresh:
-                webView.reload();
-                return true;
             case R.id.menu_back:
                 if (webView.canGoBack()) {
                     webView.goBack();
@@ -123,6 +124,7 @@ public class BrowserPage extends Fragment {
                 String url = webView.getUrl();
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 getContext().startActivity(intent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +49,7 @@ import okhttp3.Response;
  * 切换学期
  */
 
-public class ChangeTermPage extends Fragment {
+public class ChangeTermPage extends BasePage {
 
     private TextView tvImportTerm;
     private ListView lvTerms;
@@ -89,6 +88,7 @@ public class ChangeTermPage extends Fragment {
      * 设置可选学期
      */
     private void setTerms() {
+        if (getContext() == null) return;
         final List<String> termList = getTerms();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, termList);
         lvTerms.setAdapter(adapter);
@@ -156,9 +156,9 @@ public class ChangeTermPage extends Fragment {
      */
     @NonNull
     private List<String> getTerms() {
+        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         termCourse = new CourseDao().getTermsCourse();
         final List<String> termList = new ArrayList<>();
-        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         int select_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         int select_semester = prefer_jw.getInt(Config.JW_SEMESTER, Calendar.getInstance().get(Calendar.YEAR));
 

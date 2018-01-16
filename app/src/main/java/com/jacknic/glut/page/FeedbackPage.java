@@ -2,7 +2,6 @@ package com.jacknic.glut.page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,7 @@ import java.util.Properties;
  * 用户反馈
  */
 
-public class FeedbackPage extends Fragment {
+public class FeedbackPage extends BasePage {
 
     private EditText et_feedback;
 

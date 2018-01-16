@@ -3,9 +3,11 @@ package com.jacknic.glut.page;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,6 +26,7 @@ import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.tencent.stat.StatService;
 
@@ -36,7 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * 添加课程页
  */
-public class AddCoursePage extends Fragment {
+public class AddCoursePage extends BasePage {
     int courseStart = 1;
     int courseEnd = 1;
     int weekStart = 1;
@@ -146,6 +149,21 @@ public class AddCoursePage extends Fragment {
         return page;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_page_add, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add_course:
+                save();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * 保存课程
@@ -206,6 +224,6 @@ public class AddCoursePage extends Fragment {
         et_grade.setText("");
         et_location.setText("");
         prefer_jw.edit().putBoolean(Config.IS_REFRESH, true).apply();
-        Toast.makeText(getContext(), "保存课程" + courseName + "成功", Toast.LENGTH_SHORT).show();
+        SnackbarTool.showShort("保存课程《" + courseName + "》成功");
     }
 }
