@@ -4,7 +4,7 @@
     <!-- 默认黑色主题. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/black</item>
-        <item name="colorAccent">?android:attr/colorPrimary</item>
+        <item name="colorAccent">?attr/colorPrimary</item>
     </style>
     <!-- 蓝色主题. -->
     <style name="AppTheme.blue" parent="AppTheme">

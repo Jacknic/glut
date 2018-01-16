@@ -14,9 +14,25 @@ android {
         /*应用版本名称*/
         resValue "string", "versionName", versionName
         ndk {
-            abiFilters 'armeabi-v7a'
+//            abiFilters 'armeabi-v7a'
         }
     }
+
+    packagingOptions {
+        exclude 'project.properties'
+        exclude 'proguard-project.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/README'
+        exclude 'META-INF/README.txt'
+        // 忽略所有mta so文件
+        exclude 'lib/**/libMtaNativeCrash_v2.so'
+    }
+
     buildTypes {
         release {
             minifyEnabled true
