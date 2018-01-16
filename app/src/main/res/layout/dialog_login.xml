@@ -159,8 +159,8 @@
             android:background="@color/press" />
 
 
-        <Button
-            android:id="@+id/btn_login"
+        <TextView
+            android:id="@+id/tv_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -168,8 +168,9 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_selector_blue"
+            android:gravity="center"
+            android:padding="10dp"
             android:text="@string/title_activity_login"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

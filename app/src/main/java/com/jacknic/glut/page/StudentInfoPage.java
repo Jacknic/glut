@@ -4,9 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,6 +17,7 @@ import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.model.StudentInfoModel;
 import com.jacknic.glut.model.bean.StudentInfoBean;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -32,7 +33,7 @@ import okhttp3.Response;
  * 学籍信息
  */
 
-public class StudentInfoPage extends Fragment {
+public class StudentInfoPage extends BasePage {
 
     private View page;
 
@@ -83,11 +84,18 @@ public class StudentInfoPage extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_refresh, menu);
+    }
+
     /**
      * 刷新信息
      */
-    private void refresh() {
-        Snackbar.make(getActivity().getWindow().getDecorView(), "刷新中...", Snackbar.LENGTH_LONG).show();
+    @Override
+    void refresh() {
+        SnackbarTool.showLong("刷新中...");
         Func.checkLoginStatus(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
@@ -114,8 +122,9 @@ public class StudentInfoPage extends Fragment {
         eduInfoModel.getStudentInfo(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
+                if (getContext() == null) return;
                 setStudentInfo();
-                Snackbar.make(getActivity().getWindow().getDecorView(), "刷新成功", Snackbar.LENGTH_SHORT).show();
+                SnackbarTool.showShort("刷新成功");
             }
         });
     }

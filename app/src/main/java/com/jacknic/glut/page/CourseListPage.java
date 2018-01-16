@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -37,7 +36,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * 课程列表页
  */
-public class CourseListPage extends Fragment {
+public class CourseListPage extends BasePage {
 
     private View courseListPage;
 

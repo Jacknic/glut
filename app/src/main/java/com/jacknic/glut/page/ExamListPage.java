@@ -3,11 +3,12 @@ package com.jacknic.glut.page;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -36,7 +37,7 @@ import okhttp3.Response;
  * 考试列表查询
  */
 
-public class ExamListPage extends Fragment {
+public class ExamListPage extends BasePage {
 
     private ArrayList<ExamInfoBean> examInfoBeenList = new ArrayList<>();
     private ExamListAdapter examListAdapter;
@@ -114,5 +115,16 @@ public class ExamListPage extends Fragment {
             }
         });
         login_dialog.show();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_refresh, menu);
+    }
+
+    @Override
+    void refresh() {
+        getDataPre();
     }
 }

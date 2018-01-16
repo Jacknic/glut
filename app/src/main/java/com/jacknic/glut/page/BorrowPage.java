@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,7 +38,7 @@ import okhttp3.Response;
 /**
  * 图书借阅页
  */
-public class BorrowPage extends Fragment {
+public class BorrowPage extends BasePage {
 
     private RecyclerView rl_borrow_list;
     private boolean isAuto = true;
@@ -50,14 +51,26 @@ public class BorrowPage extends Fragment {
         View page = inflater.inflate(R.layout.page_borrow, container, false);
         ViewUtil.setTitle(getContext(), "借阅查询");
         tips = page.findViewById(R.id.ts_tv_empty_tips);
+        tips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getRenewList();
+            }
+        });
         rl_borrow_list = (RecyclerView) page.findViewById(R.id.ts_rl_borrow_list);
         rl_borrow_list.setLayoutManager(new LinearLayoutManager(getContext()));
+        getRenewList();
         return page;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_refresh, menu);
+    }
+
+    @Override
+    void refresh() {
         getRenewList();
     }
 
@@ -74,6 +87,7 @@ public class BorrowPage extends Fragment {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {
+                if (getContext() == null) return;
                 Document dom = Jsoup.parse(s);
                 Elements select = dom.select("#contentTable tr[id!=contentHeader]");
                 if (select.isEmpty()) {
@@ -104,12 +118,6 @@ public class BorrowPage extends Fragment {
                 } else {
                     SnackbarTool.showShort("网络错误");
                 }
-            }
-
-            @Override
-            public void onAfter(String s, Exception e) {
-                super.onAfter(s, e);
-                SnackbarTool.dismiss();
             }
         });
     }

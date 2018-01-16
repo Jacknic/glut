@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -44,7 +43,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * 用户登录页
  */
-public class LoginPage extends Fragment {
+public class LoginPage extends BasePage {
     private EditText et_sid, et_password;
     private EditText et_captcha;
     private ImageView iv_captcha;
@@ -82,7 +81,7 @@ public class LoginPage extends Fragment {
                 et_password.setSelection(et_password.getText().length());
             }
         });
-        page.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+        page.findViewById(R.id.tv_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
