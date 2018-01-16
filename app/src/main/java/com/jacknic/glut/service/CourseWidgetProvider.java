@@ -11,6 +11,7 @@ import android.widget.RemoteViews;
 import com.jacknic.glut.MainActivity;
 import com.jacknic.glut.R;
 import com.jacknic.glut.util.Func;
+import com.tencent.stat.StatService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class CourseWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        StatService.trackCustomEvent(context, "更新小部件");
         if (appWidgetIds == null || appWidgetIds.length == 0) return;
         System.out.println("执行更新小部件--------" + new Date());
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.course_widget);

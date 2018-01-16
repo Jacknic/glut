@@ -27,6 +27,7 @@ import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
+import com.tencent.stat.StatService;
 
 import java.util.Calendar;
 import java.util.List;
@@ -43,6 +44,7 @@ public class CourseListPage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "课程列表页");
         courseListPage = inflater.inflate(R.layout.page_all_course, container, false);
         ViewUtil.setTitle(getContext(), "课程列表");
         initView();

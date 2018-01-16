@@ -35,6 +35,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.BaseRequest;
+import com.tencent.stat.StatService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -61,6 +62,7 @@ public class ChangeTermPage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "切换学期页");
         page = inflater.inflate(R.layout.page_change_term, container, false);
         initView();
         setTerms();

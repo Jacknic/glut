@@ -25,6 +25,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.BaseRequest;
+import com.tencent.stat.StatService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -45,6 +46,7 @@ public class BorrowPage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "图书借阅页");
         View page = inflater.inflate(R.layout.page_borrow, container, false);
         ViewUtil.setTitle(getContext(), "借阅查询");
         tips = page.findViewById(R.id.ts_tv_empty_tips);

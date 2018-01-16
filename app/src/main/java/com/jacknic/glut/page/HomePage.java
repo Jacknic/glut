@@ -25,6 +25,7 @@ import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.UpdateUtil;
 import com.jacknic.glut.util.ViewUtil;
+import com.tencent.stat.StatService;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.jacknic.glut.util.Config.PREFER;
@@ -58,6 +59,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "起始页");
         page = inflater.inflate(R.layout.page_home, container, false);
         pageContainer = (ViewPager) page.findViewById(R.id.page_container);
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);

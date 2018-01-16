@@ -8,16 +8,19 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 50
-        manifestPlaceholders = [INSTALL_CHANNEL: "测试", TA_APPKEY: "debug"]
+        manifestPlaceholders = [MTA_CHANNEL: "测试", MTA_APPKEY: "debug"]
         versionName "5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         /*应用版本名称*/
         resValue "string", "versionName", versionName
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
     buildTypes {
         release {
             minifyEnabled true
-            manifestPlaceholders = [TA_APPKEY: "Aqc1105763654"]
+            manifestPlaceholders = [MTA_APPKEY: "Aqc1105763654"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -29,11 +32,11 @@ android {
     productFlavors {
         // 默认调试
         DebugApk {
-            //manifestPlaceholders = [INSTALL_CHANNEL: "测试"]
+            //manifestPlaceholders = [MTA_CHANNEL: "测试"]
         }
         // 应用宝
         yyb {
-            manifestPlaceholders = [INSTALL_CHANNEL: "应用宝"]
+            manifestPlaceholders = [MTA_CHANNEL: "应用宝"]
         }
     }
 }
@@ -53,7 +56,7 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'com.contrarywind:Android-PickerView:3.2.6'
     testCompile 'junit:junit:4.12'
-    compile files('libs/mta-android-stat-sdk-2.3.0_20161221-jdk1.6.jar')
-    compile files('libs/mid-core-sdk-3.7.1.jar')
+    compile 'com.qq.mta:mta:3.3.1-release'
+    compile 'com.tencent.mid:mid:3.73-release'
     compile 'org.greenrobot:eventbus:3.1.1'
 }
