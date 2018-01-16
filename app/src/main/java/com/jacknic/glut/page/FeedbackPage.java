@@ -29,6 +29,7 @@ public class FeedbackPage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "用户反馈页");
         View page = inflater.inflate(R.layout.page_feedback, container, false);
         ViewUtil.setTitle(getContext(), "用户反馈");
         et_feedback = (EditText) page.findViewById(R.id.fb_et_feedback);

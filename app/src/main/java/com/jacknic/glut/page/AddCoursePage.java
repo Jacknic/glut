@@ -25,6 +25,7 @@ import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.ViewUtil;
+import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +51,7 @@ public class AddCoursePage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "添加课程页");
         page = inflater.inflate(R.layout.page_add_course, container, false);
         Bundle bundle = getArguments();
         int start = bundle.getInt("start", 1);

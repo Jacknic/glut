@@ -31,6 +31,7 @@ import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.BitmapCallback;
 import com.lzy.okgo.callback.StringCallback;
+import com.tencent.stat.StatService;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,7 +42,7 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * 用户登录
+ * 用户登录页
  */
 public class LoginPage extends Fragment {
     private EditText et_sid, et_password;
@@ -57,6 +58,7 @@ public class LoginPage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "用户登录页");
         page = inflater.inflate(R.layout.page_login, container, false);
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         et_sid = (EditText) page.findViewById(R.id.et_sid);

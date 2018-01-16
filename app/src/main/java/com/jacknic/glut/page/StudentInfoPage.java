@@ -21,6 +21,7 @@ import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
+import com.tencent.stat.StatService;
 
 import java.io.File;
 
@@ -38,6 +39,7 @@ public class StudentInfoPage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "学籍信息页");
         page = inflater.inflate(R.layout.page_student_info, container, false);
         ViewUtil.setTitle(getContext(), "学籍信息");
         setStudentInfo();

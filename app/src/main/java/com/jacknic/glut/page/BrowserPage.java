@@ -22,9 +22,12 @@ import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.util.ViewUtil;
+import com.tencent.stat.StatService;
+
+import java.util.Properties;
 
 /**
- * 内置浏览器
+ *
  */
 
 public class BrowserPage extends Fragment {
@@ -36,6 +39,7 @@ public class BrowserPage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "内置浏览器页");
         page = inflater.inflate(R.layout.page_browser, container, false);
         ViewUtil.setTitle(getContext(), "");
         initViews();
@@ -69,6 +73,10 @@ public class BrowserPage extends Fragment {
                 if (newProgress < 100) {
                     progressbar.setVisibility(View.VISIBLE);
                 } else if (newProgress == 100) {
+                    Properties properties = new Properties();
+                    properties.put("url", view.getUrl());
+                    properties.put("title", view.getTitle());
+                    StatService.trackCustomKVEvent(getContext(), "浏览网页内容", properties);
                     progressbar.setVisibility(View.GONE);
                 }
                 progressbar.setProgress(newProgress);

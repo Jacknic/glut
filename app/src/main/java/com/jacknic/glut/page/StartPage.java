@@ -16,6 +16,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.ViewUtil;
+import com.tencent.stat.StatService;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,6 +34,7 @@ public class StartPage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "启动页");
         page = inflater.inflate(R.layout.page_start, container, false);
         preferJw = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         ViewUtil.showToolbar((AppCompatActivity) getContext(), false);

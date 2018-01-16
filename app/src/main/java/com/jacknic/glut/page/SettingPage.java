@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.SettingPagerAdapter;
 import com.jacknic.glut.util.ViewUtil;
+import com.tencent.stat.StatService;
 
 /**
  * 设置
@@ -26,6 +27,7 @@ public class SettingPage extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatService.trackBeginPage(getContext(), "设置页");
         page = inflater.inflate(R.layout.page_setting, container, false);
         tab = (TabLayout) page.findViewById(R.id.setting_tab);
         pager_container = (ViewPager) page.findViewById(R.id.setting_pager);
