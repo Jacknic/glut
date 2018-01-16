@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.BorrowListAdapter;
 import com.jacknic.glut.model.LoginModel;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
@@ -36,18 +36,17 @@ import okhttp3.Response;
 /**
  * 图书借阅页
  */
-public class BorrowPage extends RootFragment {
+public class BorrowPage extends Fragment {
 
     private RecyclerView rl_borrow_list;
     private boolean isAuto = true;
     private View tips;
-    private View page;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        page = inflater.inflate(R.layout.page_borrow, container, false);
-        ViewUtil.setTitle(getRoot(), "借阅查询");
+        View page = inflater.inflate(R.layout.page_borrow, container, false);
+        ViewUtil.setTitle(getContext(), "借阅查询");
         tips = page.findViewById(R.id.ts_tv_empty_tips);
         rl_borrow_list = (RecyclerView) page.findViewById(R.id.ts_rl_borrow_list);
         rl_borrow_list.setLayoutManager(new LinearLayoutManager(getContext()));

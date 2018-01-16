@@ -27,8 +27,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.R;
 import com.jacknic.glut.model.bean.FinancialInfoBean;
+import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.Func;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -271,8 +271,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                 url = urls[4];
                 break;
         }
-        Func.openWebPage(getActivity(), url);
-
+        PageTool.openWebPage(getActivity(), url);
     }
 
     /**

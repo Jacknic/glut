@@ -199,18 +199,17 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="20dp"
-                    app:cardBackgroundColor="@color/blue"
+                    app:cardBackgroundColor="@color/blueLight"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="0dp">
 
                     <Button
                         android:id="@+id/btn_login"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/selector_item_tran"
                         android:text="@string/title_activity_login"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
+                        android:textColor="@color/white" />
                 </android.support.v7.widget.CardView>
 
             </LinearLayout>

@@ -21,9 +21,8 @@ import com.jacknic.glut.page.GradeListPage;
 import com.jacknic.glut.page.ProcessPage;
 import com.jacknic.glut.page.SettingPage;
 import com.jacknic.glut.page.StudentInfoPage;
-import com.jacknic.glut.stacklibrary.RootFragment;
+import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
-import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.ImageUtil;
 
 import java.io.File;
@@ -97,22 +96,21 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        RootFragment rootFragment = Func.getTopFragment(getActivity());
         switch (v.getId()) {
             case R.id.tv_kaoshi:
-                rootFragment.open(new ExamListPage());
+                PageTool.open(getContext(), new ExamListPage());
                 break;
             case R.id.tv_xueji:
-                rootFragment.open(new StudentInfoPage());
+                PageTool.open(getContext(), new StudentInfoPage());
                 break;
             case R.id.tv_xueye:
-                rootFragment.open(new ProcessPage());
+                PageTool.open(getContext(), new ProcessPage());
                 break;
             case R.id.tv_chengji:
-                rootFragment.open(new GradeListPage());
+                PageTool.open(getContext(), new GradeListPage());
                 break;
             case R.id.tv_setting:
-                rootFragment.open(new SettingPage());
+                PageTool.open(getContext(), new SettingPage());
                 break;
             case R.id.jw_iv_header:
                 v.setVisibility(View.GONE);

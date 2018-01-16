@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.page.BorrowPage;
-import com.jacknic.glut.util.Func;
+import com.jacknic.glut.stacklibrary.PageTool;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -29,8 +29,6 @@ import java.util.List;
 import me.gujun.android.taggroup.TagGroup;
 import okhttp3.Call;
 import okhttp3.Response;
-
-import static com.jacknic.glut.util.Func.getTopFragment;
 
 
 /**
@@ -118,7 +116,7 @@ public class LibraryFragment extends Fragment {
                 case R.id.ts_iv_search_book:
                     et_search_book.setEnabled(false);
                     String url = "http://202.193.80.181:8081/search?xc=3&kw=" + et_search_book.getText().toString();
-                    Func.openWebPage(getActivity(), url);
+                    PageTool.openWebPage(getActivity(), url);
                     et_search_book.setEnabled(true);
                     break;
                 case R.id.ts_tv_change_tag_list:
@@ -129,7 +127,7 @@ public class LibraryFragment extends Fragment {
                     }
                     break;
                 case R.id.ts_fab_mine:
-                    getTopFragment(getActivity()).open(new BorrowPage());
+                    PageTool.open(getContext(), new BorrowPage());
                     break;
             }
         }

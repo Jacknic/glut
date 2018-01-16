@@ -1,5 +1,6 @@
 package com.jacknic.glut.util;
 
+import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
@@ -14,11 +15,15 @@ public class ViewUtil {
     /**
      * 设置actionBar标题
      */
-    public static void setTitle(AppCompatActivity activity, String title) {
-        ActionBar supportActionBar = activity.getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setTitle(title);
+    public static void setTitle(Context context, String title) {
+        if (context instanceof AppCompatActivity) {
+            AppCompatActivity activity = ((AppCompatActivity) context);
+            ActionBar supportActionBar = activity.getSupportActionBar();
+            if (supportActionBar != null) {
+                supportActionBar.setTitle(title);
+            }
         }
+
     }
 
     /**

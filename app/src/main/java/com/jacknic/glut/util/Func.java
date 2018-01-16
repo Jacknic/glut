@@ -4,15 +4,10 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.jacknic.glut.MainActivity;
-import com.jacknic.glut.page.BrowserPage;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -145,22 +140,5 @@ public final class Func {
         context.sendBroadcast(intent);
     }
 
-    /**
-     * 获取栈顶页面
-     */
-    public static RootFragment getTopFragment(FragmentActivity activity) {
-        RootFragment topFragment = ((MainActivity) activity).manager.getPages().peek();
-        return topFragment;
-    }
-
-    /**
-     * 打开网页
-     */
-    public static void openWebPage(FragmentActivity activity, String url) {
-        RootFragment rootFragment = getTopFragment(activity);
-        Bundle bundle = new Bundle();
-        bundle.putString("url", url);
-        rootFragment.open(new BrowserPage(), bundle);
-    }
 
 }

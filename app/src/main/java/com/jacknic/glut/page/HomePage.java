@@ -3,9 +3,10 @@ package com.jacknic.glut.page;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.MainPagerAdapter;
-import com.jacknic.glut.stacklibrary.RootFragment;
+import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.UpdateUtil;
 import com.jacknic.glut.util.ViewUtil;
@@ -34,7 +35,7 @@ import static com.jacknic.glut.util.Config.SETTING_THEME_INDEX;
  * 起始页
  */
 
-public class HomePage extends RootFragment implements View.OnClickListener {
+public class HomePage extends Fragment implements View.OnClickListener {
 
     private View page;
     private ViewPager pageContainer;
@@ -53,18 +54,13 @@ public class HomePage extends RootFragment implements View.OnClickListener {
             R.id.bottom_tabs_tv_mine,
     };
     private int selectIndex = 0;//按钮选中位置
-    private ActionBar actionBar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(R.layout.page_home, container, false);
         pageContainer = (ViewPager) page.findViewById(R.id.page_container);
-        actionBar = getRoot().getSupportActionBar();
-        ViewUtil.showToolbar(getRoot(), true);
-        if (actionBar != null) {
-            actionBar.show();
-        }
+        ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         initFragments();
         setOnClick();
         //  选择课程页作为默认显示页面
@@ -125,7 +121,7 @@ public class HomePage extends RootFragment implements View.OnClickListener {
         }
         ImageView imageView = (ImageView) page.findViewById(tabsIv[selectIndex]);
         TextView textView = (TextView) page.findViewById(tabsTv[selectIndex]);
-        ViewUtil.setTitle(getRoot(), textView.getText().toString());
+        ViewUtil.setTitle(getContext(), textView.getText().toString());
         int color_index = getContext().getSharedPreferences(PREFER, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
         int color = getResources().getColor(Config.COLORS[color_index]);
         pageContainer.setCurrentItem(selectIndex, true);
@@ -141,13 +137,12 @@ public class HomePage extends RootFragment implements View.OnClickListener {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        getRoot().manager.setFragment(this);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         TextView textView = (TextView) page.findViewById(tabsTv[selectIndex]);
-        ViewUtil.setTitle(getRoot(), textView.getText().toString());
+        ViewUtil.setTitle(getContext(), textView.getText().toString());
         inflater.inflate(R.menu.menu_page_home, menu);
     }
 
@@ -155,7 +150,7 @@ public class HomePage extends RootFragment implements View.OnClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_all_courses:
-                open(new CourseListPage());
+                PageTool.open(getContext(), new CourseListPage());
                 return true;
         }
         return super.onOptionsItemSelected(item);

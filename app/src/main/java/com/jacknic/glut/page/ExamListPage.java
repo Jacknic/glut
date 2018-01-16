@@ -3,6 +3,7 @@ package com.jacknic.glut.page;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.ExamListAdapter;
 import com.jacknic.glut.model.bean.ExamInfoBean;
-import com.jacknic.glut.stacklibrary.RootFragment;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
@@ -35,7 +35,7 @@ import okhttp3.Response;
  * 考试列表查询
  */
 
-public class ExamListPage extends RootFragment {
+public class ExamListPage extends Fragment {
 
     private ArrayList<ExamInfoBean> examInfoBeenList = new ArrayList<>();
     private ExamListAdapter examListAdapter;
@@ -45,7 +45,7 @@ public class ExamListPage extends RootFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View page = inflater.inflate(R.layout.page_exam_list, container, false);
-        ViewUtil.setTitle(getRoot(), "考试安排");
+        ViewUtil.setTitle(getContext(), "考试安排");
         RecyclerView rv_exam_list = (RecyclerView) page.findViewById(R.id.jw_rv_exam_list);
         rv_exam_list.setLayoutManager(new LinearLayoutManager(getContext()));
         examListAdapter = new ExamListAdapter(getContext(), examInfoBeenList);

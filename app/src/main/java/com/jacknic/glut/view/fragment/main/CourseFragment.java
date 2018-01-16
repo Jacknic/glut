@@ -7,7 +7,6 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -30,6 +29,7 @@ import com.jacknic.glut.adapter.WeekNameAdapter;
 import com.jacknic.glut.model.dao.CourseDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.page.ChangeTermPage;
+import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.view.widget.CourseTableView;
@@ -118,7 +118,7 @@ public class CourseFragment extends Fragment {
         View.OnClickListener change = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Func.getTopFragment((FragmentActivity) getContext()).open(new ChangeTermPage());
+                PageTool.open(getContext(), new ChangeTermPage());
                 CourseFragment.this.fragment.invalidate();
             }
         };
