@@ -86,7 +86,7 @@ public class HomePage extends BasePage implements View.OnClickListener {
      * 初始化Fragment
      */
     private void initFragments() {
-        MainPagerAdapter pagerAdapter = new MainPagerAdapter(getFragmentManager());
+        MainPagerAdapter pagerAdapter = new MainPagerAdapter(getChildFragmentManager());
         pageContainer.setOffscreenPageLimit(pagerAdapter.getCount());
         pageContainer.setAdapter(pagerAdapter);
         pageContainer.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
