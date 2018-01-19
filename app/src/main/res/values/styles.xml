@@ -8,7 +8,7 @@
     </style>
     <!-- 蓝色主题. -->
     <style name="AppTheme.blue" parent="AppTheme">
-        <item name="colorPrimary">@color/blueLight</item>
+        <item name="colorPrimary">@color/blue</item>
     </style>
     <!-- 橙色主题. -->
     <style name="AppTheme.orange" parent="AppTheme">

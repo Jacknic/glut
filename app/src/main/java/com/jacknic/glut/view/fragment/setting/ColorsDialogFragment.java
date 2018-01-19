@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +18,11 @@ import android.widget.GridView;
 import com.jacknic.glut.MainActivity;
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.ColorsSelectorAdapter;
+import com.jacknic.glut.page.HomePage;
+import com.jacknic.glut.page.SettingPage;
 import com.jacknic.glut.util.Config;
+
+import java.util.Stack;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -26,12 +33,12 @@ import static android.content.Context.MODE_PRIVATE;
 public class ColorsDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener {
 
     public static void launch(Activity context) {
-        Fragment fragment = context.getFragmentManager().findFragmentByTag("ColorsDialogFragment");
+        Fragment fragment = context.getFragmentManager().findFragmentByTag(ColorsDialogFragment.class.getName());
         if (fragment != null) {
             context.getFragmentManager().beginTransaction().remove(fragment).commit();
         }
         ColorsDialogFragment dialogFragment = new ColorsDialogFragment();
-        dialogFragment.show(context.getFragmentManager(), "ColorsDialogFragment");
+        dialogFragment.show(context.getFragmentManager(), ColorsDialogFragment.class.getName());
     }
 
 
@@ -55,8 +62,28 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
         if (oldIndex != position) {
             prefer.edit().putInt(Config.SETTING_THEME_INDEX, position).putBoolean(Config.IS_REFRESH, true).apply();
             MainActivity mainActivity = (MainActivity) getActivity();
-            mainActivity.finish();
-            startActivity(new Intent(getActivity(), MainActivity.class));
+
+            mainActivity.selectTheme();
+            FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            HomePage homePage = new HomePage();
+            SettingPage settingPage = new SettingPage();
+            transaction.add(R.id.frame_container, homePage, homePage.getClass().getName());
+            transaction.add(R.id.frame_container, settingPage, settingPage.getClass().getName());
+            transaction.hide(homePage);
+            transaction.show(settingPage);
+            Stack<android.support.v4.app.Fragment> pages = mainActivity.manager.getPages();
+            while (!pages.empty()) {
+                android.support.v4.app.Fragment fragment = pages.pop();
+                transaction.remove(fragment);
+            }
+            transaction.commit();
+            ActionBar actionBar = mainActivity.getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setBackgroundDrawable(new ColorDrawable(getActivity().getResources().getColor(Config.COLORS[position])));
+            }
+            pages.add(homePage);
+            pages.add(settingPage);
         }
         dismiss();
     }
