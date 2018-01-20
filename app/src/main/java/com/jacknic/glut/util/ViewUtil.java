@@ -3,6 +3,7 @@ package com.jacknic.glut.util;
 import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.lzy.okgo.OkGo;
 
@@ -45,6 +46,18 @@ public class ViewUtil {
             } else {
                 actionBar.hide();
             }
+        }
+    }
+
+    /**
+     * 设置工具栏返回按钮
+     */
+    public static void showBackIcon(Context context, boolean isShow) {
+        if (!(context instanceof AppCompatActivity)) return;
+        ActionBar supportActionBar = ((AppCompatActivity) context).getSupportActionBar();
+        if (supportActionBar != null) {
+            Log.d(context.getClass().getName(), "showBackIcon: " + isShow);
+            supportActionBar.setDisplayHomeAsUpEnabled(isShow);
         }
     }
 }

@@ -138,6 +138,7 @@ public class HomePage extends BasePage implements View.OnClickListener {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         TextView textView = (TextView) page.findViewById(tabsTv[selectIndex]);
         ViewUtil.setTitle(getContext(), textView.getText().toString());
+        ViewUtil.showBackIcon(getContext(), false);
         menu.clear();
         inflater.inflate(R.menu.menu_page_home, menu);
     }

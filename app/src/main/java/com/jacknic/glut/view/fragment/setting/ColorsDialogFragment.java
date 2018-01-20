@@ -3,7 +3,6 @@ package com.jacknic.glut.view.fragment.setting;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -33,11 +32,10 @@ import static android.content.Context.MODE_PRIVATE;
 public class ColorsDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener {
 
     public static void launch(Activity context) {
-        Fragment fragment = context.getFragmentManager().findFragmentByTag(ColorsDialogFragment.class.getName());
-        if (fragment != null) {
-            context.getFragmentManager().beginTransaction().remove(fragment).commit();
+        ColorsDialogFragment dialogFragment = (ColorsDialogFragment) context.getFragmentManager().findFragmentByTag(ColorsDialogFragment.class.getName());
+        if (dialogFragment == null) {
+            dialogFragment = new ColorsDialogFragment();
         }
-        ColorsDialogFragment dialogFragment = new ColorsDialogFragment();
         dialogFragment.show(context.getFragmentManager(), ColorsDialogFragment.class.getName());
     }
 

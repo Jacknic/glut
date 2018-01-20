@@ -95,11 +95,6 @@ public class BrowserPage extends BasePage {
         progressbar = (ProgressBar) page.findViewById(R.id.progressbar);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
