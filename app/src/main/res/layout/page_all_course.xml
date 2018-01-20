@@ -13,7 +13,5 @@
         android:layout_weight="1"
         android:background="@color/press"
         android:divider="@null"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
         tools:listitem="@layout/item_course" />
 </LinearLayout>

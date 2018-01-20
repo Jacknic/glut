@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.util.SnackbarTool;
+import com.jacknic.glut.util.ViewUtil;
 
 /**
  * 带操作栏菜单frag
@@ -16,6 +17,7 @@ public class BasePage extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        ViewUtil.showBackIcon(getContext(), true);
         super.onCreate(savedInstanceState);
     }
 
@@ -37,7 +39,7 @@ public class BasePage extends Fragment {
 
     @Override
     public void onStop() {
-        SnackbarTool.dismiss();
         super.onStop();
+        SnackbarTool.dismiss();
     }
 }
