@@ -2,14 +2,11 @@ package com.jacknic.glut.page;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -27,8 +24,6 @@ import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.SnackbarTool;
-import com.jacknic.glut.util.ViewUtil;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,19 +44,21 @@ public class AddCoursePage extends BasePage {
     private int weekDay = 1;
     private AutoCompleteTextView actCourseName;
     private TextView tvCourseClass;
-    private View page;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "添加课程页");
-        page = inflater.inflate(R.layout.page_add_course, container, false);
+    protected int getLayoutId() {
+        mTitle = "添加课程";
+        return R.layout.page_add_course;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         Bundle bundle = getArguments();
         int start = bundle.getInt("start", 1);
         courseStart = start;
         courseEnd = start;
         weekDay = bundle.getInt("weekDay", 1);
-        ViewUtil.setTitle(getContext(), "添加课程");
         actCourseName = (AutoCompleteTextView) page.findViewById(R.id.act_course_name);
         List<CourseInfoEntity> courseInfoEntities = DataBase.getDaoSession().getCourseInfoEntityDao().loadAll();
         List<String> courseNames = new ArrayList<>();
@@ -146,7 +143,6 @@ public class AddCoursePage extends BasePage {
                 pvOptions.show();
             }
         });
-        return page;
     }
 
     @Override

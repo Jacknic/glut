@@ -30,7 +30,7 @@ public class WeekNameAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return "周" + Config.weekNames[position] + "\n" + weekdays.get(position);
+        return "周" + Config.weekNames[(position + 1) % 7] + "\n" + weekdays.get(position);
     }
 
     @Override

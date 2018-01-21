@@ -3,13 +3,9 @@ package com.jacknic.glut.page;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -23,10 +19,8 @@ import com.jacknic.glut.model.entity.CourseInfoEntityDao;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
-import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
-import com.tencent.stat.StatService;
 
 import java.util.Calendar;
 import java.util.List;
@@ -38,24 +32,25 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class CourseListPage extends BasePage {
 
-    private View courseListPage;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "课程列表页");
-        courseListPage = inflater.inflate(R.layout.page_all_course, container, false);
-        ViewUtil.setTitle(getContext(), "课程列表");
-        initView();
-        return courseListPage;
+    protected int getLayoutId() {
+        mTitle = "课程列表";
+        return R.layout.page_all_course;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initView();
+
+    }
 
     /**
      * 初始化控件并添加事件监听
      */
     private void initView() {
-        final ListView lv_course_list = (ListView) courseListPage.findViewById(R.id.lv_course_list);
+        final ListView lv_course_list = (ListView) page.findViewById(R.id.lv_course_list);
         SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         int startYear = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         int semester = prefer_jw.getInt(Config.JW_SEMESTER, 1);
@@ -110,7 +105,7 @@ public class CourseListPage extends BasePage {
                     Integer dayOfWeek = entity.getDayOfWeek();
                     courseArrange.append(entity.getWeek() == null ? "" : entity.getWeek())
                             .append(dayOfWeek != null && dayOfWeek >= 1 ?
-                                    ",周" + Config.weekNames[dayOfWeek - 1] + " "
+                                    ",周" + Config.weekNames[dayOfWeek % 7] + " "
                                             + Func.courseIndexToStr(entity.getStartSection()) + "-" + Func.courseIndexToStr(entity.getEndSection()) + "节;" : "");
                     classRooms.append(!TextUtils.isEmpty(entity.getClassRoom()) ? entity.getClassRoom() + ";" : "");
                 }
