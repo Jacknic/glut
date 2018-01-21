@@ -257,12 +257,12 @@ public class ChangeTermPage extends BasePage {
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
-                        Dialogs.getLoginJw(getActivity(), new AbsCallbackWrapper() {
+                        Dialogs.showLoginJw(getContext(), new AbsCallbackWrapper() {
                             @Override
                             public void onAfter(Object o, Exception e) {
                                 importTerm(year, term);
                             }
-                        }).show();
+                        });
                     }
 
                     @Override

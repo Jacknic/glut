@@ -2,7 +2,6 @@ package com.jacknic.glut.page;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -40,7 +39,7 @@ public class BorrowPage extends BasePage {
 
     @Override
     protected int getLayoutId() {
-        mTitle = "图书借阅页";
+        mTitle = "图书借阅";
         return R.layout.page_borrow;
     }
 
@@ -96,19 +95,19 @@ public class BorrowPage extends BasePage {
 
             @Override
             public void onError(Call call, Response response, Exception e) {
+                if (getContext() == null) return;
                 if (response != null) {
                     // 自动登录
                     if (isAuto) {
                         autoLogin();
                     } else {
                         //登录图书对话框
-                        AlertDialog loginTs = Dialogs.getLoginTs(getActivity(), new AbsCallbackWrapper() {
+                        Dialogs.showLoginTs(getActivity(), new AbsCallbackWrapper() {
                             @Override
                             public void onAfter(Object o, Exception e) {
                                 getRenewList();
                             }
                         });
-                        loginTs.show();
                     }
 
                 } else {

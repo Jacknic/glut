@@ -1,6 +1,5 @@
 package com.jacknic.glut.page;
 
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -39,8 +38,6 @@ public class GradeListPage extends BasePage {
     private Spinner sp_year;
     private Spinner sp_semester;
     private ArrayList<String> years;
-    private AlertDialog loginDialog;
-    private View page;
     private GradeListAdapter gradeListAdapter;
 
     @Override
@@ -120,18 +117,13 @@ public class GradeListPage extends BasePage {
      * 用户登录
      */
     private void login() {
-        if (loginDialog == null) {
-            loginDialog = Dialogs.getLoginJw(getActivity(), new AbsCallbackWrapper() {
-                @Override
-                public void onAfter(Object o, Exception e) {
-                    showGrade();
-                }
-            });
-        }
-        if (!loginDialog.isShowing() && !getActivity().isFinishing()) {
-            loginDialog.show();
-            SnackbarTool.dismiss();
-        }
+        Dialogs.showLoginJw(getContext(), new AbsCallbackWrapper() {
+            @Override
+            public void onAfter(Object o, Exception e) {
+                showGrade();
+            }
+        });
+        SnackbarTool.dismiss();
     }
 
     //获取所有成绩

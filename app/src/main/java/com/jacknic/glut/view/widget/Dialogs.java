@@ -120,9 +120,10 @@ public class Dialogs {
     /**
      * 教务登录对话框
      */
-    public static AlertDialog getLoginJw(final Activity activity, final AbsCallbackWrapper callback) {
-        LinearLayout login_view = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_login, null, false);
-        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+    public static void showLoginJw(final Context context, final AbsCallbackWrapper callback) {
+        if (context == null) return;
+        LinearLayout login_view = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_login, null, false);
+        SharedPreferences prefer_jw = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         String sid = prefer_jw.getString(Config.SID, "");
         String password = prefer_jw.getString(Config.PASSWORD_JW, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
@@ -130,7 +131,7 @@ public class Dialogs {
         et_sid.setText(sid);
         et_password.setText(password);
         final EditText et_captcha = (EditText) login_view.findViewById(R.id.et_captcha);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setView(login_view);
         final ImageView iv_captcha = (ImageView) login_view.findViewById(R.id.iv_captcha);
         final ImageView iv_check_captcha = (ImageView) login_view.findViewById(R.id.iv_check_captcha);
@@ -191,11 +192,11 @@ public class Dialogs {
                     public void onSuccess(String s, Call call, Response response) {
                         if ("true".equalsIgnoreCase(s)) {
                             iv_check_captcha.setImageResource(R.drawable.ic_check_circle);
-                            iv_check_captcha.setColorFilter(activity.getResources().getColor(R.color.green));
+                            iv_check_captcha.setColorFilter(context.getResources().getColor(R.color.green));
                             iv_check_captcha.setClickable(false);
                         } else {
                             iv_check_captcha.setImageResource(R.drawable.ic_cancel);
-                            iv_check_captcha.setColorFilter(activity.getResources().getColor(R.color.red));
+                            iv_check_captcha.setColorFilter(context.getResources().getColor(R.color.red));
                             iv_check_captcha.setClickable(true);
                         }
                     }
@@ -215,25 +216,26 @@ public class Dialogs {
                 dialog.dismiss();
             }
         });
-        return dialog;
+        dialog.show();
     }
 
     /**
      * 图书登录对话框
      */
-    public static AlertDialog getLoginTs(final Activity activity, final AbsCallbackWrapper callback) {
-        LinearLayout login_view = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_login, null, false);
+    public static void showLoginTs(final Context context, final AbsCallbackWrapper callback) {
+        if (context == null) return;
+        LinearLayout login_view = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_login, null, false);
         login_view.findViewById(R.id.captcha_layout).setVisibility(View.GONE);
-        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        SharedPreferences prefer_jw = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         String sid = prefer_jw.getString(Config.SID, "");
-        final SharedPreferences prefer = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        final SharedPreferences prefer = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         String password = prefer.getString(Config.PASSWORD_TS, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
         final EditText et_password = (EditText) login_view.findViewById(R.id.et_password);
         et_sid.setText(sid);
         et_password.setHint("默认密码123456");
         et_password.setText(password);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setView(login_view);
         final ImageView iv_show_pwd = (ImageView) login_view.findViewById(R.id.iv_show_pwd);
         //显示、隐藏密码
@@ -261,25 +263,26 @@ public class Dialogs {
                 dialog.dismiss();
             }
         });
-        return dialog;
+        dialog.show();
     }
 
     /**
      * 财务登录对话框
      */
-    public static AlertDialog getLoginCw(final Activity activity, final AbsCallbackWrapper callback) {
-        LinearLayout login_view = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_login, null, false);
+    public static void showLoginCw(final Context context, final AbsCallbackWrapper callback) {
+        if (context == null) return;
+        LinearLayout login_view = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_login, null, false);
         login_view.findViewById(R.id.captcha_layout).setVisibility(View.GONE);
-        SharedPreferences prefer_jw = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        SharedPreferences prefer_jw = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         String sid = prefer_jw.getString(Config.SID, "");
-        final SharedPreferences prefer_ts = activity.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        final SharedPreferences prefer_ts = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         String password = prefer_ts.getString(Config.PASSWORD_CW, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
         final EditText et_password = (EditText) login_view.findViewById(R.id.et_password);
         et_sid.setText(sid);
         et_password.setHint("默认密码身份证后6位");
         et_password.setText(password);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setView(login_view);
         final ImageView iv_show_pwd = (ImageView) login_view.findViewById(R.id.iv_show_pwd);
         //显示、隐藏密码
@@ -307,6 +310,6 @@ public class Dialogs {
                 dialog.dismiss();
             }
         });
-        return dialog;
+        dialog.show();
     }
 }
