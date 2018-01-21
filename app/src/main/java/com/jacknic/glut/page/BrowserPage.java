@@ -4,14 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -20,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.util.ViewUtil;
 import com.tencent.stat.StatService;
 
 import java.util.Properties;
@@ -33,14 +29,15 @@ public class BrowserPage extends BasePage {
 
     private ProgressBar progressbar;
     private WebView webView;
-    private View page;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "内置浏览器页");
-        page = inflater.inflate(R.layout.page_browser, container, false);
-        ViewUtil.setTitle(getContext(), "");
+    protected int getLayoutId() {
+        return R.layout.page_browser;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         initViews();
         setWebView();
         Bundle bundle = getArguments();
@@ -50,7 +47,6 @@ public class BrowserPage extends BasePage {
             getActivity().onBackPressed();
         }
         webView.loadUrl(url);
-        return page;
     }
 
 

@@ -7,7 +7,7 @@ import com.jacknic.glut.R;
  */
 
 public final class Config {
-    public static final String[] weekNames = {"一", "二", "三", "四", "五", "六", "日",};
+    public static final String[] weekNames = {"日", "一", "二", "三", "四", "五", "六",};
     /**
      * 财务处接口
      */
@@ -98,7 +98,7 @@ public final class Config {
      * 配色数组
      */
     public static final int[] COLORS = {
-            R.color.barDark,
+            R.color.black,
             R.color.purple,
             R.color.purpleDeep,
             R.color.indigo,

@@ -1,18 +1,13 @@
 package com.jacknic.glut.page;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.stacklibrary.PageTool;
-import com.jacknic.glut.util.ViewUtil;
 import com.tencent.stat.StatService;
 
 import java.util.Properties;
@@ -25,12 +20,15 @@ public class FeedbackPage extends BasePage {
 
     private EditText et_feedback;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "用户反馈页");
-        View page = inflater.inflate(R.layout.page_feedback, container, false);
-        ViewUtil.setTitle(getContext(), "用户反馈");
+    protected int getLayoutId() {
+        mTitle = "用户反馈";
+        return R.layout.page_feedback;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         et_feedback = (EditText) page.findViewById(R.id.fb_et_feedback);
         Button btn_submit = (Button) page.findViewById(R.id.fb_btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +47,5 @@ public class FeedbackPage extends BasePage {
                 }
             }
         });
-        return page;
     }
-
-
 }

@@ -2,31 +2,25 @@ package com.jacknic.glut.page;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.BorrowListAdapter;
 import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.SnackbarTool;
-import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.BaseRequest;
-import com.tencent.stat.StatService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,12 +38,15 @@ public class BorrowPage extends BasePage {
     private boolean isAuto = true;
     private View tips;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "图书借阅页");
-        View page = inflater.inflate(R.layout.page_borrow, container, false);
-        ViewUtil.setTitle(getContext(), "借阅查询");
+    protected int getLayoutId() {
+        mTitle = "图书借阅页";
+        return R.layout.page_borrow;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         tips = page.findViewById(R.id.ts_tv_empty_tips);
         tips.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +57,6 @@ public class BorrowPage extends BasePage {
         rl_borrow_list = (RecyclerView) page.findViewById(R.id.ts_rl_borrow_list);
         rl_borrow_list.setLayoutManager(new LinearLayoutManager(getContext()));
         getRenewList();
-        return page;
     }
 
     @Override

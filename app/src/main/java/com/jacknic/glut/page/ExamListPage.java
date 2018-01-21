@@ -1,27 +1,20 @@
 package com.jacknic.glut.page;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.ExamListAdapter;
 import com.jacknic.glut.model.bean.ExamInfoBean;
 import com.jacknic.glut.util.SnackbarTool;
-import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
-import com.tencent.stat.StatService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -43,20 +36,21 @@ public class ExamListPage extends BasePage {
     private ExamListAdapter examListAdapter;
     private boolean isGot = false;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "考试安排页");
-        View page = inflater.inflate(R.layout.page_exam_list, container, false);
-        ViewUtil.setTitle(getContext(), "考试安排");
+    protected int getLayoutId() {
+        mTitle = "考试安排";
+        return R.layout.page_exam_list;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         RecyclerView rv_exam_list = (RecyclerView) page.findViewById(R.id.jw_rv_exam_list);
         rv_exam_list.setLayoutManager(new LinearLayoutManager(getContext()));
         examListAdapter = new ExamListAdapter(getContext(), examInfoBeenList);
         rv_exam_list.setAdapter(examListAdapter);
         getDataPre();
-        return page;
     }
-
 
     /**
      * 获取数据

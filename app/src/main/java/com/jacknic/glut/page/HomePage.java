@@ -1,12 +1,9 @@
 package com.jacknic.glut.page;
 
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +21,6 @@ import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.UpdateUtil;
 import com.jacknic.glut.util.ViewUtil;
-import com.tencent.stat.StatService;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.jacknic.glut.util.Config.PREFER;
@@ -37,7 +33,6 @@ import static com.jacknic.glut.util.Config.SETTING_THEME_INDEX;
 
 public class HomePage extends BasePage implements View.OnClickListener {
 
-    private View page;
     private ViewPager pageContainer;
     //按钮图标ID
     private int[] tabsIv = new int[]{
@@ -55,11 +50,14 @@ public class HomePage extends BasePage implements View.OnClickListener {
     };
     private int selectIndex = 0;//按钮选中位置
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "起始页");
-        page = inflater.inflate(R.layout.page_home, container, false);
+    protected int getLayoutId() {
+        return R.layout.page_home;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         pageContainer = (ViewPager) page.findViewById(R.id.page_container);
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         initFragments();
@@ -69,9 +67,7 @@ public class HomePage extends BasePage implements View.OnClickListener {
         SharedPreferences prefer = getContext().getSharedPreferences(PREFER, MODE_PRIVATE);
         boolean auto_check_update = prefer.getBoolean("auto_check_update", true);
         if (auto_check_update) UpdateUtil.checkUpdate((FragmentActivity) getContext(), false);
-        return page;
     }
-
 
     private void setOnClick() {
         //   设置事件监听

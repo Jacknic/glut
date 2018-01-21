@@ -3,16 +3,12 @@ package com.jacknic.glut.page;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -30,7 +26,6 @@ import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.BitmapCallback;
 import com.lzy.okgo.callback.StringCallback;
-import com.tencent.stat.StatService;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -52,18 +47,20 @@ public class LoginPage extends BasePage {
     private AlertDialog login_dialog;
     private EduInfoModel eduInfoModel = new EduInfoModel();
     private boolean loginSuccess;
-    private View page;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "用户登录页");
-        page = inflater.inflate(R.layout.page_login, container, false);
+    protected int getLayoutId() {
+        mTitle = "登录教务";
+        return R.layout.page_login;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         et_sid = (EditText) page.findViewById(R.id.et_sid);
         et_password = (EditText) page.findViewById(R.id.et_password);
         et_sid.setText(prefer_jw.getString(Config.SID, ""));
-        ViewUtil.setTitle(getContext(), "登录教务");
         showCaptcha();
         iv_show_pwd = (ImageView) page.findViewById(R.id.iv_show_pwd);
         //显示、隐藏密码
@@ -106,9 +103,7 @@ public class LoginPage extends BasePage {
                 loginJw();
             }
         });
-        return page;
     }
-
 
     /**
      * 登录到教务

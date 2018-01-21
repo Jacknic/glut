@@ -2,13 +2,8 @@ package com.jacknic.glut.page;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,11 +13,9 @@ import com.jacknic.glut.model.StudentInfoModel;
 import com.jacknic.glut.model.bean.StudentInfoBean;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.SnackbarTool;
-import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
-import com.tencent.stat.StatService;
 
 import java.io.File;
 
@@ -35,18 +28,17 @@ import okhttp3.Response;
 
 public class StudentInfoPage extends BasePage {
 
-    private View page;
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "学籍信息页");
-        page = inflater.inflate(R.layout.page_student_info, container, false);
-        ViewUtil.setTitle(getContext(), "学籍信息");
-        setStudentInfo();
-        return page;
+    protected int getLayoutId() {
+        mTitle = "学籍信息";
+        return R.layout.page_student_info;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        setStudentInfo();
+    }
 
     /**
      * 文字赋值

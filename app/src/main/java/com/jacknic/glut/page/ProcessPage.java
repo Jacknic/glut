@@ -1,12 +1,7 @@
 package com.jacknic.glut.page;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.jacknic.glut.R;
@@ -14,11 +9,9 @@ import com.jacknic.glut.adapter.StudyProcessAdapter;
 import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.SnackbarTool;
-import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
-import com.tencent.stat.StatService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,17 +33,18 @@ public class ProcessPage extends BasePage {
 
     private GridView gv_grade_list;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "学业进度页");
-        View page = inflater.inflate(R.layout.page_process, container, false);
-        ViewUtil.setTitle(getContext(), "学业进度");
-        gv_grade_list = (GridView) page.findViewById(R.id.gv_grade_list);
-        showData();
-        return page;
+    protected int getLayoutId() {
+        mTitle = "学业进度";
+        return R.layout.page_process;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        gv_grade_list = (GridView) page.findViewById(R.id.gv_grade_list);
+        showData();
+    }
 
     /**
      * 展示用户数据

@@ -1,13 +1,9 @@
 package com.jacknic.glut.page;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -16,12 +12,10 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.GradeListAdapter;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.SnackbarTool;
-import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
-import com.tencent.stat.StatService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -42,7 +36,6 @@ import okhttp3.Response;
 public class GradeListPage extends BasePage {
 
     private Elements grade_list;
-    private RecyclerView rlv_grade_list;
     private Spinner sp_year;
     private Spinner sp_semester;
     private ArrayList<String> years;
@@ -50,17 +43,20 @@ public class GradeListPage extends BasePage {
     private View page;
     private GradeListAdapter gradeListAdapter;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "成绩查询页");
-        page = inflater.inflate(R.layout.page_grade_list, container, false);
-        ViewUtil.setTitle(getContext(), "成绩查询");
+    protected int getLayoutId() {
+        mTitle = "成绩查询";
+        return R.layout.page_grade_list;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         sp_year = (Spinner) page.findViewById(R.id.sp_select_year);
         sp_semester = (Spinner) page.findViewById(R.id.sp_select_semester);
-        rlv_grade_list = (RecyclerView) page.findViewById(R.id.rlv_grade_list);
+        RecyclerView rlv_grade_list = (RecyclerView) page.findViewById(R.id.rlv_grade_list);
         rlv_grade_list.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<String> semesters = new ArrayList<>();
         semesters.add("全部");
@@ -79,13 +75,6 @@ public class GradeListPage extends BasePage {
         sp_semester.setSelection(calendar.get(Calendar.MONTH) > Calendar.SEPTEMBER ? 2 : 1);
         gradeListAdapter = new GradeListAdapter(getContext());
         rlv_grade_list.setAdapter(gradeListAdapter);
-        return page;
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
         showGrade();
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override

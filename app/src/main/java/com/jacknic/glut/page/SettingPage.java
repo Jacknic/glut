@@ -1,18 +1,11 @@
 package com.jacknic.glut.page;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.SettingPagerAdapter;
-import com.jacknic.glut.util.ViewUtil;
-import com.tencent.stat.StatService;
 
 /**
  * 设置
@@ -21,21 +14,20 @@ public class SettingPage extends BasePage {
 
     private TabLayout tab;
     private ViewPager pager_container;
-    private View page;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "设置页");
-        page = inflater.inflate(R.layout.page_setting, container, false);
+    protected int getLayoutId() {
+        mTitle = "设置";
+        return R.layout.page_setting;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         tab = (TabLayout) page.findViewById(R.id.setting_tab);
         pager_container = (ViewPager) page.findViewById(R.id.setting_pager);
         setPagers();
-        ViewUtil.setTitle(getContext(), "设置");
-        return page;
-
     }
-
 
     /**
      * 设置pager

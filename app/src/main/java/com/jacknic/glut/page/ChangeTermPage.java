@@ -3,13 +3,10 @@ package com.jacknic.glut.page;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -27,14 +24,12 @@ import com.jacknic.glut.model.entity.CourseInfoEntityDao;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.SnackbarTool;
-import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.jacknic.glut.view.widget.PickerView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.BaseRequest;
-import com.tencent.stat.StatService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -51,31 +46,30 @@ import okhttp3.Response;
 
 public class ChangeTermPage extends BasePage {
 
-    private TextView tvImportTerm;
     private ListView lvTerms;
     private String year;
     private String term;
     private List<CourseEntity> termCourse;
-    private View page;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatService.trackBeginPage(getContext(), "切换学期页");
-        page = inflater.inflate(R.layout.page_change_term, container, false);
-        initView();
-        setTerms();
-        return page;
+    protected int getLayoutId() {
+        mTitle = "选择学期";
+        return R.layout.page_change_term;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initView();
+        setTerms();
+    }
 
     /**
      * 初始化控件
      */
     private void initView() {
-        ViewUtil.setTitle(getContext(), "选择学期");
         lvTerms = (ListView) page.findViewById(R.id.ch_lv_terms);
-        tvImportTerm = (TextView) page.findViewById(R.id.ch_tv_import_term);
+        TextView tvImportTerm = (TextView) page.findViewById(R.id.ch_tv_import_term);
         tvImportTerm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
