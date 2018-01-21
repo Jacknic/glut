@@ -82,12 +82,12 @@ public class ProcessPage extends BasePage {
             @Override
             public void onError(Call call, Response response, Exception e) {
                 System.out.println("用户未登录");
-                Dialogs.getLoginJw(getActivity(), new AbsCallbackWrapper() {
+                Dialogs.showLoginJw(getContext(), new AbsCallbackWrapper() {
                     @Override
                     public void onAfter(Object o, Exception e) {
                         refresh();
                     }
-                }).show();
+                });
             }
 
             @Override

@@ -1,7 +1,5 @@
 package com.jacknic.glut.page;
 
-import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -88,6 +86,7 @@ public class ExamListPage extends BasePage {
 
                         @Override
                         public void onError(Call call, Response response, Exception e) {
+                            if (getContext() == null) return;
                             login();
                         }
                     }
@@ -102,13 +101,12 @@ public class ExamListPage extends BasePage {
      * 登录验证
      */
     private void login() {
-        final AlertDialog login_dialog = Dialogs.getLoginJw((Activity) getContext(), new AbsCallbackWrapper() {
+        Dialogs.showLoginJw(getContext(), new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
                 getDataPre();
             }
         });
-        login_dialog.show();
     }
 
     @Override

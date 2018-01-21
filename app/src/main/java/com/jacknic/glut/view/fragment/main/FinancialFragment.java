@@ -101,7 +101,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
      * 登录财务处
      */
     private void toLogin() {
-        Dialogs.getLoginCw(getActivity(), new AbsCallbackWrapper() {
+        Dialogs.showLoginCw(getContext(), new AbsCallbackWrapper() {
             @Override
             public void onSuccess(Object o, Call call, Response response) {
                 isLogin = true;
@@ -114,7 +114,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
             public void onError(Call call, Response response, Exception e) {
                 Toast.makeText(getContext(), "登录财务处失败", Toast.LENGTH_SHORT).show();
             }
-        }).show();
+        });
     }
 
     /**
