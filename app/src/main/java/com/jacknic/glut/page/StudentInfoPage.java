@@ -35,8 +35,7 @@ public class StudentInfoPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         setStudentInfo();
     }
 

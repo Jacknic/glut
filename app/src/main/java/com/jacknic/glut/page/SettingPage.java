@@ -22,8 +22,7 @@ public class SettingPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         tab = (TabLayout) page.findViewById(R.id.setting_tab);
         viewPager = (ViewPager) page.findViewById(R.id.setting_pager);
         setPagers();

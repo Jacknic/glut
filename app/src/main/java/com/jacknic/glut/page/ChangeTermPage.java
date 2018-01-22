@@ -58,17 +58,9 @@ public class ChangeTermPage extends BasePage {
         return R.layout.page_change_term;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        initView();
-        setTerms();
-    }
 
-    /**
-     * 初始化控件
-     */
-    private void initView() {
+    @Override
+    protected void initPage() {
         lvTerms = (ListView) page.findViewById(R.id.ch_lv_terms);
         TextView tvImportTerm = (TextView) page.findViewById(R.id.ch_tv_import_term);
         tvImportTerm.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +69,7 @@ public class ChangeTermPage extends BasePage {
                 dialog().show();
             }
         });
+        setTerms();
     }
 
     /**

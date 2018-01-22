@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
+import com.jacknic.glut.MainActivity;
 import com.jacknic.glut.page.BrowserPage;
 
 /**
@@ -53,8 +54,8 @@ public class PageTool {
     /**
      * 获取Activity
      */
-    private static RootActivity getRoot(Context context) {
-        return (RootActivity) context;
+    private static MainActivity getRoot(Context context) {
+        return (MainActivity) context;
     }
 
     /**

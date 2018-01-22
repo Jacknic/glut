@@ -4,12 +4,15 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.jacknic.glut.stacklibrary.RootActivity;
+import com.jacknic.glut.page.StartPage;
+import com.jacknic.glut.stacklibrary.StackManager;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.SnackbarTool;
 import com.lzy.okgo.OkGo;
@@ -17,12 +20,18 @@ import com.lzy.okgo.OkGo;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends RootActivity {
+public class MainActivity extends AppCompatActivity {
+
+    public StackManager manager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        selectTheme();
         super.onCreate(savedInstanceState);
+        selectTheme();
+        setContentView(R.layout.activity_main);
+        manager = new StackManager(this);
+        Fragment startPage = new StartPage();
+        manager.setFragment(startPage);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -34,7 +43,7 @@ public class MainActivity extends RootActivity {
         });
         setStatusView();
         SnackbarTool.init(this);
-        setAnim(R.anim.push_right_in, R.anim.push_left_out, R.anim.push_left_in, R.anim.push_right_out);
+        manager.setAnim(R.anim.push_right_in, R.anim.push_left_out, R.anim.push_left_in, R.anim.push_right_out);
     }
 
 
@@ -43,8 +52,8 @@ public class MainActivity extends RootActivity {
      */
     public void selectTheme() {
         SharedPreferences prefer = getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        int theme_index = prefer.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
-        setTheme(Config.THEME_LIST[theme_index]);
+        int themeIndex = prefer.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
+        setTheme(Config.THEME_LIST[themeIndex]);
     }
 
     /**

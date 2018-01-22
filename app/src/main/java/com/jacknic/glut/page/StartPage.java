@@ -29,8 +29,7 @@ public class StartPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         ViewUtil.showToolbar((AppCompatActivity) getContext(), false);
         SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         boolean isLogin = prefer.getBoolean("login_flag", false);

@@ -40,7 +40,7 @@ public class ProcessPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
+    void initPage() {
         super.onStart();
         gv_grade_list = (GridView) page.findViewById(R.id.gv_grade_list);
         showData();

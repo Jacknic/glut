@@ -41,8 +41,7 @@ public class ExamListPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         RecyclerView rv_exam_list = (RecyclerView) page.findViewById(R.id.jw_rv_exam_list);
         rv_exam_list.setLayoutManager(new LinearLayoutManager(getContext()));
         examListAdapter = new ExamListAdapter(getContext(), examInfoBeenList);
@@ -86,7 +85,6 @@ public class ExamListPage extends BasePage {
 
                         @Override
                         public void onError(Call call, Response response, Exception e) {
-                            if (getContext() == null) return;
                             login();
                         }
                     }

@@ -43,16 +43,7 @@ public class CourseListPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        initView();
-
-    }
-
-    /**
-     * 初始化控件并添加事件监听
-     */
-    private void initView() {
+    void initPage() {
         final ListView lv_course_list = (ListView) page.findViewById(R.id.lv_course_list);
         SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         int startYear = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
