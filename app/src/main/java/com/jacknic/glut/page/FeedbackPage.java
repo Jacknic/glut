@@ -27,8 +27,7 @@ public class FeedbackPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         et_feedback = (EditText) page.findViewById(R.id.fb_et_feedback);
         Button btn_submit = (Button) page.findViewById(R.id.fb_btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {

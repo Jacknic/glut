@@ -36,9 +36,9 @@ public class BrowserPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        initViews();
+    void initPage() {
+        webView = (WebView) page.findViewById(R.id.web_view);
+        progressbar = (ProgressBar) page.findViewById(R.id.progressbar);
         setWebView();
         Bundle bundle = getArguments();
         String url = bundle.getString("url");
@@ -48,7 +48,6 @@ public class BrowserPage extends BasePage {
         }
         webView.loadUrl(url);
     }
-
 
     /**
      * 设置webView控件
@@ -81,14 +80,6 @@ public class BrowserPage extends BasePage {
 
         });
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-    }
-
-    /**
-     * 初始化视图控件
-     */
-    private void initViews() {
-        webView = (WebView) page.findViewById(R.id.web_view);
-        progressbar = (ProgressBar) page.findViewById(R.id.progressbar);
     }
 
 

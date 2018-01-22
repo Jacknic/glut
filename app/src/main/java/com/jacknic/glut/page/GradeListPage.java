@@ -47,8 +47,7 @@ public class GradeListPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         Calendar calendar = Calendar.getInstance();
         boolean springSession = calendar.get(Calendar.MONTH) < Calendar.JULY;
         int year = calendar.get(Calendar.YEAR);
@@ -74,6 +73,11 @@ public class GradeListPage extends BasePage {
         gradeListAdapter = new GradeListAdapter(getContext());
         rlv_grade_list.setAdapter(gradeListAdapter);
         showGrade();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -129,17 +133,14 @@ public class GradeListPage extends BasePage {
 
     //获取所有成绩
     private void getAllGrade() {
-        if (grade_list == null) {
-
-            OkGo.get("http://202.193.80.58:81/academic/manager/score/studentOwnScore.do?year=&term=&para=0&sortColumn=&Submit=%E6%9F%A5%E8%AF%A2").execute(new StringCallback() {
-                @Override
-                public void onSuccess(String s, Call call, Response response) {
-                    Document document = Jsoup.parse(s);
-                    grade_list = document.select("table.datalist tr");
-                    showGrade();
-                }
-            });
-        }
+        OkGo.get("http://202.193.80.58:81/academic/manager/score/studentOwnScore.do?year=&term=&para=0&sortColumn=&Submit=%E6%9F%A5%E8%AF%A2").execute(new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                Document document = Jsoup.parse(s);
+                grade_list = document.select("table.datalist tr");
+                showGrade();
+            }
+        });
     }
 
     /**

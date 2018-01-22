@@ -55,8 +55,7 @@ public class AddCoursePage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         Bundle bundle = getArguments();
         int start = bundle.getInt("start", 1);
         courseStart = start;

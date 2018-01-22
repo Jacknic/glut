@@ -28,14 +28,26 @@ public abstract class BasePage extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * 页面布局ID
+     */
     @LayoutRes
     protected abstract int getLayoutId();
+
+    /**
+     * 初始化页面
+     */
+    void initPage() {
+        //do not thing
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(getLayoutId(), container, false);
         ViewUtil.setTitle(getContext(), mTitle);
+        initPage();
         return page;
     }
 

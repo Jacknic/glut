@@ -8,13 +8,13 @@
     android:paddingTop="3dp">
 
     <LinearLayout
+        android:id="@+id/bottom_tab_course"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/bottom_tabs_iv_course"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="20dp"
@@ -23,7 +23,6 @@
             android:tint="@color/inactive" />
 
         <TextView
-            android:id="@+id/bottom_tabs_tv_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -34,13 +33,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/bottom_tab_financial"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/bottom_tabs_iv_financial"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="20dp"
@@ -49,7 +48,6 @@
             android:tint="@color/inactive" />
 
         <TextView
-            android:id="@+id/bottom_tabs_tv_financial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -60,13 +58,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/bottom_tab_library"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/bottom_tabs_iv_library"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="20dp"
@@ -75,7 +73,6 @@
             android:tint="@color/inactive" />
 
         <TextView
-            android:id="@+id/bottom_tabs_tv_library"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -86,6 +83,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/bottom_tab_mine"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
@@ -93,7 +91,6 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/bottom_tabs_iv_mine"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="20dp"
@@ -102,7 +99,6 @@
             android:tint="@color/inactive" />
 
         <TextView
-            android:id="@+id/bottom_tabs_tv_mine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

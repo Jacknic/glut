@@ -34,21 +34,15 @@ import static com.jacknic.glut.util.Config.SETTING_THEME_INDEX;
 public class HomePage extends BasePage implements View.OnClickListener {
 
     private ViewPager pageContainer;
-    //按钮图标ID
-    private int[] tabsIv = new int[]{
-            R.id.bottom_tabs_iv_course,
-            R.id.bottom_tabs_iv_financial,
-            R.id.bottom_tabs_iv_library,
-            R.id.bottom_tabs_iv_mine,
+
+    //按钮组
+    private int[] TAB_IDS = new int[]{
+            R.id.bottom_tab_course,
+            R.id.bottom_tab_financial,
+            R.id.bottom_tab_library,
+            R.id.bottom_tab_mine,
     };
-    //按钮下部文字ID
-    private int[] tabsTv = new int[]{
-            R.id.bottom_tabs_tv_course,
-            R.id.bottom_tabs_tv_financial,
-            R.id.bottom_tabs_tv_library,
-            R.id.bottom_tabs_tv_mine,
-    };
-    private int selectIndex = 0;//按钮选中位置
+    private ViewGroup selectTab;
 
     @Override
     protected int getLayoutId() {
@@ -56,25 +50,18 @@ public class HomePage extends BasePage implements View.OnClickListener {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         pageContainer = (ViewPager) page.findViewById(R.id.page_container);
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         initFragments();
-        setOnClick();
+        for (int id : TAB_IDS) {
+            page.findViewById(id).setOnClickListener(this);
+        }
         //  选择课程页作为默认显示页面
-        page.findViewById(tabsIv[selectIndex]).callOnClick();
+        page.findViewById(R.id.bottom_tab_course).callOnClick();
         SharedPreferences prefer = getContext().getSharedPreferences(PREFER, MODE_PRIVATE);
         boolean auto_check_update = prefer.getBoolean("auto_check_update", true);
         if (auto_check_update) UpdateUtil.checkUpdate((FragmentActivity) getContext(), false);
-    }
-
-    private void setOnClick() {
-        //   设置事件监听
-        for (int iv_id : tabsIv) {
-            ImageView imageView = (ImageView) page.findViewById(iv_id);
-            imageView.setOnClickListener(this);
-        }
     }
 
 
@@ -88,12 +75,11 @@ public class HomePage extends BasePage implements View.OnClickListener {
         pageContainer.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
-                page.findViewById(tabsIv[position]).callOnClick();
+                page.findViewById(TAB_IDS[position]).callOnClick();
             }
 
             @Override
@@ -104,36 +90,47 @@ public class HomePage extends BasePage implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        int view_id = v.getId();
-        for (int i = 0; selectIndex < tabsIv.length; i++) {
-            if (view_id == tabsIv[i]) {
-                int color = getResources().getColor(R.color.inactive);
-                ImageView imageView = (ImageView) page.findViewById(tabsIv[selectIndex]);
-                imageView.setColorFilter(color);
-                TextView textView = (TextView) page.findViewById(tabsTv[selectIndex]);
-                textView.setTextColor(color);
-                selectIndex = i;
-                break;
+        if (selectTab == null) {
+            selectTab = (ViewGroup) v;
+        } else if (selectTab == v) {
+            return;
+        }
+        int color = getResources().getColor(R.color.inactive);
+        ViewGroup preTab = selectTab;
+        changeColor(preTab, color);
+        //选中tab设置样式
+        ViewGroup tab = (ViewGroup) v;
+        selectTab = tab;
+        TextView textView = (TextView) tab.getChildAt(1);
+        mTitle = textView.getText().toString();
+        ViewUtil.setTitle(getContext(), mTitle);
+        int colorIndex = getContext().getSharedPreferences(PREFER, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
+        color = getResources().getColor(Config.COLORS[colorIndex]);
+        changeColor(tab, color);
+        for (int i = 0; i < TAB_IDS.length; i++) {
+            if (selectTab.getId() == TAB_IDS[i]) {
+                pageContainer.setCurrentItem(i, true);
             }
         }
-        ImageView imageView = (ImageView) page.findViewById(tabsIv[selectIndex]);
-        TextView textView = (TextView) page.findViewById(tabsTv[selectIndex]);
-        ViewUtil.setTitle(getContext(), textView.getText().toString());
-        int color_index = getContext().getSharedPreferences(PREFER, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
-        int color = getResources().getColor(Config.COLORS[color_index]);
-        pageContainer.setCurrentItem(selectIndex, true);
         ScaleAnimation scale = new ScaleAnimation(0.39F, 1.1F, 0.39F, 1.1F, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);
         scale.setDuration(200L);
         scale.setInterpolator(new AccelerateDecelerateInterpolator());
-        ((ViewGroup) imageView.getParent()).startAnimation(scale);
+        tab.startAnimation(scale);
+    }
+
+    /**
+     * 切换颜色
+     */
+    private void changeColor(ViewGroup tab, int color) {
+        ImageView imageView = (ImageView) tab.getChildAt(0);
+        TextView textView = (TextView) tab.getChildAt(1);
         imageView.setColorFilter(color);
         textView.setTextColor(color);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        TextView textView = (TextView) page.findViewById(tabsTv[selectIndex]);
-        ViewUtil.setTitle(getContext(), textView.getText().toString());
+        ViewUtil.setTitle(getContext(), mTitle);
         ViewUtil.showBackIcon(getContext(), false);
         menu.clear();
         inflater.inflate(R.menu.menu_page_home, menu);

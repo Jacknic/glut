@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
 
 import java.io.File;
-import java.net.SocketTimeoutException;
 import java.util.Calendar;
 
 import okhttp3.Call;
@@ -103,9 +101,6 @@ public final class Func {
 
             @Override
             public void onError(Call call, Response response, Exception e) {
-                if (response == null && e instanceof SocketTimeoutException) {
-                    Toast.makeText(OkGo.getContext(), "连接服务器失败", Toast.LENGTH_SHORT).show();
-                }
                 callback.onError(call, response, e);
             }
 

@@ -55,8 +55,7 @@ public class LoginPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         et_sid = (EditText) page.findViewById(R.id.et_sid);
         et_password = (EditText) page.findViewById(R.id.et_password);

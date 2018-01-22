@@ -44,8 +44,7 @@ public class BorrowPage extends BasePage {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    void initPage() {
         tips = page.findViewById(R.id.ts_tv_empty_tips);
         tips.setOnClickListener(new View.OnClickListener() {
             @Override
