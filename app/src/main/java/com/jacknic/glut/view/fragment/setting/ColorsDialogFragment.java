@@ -60,7 +60,6 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
         if (oldIndex != position) {
             prefer.edit().putInt(Config.SETTING_THEME_INDEX, position).putBoolean(Config.IS_REFRESH, true).apply();
             MainActivity mainActivity = (MainActivity) getActivity();
-
             mainActivity.selectTheme();
             FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -70,16 +69,13 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
             transaction.add(R.id.frame_container, settingPage, settingPage.getClass().getName());
             transaction.hide(homePage);
             transaction.show(settingPage);
-            Stack<android.support.v4.app.Fragment> pages = mainActivity.manager.getPages();
-            while (!pages.empty()) {
-                android.support.v4.app.Fragment fragment = pages.pop();
-                transaction.remove(fragment);
-            }
             transaction.commit();
             ActionBar actionBar = mainActivity.getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setBackgroundDrawable(new ColorDrawable(getActivity().getResources().getColor(Config.COLORS[position])));
             }
+            mainActivity.manager.closeAllFragment();
+            Stack<android.support.v4.app.Fragment> pages = mainActivity.manager.getPages();
             pages.add(homePage);
             pages.add(settingPage);
         }

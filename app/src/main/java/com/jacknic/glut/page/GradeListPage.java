@@ -50,6 +50,7 @@ public class GradeListPage extends BasePage {
     public void onStart() {
         super.onStart();
         Calendar calendar = Calendar.getInstance();
+        boolean springSession = calendar.get(Calendar.MONTH) < Calendar.JULY;
         int year = calendar.get(Calendar.YEAR);
         sp_year = (Spinner) page.findViewById(R.id.sp_select_year);
         sp_semester = (Spinner) page.findViewById(R.id.sp_select_semester);
@@ -66,10 +67,10 @@ public class GradeListPage extends BasePage {
         }
         ArrayAdapter<String> adapter_years = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
         sp_year.setAdapter(adapter_years);
-        sp_year.setSelection(1);
+        sp_year.setSelection(springSession ? 2 : 1);
         ArrayAdapter<String> adapter_semesters = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, semesters);
         sp_semester.setAdapter(adapter_semesters);
-        sp_semester.setSelection(calendar.get(Calendar.MONTH) > Calendar.SEPTEMBER ? 2 : 1);
+        sp_semester.setSelection(springSession ? 2 : 1);
         gradeListAdapter = new GradeListAdapter(getContext());
         rlv_grade_list.setAdapter(gradeListAdapter);
         showGrade();

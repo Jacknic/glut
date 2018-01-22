@@ -42,8 +42,8 @@ public class MainActivity extends RootActivity {
      * 设置主题
      */
     public void selectTheme() {
-        SharedPreferences setting = getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        int theme_index = setting.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
+        SharedPreferences prefer = getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        int theme_index = prefer.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
         setTheme(Config.THEME_LIST[theme_index]);
     }
 

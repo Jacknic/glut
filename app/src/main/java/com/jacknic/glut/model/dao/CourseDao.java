@@ -43,9 +43,9 @@ public class CourseDao {
      * @return 课表列表
      */
     public List<CourseEntity> getCourse(int week) {
-        SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
-        int school_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
-        int term = prefer_jw.getInt(Config.JW_SEMESTER, 1);
+        SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        int school_year = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        int term = prefer.getInt(Config.JW_SEMESTER, 1);
         return courseEntityDao.queryBuilder()
                 .where(CourseEntityDao.Properties.SmartPeriod.like("% " + week + " %"),
                         CourseEntityDao.Properties.SchoolStartYear.eq(school_year),
@@ -60,11 +60,11 @@ public class CourseDao {
      * 获取当日课表
      */
     public List<CourseEntity> getCourse() {
-        SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         Calendar calendar_now = Calendar.getInstance();
         int week_now = Func.getWeekNow();
-        int school_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
-        int term = prefer_jw.getInt(Config.JW_SEMESTER, 1);
+        int school_year = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        int term = prefer.getInt(Config.JW_SEMESTER, 1);
         int weekDay = (calendar_now.get(Calendar.DAY_OF_WEEK) + 6) % 7;
         System.out.printf("当前周%d，当前学年%d,当前学期%d,当前星期%d\n", week_now, school_year, term, weekDay);
         return courseEntityDao.queryBuilder()

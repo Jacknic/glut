@@ -47,7 +47,6 @@ public class StackManager {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(R.id.frame_container, mTargetFragment, mTargetFragment.getClass().getName())
                 .commit();
-        pages.clear();
         pages.add(mTargetFragment);
     }
 
@@ -104,7 +103,7 @@ public class StackManager {
      * 跳转页面,清空旧栈
      */
     public void jumpFragment(Fragment to) {
-        pages.clear();
+        closeAllFragment();
         pages.push(to);
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         if (!to.isAdded()) {
@@ -145,11 +144,13 @@ public class StackManager {
      * 关闭所有 fragment
      */
     public void closeAllFragment() {
-        int backStackCount = context.getSupportFragmentManager().getBackStackEntryCount();
-        for (int i = 0; i < backStackCount; i++) {
-            int backStackId = context.getSupportFragmentManager().getBackStackEntryAt(i).getId();
-            context.getSupportFragmentManager().popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        FragmentManager supportFragmentManager = context.getSupportFragmentManager();
+        FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+        while (!pages.empty()) {
+            Fragment fragment = pages.pop();
+            transaction.remove(fragment);
         }
+        transaction.commit();
     }
 
     /**

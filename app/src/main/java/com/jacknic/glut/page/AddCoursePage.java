@@ -177,9 +177,9 @@ public class AddCoursePage extends BasePage {
         EditText et_grade = (EditText) page.findViewById(R.id.et_grade);
         String grade = et_grade.getText().toString();
         String courseNum = System.currentTimeMillis() + "";
-        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        int semester = prefer_jw.getInt(Config.JW_SEMESTER, 1);
-        int schoolYearStart = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        int semester = prefer.getInt(Config.JW_SEMESTER, 1);
+        int schoolYearStart = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         /*上课安排信息*/
         CourseEntity courseEntity = new CourseEntity();
         courseEntity.setCourseName(courseName);
@@ -219,7 +219,7 @@ public class AddCoursePage extends BasePage {
         et_teacher.setText("");
         et_grade.setText("");
         et_location.setText("");
-        prefer_jw.edit().putBoolean(Config.IS_REFRESH, true).apply();
+        prefer.edit().putBoolean(Config.IS_REFRESH, true).apply();
         SnackbarTool.showShort("保存课程《" + courseName + "》成功");
     }
 }

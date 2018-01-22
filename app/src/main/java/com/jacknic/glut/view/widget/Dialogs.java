@@ -70,11 +70,11 @@ public class Dialogs {
      */
     public static AlertDialog.Builder getChangeWeekDialog(Activity activity) {
         LinearLayout dialogView = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.dialog_change_week, null);
-        final SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
-        int jw_week_end = prefer_jw.getInt(Config.JW_WEEK_END, 30);
-        int select_week = prefer_jw.getInt(Config.JW_WEEK_SELECT, 30);
+        final SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        int jw_week_end = prefer.getInt(Config.JW_WEEK_END, 30);
+        int select_week = prefer.getInt(Config.JW_WEEK_SELECT, 30);
         final Calendar calendar = Calendar.getInstance();
-        int year_week_old = prefer_jw.getInt(Config.JW_YEAR_WEEK_OLD, calendar.get(Calendar.WEEK_OF_YEAR));
+        int year_week_old = prefer.getInt(Config.JW_YEAR_WEEK_OLD, calendar.get(Calendar.WEEK_OF_YEAR));
         int year_week_now = calendar.get(Calendar.WEEK_OF_YEAR);
         int week_now = select_week + (year_week_now - year_week_old);
         if (year_week_now > year_week_old && calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
@@ -102,7 +102,7 @@ public class Dialogs {
             public void onClick(DialogInterface dialog, int which) {
                 int select_week = curr_week.getValue();
                 int end_week = max_week.getValue();
-                SharedPreferences.Editor edit_jw = prefer_jw.edit();
+                SharedPreferences.Editor edit_jw = prefer.edit();
                 edit_jw.putInt(Config.JW_WEEK_SELECT, select_week);
                 int year_week_old = calendar.get(Calendar.WEEK_OF_YEAR);
                 if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
@@ -123,9 +123,9 @@ public class Dialogs {
     public static void showLoginJw(final Context context, final AbsCallbackWrapper callback) {
         if (context == null) return;
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_login, null, false);
-        SharedPreferences prefer_jw = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        String sid = prefer_jw.getString(Config.SID, "");
-        String password = prefer_jw.getString(Config.PASSWORD_JW, "");
+        SharedPreferences prefer = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        String sid = prefer.getString(Config.SID, "");
+        String password = prefer.getString(Config.PASSWORD_JW, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
         final EditText et_password = (EditText) login_view.findViewById(R.id.et_password);
         et_sid.setText(sid);
@@ -226,9 +226,8 @@ public class Dialogs {
         if (context == null) return;
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_login, null, false);
         login_view.findViewById(R.id.captcha_layout).setVisibility(View.GONE);
-        SharedPreferences prefer_jw = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        String sid = prefer_jw.getString(Config.SID, "");
         final SharedPreferences prefer = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        String sid = prefer.getString(Config.SID, "");
         String password = prefer.getString(Config.PASSWORD_TS, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
         final EditText et_password = (EditText) login_view.findViewById(R.id.et_password);
@@ -273,10 +272,9 @@ public class Dialogs {
         if (context == null) return;
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_login, null, false);
         login_view.findViewById(R.id.captcha_layout).setVisibility(View.GONE);
-        SharedPreferences prefer_jw = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        String sid = prefer_jw.getString(Config.SID, "");
-        final SharedPreferences prefer_ts = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        String password = prefer_ts.getString(Config.PASSWORD_CW, "");
+        final SharedPreferences prefer = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        String sid = prefer.getString(Config.SID, "");
+        String password = prefer.getString(Config.PASSWORD_CW, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
         final EditText et_password = (EditText) login_view.findViewById(R.id.et_password);
         et_sid.setText(sid);
