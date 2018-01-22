@@ -22,10 +22,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.WeekNameAdapter;
+import com.jacknic.glut.event.UpdateCourseEvent;
 import com.jacknic.glut.model.dao.CourseDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.page.ChangeTermPage;
@@ -35,6 +35,7 @@ import com.jacknic.glut.util.Func;
 import com.jacknic.glut.view.widget.CourseTableView;
 import com.jacknic.glut.view.widget.Dialogs;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class CourseFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragment = inflater.inflate(R.layout.frag_course, container, false);
+        EventBus.getDefault().register(this);
         initView();
         setTab();
         showSelect();
@@ -231,28 +233,27 @@ public class CourseFragment extends Fragment {
     }
 
     /**
-     * 刷新视图
+     * 课表变动事件刷新
      */
-    private void refresh() {
-        boolean refresh = prefer.getBoolean(Config.IS_REFRESH, false);
-        if (refresh) {
-            prefer.edit().remove(Config.IS_REFRESH).apply();
-            if (ll_select_time.getVisibility() == View.VISIBLE) iv_toggle.callOnClick();
-            tabLayout.removeAllTabs();
-            Func.updateWidget(getContext());
-            setTab();
-            showSelect();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+    @Subscribe
+    public void updateCourse(UpdateCourseEvent event) {
         refresh();
     }
 
-    @Subscribe
-    public void onMessageEvent(String event) {
-        Toast.makeText(getActivity(), event, Toast.LENGTH_SHORT).show();
+    /**
+     * 刷新视图
+     */
+    private void refresh() {
+        if (ll_select_time.getVisibility() == View.VISIBLE) iv_toggle.callOnClick();
+        tabLayout.removeAllTabs();
+        Func.updateWidget(getContext());
+        setTab();
+        showSelect();
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 }

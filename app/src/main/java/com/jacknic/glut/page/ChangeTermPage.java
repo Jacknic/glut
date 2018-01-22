@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
+import com.jacknic.glut.event.UpdateCourseEvent;
 import com.jacknic.glut.model.CourseModel;
 import com.jacknic.glut.model.dao.CourseDao;
 import com.jacknic.glut.model.dao.CourseInfoDao;
@@ -98,9 +99,9 @@ public class ChangeTermPage extends BasePage {
                                 SharedPreferences.Editor editor = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE).edit();
                                 editor.putInt(Config.JW_SCHOOL_YEAR, courseEntity.getSchoolStartYear())
                                         .putInt(Config.JW_SEMESTER, courseEntity.getSemester())
-                                        .putBoolean(Config.IS_REFRESH, true)
                                         .putInt(Config.JW_YEAR_WEEK_OLD, Calendar.getInstance().get(Calendar.WEEK_OF_YEAR))
                                         .apply();
+                                EventBus.getDefault().post(new UpdateCourseEvent());
                                 setTerms();
                             }
                         })

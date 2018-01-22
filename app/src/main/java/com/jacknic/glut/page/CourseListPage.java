@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.CourseListAdapter;
+import com.jacknic.glut.event.UpdateCourseEvent;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseEntityDao;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
@@ -21,6 +22,8 @@ import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 import java.util.List;
@@ -78,10 +81,8 @@ public class CourseListPage extends BasePage {
                                         .queryBuilder()
                                         .where(CourseEntityDao.Properties.CourseNum.eq(courseInfoEntity.getCourseNum()))
                                         .buildDelete().executeDeleteWithoutDetachingEntities();
-                                SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-                                prefer.edit().putBoolean(Config.IS_REFRESH, true).apply();
+                                EventBus.getDefault().post(new UpdateCourseEvent());
                                 DataBase.getDaoSession().getCourseInfoEntityDao().delete(courseInfoEntity);
-                                Func.updateWidget(getContext());
                                 courseInfoList.remove(position);
                                 listAdapter.notifyDataSetChanged();
                             }

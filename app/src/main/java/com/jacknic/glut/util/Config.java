@@ -42,16 +42,10 @@ public final class Config {
 
 
     /**
-     * 登录识别
-     */
-    public static final int LOGIN_FLAG_JW = 0;
-    public static final int LOGIN_FLAG_CW = 1;
-    /**
      * 设置
      */
     public static final int SETTING_THEME_COLOR_INDEX = 4;//默认蓝色主题样式
     public static final String SETTING_THEME_INDEX = "theme_index";
-    public static final String IS_REFRESH = "is_refresh";
 
 
     /**

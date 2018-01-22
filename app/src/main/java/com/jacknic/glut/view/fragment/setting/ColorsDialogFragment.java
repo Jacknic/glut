@@ -58,7 +58,7 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
         SharedPreferences prefer = getActivity().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         int oldIndex = prefer.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
         if (oldIndex != position) {
-            prefer.edit().putInt(Config.SETTING_THEME_INDEX, position).putBoolean(Config.IS_REFRESH, true).apply();
+            prefer.edit().putInt(Config.SETTING_THEME_INDEX, position).apply();
             MainActivity mainActivity = (MainActivity) getActivity();
             mainActivity.selectTheme();
             FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
