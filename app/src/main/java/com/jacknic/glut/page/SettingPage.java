@@ -13,7 +13,7 @@ import com.jacknic.glut.adapter.SettingPagerAdapter;
 public class SettingPage extends BasePage {
 
     private TabLayout tab;
-    private ViewPager pager_container;
+    private ViewPager viewPager;
 
     @Override
     protected int getLayoutId() {
@@ -25,7 +25,7 @@ public class SettingPage extends BasePage {
     public void onStart() {
         super.onStart();
         tab = (TabLayout) page.findViewById(R.id.setting_tab);
-        pager_container = (ViewPager) page.findViewById(R.id.setting_pager);
+        viewPager = (ViewPager) page.findViewById(R.id.setting_pager);
         setPagers();
     }
 
@@ -34,8 +34,8 @@ public class SettingPage extends BasePage {
      */
     private void setPagers() {
         FragmentPagerAdapter settingPagerAdapter = new SettingPagerAdapter(getChildFragmentManager());
-        pager_container.setAdapter(settingPagerAdapter);
-        tab.setupWithViewPager(pager_container);
+        viewPager.setAdapter(settingPagerAdapter);
+        tab.setupWithViewPager(viewPager);
     }
 
 }

@@ -36,14 +36,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     private ImageView ivHeader;
     private View fragment;
-    private SharedPreferences preferJw;
+    private SharedPreferences prefer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        preferJw = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
-        String sid = preferJw.getString("sid", "");
+        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        String sid = prefer.getString("sid", "");
         StudentInfoBean studentInfo = new StudentInfoModel().getFromPrefer();
-        boolean isShowHeadImg = preferJw.getBoolean("isShowHeadImg", true);
+        boolean isShowHeadImg = prefer.getBoolean("isShowHeadImg", true);
         fragment = inflater.inflate(R.layout.frag_mine, container, false);
         TextView tvSid = (TextView) fragment.findViewById(R.id.jw_tv_sid);
         tvSid.setText(sid);
@@ -114,11 +114,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.jw_iv_header:
                 v.setVisibility(View.GONE);
-                preferJw.edit().putBoolean("isShowHeadImg", false).apply();
+                prefer.edit().putBoolean("isShowHeadImg", false).apply();
                 break;
             case R.id.jw_iv_header_bg:
                 ivHeader.setVisibility(View.VISIBLE);
-                preferJw.edit().putBoolean("isShowHeadImg", true).apply();
+                prefer.edit().putBoolean("isShowHeadImg", true).apply();
                 break;
         }
 

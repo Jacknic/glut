@@ -42,7 +42,7 @@ public class LoginPage extends BasePage {
     private EditText et_sid, et_password;
     private EditText et_captcha;
     private ImageView iv_captcha;
-    private final SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+    private final SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
     private ImageView iv_show_pwd;
     private AlertDialog login_dialog;
     private EduInfoModel eduInfoModel = new EduInfoModel();
@@ -60,7 +60,7 @@ public class LoginPage extends BasePage {
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         et_sid = (EditText) page.findViewById(R.id.et_sid);
         et_password = (EditText) page.findViewById(R.id.et_password);
-        et_sid.setText(prefer_jw.getString(Config.SID, ""));
+        et_sid.setText(prefer.getString(Config.SID, ""));
         showCaptcha();
         iv_show_pwd = (ImageView) page.findViewById(R.id.iv_show_pwd);
         //显示、隐藏密码

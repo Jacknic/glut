@@ -49,8 +49,8 @@ public class LoginModel {
 
             @Override
             public void onError(Call call, Response response, Exception e) {
-                SharedPreferences prefer_jw = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefer_jw.edit();
+                SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefer.edit();
                 editor.putString(Config.SID, sid);
                 editor.putString(Config.PASSWORD_JW, password);
                 editor.apply();
@@ -87,8 +87,8 @@ public class LoginModel {
                     public void onError(Call call, Response response, Exception e) {
                         //判断是否跳转，如果跳转则登录成功
                         if (response != null && "http://202.193.80.181:8080/opac/reader/space".equals(response.header("location"))) {
-                            SharedPreferences prefer_ts = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
-                            prefer_ts.edit().putString(Config.SID, sid).putString(Config.PASSWORD_TS, password).apply();
+                            SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+                            prefer.edit().putString(Config.SID, sid).putString(Config.PASSWORD_TS, password).apply();
                             callback.onSuccess("", call, response);
                         }
                         callback.onError(call, response, e);

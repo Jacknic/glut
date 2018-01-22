@@ -150,11 +150,11 @@ public class ChangeTermPage extends BasePage {
      */
     @NonNull
     private List<String> getTerms() {
-        SharedPreferences prefer_jw = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
         termCourse = new CourseDao().getTermsCourse();
         final List<String> termList = new ArrayList<>();
-        int select_year = prefer_jw.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
-        int select_semester = prefer_jw.getInt(Config.JW_SEMESTER, Calendar.getInstance().get(Calendar.YEAR));
+        int select_year = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        int select_semester = prefer.getInt(Config.JW_SEMESTER, Calendar.getInstance().get(Calendar.YEAR));
 
         for (CourseEntity courseEntity : termCourse) {
             Integer schoolStartYear = courseEntity.getSchoolStartYear();
