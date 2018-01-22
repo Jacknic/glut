@@ -18,12 +18,15 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.jacknic.glut.R;
+import com.jacknic.glut.event.UpdateCourseEvent;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.SnackbarTool;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -219,7 +222,7 @@ public class AddCoursePage extends BasePage {
         et_teacher.setText("");
         et_grade.setText("");
         et_location.setText("");
-        prefer.edit().putBoolean(Config.IS_REFRESH, true).apply();
+        EventBus.getDefault().post(new UpdateCourseEvent());
         SnackbarTool.showShort("保存课程《" + courseName + "》成功");
     }
 }

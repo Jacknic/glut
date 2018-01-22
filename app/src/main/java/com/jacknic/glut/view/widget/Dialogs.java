@@ -109,7 +109,6 @@ public class Dialogs {
                     year_week_old -= 1;
                 }
                 edit_jw.putInt(Config.JW_YEAR_WEEK_OLD, year_week_old);
-                edit_jw.putBoolean(Config.IS_REFRESH, true);
                 edit_jw.putInt(Config.JW_WEEK_END, end_week);
                 edit_jw.apply();
             }
