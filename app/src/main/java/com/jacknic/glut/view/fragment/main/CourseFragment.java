@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -235,6 +236,7 @@ public class CourseFragment extends Fragment {
     /**
      * 课表变动事件刷新
      */
+    @Keep
     @Subscribe
     public void updateCourse(UpdateCourseEvent event) {
         refresh();

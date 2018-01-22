@@ -37,6 +37,7 @@
 -keep class com.alibaba.fastjson.** { *; }
 -keep class org.jsoup.** { *; }
 -keep class me.gujun.** { *; }
+-keep class org.greenrobot.eventbus.** { *; }
 
 
 ### greenDAO 3

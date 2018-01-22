@@ -74,7 +74,6 @@ public class MainActivity extends RootActivity {
                 exit = true;
             } else {
                 OkGo.getInstance().cancelAll();
-                manager.closeAllFragment();
                 finish();
             }
         } else {
