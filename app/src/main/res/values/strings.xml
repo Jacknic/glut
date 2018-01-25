@@ -11,6 +11,7 @@
     <string name="txt_mine">我的</string>
     <string name="txt_cw">财务</string>
     <string name="txt_jw">教务</string>
+    <string name="txt_kb">课表</string>
     <string name="error_login_fail">用户名或密码有误</string>
     <string name="search_book_hint">搜索图书</string>
     <string name="about_this_app">关于此应用</string>

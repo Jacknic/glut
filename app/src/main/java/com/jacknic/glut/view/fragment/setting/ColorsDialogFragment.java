@@ -6,8 +6,6 @@ import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -17,11 +15,10 @@ import android.widget.GridView;
 import com.jacknic.glut.MainActivity;
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.ColorsSelectorAdapter;
-import com.jacknic.glut.page.HomePage;
-import com.jacknic.glut.page.SettingPage;
+import com.jacknic.glut.event.ThemeChangeEvent;
 import com.jacknic.glut.util.Config;
 
-import java.util.Stack;
+import org.greenrobot.eventbus.EventBus;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -61,23 +58,11 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
             prefer.edit().putInt(Config.SETTING_THEME_INDEX, position).apply();
             MainActivity mainActivity = (MainActivity) getActivity();
             mainActivity.selectTheme();
-            FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            HomePage homePage = new HomePage();
-            SettingPage settingPage = new SettingPage();
-            transaction.add(R.id.frame_container, homePage, homePage.getClass().getName());
-            transaction.add(R.id.frame_container, settingPage, settingPage.getClass().getName());
-            transaction.hide(homePage);
-            transaction.show(settingPage);
-            transaction.commit();
             ActionBar actionBar = mainActivity.getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setBackgroundDrawable(new ColorDrawable(getActivity().getResources().getColor(Config.COLORS[position])));
             }
-            mainActivity.manager.closeAllFragment();
-            Stack<android.support.v4.app.Fragment> pages = mainActivity.manager.getPages();
-            pages.add(homePage);
-            pages.add(settingPage);
+            EventBus.getDefault().post(new ThemeChangeEvent());
         }
         dismiss();
     }

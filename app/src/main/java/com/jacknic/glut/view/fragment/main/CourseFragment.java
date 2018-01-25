@@ -255,7 +255,7 @@ public class CourseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        EventBus.getDefault().unregister(this);
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }

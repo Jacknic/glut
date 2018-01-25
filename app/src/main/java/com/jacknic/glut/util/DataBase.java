@@ -1,10 +1,10 @@
 package com.jacknic.glut.util;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import com.jacknic.glut.model.entity.DaoMaster;
 import com.jacknic.glut.model.entity.DaoSession;
 import com.lzy.okgo.OkGo;
+
+import org.greenrobot.greendao.database.Database;
 
 
 /**
@@ -12,7 +12,7 @@ import com.lzy.okgo.OkGo;
  */
 
 public class DataBase {
-    private static SQLiteDatabase db;
+    private static Database db;
     private static DaoSession mDaoSession;
 
 
@@ -21,7 +21,7 @@ public class DataBase {
      */
     private static void setDatabase() {
         DaoMaster.DevOpenHelper mHelper = new DaoMaster.DevOpenHelper(OkGo.getContext(), "course.db", null);
-        db = mHelper.getWritableDatabase();
+        db = mHelper.getWritableDb();
         DaoMaster mDaoMaster = new DaoMaster(db);
         mDaoSession = mDaoMaster.newSession();
     }
@@ -39,7 +39,7 @@ public class DataBase {
     /**
      * 获取数据库对象
      */
-    public static SQLiteDatabase getDb() {
+    public static Database getDb() {
         if (db == null) {
             setDatabase();
         }

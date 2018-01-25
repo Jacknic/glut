@@ -41,7 +41,6 @@ public class ProcessPage extends BasePage {
 
     @Override
     void initPage() {
-        super.onStart();
         gv_grade_list = (GridView) page.findViewById(R.id.gv_grade_list);
         showData();
     }

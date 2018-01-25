@@ -24,7 +24,6 @@ import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
-import com.jacknic.glut.util.SnackbarTool;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -68,19 +67,18 @@ public class AddCoursePage extends BasePage {
             courseNames.add(courseInfoEntity.getCourseName());
         }
         tvCourseClass = (TextView) page.findViewById(R.id.tv_course_class);
-        tvCourseClass.setText(String.format(showWeek, Config.weekNames[weekDay - 1], courseStart, courseEnd));
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, courseNames);
         actCourseName.setAdapter(arrayAdapter);
         //条件选择器
         final List<String> weekDays = new ArrayList<String>();
-        for (int i = 0; i < Config.weekNames.length; i++) {
-            weekDays.add("星期" + Config.weekNames[i]);
+        for (int i = 1; i <= Config.weekNames.length; i++) {
+            weekDays.add("星期" + Config.weekNames[i % 7]);
         }
         final List<String> classes = new ArrayList<>();
         for (int i = 1; i <= 14; i++) {
             classes.add(Func.courseIndexToStr(i));
         }
-
+        tvCourseClass.setText(String.format(showWeek, Config.weekNames[weekDay % 7], Func.courseIndexToStr(courseStart), Func.courseIndexToStr(courseEnd)));
         final NumberPicker npWeekStart = (NumberPicker) page.findViewById(R.id.np_week_start);
         final NumberPicker npWeekEnd = (NumberPicker) page.findViewById(R.id.np_week_end);
         Spinner sp_week_type = (Spinner) page.findViewById(R.id.sp_week_type);
@@ -122,6 +120,7 @@ public class AddCoursePage extends BasePage {
         int weekNow = Func.getWeekNow();
         npWeekStart.setValue(weekNow);
         npWeekEnd.setValue(weekNow);
+        int color = tvCourseClass.getCurrentTextColor();
         final OptionsPickerView pvOptions = new OptionsPickerView.Builder(getContext(), new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
@@ -131,11 +130,14 @@ public class AddCoursePage extends BasePage {
                 weekDay = options1 + 1;
                 courseStart = option2;
                 courseEnd = options3;
-                String tx = String.format(showWeek, Config.weekNames[options1], classes.get(option2), classes.get(options3));
+                String tx = String.format(showWeek, Config.weekNames[weekDay % 7], classes.get(option2), classes.get(options3));
                 tvCourseClass.setText(tx);
             }
         })
                 .setLabels("", "到", "")
+                .setCancelColor(color)
+                .setSubmitColor(color)
+                .isDialog(true)
                 .build();
         pvOptions.setNPicker(weekDays, classes, classes);
         pvOptions.setSelectOptions(weekDay - 1, start - 1, start - 1);
@@ -222,6 +224,6 @@ public class AddCoursePage extends BasePage {
         et_grade.setText("");
         et_location.setText("");
         EventBus.getDefault().post(new UpdateCourseEvent());
-        SnackbarTool.showShort("保存课程《" + courseName + "》成功");
+        Toast.makeText(getContext(), "保存课程《" + courseName + "》成功", Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,6 +1,7 @@
 package com.jacknic.glut.page;
 
 import android.content.SharedPreferences;
+import android.support.annotation.Keep;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +18,14 @@ import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.MainPagerAdapter;
+import com.jacknic.glut.event.ThemeChangeEvent;
 import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.UpdateUtil;
 import com.jacknic.glut.util.ViewUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.jacknic.glut.util.Config.PREFER;
@@ -43,6 +48,8 @@ public class HomePage extends BasePage implements View.OnClickListener {
             R.id.bottom_tab_mine,
     };
     private ViewGroup selectTab;
+    private int colorInactive;
+    private int colorActive;
 
     @Override
     protected int getLayoutId() {
@@ -51,6 +58,10 @@ public class HomePage extends BasePage implements View.OnClickListener {
 
     @Override
     void initPage() {
+        EventBus.getDefault().register(this);
+        colorInactive = getResources().getColor(R.color.inactive);
+        int colorIndex = getContext().getSharedPreferences(PREFER, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
+        colorActive = getResources().getColor(Config.COLORS[colorIndex]);
         pageContainer = (ViewPager) page.findViewById(R.id.page_container);
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         initFragments();
@@ -95,18 +106,15 @@ public class HomePage extends BasePage implements View.OnClickListener {
         } else if (selectTab == v) {
             return;
         }
-        int color = getResources().getColor(R.color.inactive);
         ViewGroup preTab = selectTab;
-        changeColor(preTab, color);
+        changeColor(preTab, colorInactive);
         //选中tab设置样式
         ViewGroup tab = (ViewGroup) v;
         selectTab = tab;
         TextView textView = (TextView) tab.getChildAt(1);
         mTitle = textView.getText().toString();
         ViewUtil.setTitle(getContext(), mTitle);
-        int colorIndex = getContext().getSharedPreferences(PREFER, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
-        color = getResources().getColor(Config.COLORS[colorIndex]);
-        changeColor(tab, color);
+        changeColor(tab, colorActive);
         for (int i = 0; i < TAB_IDS.length; i++) {
             if (selectTab.getId() == TAB_IDS[i]) {
                 pageContainer.setCurrentItem(i, true);
@@ -136,6 +144,19 @@ public class HomePage extends BasePage implements View.OnClickListener {
         inflater.inflate(R.menu.menu_page_home, menu);
     }
 
+    /**
+     * 主题切换事件
+     */
+    @Keep
+    @Subscribe
+    public void themeChange(ThemeChangeEvent event) {
+        int colorIndex = getContext().getSharedPreferences(PREFER, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
+        colorActive = getResources().getColor(Config.COLORS[colorIndex]);
+        pageContainer.setAdapter(new MainPagerAdapter(getChildFragmentManager()));
+        pageContainer.setCurrentItem(3);
+        changeColor(selectTab, colorActive);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -144,5 +165,11 @@ public class HomePage extends BasePage implements View.OnClickListener {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }
