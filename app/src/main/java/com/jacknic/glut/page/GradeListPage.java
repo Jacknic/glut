@@ -39,6 +39,7 @@ public class GradeListPage extends BasePage {
     private Spinner sp_semester;
     private ArrayList<String> years;
     private GradeListAdapter gradeListAdapter;
+    private AdapterView.OnItemSelectedListener onItemSelectedListener;
 
     @Override
     protected int getLayoutId() {
@@ -75,24 +76,6 @@ public class GradeListPage extends BasePage {
         showGrade();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                showGrade();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        };
-        sp_semester.setOnItemSelectedListener(onItemSelectedListener);
-        sp_year.setOnItemSelectedListener(onItemSelectedListener);
-    }
-
     /**
      * 获取成绩
      */
@@ -114,8 +97,31 @@ public class GradeListPage extends BasePage {
                     login();
                 }
             }
+
+            @Override
+            public void onAfter(String s, Exception e) {
+                if (onItemSelectedListener == null) {
+                    setListener();
+                }
+            }
         };
         Func.checkLoginStatus(callback);
+    }
+
+    private void setListener() {
+        onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                showGrade();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        sp_semester.setOnItemSelectedListener(onItemSelectedListener);
+        sp_year.setOnItemSelectedListener(onItemSelectedListener);
     }
 
     /**

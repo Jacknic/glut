@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,193 +7,189 @@
     android:orientation="vertical"
     tools:context="com.jacknic.glut.page.AddCoursePage">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.LinearLayoutCompat
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="@dimen/list_item_height"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="课名" />
+
+            <android.support.v7.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/act_course_name"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:layout_marginBottom="10dp"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="课名" />
-
-                <android.support.v7.widget.AppCompatAutoCompleteTextView
-                    android:id="@+id/act_course_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:background="@android:color/transparent"
-                    android:hint="未填写"
-                    android:paddingLeft="10dp" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="未填写"
+                android:maxLines="1"
+                android:paddingLeft="10dp" />
+        </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:background="@color/white"
-                android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_height"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="节数" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="节数" />
 
-                <TextView
-                    android:id="@+id/tv_course_class"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_item"
-                    android:clickable="true"
-                    android:drawableRight="@drawable/ic_keyboard_arrow_right"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:paddingLeft="10dp"
-                    android:text=""
-                    android:textColor="?attr/colorPrimary" />
-
-            </LinearLayout>
-
-            <include layout="@layout/div_line" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:background="@color/white"
+            <TextView
+                android:id="@+id/tv_course_class"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selector_item"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:focusableInTouchMode="true"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:text=""
+                android:textColor="?attr/colorPrimary" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="周数" />
+        </LinearLayout>
 
-                <NumberPicker
-                    android:id="@+id/np_week_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+        <include layout="@layout/div_line" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="-" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-                <NumberPicker
-                    android:id="@+id/np_week_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="周数" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="周" />
+            <NumberPicker
+                android:id="@+id/np_week_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/sp_week_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/week_type" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="-" />
 
-            <include layout="@layout/div_line" />
+            <NumberPicker
+                android:id="@+id/np_week_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="周" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/sp_week_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/week_type" />
+        </LinearLayout>
+
+        <include layout="@layout/div_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_height"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="地点" />
+
+            <EditText
+                android:id="@+id/et_location"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:layout_marginBottom="10dp"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="地点" />
-
-                <EditText
-                    android:id="@+id/et_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="未填写"
-                    android:maxLines="1"
-                    android:paddingLeft="10dp" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="未填写"
+                android:maxLines="1"
+                android:paddingLeft="10dp" />
+        </LinearLayout>
 
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_height"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="老师" />
+
+            <EditText
+                android:id="@+id/et_teacher"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:background="@color/white"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="未填写"
+                android:maxLines="1"
+                android:paddingLeft="10dp" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="老师" />
+        <include layout="@layout/div_line" />
 
-                <EditText
-                    android:id="@+id/et_teacher"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="未填写"
-                    android:maxLines="1"
-                    android:paddingLeft="10dp" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_height"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-            <include layout="@layout/div_line" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="学分" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/et_grade"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
-                android:layout_marginBottom="10dp"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="学分" />
-
-                <EditText
-                    android:id="@+id/et_grade"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="未填写"
-                    android:maxLines="1"
-                    android:paddingLeft="10dp" />
-            </LinearLayout>
-        </android.support.v7.widget.LinearLayoutCompat>
-    </ScrollView>
-</android.support.v7.widget.LinearLayoutCompat>
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="未填写"
+                android:maxLines="1"
+                android:paddingLeft="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

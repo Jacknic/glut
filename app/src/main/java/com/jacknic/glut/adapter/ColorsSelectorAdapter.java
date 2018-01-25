@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.ViewUtil;
 import com.jacknic.glut.view.fragment.setting.ColorsDialogFragment;
 
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class ColorsSelectorAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             TextView textView = new TextView(parent.getContext());
-            textView.setHeight(100);
+            textView.setHeight(ViewUtil.dip2px(50));
             textView.setBackgroundColor(colorsDialogFragment.getResources().getColor(Config.COLORS[position]));
             convertView = textView;
         }

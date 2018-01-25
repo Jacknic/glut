@@ -1,57 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:paddingTop="3dp">
+    android:paddingBottom="6dp"
+    android:paddingTop="6dp">
 
     <LinearLayout
         android:id="@+id/bottom_tab_course"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="20dp"
-            android:paddingTop="5dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_event_note"
             android:tint="@color/inactive" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-20dp"
-            android:text="课表"
+            android:text="@string/txt_kb"
             android:textColor="@color/inactive"
             android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bottom_tab_financial"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="20dp"
-            android:paddingTop="5dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_account_balance_wallet"
             android:tint="@color/inactive" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-20dp"
             android:text="@string/txt_cw"
             android:textColor="@color/inactive"
             android:textSize="@dimen/bottom_tabs_textSize" />
@@ -59,24 +54,21 @@
 
     <LinearLayout
         android:id="@+id/bottom_tab_library"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="20dp"
-            android:paddingTop="5dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_library_books"
             android:tint="@color/inactive" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-20dp"
             android:text="@string/txt_library"
             android:textColor="@color/inactive"
             android:textSize="@dimen/bottom_tabs_textSize" />
@@ -84,25 +76,21 @@
 
     <LinearLayout
         android:id="@+id/bottom_tab_mine"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="20dp"
-            android:paddingTop="5dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_account_circle"
             android:tint="@color/inactive" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-20dp"
             android:text="@string/txt_mine"
             android:textColor="@color/inactive"
             android:textSize="@dimen/bottom_tabs_textSize" />
