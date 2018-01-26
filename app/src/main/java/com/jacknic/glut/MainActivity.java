@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import com.jacknic.glut.page.StartPage;
 import com.jacknic.glut.stacklibrary.StackManager;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.SnackbarTool;
+import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
 
 import java.util.Timer;
@@ -46,6 +48,39 @@ public class MainActivity extends AppCompatActivity {
         manager.setAnim(R.anim.push_right_in, R.anim.push_left_out, R.anim.push_left_in, R.anim.push_right_out);
     }
 
+    /**
+     * 滑动初始点x坐标
+     */
+    private float posX = 0;
+
+    /**
+     * 侧滑返回
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                posX = ev.getX();
+                if (posX < ViewUtil.dip2px(20)) {
+                    return true;
+                }
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                if (posX < ViewUtil.dip2px(20)) {
+                    float x = ev.getX();
+                    if (x > getWindow().getDecorView().getWidth() / 3) {
+                        if (manager.getPages().size() > 1) {
+                            onBackPressed();
+                            return true;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
     /**
      * 设置主题
@@ -88,6 +123,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             manager.onBackPressed();
         }
-
     }
 }
