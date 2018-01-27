@@ -21,14 +21,17 @@ import com.tencent.stat.StatService;
 
 import java.util.Properties;
 
+import butterknife.BindView;
+
 /**
  *
  */
 
 public class BrowserPage extends BasePage {
-
-    private ProgressBar progressbar;
-    private WebView webView;
+    @BindView(R.id.progressbar)
+    ProgressBar progressbar;
+    @BindView(R.id.web_view)
+    WebView webView;
 
     @Override
     protected int getLayoutId() {
@@ -37,15 +40,13 @@ public class BrowserPage extends BasePage {
 
     @Override
     void initPage() {
-        webView = (WebView) page.findViewById(R.id.web_view);
-        progressbar = (ProgressBar) page.findViewById(R.id.progressbar);
-        setWebView();
         Bundle bundle = getArguments();
         String url = bundle.getString("url");
         if (TextUtils.isEmpty(url)) {
             Toast.makeText(getContext(), "网址为空", Toast.LENGTH_SHORT).show();
             getActivity().onBackPressed();
         }
+        setWebView();
         webView.loadUrl(url);
     }
 
@@ -109,5 +110,11 @@ public class BrowserPage extends BasePage {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        webView.stopLoading();
     }
 }

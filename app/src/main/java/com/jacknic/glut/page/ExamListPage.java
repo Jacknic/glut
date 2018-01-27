@@ -21,6 +21,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -33,6 +34,8 @@ public class ExamListPage extends BasePage {
     private ArrayList<ExamInfoBean> examInfoBeenList = new ArrayList<>();
     private ExamListAdapter examListAdapter;
     private boolean isGot = false;
+    @BindView(R.id.rv_exam_list)
+    RecyclerView rv_exam_list;
 
     @Override
     protected int getLayoutId() {
@@ -42,7 +45,6 @@ public class ExamListPage extends BasePage {
 
     @Override
     void initPage() {
-        RecyclerView rv_exam_list = (RecyclerView) page.findViewById(R.id.jw_rv_exam_list);
         rv_exam_list.setLayoutManager(new LinearLayoutManager(getContext()));
         examListAdapter = new ExamListAdapter(getContext(), examInfoBeenList);
         rv_exam_list.setAdapter(examListAdapter);

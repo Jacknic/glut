@@ -25,6 +25,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -32,10 +34,11 @@ import okhttp3.Response;
  * 图书借阅页
  */
 public class BorrowPage extends BasePage {
-
-    private RecyclerView rl_borrow_list;
+    @BindView(R.id.rl_borrow_list)
+    RecyclerView rl_borrow_list;
+    @BindView(R.id.tv_empty_tips)
+    View tips;
     private boolean isAuto = true;
-    private View tips;
 
     @Override
     protected int getLayoutId() {
@@ -43,17 +46,18 @@ public class BorrowPage extends BasePage {
         return R.layout.page_borrow;
     }
 
+
     @Override
     void initPage() {
-        tips = page.findViewById(R.id.ts_tv_empty_tips);
-        tips.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getRenewList();
-            }
-        });
-        rl_borrow_list = (RecyclerView) page.findViewById(R.id.ts_rl_borrow_list);
         rl_borrow_list.setLayoutManager(new LinearLayoutManager(getContext()));
+        getRenewList();
+    }
+
+    /**
+     * 点击刷新
+     */
+    @OnClick(R.id.tv_empty_tips)
+    void tipsClick() {
         getRenewList();
     }
 

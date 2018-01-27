@@ -25,6 +25,7 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -35,8 +36,12 @@ import okhttp3.Response;
 public class GradeListPage extends BasePage {
 
     private Elements grade_list;
-    private Spinner sp_year;
-    private Spinner sp_semester;
+    @BindView(R.id.sp_select_year)
+    Spinner sp_year;
+    @BindView(R.id.sp_select_semester)
+    Spinner sp_semester;
+    @BindView(R.id.rv_grade_list)
+    RecyclerView rv_grade_list;
     private ArrayList<String> years;
     private GradeListAdapter gradeListAdapter;
     private AdapterView.OnItemSelectedListener onItemSelectedListener;
@@ -52,10 +57,7 @@ public class GradeListPage extends BasePage {
         Calendar calendar = Calendar.getInstance();
         boolean springSession = calendar.get(Calendar.MONTH) < Calendar.JULY;
         int year = calendar.get(Calendar.YEAR);
-        sp_year = (Spinner) page.findViewById(R.id.sp_select_year);
-        sp_semester = (Spinner) page.findViewById(R.id.sp_select_semester);
-        RecyclerView rlv_grade_list = (RecyclerView) page.findViewById(R.id.rlv_grade_list);
-        rlv_grade_list.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_grade_list.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<String> semesters = new ArrayList<>();
         semesters.add("全部");
         semesters.add("春季");
@@ -72,7 +74,7 @@ public class GradeListPage extends BasePage {
         sp_semester.setAdapter(adapter_semesters);
         sp_semester.setSelection(springSession ? 2 : 1);
         gradeListAdapter = new GradeListAdapter(getContext());
-        rlv_grade_list.setAdapter(gradeListAdapter);
+        rv_grade_list.setAdapter(gradeListAdapter);
         showGrade();
     }
 

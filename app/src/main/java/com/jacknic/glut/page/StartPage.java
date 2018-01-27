@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.stacklibrary.PageTool;
@@ -15,6 +14,9 @@ import com.jacknic.glut.util.ViewUtil;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -22,6 +24,8 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class StartPage extends BasePage {
+    @BindView(R.id.start_btns)
+    View startBtns;
 
     @Override
     protected int getLayoutId() {
@@ -50,30 +54,25 @@ public class StartPage extends BasePage {
      * 启动选项
      */
     public void start() {
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.tv_login:
-                        PageTool.open(getContext(), new LoginPage());
-                        break;
-                    case R.id.btn_enter:
-                        PageTool.jumpFragment(getContext(), new HomePage());
-//                        prefer.edit().putBoolean("login_flag", true).apply();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-        View startBtns = page.findViewById(R.id.start_btns);
         Animation loadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         startBtns.startAnimation(loadAnimation);
         startBtns.setVisibility(View.VISIBLE);
-        TextView btnLogin = (TextView) page.findViewById(R.id.tv_login);
-        TextView btnEnter = (TextView) page.findViewById(R.id.btn_enter);
-        btnLogin.setOnClickListener(listener);
-        btnEnter.setOnClickListener(listener);
+    }
+
+    /**
+     * 直接进入
+     */
+    @OnClick(R.id.btn_enter)
+    void enter() {
+        PageTool.jumpFragment(getContext(), new HomePage());
+    }
+
+    /**
+     * 用户登录
+     */
+    @OnClick(R.id.tv_login)
+    void login() {
+        PageTool.open(getContext(), new LoginPage());
     }
 
     @Override

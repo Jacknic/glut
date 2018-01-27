@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <ListView
-        android:id="@+id/ch_lv_terms"
+        android:id="@+id/lv_terms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -19,7 +19,7 @@
 
 
         <TextView
-            android:id="@+id/ch_tv_import_term"
+            android:id="@+id/tv_import_term"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_item_tran"

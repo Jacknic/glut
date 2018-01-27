@@ -21,34 +21,30 @@ import com.lzy.okgo.OkGo;
 
 import java.io.File;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.HttpUrl;
 
 
 /**
  * 账户设置
  */
-public class AccountSettingsFragment extends Fragment implements View.OnClickListener {
+public class AccountSettingsFragment extends Fragment {
 
-    private View fragment;
     private SharedPreferences prefer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragment = inflater.inflate(R.layout.frag_setting_account, container, false);
+        View fragment = inflater.inflate(R.layout.frag_setting_account, container, false);
+        ButterKnife.bind(this, fragment);
         prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
-        setOnClick();
         return fragment;
     }
 
-    private void setOnClick() {
-        fragment.findViewById(R.id.setting_btn_clear_cw).setOnClickListener(this);
-        fragment.findViewById(R.id.setting_btn_clear_ts).setOnClickListener(this);
-        fragment.findViewById(R.id.setting_btn_clear_all).setOnClickListener(this);
-    }
 
     //控件点击事件处理
-    @Override
-    public void onClick(final View v) {
+    @OnClick({R.id.setting_btn_clear_cw, R.id.setting_btn_clear_ts, R.id.setting_btn_clear_all})
+    void onClick(final View v) {
         AlertDialog dialog = new AlertDialog.Builder(getContext())
                 .setTitle("确定清除?")
                 .setNegativeButton(android.R.string.cancel, null)
@@ -95,5 +91,4 @@ public class AccountSettingsFragment extends Fragment implements View.OnClickLis
         getActivity().finish();
         startActivity(new Intent(getContext(), MainActivity.class));
     }
-
 }

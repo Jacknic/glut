@@ -28,7 +28,7 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:id="@+id/ts_iv_search_book"
+            android:id="@+id/iv_search_book"
             android:layout_width="@dimen/list_item_height"
             android:layout_height="match_parent"
             android:background="@drawable/selector_item"
@@ -73,7 +73,7 @@
                     android:text="热门标签(搜索次数)" />
 
                 <TextView
-                    android:id="@+id/ts_tv_change_tag_list"
+                    android:id="@+id/tv_change_tag_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -106,7 +106,7 @@
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/ts_fab_mine"
+            android:id="@+id/fab_mine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

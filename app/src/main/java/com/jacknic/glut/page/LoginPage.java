@@ -30,6 +30,8 @@ import com.lzy.okgo.callback.StringCallback;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -39,11 +41,19 @@ import static android.content.Context.MODE_PRIVATE;
  * 用户登录页
  */
 public class LoginPage extends BasePage {
-    private EditText et_sid, et_password;
-    private EditText et_captcha;
-    private ImageView iv_captcha;
+    @BindView(R.id.et_sid)
+    EditText et_sid;
+    @BindView(R.id.et_password)
+    EditText et_password;
+    @BindView(R.id.et_captcha)
+    EditText et_captcha;
+    @BindView(R.id.iv_captcha)
+    ImageView iv_captcha;
+    @BindView(R.id.iv_show_pwd)
+    ImageView iv_show_pwd;
+    @BindView(R.id.iv_check_captcha)
+    ImageView iv_check_captcha;
     private final SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-    private ImageView iv_show_pwd;
     private AlertDialog login_dialog;
     private EduInfoModel eduInfoModel = new EduInfoModel();
     private boolean loginSuccess;
@@ -57,51 +67,60 @@ public class LoginPage extends BasePage {
     @Override
     void initPage() {
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
-        et_sid = (EditText) page.findViewById(R.id.et_sid);
-        et_password = (EditText) page.findViewById(R.id.et_password);
         et_sid.setText(prefer.getString(Config.SID, ""));
         showCaptcha();
-        iv_show_pwd = (ImageView) page.findViewById(R.id.iv_show_pwd);
-        //显示、隐藏密码
-        iv_show_pwd.setOnClickListener(new View.OnClickListener() {
+    }
+
+    /**
+     * 显示/隐藏密码
+     */
+    @OnClick(R.id.iv_show_pwd)
+    void showPwd() {
+        int inputType = et_password.getInputType();
+        if (inputType == (InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD | 1)) {
+            et_password.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
+            iv_show_pwd.setColorFilter(0xff222222);
+        } else {
+            iv_show_pwd.setColorFilter(0xffd9d9d9);
+            et_password.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD | 1);
+        }
+        et_password.setSelection(et_password.getText().length());
+    }
+
+    /**
+     * 清除验证码
+     */
+    @OnClick(R.id.iv_check_captcha)
+    void clearCaptcha() {
+        et_captcha.setText("");
+    }
+
+    /**
+     * 登录
+     */
+    @OnClick(R.id.tv_login)
+    void login() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(((AppCompatActivity) getContext()).getWindow().getDecorView().getWindowToken(), 0);
+        }
+        login_dialog = new AlertDialog.Builder(getContext())
+                .setTitle("登录中 ")
+                .setMessage("验证用户信息...")
+                .setCancelable(false)
+                .create();
+        login_dialog.show();
+        //12秒超时设置
+        new Timer().schedule(new TimerTask() {
             @Override
-            public void onClick(View v) {
-                int inputType = et_password.getInputType();
-                if (inputType == (InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD | 1)) {
-                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
-                    iv_show_pwd.setColorFilter(0xff222222);
-                } else {
-                    iv_show_pwd.setColorFilter(0xffd9d9d9);
-                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD | 1);
+            public void run() {
+                if (login_dialog.isShowing()) {
+                    login_dialog.dismiss();
                 }
-                et_password.setSelection(et_password.getText().length());
             }
-        });
-        page.findViewById(R.id.tv_login).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(((AppCompatActivity) getContext()).getWindow().getDecorView().getWindowToken(), 0);
-                }
-                login_dialog = new AlertDialog.Builder(getContext())
-                        .setTitle("登录中 ")
-                        .setMessage("验证用户信息...")
-                        .setCancelable(false)
-                        .create();
-                login_dialog.show();
-                //12秒超时设置
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (login_dialog.isShowing()) {
-                            login_dialog.dismiss();
-                        }
-                    }
-                }, 12000);
-                loginJw();
-            }
-        });
+        }, 12000);
+        loginJw();
+
     }
 
     /**
@@ -199,7 +218,7 @@ public class LoginPage extends BasePage {
         AbsCallback callback = new AbsCallbackWrapper() {
             @Override
             public void onAfter(Object o, Exception e) {
-                PageTool.open(getContext(), new HomePage());
+                PageTool.jumpFragment(getContext(), new HomePage());
                 login_dialog.dismiss();
             }
         };
@@ -213,16 +232,6 @@ public class LoginPage extends BasePage {
     private void showCaptcha() {
         SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         et_password.setText(prefer.getString(Config.PASSWORD_JW, ""));
-        final View captcha_layout = page.findViewById(R.id.captcha_layout);
-        captcha_layout.setVisibility(View.VISIBLE);
-        et_captcha = (EditText) page.findViewById(R.id.et_captcha);
-        final ImageView iv_check_captcha = (ImageView) page.findViewById(R.id.iv_check_captcha);
-        iv_check_captcha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                et_captcha.setText("");
-            }
-        });
         //验证码检验监听
         et_captcha.addTextChangedListener(new TextWatcher() {
             @Override

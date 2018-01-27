@@ -70,7 +70,7 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlv_grade_list"
+        android:id="@+id/rv_grade_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

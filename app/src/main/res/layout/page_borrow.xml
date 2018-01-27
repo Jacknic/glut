@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/ts_tv_empty_tips"
+        android:id="@+id/tv_empty_tips"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
@@ -36,7 +36,7 @@
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/ts_rl_borrow_list"
+        android:id="@+id/rl_borrow_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

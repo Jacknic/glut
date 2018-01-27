@@ -38,6 +38,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnItemClick;
+import butterknife.OnItemLongClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -47,7 +50,10 @@ import okhttp3.Response;
 
 public class ChangeTermPage extends BasePage {
 
-    private ListView lvTerms;
+    @BindView(R.id.lv_terms)
+    ListView lvTerms;
+    @BindView(R.id.tv_import_term)
+    TextView tvImportTerm;
     private String year;
     private String term;
     private List<CourseEntity> termCourse;
@@ -61,8 +67,6 @@ public class ChangeTermPage extends BasePage {
 
     @Override
     protected void initPage() {
-        lvTerms = (ListView) page.findViewById(R.id.ch_lv_terms);
-        TextView tvImportTerm = (TextView) page.findViewById(R.id.ch_tv_import_term);
         tvImportTerm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +77,49 @@ public class ChangeTermPage extends BasePage {
     }
 
     /**
+     * 切换学期
+     */
+    @OnItemClick(R.id.lv_terms)
+    void changeTerm(AdapterView<?> parent, View view, final int position, long id) {
+        new AlertDialog.Builder(getContext())
+                .setMessage("当前学期修改为：" + ((TextView) view).getText())
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CourseEntity courseEntity = termCourse.get(position);
+                        SharedPreferences.Editor editor = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE).edit();
+                        editor.putInt(Config.JW_SCHOOL_YEAR, courseEntity.getSchoolStartYear())
+                                .putInt(Config.JW_SEMESTER, courseEntity.getSemester())
+                                .putInt(Config.JW_YEAR_WEEK_OLD, Calendar.getInstance().get(Calendar.WEEK_OF_YEAR))
+                                .apply();
+                        EventBus.getDefault().post(new UpdateCourseEvent());
+                        setTerms();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    /**
+     * 删除指定学期课程
+     */
+    @OnItemLongClick(R.id.lv_terms)
+    boolean deleteTerm(AdapterView<?> parent, View view, final int position, long id) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage("删除" + ((TextView) view).getText() + "课程？")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CourseEntity courseEntity = termCourse.get(position);
+                        deleteTerm(courseEntity);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+        return true;
+    }
+
+    /**
      * 设置可选学期
      */
     private void setTerms() {
@@ -80,45 +127,6 @@ public class ChangeTermPage extends BasePage {
         final List<String> termList = getTerms();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, termList);
         lvTerms.setAdapter(adapter);
-        lvTerms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                new AlertDialog.Builder(getContext())
-                        .setMessage("当前学期修改为：" + ((TextView) view).getText())
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                CourseEntity courseEntity = termCourse.get(position);
-                                SharedPreferences.Editor editor = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE).edit();
-                                editor.putInt(Config.JW_SCHOOL_YEAR, courseEntity.getSchoolStartYear())
-                                        .putInt(Config.JW_SEMESTER, courseEntity.getSemester())
-                                        .putInt(Config.JW_YEAR_WEEK_OLD, Calendar.getInstance().get(Calendar.WEEK_OF_YEAR))
-                                        .apply();
-                                EventBus.getDefault().post(new UpdateCourseEvent());
-                                setTerms();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show();
-            }
-        });
-        lvTerms.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                new AlertDialog.Builder(getActivity())
-                        .setMessage("删除" + ((TextView) view).getText() + "课程？")
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                CourseEntity courseEntity = termCourse.get(position);
-                                deleteTerm(courseEntity);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show();
-                return true;
-            }
-        });
     }
 
     /**
