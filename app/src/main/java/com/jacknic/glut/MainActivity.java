@@ -67,19 +67,27 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case MotionEvent.ACTION_UP: {
-                if (posX < ViewUtil.dip2px(20)) {
-                    float x = ev.getX();
-                    if (x > getWindow().getDecorView().getWidth() / 3) {
-                        if (manager.getPages().size() > 1) {
-                            onBackPressed();
-                            return true;
-                        }
-                    }
-                }
+                float x = ev.getX();
+                if (isBack(x)) return true;
                 break;
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 检验是否执行返回操作
+     */
+    private boolean isBack(float x) {
+        if (posX < ViewUtil.dip2px(20)) {
+            if (x > getWindow().getDecorView().getWidth() / 3) {
+                if (manager.getPages().size() > 1) {
+                    onBackPressed();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

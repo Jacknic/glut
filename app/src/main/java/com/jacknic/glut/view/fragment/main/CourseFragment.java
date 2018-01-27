@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -134,26 +135,45 @@ public class CourseFragment extends Fragment {
      * 拓展栏开关
      */
     private void setToggle(final int week) {
+        final Animation.AnimationListener toggleListener = new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ll_select_time.setVisibility(ll_select_time.getVisibility() != View.VISIBLE ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        };
+
         iv_toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int degree = -135;
-                if (ll_select_time.getVisibility() == View.VISIBLE) {
-                    ll_select_time.setVisibility(View.GONE);
-                    v.setRotation(0f);
-                    showSelect();
+                //当前是否可见，可见执行关闭操作，不可见执行展开
+                boolean visible = ll_select_time.getVisibility() == View.VISIBLE;
+                if (visible) {
+                    if (week_now != Func.getWeekNow()) {
+                        showSelect();
+                    }
                 } else {
-                    v.setRotation(45f);
-                    ll_select_time.setVisibility(View.VISIBLE);
-                    degree = 135;
+                    ll_select_time.setVisibility(View.INVISIBLE);
                     TabLayout.Tab tab = tabLayout.getTabAt(week - 1);
                     if (tab != null) {
                         tab.select();
                     }
                 }
-                RotateAnimation rota = new RotateAnimation(degree, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                Animation animToggle = AnimationUtils.loadAnimation(getContext(), visible ? R.anim.toggle_out : R.anim.toggle_in);
+                v.setRotation(visible ? 0 : 45);
+                animToggle.setAnimationListener(toggleListener);
+                ll_select_time.startAnimation(animToggle);
+                RotateAnimation rota = new RotateAnimation(visible ? -135 : 135, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 rota.setFillAfter(true);
-                rota.setDuration(500L);
+                rota.setDuration(300L);
                 v.startAnimation(rota);
             }
         });
