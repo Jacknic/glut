@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -44,8 +46,20 @@ public class AddCoursePage extends BasePage {
     int weekType = 0;
     final String showWeek = "星期%s  %s - %s节";
     private int weekDay = 1;
-    private AutoCompleteTextView actCourseName;
-    private TextView tvCourseClass;
+    @BindView(R.id.act_course_name)
+    AutoCompleteTextView actCourseName;
+    @BindView(R.id.tv_course_class)
+    TextView tvCourseClass;
+    @BindView(R.id.np_week_start)
+    NumberPicker npWeekStart;
+    @BindView(R.id.np_week_end)
+    NumberPicker npWeekEnd;
+    @BindView(R.id.et_location)
+    EditText et_location;
+    @BindView(R.id.et_teacher)
+    EditText et_teacher;
+    @BindView(R.id.et_grade)
+    EditText et_grade;
 
     @Override
     protected int getLayoutId() {
@@ -60,13 +74,11 @@ public class AddCoursePage extends BasePage {
         courseStart = start;
         courseEnd = start;
         weekDay = bundle.getInt("weekDay", 1);
-        actCourseName = (AutoCompleteTextView) page.findViewById(R.id.act_course_name);
         List<CourseInfoEntity> courseInfoEntities = DataBase.getDaoSession().getCourseInfoEntityDao().loadAll();
         List<String> courseNames = new ArrayList<>();
         for (CourseInfoEntity courseInfoEntity : courseInfoEntities) {
             courseNames.add(courseInfoEntity.getCourseName());
         }
-        tvCourseClass = (TextView) page.findViewById(R.id.tv_course_class);
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, courseNames);
         actCourseName.setAdapter(arrayAdapter);
         //条件选择器
@@ -79,8 +91,6 @@ public class AddCoursePage extends BasePage {
             classes.add(Func.courseIndexToStr(i));
         }
         tvCourseClass.setText(String.format(showWeek, Config.weekNames[weekDay % 7], Func.courseIndexToStr(courseStart), Func.courseIndexToStr(courseEnd)));
-        final NumberPicker npWeekStart = (NumberPicker) page.findViewById(R.id.np_week_start);
-        final NumberPicker npWeekEnd = (NumberPicker) page.findViewById(R.id.np_week_end);
         Spinner sp_week_type = (Spinner) page.findViewById(R.id.sp_week_type);
         sp_week_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -174,11 +184,8 @@ public class AddCoursePage extends BasePage {
             Toast.makeText(getContext(), "课程名称不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        EditText et_location = (EditText) page.findViewById(R.id.et_location);
         String location = et_location.getText().toString();
-        EditText et_teacher = (EditText) page.findViewById(R.id.et_teacher);
         String teacher = et_teacher.getText().toString();
-        EditText et_grade = (EditText) page.findViewById(R.id.et_grade);
         String grade = et_grade.getText().toString();
         String courseNum = System.currentTimeMillis() + "";
         SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);

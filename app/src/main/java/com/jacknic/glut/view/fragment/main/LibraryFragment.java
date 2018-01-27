@@ -40,10 +40,10 @@ public class LibraryFragment extends Fragment {
     private ImageView iv_search_book;
     private View fragment;
     private TagGroup hot_tag;
+    private FloatingActionButton fab_mine;
     List<String> tags = new ArrayList<String>();
     private TextView tv_change_tags;
     private int tag_part = 0;
-    private FloatingActionButton ts_fab_mine;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,10 +59,10 @@ public class LibraryFragment extends Fragment {
     private void initVIew() {
         et_search_book = (EditText) fragment.findViewById(R.id.et_search_book);
         iv_search_book_shadow = (ImageView) fragment.findViewById(R.id.iv_search_book_shadow);
-        iv_search_book = (ImageView) fragment.findViewById(R.id.ts_iv_search_book);
+        iv_search_book = (ImageView) fragment.findViewById(R.id.iv_search_book);
         hot_tag = (TagGroup) fragment.findViewById(R.id.hot_tag);
-        ts_fab_mine = (FloatingActionButton) fragment.findViewById(R.id.ts_fab_mine);
-        tv_change_tags = (TextView) fragment.findViewById(R.id.ts_tv_change_tag_list);
+        fab_mine = (FloatingActionButton) fragment.findViewById(R.id.fab_mine);
+        tv_change_tags = (TextView) fragment.findViewById(R.id.tv_change_tag_list);
     }
 
 
@@ -90,12 +90,15 @@ public class LibraryFragment extends Fragment {
                     iv_search_book_shadow.setAlpha(1.0f);
                 } else {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(et_search_book.getWindowToken(), 0); //强制隐藏键盘
+                    if (imm != null) {
+                        //强制隐藏键盘
+                        imm.hideSoftInputFromWindow(et_search_book.getWindowToken(), 0);
+                    }
                     iv_search_book_shadow.setAlpha(0.0f);
                 }
             }
         });
-        ts_fab_mine.setOnClickListener(listener);
+        fab_mine.setOnClickListener(listener);
         iv_search_book.setOnClickListener(listener);
         tv_change_tags.setOnClickListener(listener);
         hot_tag.setOnTagClickListener(new TagGroup.OnTagClickListener() {
@@ -113,20 +116,20 @@ public class LibraryFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.ts_iv_search_book:
+                case R.id.iv_search_book:
                     et_search_book.setEnabled(false);
                     String url = "http://202.193.80.181:8081/search?xc=3&kw=" + et_search_book.getText().toString();
                     PageTool.openWebPage(getActivity(), url);
                     et_search_book.setEnabled(true);
                     break;
-                case R.id.ts_tv_change_tag_list:
+                case R.id.tv_change_tag_list:
                     if (tags.size() == 0) {
                         getTags();
                     } else {
                         showTags();
                     }
                     break;
-                case R.id.ts_fab_mine:
+                case R.id.fab_mine:
                     PageTool.open(getContext(), new BorrowPage());
                     break;
             }

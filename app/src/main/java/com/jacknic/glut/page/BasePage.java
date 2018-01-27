@@ -13,6 +13,8 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 
+import butterknife.ButterKnife;
+
 /**
  * 带操作栏菜单frag
  */
@@ -46,6 +48,7 @@ public abstract class BasePage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         page = inflater.inflate(getLayoutId(), container, false);
+        ButterKnife.bind(this, page);
         ViewUtil.setTitle(getContext(), mTitle);
         initPage();
         return page;

@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -31,7 +32,8 @@ import okhttp3.Response;
 
 public class ProcessPage extends BasePage {
 
-    private GridView gv_grade_list;
+    @BindView(R.id.gv_grade_list)
+    GridView gv_grade_list;
 
     @Override
     protected int getLayoutId() {
@@ -41,7 +43,6 @@ public class ProcessPage extends BasePage {
 
     @Override
     void initPage() {
-        gv_grade_list = (GridView) page.findViewById(R.id.gv_grade_list);
         showData();
     }
 

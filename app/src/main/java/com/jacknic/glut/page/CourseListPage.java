@@ -28,6 +28,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -35,6 +37,9 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class CourseListPage extends BasePage {
 
+
+    @BindView(R.id.lv_course_list)
+    ListView lv_course_list;
 
     @Override
     protected int getLayoutId() {
@@ -44,7 +49,6 @@ public class CourseListPage extends BasePage {
 
     @Override
     void initPage() {
-        final ListView lv_course_list = (ListView) page.findViewById(R.id.lv_course_list);
         SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
         int startYear = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         int semester = prefer.getInt(Config.JW_SEMESTER, 1);

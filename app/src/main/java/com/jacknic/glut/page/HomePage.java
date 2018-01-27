@@ -27,6 +27,9 @@ import com.jacknic.glut.util.ViewUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 import static android.content.Context.MODE_PRIVATE;
 import static com.jacknic.glut.util.Config.PREFER;
 import static com.jacknic.glut.util.Config.SETTING_THEME_COLOR_INDEX;
@@ -36,23 +39,26 @@ import static com.jacknic.glut.util.Config.SETTING_THEME_INDEX;
  * 起始页
  */
 
-public class HomePage extends BasePage implements View.OnClickListener {
+public class HomePage extends BasePage {
 
-    private ViewPager pageContainer;
-
+    @BindView(R.id.page_container)
+    ViewPager pageContainer;
     //按钮组
-    private int[] TAB_IDS = new int[]{
+    private final int[] TAB_IDS = new int[]{
             R.id.bottom_tab_course,
             R.id.bottom_tab_financial,
             R.id.bottom_tab_library,
             R.id.bottom_tab_mine,
     };
-    private ViewGroup selectTab;
+    //默认选中课表页
+    @BindView(R.id.bottom_tab_course)
+    ViewGroup selectTab;
     private int colorInactive;
     private int colorActive;
 
     @Override
     protected int getLayoutId() {
+        mTitle = getString(R.string.txt_kb);
         return R.layout.page_home;
     }
 
@@ -62,14 +68,8 @@ public class HomePage extends BasePage implements View.OnClickListener {
         colorInactive = getResources().getColor(R.color.inactive);
         int colorIndex = getContext().getSharedPreferences(PREFER, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
         colorActive = getResources().getColor(Config.COLORS[colorIndex]);
-        pageContainer = (ViewPager) page.findViewById(R.id.page_container);
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         initFragments();
-        for (int id : TAB_IDS) {
-            page.findViewById(id).setOnClickListener(this);
-        }
-        //  选择课程页作为默认显示页面
-        page.findViewById(R.id.bottom_tab_course).callOnClick();
         SharedPreferences prefer = getContext().getSharedPreferences(PREFER, MODE_PRIVATE);
         boolean auto_check_update = prefer.getBoolean("auto_check_update", true);
         if (auto_check_update) UpdateUtil.checkUpdate((FragmentActivity) getContext(), false);
@@ -99,11 +99,9 @@ public class HomePage extends BasePage implements View.OnClickListener {
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        if (selectTab == null) {
-            selectTab = (ViewGroup) v;
-        } else if (selectTab == v) {
+    @OnClick({R.id.bottom_tab_course, R.id.bottom_tab_financial, R.id.bottom_tab_library, R.id.bottom_tab_mine})
+    void tabClick(View v) {
+        if (selectTab == v) {
             return;
         }
         ViewGroup preTab = selectTab;

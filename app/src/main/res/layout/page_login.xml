@@ -149,13 +149,11 @@
                             android:background="@color/press" />
 
                         <LinearLayout
-                            android:id="@+id/captcha_layout"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
                             android:background="@color/white"
                             android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
+                            android:orientation="horizontal">
 
                             <ImageView
                                 android:id="@+id/iv_captcha"

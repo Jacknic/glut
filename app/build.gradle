@@ -75,4 +75,6 @@ dependencies {
     compile 'com.qq.mta:mta:3.3.1-release'
     compile 'com.tencent.mid:mid:3.73-release'
     compile 'org.greenrobot:eventbus:3.1.1'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

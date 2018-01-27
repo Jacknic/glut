@@ -14,13 +14,17 @@ import com.jacknic.glut.util.Config;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import butterknife.BindView;
+
 /**
  * 设置
  */
 public class SettingPage extends BasePage {
 
-    private TabLayout tab;
-    private ViewPager viewPager;
+    @BindView(R.id.setting_tab)
+    TabLayout tab;
+    @BindView(R.id.setting_pager)
+    ViewPager viewPager;
 
     @Override
     protected int getLayoutId() {
@@ -31,8 +35,6 @@ public class SettingPage extends BasePage {
     @Override
     void initPage() {
         EventBus.getDefault().register(this);
-        tab = (TabLayout) page.findViewById(R.id.setting_tab);
-        viewPager = (ViewPager) page.findViewById(R.id.setting_pager);
         setPagers();
     }
 

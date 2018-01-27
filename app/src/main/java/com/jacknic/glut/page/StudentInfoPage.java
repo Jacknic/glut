@@ -19,6 +19,7 @@ import com.lzy.okgo.callback.StringCallback;
 
 import java.io.File;
 
+import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -27,6 +28,31 @@ import okhttp3.Response;
  */
 
 public class StudentInfoPage extends BasePage {
+
+    @BindView(R.id.si_tv_id)
+    TextView tv_id;
+    @BindView(R.id.si_tv_birthday)
+    TextView tv_birthday;
+    @BindView(R.id.si_tv_className)
+    TextView tv_className;
+    @BindView(R.id.si_tv_level)
+    TextView tv_level;
+    @BindView(R.id.si_tv_name)
+    TextView tv_name;
+    @BindView(R.id.si_tv_nation)
+    TextView tv_nation;
+    @BindView(R.id.si_tv_origin)
+    TextView tv_origin;
+    @BindView(R.id.si_tv_place)
+    TextView tv_place;
+    @BindView(R.id.si_tv_sid)
+    TextView tv_sid;
+    @BindView(R.id.si_tv_score)
+    TextView tv_score;
+    @BindView(R.id.si_tv_role)
+    TextView tv_role;
+    @BindView(R.id.si_iv_header)
+    ImageView iv_header;
 
     @Override
     protected int getLayoutId() {
@@ -40,34 +66,22 @@ public class StudentInfoPage extends BasePage {
     }
 
     /**
-     * 文字赋值
-     *
-     * @param view_id
-     * @param text
-     */
-    private void setTextView(int view_id, String text) {
-        TextView textView = (TextView) page.findViewById(view_id);
-        textView.setText(text);
-    }
-
-    /**
      * 显示学生信息
      */
     private void setStudentInfo() {
         StudentInfoModel infoModel = new StudentInfoModel();
         StudentInfoBean infoBean = infoModel.getFromPrefer();
-        setTextView(R.id.si_tv_id, infoBean.getId());
-        setTextView(R.id.si_tv_birthday, infoBean.getBirthday());
-        setTextView(R.id.si_tv_className, infoBean.getClassName());
-        setTextView(R.id.si_tv_level, infoBean.getLevel());
-        setTextView(R.id.si_tv_name, infoBean.getName());
-        setTextView(R.id.si_tv_nation, infoBean.getNation());
-        setTextView(R.id.si_tv_origin, infoBean.getOrigin());
-        setTextView(R.id.si_tv_place, infoBean.getPlace());
-        setTextView(R.id.si_tv_sid, infoBean.getSid());
-        setTextView(R.id.si_tv_score, infoBean.getScore());
-        setTextView(R.id.si_tv_role, infoBean.getRole());
-        ImageView iv_header = (ImageView) page.findViewById(R.id.si_iv_header);
+        tv_id.setText(infoBean.getId());
+        tv_birthday.setText(infoBean.getBirthday());
+        tv_className.setText(infoBean.getClassName());
+        tv_level.setText(infoBean.getLevel());
+        tv_name.setText(infoBean.getName());
+        tv_nation.setText(infoBean.getNation());
+        tv_origin.setText(infoBean.getOrigin());
+        tv_place.setText(infoBean.getPlace());
+        tv_sid.setText(infoBean.getSid());
+        tv_score.setText(infoBean.getScore());
+        tv_role.setText(infoBean.getRole());
         File header_img = new File(getContext().getFilesDir(), infoBean.getSid() + ".jpg");
         if (header_img.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(header_img.getAbsolutePath());

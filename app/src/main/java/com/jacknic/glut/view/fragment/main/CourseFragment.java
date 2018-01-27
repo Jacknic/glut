@@ -44,65 +44,67 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 /**
  * 课表
  */
 public class CourseFragment extends Fragment {
 
-
-    private CourseTableView timeTableView;
-    private SharedPreferences prefer;
-    private View fragment;
-    private TabLayout tabLayout;
-    private ImageView iv_course_setting;
+    View fragment;
+    @BindView(R.id.table_view)
+    CourseTableView timeTableView;
+    @BindView(R.id.tab_select_week)
+    TabLayout tab_select_week;
+    @BindView(R.id.tv_week)
+    TextView tv_week;
+    @BindView(R.id.iv_toggle)
+    ImageView iv_toggle;
+    @BindView(R.id.ll_select_time)
+    LinearLayout ll_select_time;
+    @BindView(R.id.tv_school_year)
+    TextView tv_school_year;
+    @BindView(R.id.tv_semester)
+    TextView tv_semester;
+    @BindView(R.id.gv_weekName)
+    GridView gv_weekName;
+    @BindView(R.id.tv_month)
+    TextView tv_month;
     private int week_now;
-    private TextView tv_week;
-    private ImageView iv_toggle;
-    private LinearLayout ll_select_time;
+    private SharedPreferences prefer;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragment = inflater.inflate(R.layout.frag_course, container, false);
+        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        ButterKnife.bind(this, fragment);
         EventBus.getDefault().register(this);
-        initView();
         setTab();
         showSelect();
         return fragment;
     }
 
+    @OnClick(R.id.tv_week)
+    void showDialog() {
+        AlertDialog.Builder builder = Dialogs.getChangeWeekDialog(getActivity());
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                refresh();
+            }
+        });
+        builder.show();
+    }
 
     /**
-     * 初始化控件
+     * 打开切换学期页
      */
-    private void initView() {
-        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
-        timeTableView = (CourseTableView) fragment.findViewById(R.id.table_view);
-        iv_course_setting = (ImageView) fragment.findViewById(R.id.kc_iv_course_setting);
-        tabLayout = (TabLayout) fragment.findViewById(R.id.lv_select_week);
-        iv_toggle = (ImageView) fragment.findViewById(R.id.jw_iv_toggle);
-        tv_week = (TextView) fragment.findViewById(R.id.jw_tv_week);
-        ll_select_time = (LinearLayout) fragment.findViewById(R.id.ll_select_time);
-        iv_course_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = Dialogs.getChangeWeekDialog(getActivity());
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        refresh();
-                    }
-                });
-                builder.show();
-            }
-        });
-        tv_week.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iv_toggle.callOnClick();
-            }
-        });
-
+    @OnClick({R.id.tv_school_year, R.id.tv_semester})
+    void openChangeTerm() {
+        PageTool.open(getContext(), new ChangeTermPage());
     }
 
     /**
@@ -114,69 +116,55 @@ public class CourseFragment extends Fragment {
         selectWeek(week_now);
         int semester = prefer.getInt(Config.JW_SEMESTER, 1);
         int school_year = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
-        TextView tv_school_year = (TextView) fragment.findViewById(R.id.jw_tv_school_year);
-        TextView tv_semester = (TextView) fragment.findViewById(R.id.jw_tv_semester);
         tv_week.setText("第" + week_now + "周 ");
         tv_school_year.setText(school_year + "年");
         tv_semester.setText((semester == 1 ? "春" : "秋") + "季学期");
-        View.OnClickListener change = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PageTool.open(getContext(), new ChangeTermPage());
-                CourseFragment.this.fragment.invalidate();
-            }
-        };
-        tv_school_year.setOnClickListener(change);
-        tv_semester.setOnClickListener(change);
-        setToggle(week_now);
     }
 
+
+    final Animation.AnimationListener toggleListener = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            ll_select_time.setVisibility(ll_select_time.getVisibility() != View.VISIBLE ? View.VISIBLE : View.GONE);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+    };
+
     /**
-     * 拓展栏开关
+     * tab栏开关
      */
-    private void setToggle(final int week) {
-        final Animation.AnimationListener toggleListener = new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+    @OnClick(R.id.iv_toggle)
+    void toggle(View v) {
+        //当前是否可见，可见执行关闭操作，不可见执行展开
+        boolean visible = ll_select_time.getVisibility() == View.VISIBLE;
+        if (visible) {
+            int tabPosition = tab_select_week.getSelectedTabPosition();
+            if (tabPosition + 1 != week_now) {
+                showSelect();
             }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                ll_select_time.setVisibility(ll_select_time.getVisibility() != View.VISIBLE ? View.VISIBLE : View.GONE);
+        } else {
+            ll_select_time.setVisibility(View.INVISIBLE);
+            TabLayout.Tab tab = tab_select_week.getTabAt(week_now - 1);
+            if (tab != null) {
+                tab.select();
             }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        };
-
-        iv_toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //当前是否可见，可见执行关闭操作，不可见执行展开
-                boolean visible = ll_select_time.getVisibility() == View.VISIBLE;
-                if (visible) {
-                    if (week_now != Func.getWeekNow()) {
-                        showSelect();
-                    }
-                } else {
-                    ll_select_time.setVisibility(View.INVISIBLE);
-                    TabLayout.Tab tab = tabLayout.getTabAt(week - 1);
-                    if (tab != null) {
-                        tab.select();
-                    }
-                }
-                Animation animToggle = AnimationUtils.loadAnimation(getContext(), visible ? R.anim.toggle_out : R.anim.toggle_in);
-                v.setRotation(visible ? 0 : 45);
-                animToggle.setAnimationListener(toggleListener);
-                ll_select_time.startAnimation(animToggle);
-                RotateAnimation rota = new RotateAnimation(visible ? -135 : 135, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                rota.setFillAfter(true);
-                rota.setDuration(300L);
-                v.startAnimation(rota);
-            }
-        });
+        }
+        Animation animToggle = AnimationUtils.loadAnimation(getContext(), visible ? R.anim.toggle_out : R.anim.toggle_in);
+        v.setRotation(visible ? 0 : 45);
+        animToggle.setAnimationListener(toggleListener);
+        ll_select_time.startAnimation(animToggle);
+        RotateAnimation rota = new RotateAnimation(visible ? -135 : 135, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rota.setFillAfter(true);
+        rota.setDuration(300L);
+        v.startAnimation(rota);
     }
 
     /**
@@ -193,11 +181,11 @@ public class CourseFragment extends Fragment {
             tv_tab.setTextColor(colorStateList);
             tv_tab.setText(spanned);
             tv_tab.setGravity(Gravity.CENTER);
-            TabLayout.Tab tab = tabLayout.newTab();
+            TabLayout.Tab tab = tab_select_week.newTab();
             tab.setCustomView(tv_tab);
-            tabLayout.addTab(tab);
+            tab_select_week.addTab(tab);
         }
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tab_select_week.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
@@ -234,8 +222,6 @@ public class CourseFragment extends Fragment {
      * @param addWeek 周数增量
      */
     private void setTime(final int addWeek) {
-        GridView gv_weekName = (GridView) fragment.findViewById(R.id.kc_gv_weekName);
-        TextView tv_month = (TextView) fragment.findViewById(R.id.kc_tv_month);
         final Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.WEEK_OF_YEAR, addWeek);
         System.out.println("初始时间：" + calendar.getTime().toLocaleString());
@@ -267,7 +253,7 @@ public class CourseFragment extends Fragment {
      */
     private void refresh() {
         if (ll_select_time.getVisibility() == View.VISIBLE) iv_toggle.callOnClick();
-        tabLayout.removeAllTabs();
+        tab_select_week.removeAllTabs();
         Func.updateWidget(getContext());
         setTab();
         showSelect();
