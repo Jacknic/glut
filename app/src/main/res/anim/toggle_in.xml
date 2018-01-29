@@ -4,7 +4,7 @@
 
     <scale
         android:fromXScale="1"
-        android:fromYScale="0"
+        android:fromYScale="0.5"
         android:toXScale="1"
         android:toYScale="1" />
 </set>

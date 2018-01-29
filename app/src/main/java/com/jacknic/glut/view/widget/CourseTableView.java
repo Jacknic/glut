@@ -266,7 +266,7 @@ public class CourseTableView extends LinearLayout {
         courseView.setGravity(Gravity.CENTER);
         courseView.setText(courseEntity.getCourseName() + "@" + courseEntity.getClassRoom());
         course.addView(getWeekTransverseLine());
-        Drawable text_bg = getContext().getResources().getDrawable(R.drawable.round_ts_bg_white_5dp);
+        Drawable text_bg = getContext().getResources().getDrawable(R.drawable.round_bg_white_5dp);
         int color = Config.COLORS[getColorIndex(courseEntity.getCourseName())];
         text_bg.setColorFilter(getContext().getResources().getColor(color), PorterDuff.Mode.SRC_IN);
         text_bg.setAlpha(150);

@@ -342,7 +342,7 @@
                         android:id="@+id/cw_iv_bid_copy"
                         android:layout_width="40dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/selector_item"
+                        android:background="@drawable/selector_item_white"
                         android:padding="10dp"
                         android:src="@drawable/ic_content_copy"
                         android:tint="@color/cyan" />
