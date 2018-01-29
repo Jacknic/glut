@@ -52,18 +52,18 @@
                 android:text="编号： 刘慈溪" />
         </LinearLayout>
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:gravity="right">
+            android:gravity="right"
+            app:cardBackgroundColor="?attr/colorPrimary">
 
             <TextView
                 android:id="@+id/item_book_borrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_selector_blue"
-                android:clickable="true"
+                android:background="@drawable/selector_item_tran"
                 android:gravity="center"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
@@ -72,7 +72,7 @@
                 android:text="续借"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

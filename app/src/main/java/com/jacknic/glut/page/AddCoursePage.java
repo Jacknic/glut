@@ -138,8 +138,8 @@ public class AddCoursePage extends BasePage {
                 if (option2 > options3)
                     options3 = option2;
                 weekDay = options1 + 1;
-                courseStart = option2;
-                courseEnd = options3;
+                courseStart = option2 + 1;
+                courseEnd = options3 + 1;
                 String tx = String.format(showWeek, Config.weekNames[weekDay % 7], classes.get(option2), classes.get(options3));
                 tvCourseClass.setText(tx);
             }
@@ -226,6 +226,9 @@ public class AddCoursePage extends BasePage {
         infoEntity.setSchoolYearStart(schoolYearStart);
         DataBase.getDaoSession().getCourseEntityDao().save(courseEntity);
         DataBase.getDaoSession().getCourseInfoEntityDao().save(infoEntity);
+        if (weekEnd > prefer.getInt(Config.JW_WEEK_END, 0)) {
+            prefer.edit().putInt(Config.JW_WEEK_END, weekEnd).apply();
+        }
         actCourseName.getText().clear();
         et_teacher.setText("");
         et_grade.setText("");

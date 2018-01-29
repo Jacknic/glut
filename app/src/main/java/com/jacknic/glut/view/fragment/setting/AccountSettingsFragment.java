@@ -13,7 +13,8 @@ import android.view.ViewGroup;
 
 import com.jacknic.glut.MainActivity;
 import com.jacknic.glut.R;
-import com.jacknic.glut.model.entity.DaoMaster;
+import com.jacknic.glut.model.entity.CourseEntity;
+import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
@@ -77,7 +78,8 @@ public class AccountSettingsFragment extends Fragment {
      */
     private void logout() {
         //清除数据表
-        DaoMaster.dropAllTables(DataBase.getDb(), true);
+        DataBase.getDaoSession().deleteAll(CourseEntity.class);
+        DataBase.getDaoSession().deleteAll(CourseInfoEntity.class);
         File filesDir = getContext().getFilesDir();
         Func.deleteFile(filesDir);
         String sid = prefer.getString(Config.SID, "");
