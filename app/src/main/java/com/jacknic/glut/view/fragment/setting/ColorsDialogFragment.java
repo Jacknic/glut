@@ -17,6 +17,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.ColorsSelectorAdapter;
 import com.jacknic.glut.event.ThemeChangeEvent;
 import com.jacknic.glut.util.Config;
+import com.lzy.okgo.OkGo;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,6 +29,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ColorsDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener {
 
+    private final int oldIndex;
+    private final SharedPreferences prefer;
+
     public static void launch(Activity context) {
         ColorsDialogFragment dialogFragment = (ColorsDialogFragment) context.getFragmentManager().findFragmentByTag(ColorsDialogFragment.class.getName());
         if (dialogFragment == null) {
@@ -36,24 +40,26 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
         dialogFragment.show(context.getFragmentManager(), ColorsDialogFragment.class.getName());
     }
 
+    public ColorsDialogFragment() {
+        prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        oldIndex = prefer.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         setCancelable(true);
         View view = View.inflate(getActivity(), R.layout.frag_color_dialog, null);
         GridView gridView = (GridView) view.findViewById(R.id.grid_colors);
-        gridView.setAdapter(new ColorsSelectorAdapter(this));
+        gridView.setAdapter(new ColorsSelectorAdapter(this, oldIndex));
         gridView.setOnItemClickListener(this);
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
-                .setNegativeButton(android.R.string.cancel, null)
+                .setNegativeButton("关闭", null)
                 .create();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        SharedPreferences prefer = getActivity().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        int oldIndex = prefer.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
         if (oldIndex != position) {
             prefer.edit().putInt(Config.SETTING_THEME_INDEX, position).apply();
             MainActivity mainActivity = (MainActivity) getActivity();
