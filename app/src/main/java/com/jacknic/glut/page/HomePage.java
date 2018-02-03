@@ -115,7 +115,7 @@ public class HomePage extends BasePage {
         changeColor(tab, colorActive);
         for (int i = 0; i < TAB_IDS.length; i++) {
             if (selectTab.getId() == TAB_IDS[i]) {
-                pageContainer.setCurrentItem(i, true);
+                pageContainer.setCurrentItem(i, false);
             }
         }
         ScaleAnimation scale = new ScaleAnimation(0.39F, 1.1F, 0.39F, 1.1F, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);

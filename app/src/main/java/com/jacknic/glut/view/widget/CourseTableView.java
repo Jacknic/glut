@@ -162,8 +162,7 @@ public class CourseTableView extends LinearLayout {
      * @return 宽度
      */
     private int getViewWidth() {
-        WindowManager wm = (WindowManager) getContext().getSystemService(
-                Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getWidth();
     }
 
@@ -198,7 +197,7 @@ public class CourseTableView extends LinearLayout {
                     bundle.putInt("start", course_now);
                     bundle.putInt("weekDay", week);
                     PageTool.open(getContext(), new AddCoursePage(), bundle);
-                    return false;
+                    return true;
                 }
             });
 

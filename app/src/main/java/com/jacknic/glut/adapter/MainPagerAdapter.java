@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.jacknic.glut.view.fragment.main.CourseFragment;
-import com.jacknic.glut.view.fragment.main.FinancialFragment;
-import com.jacknic.glut.view.fragment.main.LibraryFragment;
-import com.jacknic.glut.view.fragment.main.MineFragment;
+import com.jacknic.glut.view.fragment.home.CourseFragment;
+import com.jacknic.glut.view.fragment.home.FinancialFragment;
+import com.jacknic.glut.view.fragment.home.LibraryFragment;
+import com.jacknic.glut.view.fragment.home.MineFragment;
 
 import java.util.ArrayList;
 
