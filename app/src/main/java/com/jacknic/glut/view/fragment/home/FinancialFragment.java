@@ -1,4 +1,4 @@
-package com.jacknic.glut.view.fragment.main;
+package com.jacknic.glut.view.fragment.home;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
