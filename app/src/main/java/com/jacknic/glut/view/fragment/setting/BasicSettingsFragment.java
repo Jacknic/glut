@@ -11,10 +11,11 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.jacknic.glut.BuildConfig;
 import com.jacknic.glut.R;
 import com.jacknic.glut.page.FeedbackPage;
-import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.PageTool;
 import com.jacknic.glut.util.UpdateUtil;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -47,7 +48,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
         });
         TextView tvUpdateTips = (TextView) fragment.findViewById(R.id.setting_tv_updateTips);
         tvUpdateTips.setOnClickListener(this);
-        tvCheckUpdate.append(getString(R.string.versionName));
+        tvCheckUpdate.append(BuildConfig.VERSION_NAME);
         return fragment;
     }
 

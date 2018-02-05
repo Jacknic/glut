@@ -1,4 +1,4 @@
-package com.jacknic.glut.stacklibrary;
+package com.jacknic.glut.util;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,14 +19,14 @@ public class PageTool {
      * 打开新Fragment
      */
     public static void open(Context context, @NonNull Fragment fragment) {
-        getRoot(context).manager.addFragment(getRoot(context).manager.getPages().peek(), fragment, null);
+        getRoot(context).manager.openFragment(getRoot(context).manager.getPages().peek(), fragment, null);
     }
 
     /**
      * 打开新fragment（带参数）
      */
     public static void open(Context context, @NonNull Fragment fragment, Bundle bundle) {
-        getRoot(context).manager.addFragment(getRoot(context).manager.getPages().peek(), fragment, bundle);
+        getRoot(context).manager.openFragment(getRoot(context).manager.getPages().peek(), fragment, bundle);
     }
 
     /**

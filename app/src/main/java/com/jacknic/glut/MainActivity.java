@@ -13,8 +13,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.jacknic.glut.page.StartPage;
-import com.jacknic.glut.stacklibrary.StackManager;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.PageManager;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
@@ -24,14 +24,14 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    public StackManager manager;
+    public PageManager manager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         selectTheme();
         setContentView(R.layout.activity_main);
-        manager = new StackManager(this);
+        manager = new PageManager(this);
         Fragment startPage = new StartPage();
         manager.setFragment(startPage);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

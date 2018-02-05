@@ -21,9 +21,9 @@ import com.jacknic.glut.page.GradeListPage;
 import com.jacknic.glut.page.ProcessPage;
 import com.jacknic.glut.page.SettingPage;
 import com.jacknic.glut.page.StudentInfoPage;
-import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.ImageUtil;
+import com.jacknic.glut.util.PageTool;
 
 import java.io.File;
 

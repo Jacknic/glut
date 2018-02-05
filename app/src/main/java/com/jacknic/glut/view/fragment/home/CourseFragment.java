@@ -31,9 +31,9 @@ import com.jacknic.glut.event.UpdateCourseEvent;
 import com.jacknic.glut.model.dao.CourseDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.page.ChangeTermPage;
-import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.PageTool;
 import com.jacknic.glut.view.widget.CourseTableView;
 import com.jacknic.glut.view.widget.Dialogs;
 
