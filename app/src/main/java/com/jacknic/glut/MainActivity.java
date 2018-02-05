@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         manager = new PageManager(this);
         Fragment startPage = new StartPage();
         manager.setFragment(startPage);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
