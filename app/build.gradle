@@ -11,8 +11,6 @@ android {
         manifestPlaceholders = [MTA_CHANNEL: "测试", MTA_APPKEY: "debug"]
         versionName "5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        /*应用版本名称*/
-        resValue "string", "versionName", versionName
         ndk {
 //            abiFilters 'armeabi-v7a'
         }

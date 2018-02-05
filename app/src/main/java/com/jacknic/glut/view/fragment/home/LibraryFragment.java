@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.jacknic.glut.R;
 import com.jacknic.glut.page.BorrowPage;
-import com.jacknic.glut.stacklibrary.PageTool;
+import com.jacknic.glut.util.PageTool;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 

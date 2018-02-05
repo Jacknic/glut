@@ -22,9 +22,9 @@ import com.jacknic.glut.model.dao.CourseInfoDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.page.AddCoursePage;
-import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.PageTool;
 import com.jacknic.glut.util.ViewUtil;
 
 import java.util.ArrayList;

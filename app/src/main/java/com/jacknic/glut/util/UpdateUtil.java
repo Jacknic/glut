@@ -3,14 +3,13 @@ package com.jacknic.glut.util;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jacknic.glut.BuildConfig;
 import com.jacknic.glut.model.bean.VersionBean;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
@@ -32,8 +31,6 @@ public class UpdateUtil {
      */
     public static void checkUpdate(final FragmentActivity activity, final boolean showTips) {
 
-        final PackageInfo packageInfo = getPackageInfo(activity);
-        if (packageInfo == null) return;
         OkGo.get("https://raw.githubusercontent.com/Jacknic/glut/master/version.json").readTimeOut(15000L).execute(new StringCallback() {
             Toast tips = Toast.makeText(activity, "检查更新中...", Toast.LENGTH_LONG);
 
@@ -44,7 +41,7 @@ public class UpdateUtil {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                int appVersionCode = packageInfo.versionCode;
+                int appVersionCode = BuildConfig.VERSION_CODE;
                 System.out.println("应用的版本号：" + appVersionCode);
                 VersionBean versionBean;
                 try {
@@ -86,22 +83,6 @@ public class UpdateUtil {
         });
 
 
-    }
-
-    /**
-     * 获取包版本信息
-     *
-     * @param activity
-     * @return
-     */
-    public static PackageInfo getPackageInfo(FragmentActivity activity) {
-        PackageManager pm = activity.getPackageManager();
-        try {
-            return pm.getPackageInfo(activity.getPackageName(), PackageManager.GET_CONFIGURATIONS);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     /**

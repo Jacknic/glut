@@ -19,8 +19,8 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.MainPagerAdapter;
 import com.jacknic.glut.event.ThemeChangeEvent;
-import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.PageTool;
 import com.jacknic.glut.util.UpdateUtil;
 import com.jacknic.glut.util.ViewUtil;
 

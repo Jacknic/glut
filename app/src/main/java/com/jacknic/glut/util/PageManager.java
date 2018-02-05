@@ -1,4 +1,4 @@
-package com.jacknic.glut.stacklibrary;
+package com.jacknic.glut.util;
 
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
@@ -17,9 +17,9 @@ import java.util.Stack;
 
 
 /**
- * 栈管理器
+ * 页面管理器
  */
-public class StackManager {
+public class PageManager {
     private final FragmentActivity context;
     private Stack<Fragment> pages = new Stack<>();
     private int nextIn;
@@ -28,10 +28,8 @@ public class StackManager {
     private int quitOut;
     private Animation next_in;
     private Animation next_out;
-    private int dialog_in;
-    private int dialog_out;
 
-    public StackManager(FragmentActivity context) {
+    public PageManager(FragmentActivity context) {
         this.context = context;
     }
 
@@ -51,9 +49,9 @@ public class StackManager {
     }
 
     /**
-     * 跳转到指定frag
+     * 打开到指定frag
      */
-    public void addFragment(@NonNull final Fragment from, @NonNull final Fragment to) {
+    public void openFragment(@NonNull final Fragment from, @NonNull final Fragment to) {
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         if (nextIn != 0 && nextOut != 0 && quitIn != 0 && quitOut != 0) {
             transaction
@@ -85,18 +83,11 @@ public class StackManager {
 
 
     /**
-     * 打开新frag
-     */
-    public void openFragment(Fragment from, Fragment to) {
-        addFragment(from, to);
-    }
-
-    /**
      * 带参数跳转frag
      */
-    public void addFragment(Fragment from, Fragment to, Bundle bundle) {
+    public void openFragment(Fragment from, Fragment to, Bundle bundle) {
         to.setArguments(bundle);
-        addFragment(from, to);
+        openFragment(from, to);
     }
 
     /**
@@ -107,29 +98,15 @@ public class StackManager {
         pages.push(to);
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         if (!to.isAdded()) {
-            if (dialog_in != 0 && dialog_out != 0) {
-                transaction
-                        .setCustomAnimations(dialog_in, dialog_out)
-                        .add(R.id.frame_container, to, to.getClass().getName())
-                        .commit();
-            } else {
-                transaction
-                        .add(R.id.frame_container, to, to.getClass().getName())
-                        .commit();
-            }
+            transaction
+                    .add(R.id.frame_container, to, to.getClass().getName())
+                    .commit();
         }
     }
 
-    /**
-     * 设置对话框弹出动画
-     */
-    public void setDialogAnim(@AnimRes int dialog_in, @AnimRes int dialog_out) {
-        this.dialog_in = dialog_in;
-        this.dialog_out = dialog_out;
-    }
 
     /**
-     * 关闭自定frag
+     * 关闭指定frag
      */
     public void closeFragment(Fragment mTargetFragment) {
         if (!context.isFinishing()) {
@@ -203,40 +180,34 @@ public class StackManager {
         }
     }
 
-    public static boolean isFirstClose = true;
 
     /**
      * 关闭指定frag
      */
     public void close(final Fragment fragment) {
-        if (isFirstClose) {
-            View view = fragment.getView();
-            if (view != null) {
-                if (next_out != null) {
-                    view.startAnimation(next_out);
-                    next_out.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
+        View view = fragment.getView();
+        if (view != null) {
+            if (next_out != null) {
+                view.startAnimation(next_out);
+                next_out.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            closeFragment(fragment);
-                        }
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        closeFragment(fragment);
+                    }
 
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
 
-                        }
-                    });
-                } else {
-                    closeFragment(fragment);
-                }
+                    }
+                });
+            } else {
+                closeFragment(fragment);
             }
-            isFirstClose = false;
-        } else {
-            closeFragment(fragment);
         }
 
     }

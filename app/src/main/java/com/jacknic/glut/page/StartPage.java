@@ -7,8 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.stacklibrary.PageTool;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.PageTool;
 import com.jacknic.glut.util.ViewUtil;
 
 import java.util.Timer;

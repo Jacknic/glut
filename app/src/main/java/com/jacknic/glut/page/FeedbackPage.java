@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.stacklibrary.PageTool;
+import com.jacknic.glut.util.PageTool;
 import com.tencent.stat.StatService;
 
 import java.util.Properties;
