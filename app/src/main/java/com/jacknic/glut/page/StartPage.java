@@ -54,7 +54,7 @@ public class StartPage extends BasePage {
      * 启动选项
      */
     public void start() {
-        Animation loadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        Animation loadAnimation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
         startBtns.startAnimation(loadAnimation);
         startBtns.setVisibility(View.VISIBLE);
     }
