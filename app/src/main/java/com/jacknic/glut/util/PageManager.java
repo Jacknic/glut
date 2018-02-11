@@ -208,6 +208,8 @@ public class PageManager {
             } else {
                 closeFragment(fragment);
             }
+        } else {
+            closeFragment(fragment);
         }
 
     }

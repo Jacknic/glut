@@ -1,6 +1,5 @@
 package com.jacknic.glut.page;
 
-import android.content.Context;
 import android.support.annotation.Keep;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,6 +9,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.SettingPagerAdapter;
 import com.jacknic.glut.event.ThemeChangeEvent;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.PreferManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,7 +53,7 @@ public class SettingPage extends BasePage {
     @Keep
     @Subscribe
     public void themeChange(ThemeChangeEvent event) {
-        int index = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE).getInt(Config.SETTING_THEME_INDEX, 4);
+        int index = PreferManager.getPrefer().getInt(Config.SETTING_THEME_INDEX, 4);
         tab.setBackgroundColor(getResources().getColor(Config.COLORS[index]));
         setPagers();
     }

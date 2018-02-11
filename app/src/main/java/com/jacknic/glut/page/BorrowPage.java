@@ -1,6 +1,5 @@
 package com.jacknic.glut.page;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +13,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.BorrowListAdapter;
 import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.util.Config;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
@@ -126,7 +126,7 @@ public class BorrowPage extends BasePage {
     private void autoLogin() {
         isAuto = false;
         Log.d("ts 图书", "autoLogin: 自动登录图书馆");
-        SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         String sid = prefer.getString(Config.SID, "");
         String password = prefer.getString(Config.PASSWORD_TS, "");
         if (!TextUtils.isEmpty(sid) && !TextUtils.isEmpty(password)) {

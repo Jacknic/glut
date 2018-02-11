@@ -29,6 +29,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.model.bean.FinancialInfoBean;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.PageTool;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
@@ -62,7 +63,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragment = inflater.inflate(R.layout.frag_financial, container, false);
-        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        prefer = PreferManager.getPrefer();
         initViews();
         sid = prefer.getString(Config.SID, "");
         student_id = prefer.getString(Config.STUDENT_ID, "");

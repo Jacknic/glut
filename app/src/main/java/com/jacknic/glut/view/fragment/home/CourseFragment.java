@@ -1,6 +1,5 @@
 package com.jacknic.glut.view.fragment.home;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -34,6 +33,7 @@ import com.jacknic.glut.page.ChangeTermPage;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
 import com.jacknic.glut.util.PageTool;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.view.widget.CourseTableView;
 import com.jacknic.glut.view.widget.Dialogs;
 
@@ -79,7 +79,7 @@ public class CourseFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragment = inflater.inflate(R.layout.frag_course, container, false);
-        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        prefer = PreferManager.getPrefer();
         ButterKnife.bind(this, fragment);
         EventBus.getDefault().register(this);
         setTab();

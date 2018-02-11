@@ -1,14 +1,13 @@
 package com.jacknic.glut.page;
 
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.PageTool;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.util.ViewUtil;
 
 import java.util.Timer;
@@ -16,8 +15,6 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * 启动页
@@ -35,8 +32,7 @@ public class StartPage extends BasePage {
     @Override
     void initPage() {
         ViewUtil.showToolbar((AppCompatActivity) getContext(), false);
-        SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-        boolean isLogin = prefer.getBoolean("login_flag", false);
+        boolean isLogin = PreferManager.getPrefer().getBoolean("login_flag", false);
         if (!isLogin) {
             start();
         } else {

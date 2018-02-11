@@ -14,11 +14,9 @@ import android.widget.TextView;
 import com.jacknic.glut.BuildConfig;
 import com.jacknic.glut.R;
 import com.jacknic.glut.page.FeedbackPage;
-import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.PageTool;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.util.UpdateUtil;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -29,7 +27,7 @@ public class BasicSettingsFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.frag_setting_basic, container, false);
         TextView tvSelectThemeColor = (TextView) fragment.findViewById(R.id.setting_tv_select_theme_color);
-        final SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        final SharedPreferences prefer = PreferManager.getPrefer();
         tvSelectThemeColor.setOnClickListener(this);
         TextView tvFeedback = (TextView) fragment.findViewById(R.id.setting_tv_feedback);
         tvFeedback.setOnClickListener(this);

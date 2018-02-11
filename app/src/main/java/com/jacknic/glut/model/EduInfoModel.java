@@ -1,6 +1,5 @@
 package com.jacknic.glut.model;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -10,6 +9,7 @@ import com.jacknic.glut.model.dao.CourseInfoDao;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.PreferManager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.FileCallback;
@@ -34,7 +34,7 @@ import okhttp3.Response;
  */
 
 public class EduInfoModel {
-    private SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+    private SharedPreferences prefer = PreferManager.getPrefer();
 
     /**
      * 获取课表

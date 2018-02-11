@@ -1,13 +1,11 @@
 package com.jacknic.glut.model;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.model.bean.StudentInfoBean;
-import com.jacknic.glut.util.Config;
-import com.lzy.okgo.OkGo;
+import com.jacknic.glut.util.PreferManager;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -59,8 +57,7 @@ public class StudentInfoModel {
      * 写入学生信息
      */
     public void saveToPrefer(StudentInfoBean infoBean) {
-        SharedPreferences preferences = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = preferences.edit();
+        SharedPreferences.Editor edit = PreferManager.getPrefer().edit();
         edit.putString(student_info, JSON.toJSONString(infoBean));
         edit.apply();
     }
@@ -69,8 +66,7 @@ public class StudentInfoModel {
      * 获取学生信息
      */
     public StudentInfoBean getFromPrefer() {
-        SharedPreferences preferences = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
-        StudentInfoBean infoBean = JSONObject.parseObject(preferences.getString(student_info, ""), StudentInfoBean.class);
+        StudentInfoBean infoBean = JSONObject.parseObject(PreferManager.getPrefer().getString(student_info, ""), StudentInfoBean.class);
         return infoBean == null ? new StudentInfoBean() : infoBean;
     }
 }
