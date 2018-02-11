@@ -19,6 +19,7 @@ import com.jacknic.glut.model.EduInfoModel;
 import com.jacknic.glut.model.LoginModel;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.PageTool;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
@@ -34,8 +35,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * 用户登录页
@@ -53,7 +52,7 @@ public class LoginPage extends BasePage {
     ImageView iv_show_pwd;
     @BindView(R.id.iv_check_captcha)
     ImageView iv_check_captcha;
-    private final SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+    private final SharedPreferences prefer = PreferManager.getPrefer();
     private AlertDialog login_dialog;
     private EduInfoModel eduInfoModel = new EduInfoModel();
     private boolean loginSuccess;
@@ -230,7 +229,7 @@ public class LoginPage extends BasePage {
      */
 
     private void showCaptcha() {
-        SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         et_password.setText(prefer.getString(Config.PASSWORD_JW, ""));
         //验证码检验监听
         et_captcha.addTextChangedListener(new TextWatcher() {

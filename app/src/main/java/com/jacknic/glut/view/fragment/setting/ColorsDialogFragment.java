@@ -17,11 +17,9 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.adapter.ColorsSelectorAdapter;
 import com.jacknic.glut.event.ThemeChangeEvent;
 import com.jacknic.glut.util.Config;
-import com.lzy.okgo.OkGo;
+import com.jacknic.glut.util.PreferManager;
 
 import org.greenrobot.eventbus.EventBus;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * 设置颜色页弹窗
@@ -41,7 +39,7 @@ public class ColorsDialogFragment extends DialogFragment implements AdapterView.
     }
 
     public ColorsDialogFragment() {
-        prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        prefer = PreferManager.getPrefer();
         oldIndex = prefer.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
     }
 

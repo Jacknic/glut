@@ -1,6 +1,5 @@
 package com.jacknic.glut.model.dao;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.jacknic.glut.model.entity.CourseEntity;
@@ -8,7 +7,7 @@ import com.jacknic.glut.model.entity.CourseEntityDao;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
-import com.lzy.okgo.OkGo;
+import com.jacknic.glut.util.PreferManager;
 
 import org.greenrobot.greendao.query.WhereCondition;
 
@@ -43,7 +42,7 @@ public class CourseDao {
      * @return 课表列表
      */
     public List<CourseEntity> getCourse(int week) {
-        SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         int school_year = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         int term = prefer.getInt(Config.JW_SEMESTER, 1);
         return courseEntityDao.queryBuilder()
@@ -60,7 +59,7 @@ public class CourseDao {
      * 获取当日课表
      */
     public List<CourseEntity> getCourse() {
-        SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         Calendar calendar_now = Calendar.getInstance();
         int week_now = Func.getWeekNow();
         int school_year = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));

@@ -1,5 +1,6 @@
 package com.jacknic.glut;
 
+import com.jacknic.glut.util.PreferManager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
 import com.tencent.stat.StatCrashReporter;
@@ -15,6 +16,7 @@ public class App extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        PreferManager.init(this);
         OkGo.init(this);
         //配置不跳转,超时6秒
         OkGo.getInstance().getOkHttpClientBuilder()

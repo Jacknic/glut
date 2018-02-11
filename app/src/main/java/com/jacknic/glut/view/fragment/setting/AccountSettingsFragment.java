@@ -1,6 +1,5 @@
 package com.jacknic.glut.view.fragment.setting;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +17,7 @@ import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.PreferManager;
 import com.lzy.okgo.OkGo;
 
 import java.io.File;
@@ -38,7 +38,7 @@ public class AccountSettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.frag_setting_account, container, false);
         ButterKnife.bind(this, fragment);
-        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        prefer = PreferManager.getPrefer();
         return fragment;
     }
 

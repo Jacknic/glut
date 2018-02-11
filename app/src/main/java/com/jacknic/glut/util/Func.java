@@ -115,7 +115,7 @@ public final class Func {
      * 获取实际当前周
      */
     public static int getWeekNow() {
-        SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         Calendar calendar_now = Calendar.getInstance();
         int select_week = prefer.getInt(Config.JW_WEEK_SELECT, 1);
         int year_week_old = prefer.getInt(Config.JW_YEAR_WEEK_OLD, calendar_now.get(Calendar.WEEK_OF_YEAR));

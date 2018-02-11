@@ -1,6 +1,5 @@
 package com.jacknic.glut.view.fragment.home;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,9 +20,9 @@ import com.jacknic.glut.page.GradeListPage;
 import com.jacknic.glut.page.ProcessPage;
 import com.jacknic.glut.page.SettingPage;
 import com.jacknic.glut.page.StudentInfoPage;
-import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.ImageUtil;
 import com.jacknic.glut.util.PageTool;
+import com.jacknic.glut.util.PreferManager;
 
 import java.io.File;
 
@@ -40,7 +39,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        prefer = PreferManager.getPrefer();
         String sid = prefer.getString("sid", "");
         StudentInfoBean studentInfo = new StudentInfoModel().getFromPrefer();
         boolean isShowHeadImg = prefer.getBoolean("isShowHeadImg", true);

@@ -1,6 +1,5 @@
 package com.jacknic.glut.page;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -24,6 +23,7 @@ import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntityDao;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.view.widget.Dialogs;
 import com.jacknic.glut.view.widget.PickerView;
@@ -87,7 +87,7 @@ public class ChangeTermPage extends BasePage {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CourseEntity courseEntity = termCourse.get(position);
-                        SharedPreferences.Editor editor = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE).edit();
+                        SharedPreferences.Editor editor = PreferManager.getPrefer().edit();
                         editor.putInt(Config.JW_SCHOOL_YEAR, courseEntity.getSchoolStartYear())
                                 .putInt(Config.JW_SEMESTER, courseEntity.getSemester())
                                 .putInt(Config.JW_YEAR_WEEK_OLD, Calendar.getInstance().get(Calendar.WEEK_OF_YEAR))
@@ -152,7 +152,7 @@ public class ChangeTermPage extends BasePage {
      */
     @NonNull
     private List<String> getTerms() {
-        SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         termCourse = new CourseDao().getTermsCourse();
         final List<String> termList = new ArrayList<>();
         int select_year = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));

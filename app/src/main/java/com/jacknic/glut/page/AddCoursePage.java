@@ -24,6 +24,7 @@ import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.PreferManager;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,8 +33,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * 添加课程页
@@ -188,7 +187,7 @@ public class AddCoursePage extends BasePage {
         String teacher = et_teacher.getText().toString();
         String grade = et_grade.getText().toString();
         String courseNum = System.currentTimeMillis() + "";
-        SharedPreferences prefer = getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         int semester = prefer.getInt(Config.JW_SEMESTER, 1);
         int schoolYearStart = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         /*上课安排信息*/

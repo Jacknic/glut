@@ -21,6 +21,7 @@ import com.jacknic.glut.adapter.MainPagerAdapter;
 import com.jacknic.glut.event.ThemeChangeEvent;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.PageTool;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.util.UpdateUtil;
 import com.jacknic.glut.util.ViewUtil;
 
@@ -30,8 +31,6 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static android.content.Context.MODE_PRIVATE;
-import static com.jacknic.glut.util.Config.PREFER;
 import static com.jacknic.glut.util.Config.SETTING_THEME_COLOR_INDEX;
 import static com.jacknic.glut.util.Config.SETTING_THEME_INDEX;
 
@@ -66,11 +65,11 @@ public class HomePage extends BasePage {
     void initPage() {
         EventBus.getDefault().register(this);
         colorInactive = getResources().getColor(R.color.inactive);
-        int colorIndex = getContext().getSharedPreferences(PREFER, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
+        int colorIndex = PreferManager.getPrefer().getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
         colorActive = getResources().getColor(Config.COLORS[colorIndex]);
         ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
         initFragments();
-        SharedPreferences prefer = getContext().getSharedPreferences(PREFER, MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         boolean auto_check_update = prefer.getBoolean("auto_check_update", true);
         if (auto_check_update) UpdateUtil.checkUpdate((FragmentActivity) getContext(), false);
     }
@@ -115,7 +114,7 @@ public class HomePage extends BasePage {
         changeColor(tab, colorActive);
         for (int i = 0; i < TAB_IDS.length; i++) {
             if (selectTab.getId() == TAB_IDS[i]) {
-                pageContainer.setCurrentItem(i, false);
+                pageContainer.setCurrentItem(i, true);
             }
         }
         ScaleAnimation scale = new ScaleAnimation(0.39F, 1.1F, 0.39F, 1.1F, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);
@@ -148,7 +147,7 @@ public class HomePage extends BasePage {
     @Keep
     @Subscribe
     public void themeChange(ThemeChangeEvent event) {
-        int colorIndex = getContext().getSharedPreferences(PREFER, MODE_PRIVATE).getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
+        int colorIndex = PreferManager.getPrefer().getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
         colorActive = getResources().getColor(Config.COLORS[colorIndex]);
         pageContainer.setAdapter(new MainPagerAdapter(getChildFragmentManager()));
         pageContainer.setCurrentItem(3);

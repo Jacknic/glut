@@ -1,11 +1,11 @@
 package com.jacknic.glut.model;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.PreferManager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -13,8 +13,6 @@ import com.lzy.okgo.callback.StringCallback;
 import okhttp3.Call;
 import okhttp3.Response;
 import okhttp3.internal.Util;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * 登录到教务处
@@ -49,8 +47,7 @@ public class LoginModel {
 
             @Override
             public void onError(Call call, Response response, Exception e) {
-                SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefer.edit();
+                SharedPreferences.Editor editor = PreferManager.getPrefer().edit();
                 editor.putString(Config.SID, sid);
                 editor.putString(Config.PASSWORD_JW, password);
                 editor.apply();
@@ -87,7 +84,7 @@ public class LoginModel {
                     public void onError(Call call, Response response, Exception e) {
                         //判断是否跳转，如果跳转则登录成功
                         if (response != null && "http://202.193.80.181:8080/opac/reader/space".equals(response.header("location"))) {
-                            SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+                            SharedPreferences prefer = PreferManager.getPrefer();
                             prefer.edit().putString(Config.SID, sid).putString(Config.PASSWORD_TS, password).apply();
                             callback.onSuccess("", call, response);
                         }
@@ -123,8 +120,7 @@ public class LoginModel {
                         String msg = json.getString("msg");
                         //判断是否登录成功
                         if (result == 0) {
-                            SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefer.edit();
+                            SharedPreferences.Editor editor = PreferManager.getPrefer().edit();
                             editor.putString(Config.STUDENT_ID, msg);
                             editor.putString(Config.SID, sid);
                             editor.putString(Config.PASSWORD_CW, password);

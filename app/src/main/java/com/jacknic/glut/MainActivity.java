@@ -10,11 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Toast;
 
 import com.jacknic.glut.page.StartPage;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.PageManager;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
@@ -48,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 滑动初始点x坐标
+     * 是否拦截处理
      */
-    private float posX = 0;
+    private boolean handled = false;
 
     /**
      * 侧滑返回
@@ -59,41 +62,68 @@ public class MainActivity extends AppCompatActivity {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                posX = ev.getX();
-                if (posX < ViewUtil.dip2px(20)) {
-                    return true;
-                }
+                handled = ev.getX() < ViewUtil.dip2px(20) && manager.getPages().size() > 1;
                 break;
             }
+            case MotionEvent.ACTION_MOVE:
+                if (handled) {
+                    View viewNow = manager.getPages().peek().getView();
+                    Fragment nextPage = manager.getPages().get(manager.getPages().size() - 2);
+                    View viewNext = nextPage.getView();
+                    TranslateAnimation currAnim = new TranslateAnimation(ev.getX(), ev.getX(), 0, 0);
+                    TranslateAnimation nextAnim = new TranslateAnimation(0, 0, 0, 0);
+                    currAnim.setFillAfter(true);
+                    nextAnim.setFillAfter(true);
+                    viewNow.startAnimation(currAnim);
+                    viewNext.startAnimation(nextAnim);
+                }
+                break;
             case MotionEvent.ACTION_UP: {
-                float x = ev.getX();
-                if (isBack(x)) return true;
+                if (!handled) break;
+                View currView = manager.getPages().peek().getView();
+                //滑动大于1/3则视为返回动作
+                final boolean goBack = ev.getX() > currView.getWidth() / 3;
+                TranslateAnimation currAnim = new TranslateAnimation(ev.getX(), goBack ? currView.getWidth() : 0, 0, 0);
+                currAnim.setDuration(200);
+                currAnim.setFillAfter(true);
+                currAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        if (goBack) {
+                            manager.closeFragment(manager.getPages().pop());
+                            Fragment peek = manager.getPages().peek();
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .show(peek)
+                                    .commit();
+                            handled = false;
+                        }
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                currView.startAnimation(currAnim);
+                handled = goBack;
                 break;
             }
         }
-        return super.dispatchTouchEvent(ev);
+        return handled || super.dispatchTouchEvent(ev);
     }
 
-    /**
-     * 检验是否执行返回操作
-     */
-    private boolean isBack(float x) {
-        if (posX < ViewUtil.dip2px(20)) {
-            if (x > getWindow().getDecorView().getWidth() / 3) {
-                if (manager.getPages().size() > 1) {
-                    onBackPressed();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     /**
      * 设置主题
      */
     public void selectTheme() {
-        SharedPreferences prefer = getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         int themeIndex = prefer.getInt(Config.SETTING_THEME_INDEX, Config.SETTING_THEME_COLOR_INDEX);
         setTheme(Config.THEME_LIST[themeIndex]);
     }

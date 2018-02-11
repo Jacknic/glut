@@ -20,8 +20,8 @@ import com.jacknic.glut.model.entity.CourseInfoEntityDao;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.view.widget.Dialogs;
-import com.lzy.okgo.OkGo;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -29,8 +29,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * 课程列表页
@@ -49,7 +47,7 @@ public class CourseListPage extends BasePage {
 
     @Override
     void initPage() {
-        SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         int startYear = prefer.getInt(Config.JW_SCHOOL_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         int semester = prefer.getInt(Config.JW_SEMESTER, 1);
         final List<CourseInfoEntity> courseInfoList = DataBase.getDaoSession()

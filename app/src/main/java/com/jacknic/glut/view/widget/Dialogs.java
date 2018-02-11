@@ -24,6 +24,7 @@ import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.PreferManager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.BitmapCallback;
@@ -33,8 +34,6 @@ import java.util.Calendar;
 
 import okhttp3.Call;
 import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * 对话框
@@ -70,7 +69,7 @@ public class Dialogs {
      */
     public static AlertDialog.Builder getChangeWeekDialog(Activity activity) {
         LinearLayout dialogView = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.dialog_change_week, null);
-        final SharedPreferences prefer = OkGo.getContext().getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
+        final SharedPreferences prefer = PreferManager.getPrefer();
         int jw_week_end = prefer.getInt(Config.JW_WEEK_END, 30);
         int select_week = prefer.getInt(Config.JW_WEEK_SELECT, 30);
         final Calendar calendar = Calendar.getInstance();
@@ -122,7 +121,7 @@ public class Dialogs {
     public static void showLoginJw(final Context context, final AbsCallbackWrapper callback) {
         if (context == null) return;
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_login, null, false);
-        SharedPreferences prefer = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        SharedPreferences prefer = PreferManager.getPrefer();
         String sid = prefer.getString(Config.SID, "");
         String password = prefer.getString(Config.PASSWORD_JW, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
@@ -225,7 +224,7 @@ public class Dialogs {
         if (context == null) return;
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_login, null, false);
         login_view.findViewById(R.id.captcha_layout).setVisibility(View.GONE);
-        final SharedPreferences prefer = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        final SharedPreferences prefer = PreferManager.getPrefer();
         String sid = prefer.getString(Config.SID, "");
         String password = prefer.getString(Config.PASSWORD_TS, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
@@ -271,7 +270,7 @@ public class Dialogs {
         if (context == null) return;
         LinearLayout login_view = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_login, null, false);
         login_view.findViewById(R.id.captcha_layout).setVisibility(View.GONE);
-        final SharedPreferences prefer = context.getSharedPreferences(Config.PREFER, MODE_PRIVATE);
+        final SharedPreferences prefer = PreferManager.getPrefer();
         String sid = prefer.getString(Config.SID, "");
         String password = prefer.getString(Config.PASSWORD_CW, "");
         final EditText et_sid = (EditText) login_view.findViewById(R.id.et_sid);
