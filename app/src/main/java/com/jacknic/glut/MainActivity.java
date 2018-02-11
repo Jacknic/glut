@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     View viewNow = manager.getPages().peek().getView();
                     Fragment nextPage = manager.getPages().get(manager.getPages().size() - 2);
                     View viewNext = nextPage.getView();
+                    viewNext.setAlpha((ev.getX()) / viewNext.getWidth());
                     TranslateAnimation currAnim = new TranslateAnimation(ev.getX(), ev.getX(), 0, 0);
                     TranslateAnimation nextAnim = new TranslateAnimation(0, 0, 0, 0);
                     currAnim.setFillAfter(true);
@@ -94,15 +95,20 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
+                        Fragment peek;
                         if (goBack) {
                             manager.closeFragment(manager.getPages().pop());
-                            Fragment peek = manager.getPages().peek();
+                            peek = manager.getPages().peek();
                             getSupportFragmentManager()
                                     .beginTransaction()
                                     .show(peek)
                                     .commit();
-                            handled = false;
+                        } else {
+                            peek = manager.getPages().get(manager.getPages().size() - 2);
                         }
+                        peek.getView().setAlpha(1.0f);
+                        handled = false;
+
                     }
 
                     @Override

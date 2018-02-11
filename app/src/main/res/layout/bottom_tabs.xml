@@ -4,9 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:background="@color/white"
-    android:orientation="horizontal"
-    android:paddingBottom="6dp"
-    android:paddingTop="6dp">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/bottom_tab_course"
@@ -14,7 +12,9 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -36,7 +36,9 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -58,7 +60,9 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -80,7 +84,9 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
 
         <ImageView
             android:layout_width="24dp"
