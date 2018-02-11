@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Toast;
@@ -62,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                handled = ev.getX() < ViewUtil.dip2px(20) && manager.getPages().size() > 1;
+                boolean xRange = ev.getX() < ViewUtil.dip2px(20);
+                boolean yRange = ev.getY() > getSupportActionBar().getHeight();
+                handled = xRange && yRange && manager.getPages().size() > 1;
                 break;
             }
             case MotionEvent.ACTION_MOVE:
@@ -71,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
                     Fragment nextPage = manager.getPages().get(manager.getPages().size() - 2);
                     View viewNext = nextPage.getView();
                     viewNext.setAlpha((ev.getX()) / viewNext.getWidth());
-                    TranslateAnimation currAnim = new TranslateAnimation(ev.getX(), ev.getX(), 0, 0);
+                    TranslateAnimation transX = new TranslateAnimation(ev.getX(), ev.getX(), 0, 0);
                     TranslateAnimation nextAnim = new TranslateAnimation(0, 0, 0, 0);
-                    currAnim.setFillAfter(true);
+                    transX.setFillAfter(true);
                     nextAnim.setFillAfter(true);
-                    viewNow.startAnimation(currAnim);
+                    viewNow.startAnimation(transX);
                     viewNext.startAnimation(nextAnim);
                 }
                 break;
@@ -84,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
                 View currView = manager.getPages().peek().getView();
                 //滑动大于1/3则视为返回动作
                 final boolean goBack = ev.getX() > currView.getWidth() / 3;
-                TranslateAnimation currAnim = new TranslateAnimation(ev.getX(), goBack ? currView.getWidth() : 0, 0, 0);
-                currAnim.setDuration(200);
-                currAnim.setFillAfter(true);
-                currAnim.setAnimationListener(new Animation.AnimationListener() {
+                TranslateAnimation transX = new TranslateAnimation(ev.getX(), goBack ? currView.getWidth() : 0, 0, 0);
+                transX.setDuration(200);
+                transX.setFillAfter(true);
+                transX.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
 
@@ -97,16 +100,19 @@ public class MainActivity extends AppCompatActivity {
                     public void onAnimationEnd(Animation animation) {
                         Fragment peek;
                         if (goBack) {
-                            manager.closeFragment(manager.getPages().pop());
+                            Fragment top = manager.getPages().pop();
                             peek = manager.getPages().peek();
                             getSupportFragmentManager()
                                     .beginTransaction()
+                                    .remove(top)
                                     .show(peek)
                                     .commit();
                         } else {
                             peek = manager.getPages().get(manager.getPages().size() - 2);
                         }
-                        peek.getView().setAlpha(1.0f);
+                        View preView = peek.getView();
+                        preView.startAnimation(new AlphaAnimation(1, 1));
+                        preView.setAlpha(1);
                         handled = false;
 
                     }
@@ -116,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-                currView.startAnimation(currAnim);
+                currView.startAnimation(transX);
                 handled = goBack;
                 break;
             }
