@@ -120,7 +120,8 @@ public class HomePage extends BasePage {
         ScaleAnimation scale = new ScaleAnimation(0.39F, 1.1F, 0.39F, 1.1F, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);
         scale.setDuration(200L);
         scale.setInterpolator(new AccelerateDecelerateInterpolator());
-        tab.startAnimation(scale);
+        tab.getChildAt(0).startAnimation(scale);
+        tab.getChildAt(1).startAnimation(scale);
     }
 
     /**
