@@ -103,7 +103,7 @@ public class UpdateUtil {
                 .setPositiveButton("后台下载", null).create();
 
 
-        OkGo.get(url).execute(new FileCallback("glut_update.apk") {
+        OkGo.get(url).execute(new FileCallback(activity.getExternalCacheDir().toString(), "glut_update.apk") {
             @Override
             public void onBefore(BaseRequest request) {
                 super.onBefore(request);
