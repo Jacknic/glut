@@ -150,14 +150,6 @@
                 android:tint="@color/blueLight" />
             <!--/学业进度-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/list_item_height"
-                android:background="@color/press">
-
-            </View>
-
         </LinearLayout>
 
         <LinearLayout
@@ -212,7 +204,6 @@
                 android:layout_height="@dimen/list_item_height"
                 android:layout_marginTop="@dimen/list_item_negative_height"
                 android:padding="10dp"
-
                 android:src="@drawable/ic_check_circle"
                 android:tint="@color/green" />
 
