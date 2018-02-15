@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.Toast;
 
@@ -61,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        final float posX = ev.getX();
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                boolean xRange = ev.getX() < ViewUtil.dip2px(20);
+                boolean xRange = posX < ViewUtil.dip2px(20);
                 boolean yRange = ev.getY() > getSupportActionBar().getHeight();
                 handled = xRange && yRange && manager.getPages().size() > 1;
                 break;
@@ -73,48 +75,57 @@ public class MainActivity extends AppCompatActivity {
                     View viewNow = manager.getPages().peek().getView();
                     Fragment nextPage = manager.getPages().get(manager.getPages().size() - 2);
                     View viewNext = nextPage.getView();
-                    viewNext.setAlpha((ev.getX()) / viewNext.getWidth());
-                    TranslateAnimation transX = new TranslateAnimation(ev.getX(), ev.getX(), 0, 0);
-                    TranslateAnimation nextAnim = new TranslateAnimation(0, 0, 0, 0);
-                    transX.setFillAfter(true);
-                    nextAnim.setFillAfter(true);
-                    viewNow.startAnimation(transX);
-                    viewNext.startAnimation(nextAnim);
+                    float percent = posX / viewNext.getWidth();
+                    TranslateAnimation nowTransX = new TranslateAnimation(posX, posX, 0, 0);
+                    float nextX = -viewNext.getWidth() / 3 * (1 - percent);
+                    TranslateAnimation nextTranX = new TranslateAnimation(nextX, nextX, 0, 0);
+                    AlphaAnimation nextAlpha = new AlphaAnimation(percent, percent);
+                    AnimationSet animSet = new AnimationSet(true);
+                    animSet.addAnimation(nextTranX);
+                    animSet.addAnimation(nextAlpha);
+                    animSet.setFillAfter(true);
+                    nowTransX.setFillAfter(true);
+                    viewNow.startAnimation(nowTransX);
+                    viewNext.startAnimation(animSet);
                 }
                 break;
             case MotionEvent.ACTION_UP: {
                 if (!handled) break;
                 View currView = manager.getPages().peek().getView();
                 //滑动大于1/3则视为返回动作
-                final boolean goBack = ev.getX() > currView.getWidth() / 3;
-                TranslateAnimation transX = new TranslateAnimation(ev.getX(), goBack ? currView.getWidth() : 0, 0, 0);
-                transX.setDuration(200);
-                transX.setFillAfter(true);
+                final boolean goBack = posX > currView.getWidth() / 3;
+                final float percent = posX / currView.getWidth();
+                TranslateAnimation transX = new TranslateAnimation(posX, goBack ? currView.getWidth() : 0, 0, 0);
+                transX.setDuration(200 + (goBack ? (long) (100 * (1 - percent)) : 0));
                 transX.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-
+                        if (goBack) {
+                            Fragment peek = manager.getPages().get(manager.getPages().size() - 2);
+                            View preView = peek.getView();
+                            TranslateAnimation transX = new TranslateAnimation(-preView.getWidth() / 3 * (1 - percent), 0, 0, 0);
+                            AlphaAnimation alpha = new AlphaAnimation(percent, 1);
+                            AnimationSet animSet = new AnimationSet(true);
+                            animSet.setDuration(animation.getDuration());
+                            animSet.addAnimation(transX);
+                            animSet.addAnimation(alpha);
+                            preView.startAnimation(animSet);
+                        }
                     }
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        Fragment peek;
+                        //true执行返回操作，否则清除动画
                         if (goBack) {
-                            Fragment top = manager.getPages().pop();
-                            peek = manager.getPages().peek();
                             getSupportFragmentManager()
                                     .beginTransaction()
-                                    .remove(top)
-                                    .show(peek)
+                                    .remove(manager.getPages().pop())
+                                    .show(manager.getPages().peek())
                                     .commit();
                         } else {
-                            peek = manager.getPages().get(manager.getPages().size() - 2);
+                            Fragment peek = manager.getPages().get(manager.getPages().size() - 2);
+                            peek.getView().clearAnimation();
                         }
-                        View preView = peek.getView();
-                        preView.startAnimation(new AlphaAnimation(1, 1));
-                        preView.setAlpha(1);
-                        handled = false;
-
                     }
 
                     @Override
@@ -167,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 exit = true;
             } else {
                 OkGo.getInstance().cancelAll();
-                finish();
+                super.onBackPressed();
             }
         } else {
             manager.onBackPressed();

@@ -64,7 +64,7 @@ public class GradeListPage extends BasePage {
         semesters.add("秋季");
         years = new ArrayList<>();
         years.add("全部");
-        for (int i = year; i > year - 10; i--) {
+        for (int i = year; i > year - 7; i--) {
             years.add("" + i);
         }
         ArrayAdapter<String> adapter_years = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
