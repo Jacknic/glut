@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
@@ -269,9 +270,7 @@ public class CourseTableView extends LinearLayout {
         Drawable text_bg = getContext().getResources().getDrawable(R.drawable.round_bg_white_5dp);
         int color = Config.COLORS[getColorIndex(courseEntity.getCourseName())];
         text_bg.setColorFilter(getContext().getResources().getColor(color), PorterDuff.Mode.SRC_IN);
-        text_bg.setAlpha(150);
         course.setBackgroundDrawable(text_bg);
-        course.setAlpha(0.9f);
         course.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
