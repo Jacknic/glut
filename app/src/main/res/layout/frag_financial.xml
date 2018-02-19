@@ -6,7 +6,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryBackground"
         android:orientation="vertical"
         android:overScrollMode="never"
         android:scrollbars="none">
@@ -55,7 +54,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -477,7 +475,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/list_item_height"
-                    android:background="@color/white"
                     android:orientation="horizontal"
                     android:paddingLeft="15dp">
 
