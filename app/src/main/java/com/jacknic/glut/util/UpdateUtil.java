@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
@@ -46,7 +48,7 @@ public class UpdateUtil {
                 VersionBean versionBean;
                 try {
                     versionBean = JSONObject.parseObject(s, VersionBean.class);
-                    if (appVersionCode < versionBean.getVersionCode()) {
+                    if (appVersionCode <= versionBean.getVersionCode()) {
                         final String downloadUrl = versionBean.getDownloadUrl();
                         AlertDialog alertDialog = new AlertDialog.Builder(activity)
                                 .setTitle("发现新版本！")
@@ -100,22 +102,27 @@ public class UpdateUtil {
                         OkGo.getInstance().cancelAll();
                     }
                 })
-                .setPositiveButton("后台下载", null).create();
-
-
+                .setPositiveButton("后台下载", null)
+                .create();
         OkGo.get(url).execute(new FileCallback(activity.getExternalCacheDir().toString(), "glut_update.apk") {
             @Override
             public void onBefore(BaseRequest request) {
-                super.onBefore(request);
                 dialog.show();
             }
 
             @Override
             public void onSuccess(File file, Call call, Response response) {
-                //下载完成启动安装
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                String type = "application/vnd.android.package-archive";
+                //判断是否是AndroidN以及更高的版本
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    Uri contentUri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".fileProvider", file);
+                    intent.setDataAndType(contentUri, type);
+                } else {
+                    intent.setDataAndType(Uri.fromFile(file), type);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
                 activity.startActivity(intent);
             }
 
