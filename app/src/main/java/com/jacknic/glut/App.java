@@ -3,7 +3,6 @@ package com.jacknic.glut;
 import com.jacknic.glut.util.PreferManager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
-import com.tencent.stat.StatCrashReporter;
 import com.tencent.stat.StatService;
 
 import java.util.concurrent.TimeUnit;
@@ -26,10 +25,5 @@ public class App extends android.app.Application {
         OkGo.getInstance().setCookieStore(new PersistentCookieStore());
         StatService.setContext(this);
         StatService.registerActivityLifecycleCallbacks(this);
-        StatCrashReporter crashReporter = StatCrashReporter.getStatCrashReporter(this);
-        // 开启异常时的实时上报
-        crashReporter.setEnableInstantReporting(true);
-        // 开启java异常捕获
-        crashReporter.setJavaCrashHandlerStatus(true);
     }
 }

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     TranslateAnimation nowTransX = new TranslateAnimation(posX, posX, 0, 0);
                     float nextX = -viewNext.getWidth() / 3 * (1 - percent);
                     TranslateAnimation nextTranX = new TranslateAnimation(nextX, nextX, 0, 0);
-                    AlphaAnimation nextAlpha = new AlphaAnimation(percent, percent);
+                    AlphaAnimation nextAlpha = new AlphaAnimation(percent + 0.1f, percent + 0.1f);
                     AnimationSet animSet = new AnimationSet(true);
                     animSet.addAnimation(nextTranX);
                     animSet.addAnimation(nextAlpha);
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                             Fragment peek = manager.getPages().get(manager.getPages().size() - 2);
                             View preView = peek.getView();
                             TranslateAnimation transX = new TranslateAnimation(-preView.getWidth() / 3 * (1 - percent), 0, 0, 0);
-                            AlphaAnimation alpha = new AlphaAnimation(percent, 1);
+                            AlphaAnimation alpha = new AlphaAnimation(percent + 0.1f, 1);
                             AnimationSet animSet = new AnimationSet(true);
                             animSet.setDuration(animation.getDuration());
                             animSet.addAnimation(transX);

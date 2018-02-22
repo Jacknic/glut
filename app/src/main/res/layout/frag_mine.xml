@@ -9,55 +9,44 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:background="?attr/colorPrimary">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/jw_iv_header_bg"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
                 android:background="@drawable/round_bg_white"
-                android:gravity="center"
-                android:padding="4dp">
+                android:src="@drawable/ic_account_circle"
+                android:tint="?attr/colorPrimary" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/jw_iv_header_bg"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_account_circle"
-                        android:tint="?attr/colorPrimary" />
-
-                    <ImageView
-                        android:id="@+id/jw_iv_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="头像" />
-                </RelativeLayout>
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/jw_iv_header"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:padding="4dp" />
 
             <TextView
                 android:id="@+id/jw_tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
+                android:layout_below="@id/jw_iv_header_bg"
+                android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_below="@id/jw_tv_name"
                 android:background="@color/primaryBackgroundTran"
                 android:orientation="horizontal">
 
@@ -86,14 +75,16 @@
                     android:text=""
                     android:textColor="@color/white" />
             </LinearLayout>
-        </LinearLayout>
+
+        </RelativeLayout>
 
         <!--阴影效果图-->
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:rotation="180"
-            android:src="@drawable/bg_shadow" />
+            android:src="@drawable/bg_shadow"
+            android:tint="?attr/colorPrimary" />
 
         <RelativeLayout
             android:layout_width="match_parent"
