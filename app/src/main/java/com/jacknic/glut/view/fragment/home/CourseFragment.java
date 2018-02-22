@@ -121,23 +121,6 @@ public class CourseFragment extends Fragment {
         tv_semester.setText((semester == 1 ? "春" : "秋") + "季学期");
     }
 
-
-    final Animation.AnimationListener toggleListener = new Animation.AnimationListener() {
-        @Override
-        public void onAnimationStart(Animation animation) {
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            ll_select_time.setVisibility(ll_select_time.getVisibility() != View.VISIBLE ? View.VISIBLE : View.GONE);
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-
-        }
-    };
-
     /**
      * tab栏开关
      */
@@ -145,22 +128,37 @@ public class CourseFragment extends Fragment {
     void toggle(View v) {
         //当前是否可见，可见执行关闭操作，不可见执行展开
         boolean visible = ll_select_time.getVisibility() == View.VISIBLE;
+        Animation animToggle = AnimationUtils.loadAnimation(getContext(), visible ? R.anim.toggle_out : R.anim.toggle_in);
         if (visible) {
+            animToggle.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    ll_select_time.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
             int tabPosition = tab_select_week.getSelectedTabPosition();
             if (tabPosition + 1 != week_now) {
                 showSelect();
             }
         } else {
-            ll_select_time.setVisibility(View.INVISIBLE);
+            ll_select_time.setVisibility(View.VISIBLE);
             TabLayout.Tab tab = tab_select_week.getTabAt(week_now - 1);
             if (tab != null) {
                 tab.select();
             }
         }
-        Animation animToggle = AnimationUtils.loadAnimation(getContext(), visible ? R.anim.toggle_out : R.anim.toggle_in);
+        tab_select_week.startAnimation(animToggle);
         v.setRotation(visible ? 0 : 45);
-        animToggle.setAnimationListener(toggleListener);
-        ll_select_time.startAnimation(animToggle);
         RotateAnimation rota = new RotateAnimation(visible ? -135 : 135, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rota.setFillAfter(true);
         rota.setDuration(300L);

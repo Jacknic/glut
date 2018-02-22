@@ -2,10 +2,8 @@ package com.jacknic.glut.view.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
@@ -89,6 +87,7 @@ public class CourseTableView extends LinearLayout {
                 boolean startIn = courseEntity.getStartSection() == 5 || courseEntity.getStartSection() == 6;
                 boolean centerIn = courseEntity.getStartSection() <= 5 && courseEntity.getEndSection() >= 5;
                 if (startIn || centerIn) {
+                    //显示中午时段
                     hasNoonCourse = true;
                 }
                 //放入星期列表
@@ -267,10 +266,12 @@ public class CourseTableView extends LinearLayout {
         courseView.setGravity(Gravity.CENTER);
         courseView.setText(courseEntity.getCourseName() + "@" + courseEntity.getClassRoom());
         course.addView(getWeekTransverseLine());
-        Drawable text_bg = getContext().getResources().getDrawable(R.drawable.round_bg_white_5dp);
         int color = Config.COLORS[getColorIndex(courseEntity.getCourseName())];
-        text_bg.setColorFilter(getContext().getResources().getColor(color), PorterDuff.Mode.SRC_IN);
-        course.setBackgroundDrawable(text_bg);
+        GradientDrawable course_bg = new GradientDrawable();
+        course_bg.setAlpha(200);
+        course_bg.setCornerRadius(ViewUtil.dip2px(5));
+        course_bg.setColor(getContext().getResources().getColor(color));
+        course.setBackgroundDrawable(course_bg);
         course.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

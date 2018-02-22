@@ -48,7 +48,7 @@ public class UpdateUtil {
                 VersionBean versionBean;
                 try {
                     versionBean = JSONObject.parseObject(s, VersionBean.class);
-                    if (appVersionCode <= versionBean.getVersionCode()) {
+                    if (appVersionCode < versionBean.getVersionCode()) {
                         final String downloadUrl = versionBean.getDownloadUrl();
                         AlertDialog alertDialog = new AlertDialog.Builder(activity)
                                 .setTitle("发现新版本！")
