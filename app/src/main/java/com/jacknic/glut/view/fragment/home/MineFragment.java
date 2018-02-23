@@ -57,21 +57,20 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         findAndSetOnclick(R.id.tv_setting);
         ivHeader = (ImageView) fragment.findViewById(R.id.jw_iv_header);
         ImageView iv_header_bg = (ImageView) fragment.findViewById(R.id.jw_iv_header_bg);
-        if (!isShowHeadImg) {
-            ivHeader.setVisibility(View.GONE);
+        if (isShowHeadImg) {
+            ivHeader.setVisibility(View.VISIBLE);
         }
         iv_header_bg.setOnClickListener(this);
         ivHeader.setOnClickListener(this);
-        setHeaderImage(sid);
+        setHeaderImage();
         return fragment;
     }
 
     /**
      * 设置头像
-     *
-     * @param sid 学号
      */
-    private void setHeaderImage(String sid) {
+    private void setHeaderImage() {
+        String sid = prefer.getString("sid", "");
         if (!TextUtils.isEmpty(sid)) {
             File imgPath = new File(getContext().getFilesDir(), sid + ".jpg");
             if (imgPath.exists()) {
