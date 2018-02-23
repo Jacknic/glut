@@ -99,7 +99,7 @@ public class PageManager {
         FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         if (!to.isAdded()) {
             transaction
-                    .add(R.id.frame_container, to, to.getClass().getName())
+                    .replace(R.id.frame_container, to, to.getClass().getName())
                     .commit();
         }
     }

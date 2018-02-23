@@ -76,48 +76,49 @@ public class BorrowPage extends BasePage {
      * 获取借书列表
      */
     private void getRenewList() {
-        OkGo.get("http://202.193.80.181:8080/opac/loan/renewList").execute(new StringCallback() {
+        OkGo.get("http://202.193.80.181:8080/opac/loan/renewList").tag(this)
+                .execute(new StringCallback() {
 
-            @Override
-            public void onBefore(BaseRequest request) {
-                SnackbarTool.showShort("请求中...");
-            }
-
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                if (getContext() == null) return;
-                Document dom = Jsoup.parse(s);
-                Elements select = dom.select("#contentTable tr[id!=contentHeader]");
-                if (select.isEmpty()) {
-                    tips.setVisibility(View.VISIBLE);
-                } else {
-                    tips.setVisibility(View.GONE);
-                    rl_borrow_list.setAdapter(new BorrowListAdapter(getContext(), select));
-                }
-            }
-
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                if (getContext() == null) return;
-                if (response != null) {
-                    // 自动登录
-                    if (isAuto) {
-                        autoLogin();
-                    } else {
-                        //登录图书对话框
-                        Dialogs.showLoginTs(getActivity(), new AbsCallbackWrapper() {
-                            @Override
-                            public void onAfter(Object o, Exception e) {
-                                getRenewList();
-                            }
-                        });
+                    @Override
+                    public void onBefore(BaseRequest request) {
+                        SnackbarTool.showShort("请求中...");
                     }
 
-                } else {
-                    SnackbarTool.showShort("网络错误");
-                }
-            }
-        });
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        if (getContext() == null) return;
+                        Document dom = Jsoup.parse(s);
+                        Elements select = dom.select("#contentTable tr[id!=contentHeader]");
+                        if (select.isEmpty()) {
+                            tips.setVisibility(View.VISIBLE);
+                        } else {
+                            tips.setVisibility(View.GONE);
+                            rl_borrow_list.setAdapter(new BorrowListAdapter(getContext(), select));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        if (getContext() == null) return;
+                        if (response != null) {
+                            // 自动登录
+                            if (isAuto) {
+                                autoLogin();
+                            } else {
+                                //登录图书对话框
+                                Dialogs.showLoginTs(getActivity(), new AbsCallbackWrapper() {
+                                    @Override
+                                    public void onAfter(Object o, Exception e) {
+                                        getRenewList();
+                                    }
+                                });
+                            }
+
+                        } else {
+                            SnackbarTool.showShort("网络错误");
+                        }
+                    }
+                });
     }
 
     /**

@@ -65,7 +65,7 @@ public class LoginPage extends BasePage {
 
     @Override
     void initPage() {
-        ViewUtil.showToolbar((AppCompatActivity) getContext(), true);
+        ViewUtil.showToolbar((AppCompatActivity) getContext(), false);
         et_sid.setText(prefer.getString(Config.SID, ""));
         showCaptcha();
     }

@@ -1,7 +1,6 @@
 package com.jacknic.glut.view.fragment.setting;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jacknic.glut.MainActivity;
 import com.jacknic.glut.R;
 import com.jacknic.glut.model.entity.CourseEntity;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
+import com.jacknic.glut.page.StartPage;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.DataBase;
 import com.jacknic.glut.util.Func;
+import com.jacknic.glut.util.PageTool;
 import com.jacknic.glut.util.PreferManager;
 import com.lzy.okgo.OkGo;
 
@@ -90,7 +90,6 @@ public class AccountSettingsFragment extends Fragment {
                 .putString(Config.PASSWORD_JW, pwd)
                 .apply();
         OkGo.getInstance().getCookieJar().getCookieStore().removeAllCookie();
-        getActivity().finish();
-        startActivity(new Intent(getContext(), MainActivity.class));
+        PageTool.jumpFragment(getContext(), new StartPage());
     }
 }

@@ -133,7 +133,7 @@ public class ChangeTermPage extends BasePage {
      * 删除相同学期的所以数据记录
      */
     private void deleteTerm(CourseEntity courseEntity) {
-        EventBus.getDefault().post(this.getClass().getName());
+        EventBus.getDefault().post(new UpdateCourseEvent());
         // 删除课程
         DataBase.getDaoSession().getCourseEntityDao().queryBuilder()
                 .where(CourseEntityDao.Properties.SchoolStartYear.eq(courseEntity.getSchoolStartYear()),
@@ -235,6 +235,7 @@ public class ChangeTermPage extends BasePage {
     private void importTerm(final String year, final String term) {
         int year_int = Integer.parseInt(year) - 1980;
         OkGo.get(Config.URL_JW_COURSE + String.format("?year=%s&term=%s", year_int + "", term))
+                .tag(this)
                 .execute(new StringCallback() {
 
                     @Override

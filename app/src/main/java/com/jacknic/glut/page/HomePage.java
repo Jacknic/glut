@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jacknic.glut.R;
-import com.jacknic.glut.adapter.MainPagerAdapter;
+import com.jacknic.glut.adapter.HomePagerAdapter;
 import com.jacknic.glut.event.ThemeChangeEvent;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.PageTool;
@@ -79,7 +79,7 @@ public class HomePage extends BasePage {
      * 初始化Fragment
      */
     private void initFragments() {
-        MainPagerAdapter pagerAdapter = new MainPagerAdapter(getChildFragmentManager());
+        HomePagerAdapter pagerAdapter = new HomePagerAdapter(getChildFragmentManager());
         pageContainer.setOffscreenPageLimit(pagerAdapter.getCount());
         pageContainer.setAdapter(pagerAdapter);
         pageContainer.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -150,7 +150,7 @@ public class HomePage extends BasePage {
     public void themeChange(ThemeChangeEvent event) {
         int colorIndex = PreferManager.getPrefer().getInt(SETTING_THEME_INDEX, SETTING_THEME_COLOR_INDEX);
         colorActive = getResources().getColor(Config.COLORS[colorIndex]);
-        pageContainer.setAdapter(new MainPagerAdapter(getChildFragmentManager()));
+        pageContainer.setAdapter(new HomePagerAdapter(getChildFragmentManager()));
         pageContainer.setCurrentItem(3);
         changeColor(selectTab, colorActive);
     }
