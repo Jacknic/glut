@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.jacknic.glut.R;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
+import com.lzy.okgo.OkGo;
 
 import butterknife.ButterKnife;
 
@@ -73,6 +74,7 @@ public abstract class BasePage extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        OkGo.getInstance().cancelTag(this);
         SnackbarTool.dismiss();
     }
 }

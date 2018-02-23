@@ -9,30 +9,24 @@ import com.jacknic.glut.view.fragment.home.FinancialFragment;
 import com.jacknic.glut.view.fragment.home.LibraryFragment;
 import com.jacknic.glut.view.fragment.home.MineFragment;
 
-import java.util.ArrayList;
-
 /**
- * 主页面Pager适配器
+ * home页面Pager适配器
  */
 
-public class MainPagerAdapter extends FragmentPagerAdapter {
-    private ArrayList<Fragment> fragments = new ArrayList<>();
+public class HomePagerAdapter extends FragmentPagerAdapter {
+    private Fragment[] pages = {new CourseFragment(), new FinancialFragment(), new LibraryFragment(), new MineFragment()};
 
-    public MainPagerAdapter(FragmentManager fm) {
+    public HomePagerAdapter(FragmentManager fm) {
         super(fm);
-        fragments.add(new CourseFragment());
-        fragments.add(new FinancialFragment());
-        fragments.add(new LibraryFragment());
-        fragments.add(new MineFragment());
     }
 
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        return pages[position];
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return pages.length;
     }
 }
