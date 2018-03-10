@@ -69,9 +69,12 @@ public class AddCoursePage extends BasePage {
     @Override
     void initPage() {
         Bundle bundle = getArguments();
-        int start = bundle.getInt("start", 1);
+        final int start = bundle.getInt("start", 1);
         courseStart = start;
         courseEnd = start;
+        int weekNow = Func.getWeekNow();
+        weekStart = weekNow;
+        weekEnd = weekNow;
         weekDay = bundle.getInt("weekDay", 1);
         List<CourseInfoEntity> courseInfoEntities = DataBase.getDaoSession().getCourseInfoEntityDao().loadAll();
         List<String> courseNames = new ArrayList<>();
@@ -126,7 +129,6 @@ public class AddCoursePage extends BasePage {
                 }
             }
         });
-        int weekNow = Func.getWeekNow();
         npWeekStart.setValue(weekNow);
         npWeekEnd.setValue(weekNow);
         int color = tvCourseClass.getCurrentTextColor();

@@ -9,21 +9,15 @@ import android.content.SharedPreferences;
 
 public class PreferManager {
     private static SharedPreferences prefer;
-    private Context mContext;
-    private static PreferManager preferManager;
 
     private PreferManager() {
     }
 
     public static void init(Context context) {
-        preferManager = new PreferManager();
-        preferManager.mContext = context;
+        prefer = context.getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
     }
 
     public static SharedPreferences getPrefer() {
-        if (prefer == null) {
-            prefer = preferManager.mContext.getSharedPreferences(Config.PREFER, Context.MODE_PRIVATE);
-        }
         return prefer;
     }
 }

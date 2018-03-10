@@ -12,40 +12,27 @@ import android.widget.TextView;
 import com.jacknic.glut.R;
 import com.jacknic.glut.model.entity.CourseInfoEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 课程列表适配器
  */
-public class CourseListAdapter extends ArrayAdapter {
-    private List<CourseInfoEntity> courseEntityList;
+public class CourseListAdapter extends ArrayAdapter<CourseInfoEntity> {
 
     public CourseListAdapter(@NonNull Context context, List<CourseInfoEntity> courseList) {
-        super(context, R.layout.item_course);
-        courseEntityList = courseList;
-        if (courseEntityList == null) {
-            courseEntityList = new ArrayList<>();
-        }
-    }
-
-    @Override
-    public int getCount() {
-        return courseEntityList.size();
+        super(context, R.layout.course_item, courseList);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        CourseInfoEntity infoEntity = courseEntityList.get(position);
+        CourseInfoEntity infoEntity = getItem(position);
         View view;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_course, parent, false);
-            convertView.setTag(convertView);
-            view = convertView;
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            view = inflater.inflate(R.layout.item_course, parent, false);
         } else {
-            view = (View) convertView.getTag();
+            view = convertView;
         }
         TextView tv_course_name = (TextView) view.findViewById(R.id.item_tv_course_name);
         tv_course_name.setText(infoEntity.getCourseName());

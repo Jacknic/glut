@@ -46,10 +46,10 @@
         android:layout_width="match_parent"
         android:layout_height="6dp"
         android:layout_marginBottom="10dp"
-        android:alpha="0.0"
         android:rotation="180"
         android:src="@drawable/bg_shadow"
-        android:tint="?attr/colorPrimary" />
+        android:tint="?attr/colorPrimary"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -60,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:minHeight="200dp"
             android:orientation="vertical"
             android:padding="8dp">
 
@@ -89,6 +88,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="180dp"
                 android:overScrollMode="ifContentScrolls"
                 android:paddingBottom="5dp"
                 android:scrollbars="none">
@@ -97,8 +97,7 @@
                     android:id="@+id/hot_tag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="180dp"
-                    android:padding="8dp"
+                    android:paddingTop="5dp"
                     app:atg_borderColor="@color/cary"
                     app:atg_textColor="?attr/colorPrimary"
                     app:atg_verticalPadding="5dp" />
