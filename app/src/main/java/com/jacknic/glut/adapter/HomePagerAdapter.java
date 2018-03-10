@@ -14,7 +14,7 @@ import com.jacknic.glut.view.fragment.home.MineFragment;
  */
 
 public class HomePagerAdapter extends FragmentPagerAdapter {
-    private Fragment[] pages = {new CourseFragment(), new FinancialFragment(), new LibraryFragment(), new MineFragment()};
+    private final Fragment[] pages = {new CourseFragment(), new FinancialFragment(), new LibraryFragment(), new MineFragment()};
 
     public HomePagerAdapter(FragmentManager fm) {
         super(fm);

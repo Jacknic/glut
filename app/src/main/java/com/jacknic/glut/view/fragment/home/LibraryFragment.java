@@ -48,7 +48,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragment = inflater.inflate(R.layout.frag_library, container, false);
-        initVIew();
+        initView();
         setOnClick();
         return fragment;
     }
@@ -56,7 +56,7 @@ public class LibraryFragment extends Fragment {
     /**
      * 初始化视图
      */
-    private void initVIew() {
+    private void initView() {
         et_search_book = (EditText) fragment.findViewById(R.id.et_search_book);
         iv_search_book_shadow = (ImageView) fragment.findViewById(R.id.iv_search_book_shadow);
         iv_search_book = (ImageView) fragment.findViewById(R.id.iv_search_book);
@@ -87,25 +87,27 @@ public class LibraryFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     tv_change_tags.callOnClick();
-                    iv_search_book_shadow.setAlpha(1.0f);
+                    iv_search_book_shadow.setVisibility(View.VISIBLE);
                 } else {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
                         //强制隐藏键盘
                         imm.hideSoftInputFromWindow(et_search_book.getWindowToken(), 0);
                     }
-                    iv_search_book_shadow.setAlpha(0.0f);
+                    iv_search_book_shadow.setVisibility(View.INVISIBLE);
                 }
             }
         });
         fab_mine.setOnClickListener(listener);
         iv_search_book.setOnClickListener(listener);
         tv_change_tags.setOnClickListener(listener);
+        hot_tag.setOnClickListener(listener);
         hot_tag.setOnTagClickListener(new TagGroup.OnTagClickListener() {
             @Override
             public void onTagClick(String tag) {
                 hot_tag.callOnClick();
                 et_search_book.setText(tag.replaceFirst("\\(\\d+\\)", "").trim());
+                et_search_book.setSelection(et_search_book.getText().length());
             }
         });
 
@@ -117,10 +119,8 @@ public class LibraryFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_search_book:
-                    et_search_book.setEnabled(false);
                     String url = "http://202.193.80.181:8081/search?xc=3&kw=" + et_search_book.getText().toString();
                     PageTool.openWebPage(getActivity(), url);
-                    et_search_book.setEnabled(true);
                     break;
                 case R.id.tv_change_tag_list:
                     if (tags.size() == 0) {
@@ -139,7 +139,7 @@ public class LibraryFragment extends Fragment {
     /**
      * 获取标签
      */
-    void getTags() {
+    private void getTags() {
         OkGo.get("http://202.193.80.181:8080/opac/hotsearch").execute(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_course_widget"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,8 +14,8 @@
         android:layout_width="36dp"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="1-2"
-        android:textColor="@color/barDark" />
+        android:textColor="@color/barDark"
+        tools:text="1-2" />
 
     <TextView
         android:layout_width="1px"
@@ -34,14 +35,14 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="课程名称"
-            android:textColor="@color/barDark" />
+            android:textColor="@color/barDark"
+            tools:text="课程名称" />
 
         <TextView
             android:id="@+id/item_tv_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="上课地点"
-            android:textColor="@color/blueLight" />
+            android:textColor="@color/blueLight"
+            tools:text="上课地点" />
     </LinearLayout>
 </LinearLayout>

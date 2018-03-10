@@ -57,7 +57,7 @@ public class HomePage extends BasePage {
 
     @Override
     protected int getLayoutId() {
-        mTitle = getString(R.string.txt_kb);
+        mTitle = getString(R.string.txt_course);
         return R.layout.page_home;
     }
 

@@ -2,6 +2,7 @@ package com.jacknic.glut.adapter;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class ColorsSelectorAdapter extends BaseAdapter {
 
     private ColorsDialogFragment colorsDialogFragment;
-    private Map<String, ColorDrawable> colorMap = new HashMap<String, ColorDrawable>();
+    private Map<String, ColorDrawable> colorMap = new HashMap<>();
     private int selectIndex;
 
     public ColorsSelectorAdapter(ColorsDialogFragment colorsDialogFragment, int selectIndex) {
@@ -44,6 +45,7 @@ public class ColorsSelectorAdapter extends BaseAdapter {
         return position;
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {

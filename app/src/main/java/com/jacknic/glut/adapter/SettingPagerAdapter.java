@@ -13,7 +13,7 @@ import com.jacknic.glut.view.fragment.setting.BasicSettingsFragment;
  */
 
 public class SettingPagerAdapter extends FragmentPagerAdapter {
-    private Fragment[] settingPages = {new BasicSettingsFragment(), new AccountSettingsFragment(), new AboutSettingsFragment()};
+    private final Fragment[] settingPages = {new BasicSettingsFragment(), new AccountSettingsFragment(), new AboutSettingsFragment()};
     private final String[] titles = new String[]{"基本设置", "账户设置", "关于"};
 
     public SettingPagerAdapter(FragmentManager fm) {
