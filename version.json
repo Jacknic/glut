@@ -1,8 +1,8 @@
 ﻿{
-  "date": "2017-11-15",
-  "versionCode": 50,
-  "versionName": "5.0",
-  "downloadUrl": "http://imtt.dd.qq.com/16891/95DEA4B624732BF74AEB24191A7E7165.apk?fsname=com.jacknic.glut.apk",
-  "info": "1.修复部分bug \n2.次级页面新增顶部返回按钮 \n3.调整部分用户界面",
+  "date": "2018-3-15",
+  "versionCode": 51,
+  "versionName": "5.1",
+  "downloadUrl": "http://imtt.dd.qq.com/16891/1774D53402E0FEAE8B8E0DDFF6F8A8C4.apk?fsname=com.jacknic.glut.apk",
+  "info": "1. 精简代码,改进用户界面\n2. Android高版本(6.0+)部分特性适配\n3. 减少app体积\n注意：Android 6.0以上的用户，请到应用宝下载更新！！",
   "remark": "/*该文件用于应用版本检测更新！*/"
 }
