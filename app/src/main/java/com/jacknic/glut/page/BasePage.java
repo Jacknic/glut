@@ -13,6 +13,7 @@ import com.jacknic.glut.R;
 import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
+import com.tencent.stat.StatService;
 
 import butterknife.ButterKnife;
 
@@ -52,6 +53,7 @@ public abstract class BasePage extends Fragment {
         ButterKnife.bind(this, page);
         ViewUtil.setTitle(getContext(), mTitle);
         initPage();
+        StatService.trackBeginPage(getContext(), this.getClass().getSimpleName());
         return page;
     }
 
@@ -75,6 +77,7 @@ public abstract class BasePage extends Fragment {
     public void onStop() {
         super.onStop();
         OkGo.getInstance().cancelTag(this);
+        StatService.trackEndPage(getContext(), this.getClass().getSimpleName());
         SnackbarTool.dismiss();
     }
 }

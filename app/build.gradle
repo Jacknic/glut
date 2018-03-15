@@ -7,10 +7,10 @@ android {
         applicationId "com.jacknic.glut"
         minSdkVersion 16
         targetSdkVersion 25
-        resConfigs 'zh', 'xhdpi'
-        versionCode 50
+        resConfigs 'zh', 'hdpi'
+        versionCode 51
         manifestPlaceholders = [MTA_CHANNEL: "测试", MTA_APPKEY: "debug"]
-        versionName "5.0"
+        versionName "5.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
 //            abiFilters 'armeabi-v7a'
