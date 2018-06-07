@@ -4,3 +4,4 @@
 /.gradle/
 /app/build/
 /captures/
+/local.properties

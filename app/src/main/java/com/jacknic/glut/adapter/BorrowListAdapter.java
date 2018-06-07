@@ -72,7 +72,7 @@ public class BorrowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         void bindHolder(Element element) {
             final String book_no = element.child(1).text();
-            setText(R.id.item_book_no, "图书编号: " + book_no);
+            setText(R.id.item_book_no, "编号: " + book_no);
             String book_title = element.child(2).text();
             final AlertDialog alertDialog = new AlertDialog.Builder(inflater.getContext())
                     .setTitle("续借" + "《" + book_title + "》?")
@@ -92,8 +92,8 @@ public class BorrowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             });
             setText(R.id.item_book_title, book_title);
             String str_borrow_date = element.child(7).text();
-            setText(R.id.item_book_borrow_date, "借出时间: " + str_borrow_date);
-            setText(R.id.item_book_return_date, "应还时间: " + element.child(8).text());
+            setText(R.id.item_book_borrow_date, "借出: " + str_borrow_date);
+            setText(R.id.item_book_return_date, "应还: " + element.child(8).text());
         }
 
         /**

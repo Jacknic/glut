@@ -1,7 +1,6 @@
 package com.jacknic.glut.page;
 
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +12,7 @@ import com.tencent.stat.StatService;
 import java.util.Properties;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 用户反馈
@@ -31,20 +31,11 @@ public class FeedbackPage extends BasePage {
         return R.layout.page_feedback;
     }
 
-    @Override
-    void initPage() {
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submit();
-            }
-        });
-    }
-
     /**
      * 提交反馈
      */
-    private void submit() {
+    @OnClick(R.id.fb_btn_submit)
+    void submit() {
         String txt_content = et_feedback.getText().toString().trim();
         if (!TextUtils.isEmpty(txt_content)) {
             Properties content = new Properties();
@@ -53,7 +44,6 @@ public class FeedbackPage extends BasePage {
             Toast.makeText(getContext(), "感谢你的反馈！在反馈进度可查看最新进展", Toast.LENGTH_SHORT).show();
             PageTool.close(FeedbackPage.this);
         } else {
-
             Toast.makeText(getContext(), "反馈内容不能为空！", Toast.LENGTH_SHORT).show();
         }
     }

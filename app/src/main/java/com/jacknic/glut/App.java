@@ -17,7 +17,7 @@ public class App extends android.app.Application {
         super.onCreate();
         PreferManager.init(this);
         OkGo.init(this);
-        //配置不跳转,超时6秒
+        //配置重定向301不自动跳转,超时6秒
         OkGo.getInstance().getOkHttpClientBuilder()
                 .followRedirects(false)
                 .connectTimeout(6, TimeUnit.SECONDS);

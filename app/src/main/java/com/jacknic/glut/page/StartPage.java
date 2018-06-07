@@ -10,9 +10,6 @@ import com.jacknic.glut.util.PageTool;
 import com.jacknic.glut.util.PreferManager;
 import com.jacknic.glut.util.ViewUtil;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -36,7 +33,7 @@ public class StartPage extends BasePage {
         if (!isLogin) {
             start();
         } else {
-            new Timer().schedule(new TimerTask() {
+            page.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     //打开主页

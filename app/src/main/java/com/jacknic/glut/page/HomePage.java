@@ -10,8 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -119,7 +119,7 @@ public class HomePage extends BasePage {
         }
         ScaleAnimation scale = new ScaleAnimation(0.39F, 1.1F, 0.39F, 1.1F, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);
         scale.setDuration(200L);
-        scale.setInterpolator(new AccelerateDecelerateInterpolator());
+        scale.setInterpolator(new DecelerateInterpolator());
         tab.getChildAt(0).startAnimation(scale);
         tab.getChildAt(1).startAnimation(scale);
     }
