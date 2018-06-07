@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -38,9 +39,6 @@ import com.lzy.okgo.callback.StringCallback;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -123,7 +121,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
      */
     private void getInfo() {
         student_id = prefer.getString(Config.STUDENT_ID, "");
-        OkGo.get(Config.getQueryUrlCW("getinfo", student_id))
+        OkGo.get(Config.getQueryUrlCW("getinfo", student_id)).tag(this)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String res_json, Call call, Response response) {
@@ -183,20 +181,6 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                 } else {
                     getYue();
                     getInfo();
-                    //10s超时设置
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (refreshLayout.isRefreshing()) {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        refreshLayout.setRefreshing(false);
-                                    }
-                                });
-                            }
-                        }
-                    }, 10000L);
                 }
 
             }
@@ -293,7 +277,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
             return;
         }
         final String url_login = "http://cwwsjf.glut.edu.cn:8088/ChargeOnline/Mblogin.aspx";
-        OkGo.get(url_login).execute(new StringCallback() {
+        OkGo.get(url_login).tag(this).execute(new StringCallback() {
             String state = "";
             String validation = "";
             String logon = "";
@@ -314,7 +298,10 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void onAfter(String s, Exception e) {
-                WebView webView = new WebView(getContext());
+                final WebView webView = new WebView(getContext());
+                webView.getSettings().setJavaScriptEnabled(true);
+                ((ViewGroup) fragment).addView(webView);
+                webView.setWebChromeClient(new WebChromeClient());
                 WebViewClient client = new WebViewClient() {
                     @Override
                     public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -322,12 +309,27 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                         if (isFirst) {
                             isFirst = false;
                         } else {
-                            view.stopLoading();
+//                            view.stopLoading();
                             prefer.edit().putLong("last_login", System.currentTimeMillis()).apply();
                             System.out.println("自动登录");
                             if (intent != null)
                                 startActivity(intent);
                         }
+                    }
+
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        //构建js执行用户登录
+                        String js = "javascript:(function(){$('#TextBox_SID').val('" + sid + "');$('#TextBox_Password').val('" + password + "');$('#logon').click();})()";
+                        view.loadUrl(js);
+//                        view.loadUrl("javascript:(function(){alert($('#logon').val());})()");
+                        Log.d("", "执行javascript后");
+                    }
+
+                    @Override
+                    public void onLoadResource(WebView view, String url) {
+                        Log.d(TAG, "onLoadResource: " + url);
+                        super.onLoadResource(view, url);
                     }
                 };
                 webView.setWebViewClient(client);
@@ -335,7 +337,8 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                 String verify_data = String.format("__VIEWSTATE=%s&__EVENTVALIDATION=%s&TextBox_SID=%s&TextBox_Password=%s&logon=%s",
                         state, validation, sid, password, logon);
                 //post请求登录
-                webView.postUrl(url_login, verify_data.getBytes());
+//                webView.postUrl(url_login, verify_data.getBytes());
+                webView.loadUrl(url_login);
             }
         });
 
@@ -346,7 +349,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
      * 获取一卡通余额
      */
     private void getYue() {
-        OkGo.get(Config.getQueryUrlCW("yikatongyue", "0") + String.format("&sid=%s", sid)).execute(new StringCallback() {
+        OkGo.get(Config.getQueryUrlCW("yikatongyue", "0") + String.format("&sid=%s", sid)).tag(this).execute(new StringCallback() {
             @Override
             public void onSuccess(String res_json, Call call, Response response) {
                 JSONObject json = null;
@@ -375,7 +378,6 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                 refreshLayout.setRefreshing(false);
                 if (getContext() == null) return;
                 Animation side_left = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
-                side_left.setDuration(500L);
                 View iv_refresh = fragment.findViewById(R.id.cw_tv_yktye);
                 iv_refresh.startAnimation(side_left);
             }

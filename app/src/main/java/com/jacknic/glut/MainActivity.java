@@ -14,7 +14,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
-import android.widget.Toast;
 
 import com.jacknic.glut.page.StartPage;
 import com.jacknic.glut.util.Config;
@@ -174,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         }, 2000);
         if (manager.getPages().size() <= 1) {
             if (!exit) {
-                Toast.makeText(MainActivity.this, "再次返回退出应用", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "再次返回退出应用", Toast.LENGTH_SHORT).show();
                 exit = true;
             } else {
                 OkGo.getInstance().cancelAll();

@@ -83,7 +83,7 @@ public class LoginModel {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         //判断是否跳转，如果跳转则登录成功
-                        if (response != null && "http://202.193.80.181:8080/opac/reader/space".equals(response.header("location"))) {
+                        if (response != null && response.isRedirect()) {
                             SharedPreferences prefer = PreferManager.getPrefer();
                             prefer.edit().putString(Config.SID, sid).putString(Config.PASSWORD_TS, password).apply();
                             callback.onSuccess("", call, response);
