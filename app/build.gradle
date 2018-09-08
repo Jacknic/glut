@@ -27,11 +27,24 @@ android {
         // 忽略所有mta so文件
         exclude 'lib/**/libMtaNativeCrash_v2.so'
     }
+
+    // 个人签名配置
+    signingConfigs {
+        def pwd = 'replace@@glut'
+        config {
+            storeFile file('glut_app.jks')
+            keyAlias 'glut_app'
+            keyPassword pwd
+            storePassword pwd
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             manifestPlaceholders = [MTA_APPKEY: "Aqc1105763654"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     //配置数据库版本，版本升级为2
