@@ -14,6 +14,8 @@ import okhttp3.Call;
 import okhttp3.Response;
 import okhttp3.internal.Util;
 
+import static com.jacknic.glut.util.Config.URL_CW_LOGIN;
+
 /**
  * 登录到教务处
  */
@@ -106,42 +108,40 @@ public class LoginModel {
      * @param callback 回调
      */
     public static void loginCw(final String sid, final String password, final AbsCallback callback) {
-        OkGo.post(Config.getQueryUrlCW("login", "0") + String.format("&sid=%s&spassword=%s", sid, password))
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        JSONObject json = null;
-                        try {
-                            json = JSONObject.parseObject(s);
-                        } catch (Exception e) {
-                            return;
-                        }
-                        Integer result = json.getInteger("result");
-                        String msg = json.getString("msg");
-                        //判断是否登录成功
-                        if (result == 0) {
-                            SharedPreferences.Editor editor = PreferManager.getPrefer().edit();
-                            editor.putString(Config.STUDENT_ID, msg);
-                            editor.putString(Config.SID, sid);
-                            editor.putString(Config.PASSWORD_CW, password);
-                            editor.putBoolean(Config.LOGIN_FLAG, true);
-                            editor.apply();
-                            callback.onSuccess(s, call, response);
-                        } else {
-                            onError(call, response, null);
-                        }
-                    }
+        StringCallback stringCallback = new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                JSONObject json;
+                try {
+                    json = JSONObject.parseObject(s);
+                } catch (Exception e) {
+                    return;
+                }
+                boolean success = json.getBooleanValue("success");
+                //判断是否登录成功
+                if (success) {
+                    SharedPreferences.Editor editor = PreferManager.getPrefer().edit();
+                    editor.putString(Config.SID, sid);
+                    editor.putString(Config.PASSWORD_CW, password);
+                    editor.putBoolean(Config.LOGIN_FLAG, true);
+                    editor.apply();
+                }
+                callback.onSuccess(s, call, response);
+            }
 
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        callback.onError(call, response, e);
-                    }
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                callback.onError(call, response, e);
+            }
 
-                    @Override
-                    public void onAfter(String s, Exception e) {
-                        callback.onAfter(s, e);
-                    }
-                });
+            @Override
+            public void onAfter(String s, Exception e) {
+                callback.onAfter(s, e);
+            }
+        };
+        OkGo.post(URL_CW_LOGIN)
+                .params("sid", sid)
+                .params("passWord", password).execute(stringCallback);
     }
 
 }

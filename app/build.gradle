@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.jacknic.glut"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         resConfigs 'zh', 'hdpi'
         versionCode 51
+        flavorDimensions "default"
         manifestPlaceholders = [MTA_CHANNEL: "测试", MTA_APPKEY: "debug"]
         versionName "5.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -16,7 +17,6 @@ android {
 //            abiFilters 'armeabi-v7a'
         }
     }
-
     packagingOptions {
         exclude 'project.properties'
         exclude 'proguard-project.txt'
@@ -27,7 +27,6 @@ android {
         // 忽略所有mta so文件
         exclude 'lib/**/libMtaNativeCrash_v2.so'
     }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -53,23 +52,23 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.lzy.net:okgo:2.1.4'
-    compile 'com.alibaba:fastjson:1.1.56.android'
-    compile 'org.jsoup:jsoup:1.10.2'
-    compile 'me.gujun.android.taggroup:library:1.4@aar'
-    compile 'org.greenrobot:greendao:3.2.2'
-    compile 'com.contrarywind:Android-PickerView:3.2.6'
-    testCompile 'junit:junit:4.12'
-    compile 'com.qq.mta:mta:3.3.1-release'
-    compile 'com.tencent.mid:mid:3.73-release'
-    compile 'org.greenrobot:eventbus:3.1.1'
-    compile 'com.jakewharton:butterknife:8.8.1'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    api 'com.lzy.net:okgo:2.1.4'
+    api 'com.alibaba:fastjson:1.1.56.android'
+    api 'org.jsoup:jsoup:1.10.2'
+    api 'me.gujun.android.taggroup:library:1.4@aar'
+    api 'com.contrarywind:Android-PickerView:3.2.6'
+    api 'com.qq.mta:mta:3.4.7-release'
+    api 'com.tencent.mid:mid:4.06-Release'
 }

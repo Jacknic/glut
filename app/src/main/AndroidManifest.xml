@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.jacknic.glut">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,7 +10,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <!-- /用于崩溃信息收集 -->
     <application
@@ -22,7 +22,8 @@
         <provider
             android:name="com.tencent.mid.api.MidProvider"
             android:authorities="${applicationId}.TENCENT.MID.V3"
-            android:exported="true" />
+            android:exported="true"
+            tools:replace="android:authorities" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -38,7 +39,7 @@
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

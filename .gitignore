@@ -5,3 +5,4 @@
 /app/build/
 /captures/
 /local.properties
+*.iml
