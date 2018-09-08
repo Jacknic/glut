@@ -23,9 +23,6 @@ import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class MainActivity extends AppCompatActivity {
 
     public PageManager manager;
@@ -165,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new Timer().schedule(new TimerTask() {
+        getWindow().getDecorView().postDelayed(new Runnable() {
             @Override
             public void run() {
                 exit = false;

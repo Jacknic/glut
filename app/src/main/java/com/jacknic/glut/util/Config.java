@@ -130,15 +130,13 @@ public final class Config {
     };
 
     /**
-     * 财务接口链接
-     *
-     * @param method    执行的操作
-     * @param studentId 学生财务序号
-     * @return URL
+     * 财务API
      */
-    public static String getQueryUrlCW(String method, String studentId) {
-        return String.format(URL_CW_INTERFACE, method, studentId);
-    }
+    public static final String URL_CW_API = "http://cwjf.glut.edu.cn/interface/index";
+    /**
+     * 财务登录链接
+     */
+    public static final String URL_CW_LOGIN = "http://cwjf.glut.edu.cn/interface/login";
 
     private Config() {
     }

@@ -3,11 +3,9 @@ package com.jacknic.glut.view.fragment.home;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -17,9 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.CookieManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,15 +31,17 @@ import com.jacknic.glut.view.widget.Dialogs;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallbackWrapper;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.cookie.store.CookieStore;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import java.util.List;
 
 import okhttp3.Call;
+import okhttp3.Cookie;
+import okhttp3.HttpUrl;
 import okhttp3.Response;
 
 import static android.content.ContentValues.TAG;
+import static com.jacknic.glut.util.Config.URL_CW_API;
 
 
 /**
@@ -52,20 +50,20 @@ import static android.content.ContentValues.TAG;
 public class FinancialFragment extends Fragment implements View.OnClickListener {
     SharedPreferences prefer;
     private String sid;
-    private String student_id;
     private View fragment;
     private SwipeRefreshLayout refreshLayout;
     private boolean isLogin = false;
-    private boolean isFirst = true;
+    private String password;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragment = inflater.inflate(R.layout.frag_financial, container, false);
         prefer = PreferManager.getPrefer();
         initViews();
         sid = prefer.getString(Config.SID, "");
-        student_id = prefer.getString(Config.STUDENT_ID, "");
-        if (TextUtils.isEmpty(sid) || TextUtils.isEmpty(student_id)) {
+        password = prefer.getString(Config.PASSWORD_CW, "");
+        if (TextUtils.isEmpty(sid) || TextUtils.isEmpty(password)) {
             fragment.findViewById(R.id.cw_tv_yktye).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,11 +71,9 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                 }
             });
         } else {
-            isLogin = true;
             showData();
-            //登录网页
-            autoLogin(null);
         }
+        getYue();
         return fragment;
     }
 
@@ -90,10 +86,10 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
         if (TextUtils.isEmpty(info) || financialInfoBean == null) {
             getInfo();
         } else {
+            isLogin = true;
             setText(financialInfoBean);
             Log.d(TAG, "showData: 读取缓存信息");
         }
-        getYue();
     }
 
     /**
@@ -105,8 +101,10 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
             public void onSuccess(Object o, Call call, Response response) {
                 isLogin = true;
                 fragment.findViewById(R.id.cw_tv_yktye).setOnClickListener(null);
+                sid = prefer.getString(Config.SID, "");
+                password = prefer.getString(Config.PASSWORD_CW, "");
                 showData();
-                autoLogin(null);
+                autoLogin();
             }
 
             @Override
@@ -120,18 +118,21 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
      * 获取财务信息
      */
     private void getInfo() {
-        student_id = prefer.getString(Config.STUDENT_ID, "");
-        OkGo.get(Config.getQueryUrlCW("getinfo", student_id)).tag(this)
+        OkGo.post(URL_CW_API).tag(this)
+                .params("method", "getinfo")
+                .params("stuid", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String res_json, Call call, Response response) {
                         try {
-                            String msg = JSONObject.parseObject(res_json).getString("msg");
-                            FinancialInfoBean financialInfoBean = JSONObject.parseObject(msg, FinancialInfoBean.class);
+                            String data = JSONObject.parseObject(res_json).getString("data");
+                            FinancialInfoBean financialInfoBean = JSONObject.parseObject(data, FinancialInfoBean.class);
                             Log.d(this.getClass().getName(), "获取最新信息");
                             setText(financialInfoBean);
+                            isLogin = true;
                             prefer.edit().putString("info", JSON.toJSONString(financialInfoBean)).apply();
                         } catch (Exception e) {
+                            toLogin();
                             Log.d(this.getClass().getName(), "获取财务信息失败" + e.getMessage());
                         }
                     }
@@ -170,8 +171,8 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
         }
 
         refreshLayout = (SwipeRefreshLayout) fragment.findViewById(R.id.cw_refreshLayout);
-        refreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_blue_bright), getResources().getColor(android.R.color.holo_green_light),
-                getResources().getColor(android.R.color.holo_orange_light), getResources().getColor(android.R.color.holo_red_light));
+        int[] colors = {0xff00ddff, 0xff99cc00, 0xffffbb33, 0xffff4444};
+        refreshLayout.setColorSchemeColors(colors);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -226,17 +227,21 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
      */
     @Override
     public void onClick(View v) {
+        if (!isLogin) {
+            autoLogin();
+            return;
+        }
         String[] urls = new String[]{
                 //交易记录
-                "http://cwwsjf.glut.edu.cn:8088/chargeonline/MborderList.aspx",
+                "http://cwjf.glut.edu.cn/mobile/jyjl",
                 //学费项目
-                "http://cwwsjf.glut.edu.cn:8088/chargeonline/MbstudentChargeItems.aspx",
+                "http://cwjf.glut.edu.cn/mobile/xfxm",
                 //财务处主页
-                "http://cwwsjf.glut.edu.cn:8088/chargeonline/Mbindex.aspx",
+                "http://cwjf.glut.edu.cn/mobile/index",
                 //缴费明细
-                "http://cwwsjf.glut.edu.cn:8088/chargeonline/MbchargeDetail.aspx",
+                "http://cwjf.glut.edu.cn/mobile/jfmx",
                 //一卡通充值
-                "http://cwwsjf.glut.edu.cn:8088/chargeonline/Mbrecharge.aspx",
+                "http://cwjf.glut.edu.cn/mobile/yktzxcz",
         };
         String url = "";
         switch (v.getId()) {
@@ -262,125 +267,92 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
     /**
      * 自动登录认证
      */
-    private void autoLogin(@Nullable final Intent intent) {
-        long lastLogin = prefer.getLong("last_login", 0);
-        boolean isLogged = (System.currentTimeMillis() - lastLogin) < 30 * 60 * 1000;
-        if (isLogged) {
-            if (intent != null)
-                startActivity(intent);
-            return;
-        }
-        final String sid = prefer.getString(Config.SID, "");
-        final String password = prefer.getString(Config.PASSWORD_CW, "");
+    private void autoLogin() {
         if (TextUtils.isEmpty(sid) || TextUtils.isEmpty(password)) {
             toLogin();
             return;
         }
-        final String url_login = "http://cwwsjf.glut.edu.cn:8088/ChargeOnline/Mblogin.aspx";
-        OkGo.get(url_login).tag(this).execute(new StringCallback() {
-            String state = "";
-            String validation = "";
-            String logon = "";
-
+        // 执行自动登录
+        StringCallback callback = new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                Document document = Jsoup.parse(s);
-                Element viewState = document.getElementById("__VIEWSTATE");
-                if (viewState != null)
-                    state = viewState.val();
-                Element eventValidation = document.getElementById("__EVENTVALIDATION");
-                if (eventValidation != null)
-                    validation = eventValidation.val();
-                Element logon_ele = document.getElementById("logon");
-                if (logon_ele != null)
-                    logon = logon_ele.val();
+                JSONObject json = JSON.parseObject(s);
+                boolean success = json.getBooleanValue("success");
+                String data = json.getString("data");
+                if (success) {
+                    isLogin = true;
+                    syncStatus();
+                    showData();
+                } else {
+                    Toast.makeText(OkGo.getContext(), "登录财务失败：" + data, Toast.LENGTH_SHORT).show();
+                    toLogin();
+                }
             }
-
-            @Override
-            public void onAfter(String s, Exception e) {
-                final WebView webView = new WebView(getContext());
-                webView.getSettings().setJavaScriptEnabled(true);
-                ((ViewGroup) fragment).addView(webView);
-                webView.setWebChromeClient(new WebChromeClient());
-                WebViewClient client = new WebViewClient() {
-                    @Override
-                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                        //登录后会自动重定向，如果不是首次请求，则直接打开activity
-                        if (isFirst) {
-                            isFirst = false;
-                        } else {
-//                            view.stopLoading();
-                            prefer.edit().putLong("last_login", System.currentTimeMillis()).apply();
-                            System.out.println("自动登录");
-                            if (intent != null)
-                                startActivity(intent);
-                        }
-                    }
-
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        //构建js执行用户登录
-                        String js = "javascript:(function(){$('#TextBox_SID').val('" + sid + "');$('#TextBox_Password').val('" + password + "');$('#logon').click();})()";
-                        view.loadUrl(js);
-//                        view.loadUrl("javascript:(function(){alert($('#logon').val());})()");
-                        Log.d("", "执行javascript后");
-                    }
-
-                    @Override
-                    public void onLoadResource(WebView view, String url) {
-                        Log.d(TAG, "onLoadResource: " + url);
-                        super.onLoadResource(view, url);
-                    }
-                };
-                webView.setWebViewClient(client);
-                //没有这串字符，服务器不认
-                String verify_data = String.format("__VIEWSTATE=%s&__EVENTVALIDATION=%s&TextBox_SID=%s&TextBox_Password=%s&logon=%s",
-                        state, validation, sid, password, logon);
-                //post请求登录
-//                webView.postUrl(url_login, verify_data.getBytes());
-                webView.loadUrl(url_login);
-            }
-        });
+        };
+        String cookie = CookieManager.getInstance().getCookie(URL_CW_API);
+        if (TextUtils.isEmpty(cookie)) {
+            OkGo.post(Config.URL_CW_LOGIN).tag(this)
+                    .params("sid", sid)
+                    .params("passWord", password)
+                    .execute(callback);
+        }
 
 
+    }
+
+    /**
+     * 同步登录状态到webkit
+     */
+    private void syncStatus() {
+        CookieManager cookieManager = CookieManager.getInstance();
+        CookieStore cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
+        HttpUrl httpUrl = HttpUrl.parse(URL_CW_API);
+        List<Cookie> cookies = cookieStore.getCookie(httpUrl);
+        for (Cookie cookie : cookies) {
+            cookieManager.setCookie(URL_CW_API, cookie.toString());
+        }
     }
 
     /**
      * 获取一卡通余额
      */
     private void getYue() {
-        OkGo.get(Config.getQueryUrlCW("yikatongyue", "0") + String.format("&sid=%s", sid)).tag(this).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String res_json, Call call, Response response) {
-                JSONObject json = null;
-                try {
-                    json = JSONObject.parseObject(res_json);
-                } catch (Exception e) {
-                    Log.d(this.getClass().getName(), "获取财务数据失败");
-                    return;
-                }
-                Integer result = json.getInteger("result");
-                if (result != null && result.equals(0)) {
-                    JSONObject data = json.getJSONObject("msg");
-                    findAndSetText(R.id.cw_tv_yktye, data.getString("SurplusMoney"));
-                } else {
-                    findAndSetText(R.id.cw_tv_yktye, "获取失败");
-                }
-            }
+        OkGo.post(URL_CW_API).tag(this)
+                .params("method", "getecardinfo")
+                .params("stuid", "0")
+                .params("carno", sid)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String res_json, Call call, Response response) {
+                        JSONObject json;
+                        try {
+                            json = JSONObject.parseObject(res_json);
+                        } catch (Exception e) {
+                            Log.d(this.getClass().getName(), "获取财务数据失败");
+                            return;
+                        }
+                        boolean success = json.getBoolean("success");
+                        if (success) {
+                            JSONObject data = json.getJSONObject("data");
+                            findAndSetText(R.id.cw_tv_yktye, data.getString("Balance"));
+                        } else {
+                            findAndSetText(R.id.cw_tv_yktye, "获取失败");
+                        }
+                    }
 
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                findAndSetText(R.id.cw_tv_yktye, "获取失败");
-            }
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        findAndSetText(R.id.cw_tv_yktye, "获取失败");
+                    }
 
-            @Override
-            public void onAfter(String s, Exception e) {
-                refreshLayout.setRefreshing(false);
-                if (getContext() == null) return;
-                Animation side_left = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
-                View iv_refresh = fragment.findViewById(R.id.cw_tv_yktye);
-                iv_refresh.startAnimation(side_left);
-            }
-        });
+                    @Override
+                    public void onAfter(String s, Exception e) {
+                        refreshLayout.setRefreshing(false);
+                        if (getContext() == null) return;
+                        Animation side_left = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
+                        View iv_refresh = fragment.findViewById(R.id.cw_tv_yktye);
+                        iv_refresh.startAnimation(side_left);
+                    }
+                });
     }
 }
