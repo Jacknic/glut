@@ -8,10 +8,10 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         resConfigs 'zh', 'hdpi'
-        versionCode 51
+        versionCode 52
         flavorDimensions "default"
         manifestPlaceholders = [MTA_CHANNEL: "测试", MTA_APPKEY: "debug"]
-        versionName "5.1"
+        versionName "5.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
 //            abiFilters 'armeabi-v7a'
