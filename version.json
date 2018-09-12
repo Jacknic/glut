@@ -1,8 +1,8 @@
 ﻿{
-  "date": "2018-3-15",
-  "versionCode": 51,
-  "versionName": "5.1",
-  "downloadUrl": "http://imtt.dd.qq.com/16891/1774D53402E0FEAE8B8E0DDFF6F8A8C4.apk?fsname=com.jacknic.glut.apk",
+  "date": "2018-9-10",
+  "versionCode": 52,
+  "versionName": "5.2",
+  "downloadUrl": "https://imtt.dd.qq.com/16891/E28C48B51A2F11AC037BAA80AF7393AA.apk?fsname=com.jacknic.glut.apk",
   "info": "1. 修复财务登录失败问题\n2. 更新依赖库版本",
   "remark": "/*该文件用于应用版本检测更新！*/"
 }
