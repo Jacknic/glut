@@ -27,4 +27,5 @@
     <color name="white">#ffffffff</color>
     <color name="primaryBackground">#ebebeb</color>
     <color name="primaryBackgroundTran">#10000000</color>
+    <color name="gray">#6b6f71</color>
 </resources>

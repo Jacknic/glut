@@ -14,6 +14,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.widget.Toast;
 
 import com.jacknic.glut.page.StartPage;
 import com.jacknic.glut.util.Config;
