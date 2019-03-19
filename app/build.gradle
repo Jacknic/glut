@@ -53,10 +53,6 @@ android {
     }
     //渠道打包
     productFlavors {
-        // 默认调试
-        DebugApk {
-            //manifestPlaceholders = [MTA_CHANNEL: "测试"]
-        }
         // 应用宝
         yyb {
             manifestPlaceholders = [MTA_CHANNEL: "应用宝"]
@@ -66,9 +62,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2')
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
@@ -78,10 +72,10 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     api 'com.lzy.net:okgo:2.1.4'
-    api 'com.alibaba:fastjson:1.1.56.android'
-    api 'org.jsoup:jsoup:1.10.2'
-    api 'me.gujun.android.taggroup:library:1.4@aar'
-    api 'com.contrarywind:Android-PickerView:3.2.6'
-    api 'com.qq.mta:mta:3.4.7-release'
-    api 'com.tencent.mid:mid:4.06-Release'
+    implementation 'com.alibaba:fastjson:1.1.56.android'
+    implementation 'org.jsoup:jsoup:1.10.2'
+    implementation 'me.gujun.android.taggroup:library:1.4@aar'
+    implementation 'com.contrarywind:Android-PickerView:3.2.6'
+    implementation 'com.qq.mta:mta:3.4.7-release'
+    implementation 'com.tencent.mid:mid:4.06-Release'
 }
