@@ -85,19 +85,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:background="@drawable/selector_item_white"
                 android:gravity="left|center_vertical"
-                android:text="提醒额度"
+                android:text="设置提醒额度"
                 />
 
             <TextView
                 android:id="@+id/setting_tv_money_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/selector_item_white"
-                android:gravity="center"
-                tool:text="50元"
+                android:gravity="center_vertical"
                 android:padding="8dp"
+                tool:text="50元"
                 />
 
 

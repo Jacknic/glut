@@ -138,6 +138,36 @@ public final class Config {
      */
     public static final String URL_CW_LOGIN = "http://cwjf.glut.edu.cn/interface/login";
 
+    /**
+     * 自动更新开关储存键
+     */
+    public static final String KEY_AUTO_CHECK_UPDATE = "auto_check_update";
+
+    /**
+     * 一卡通余额提醒开关储存键
+     */
+    public static final String KEY_MONEY_WARNING = "money_warning";
+
+    /**
+     * 一卡通余额提醒储存键
+     */
+    public static final String KEY_MONEY_LIMIT = "money_limit";
+
+    /**
+     * 一卡通默认提醒额度
+     */
+    public static final int DEFAULT_MONEY_LIMIT = 50;
+
+    /**
+     * 用于解析财务API返回的Balance数据的键
+     */
+    public static final String URL_CW_API_BALANCE =  "Balance";
+
+    /**
+     * 一卡通余额检查worker启动时间间隔（小时）
+     */
+    public static final int WARNING_WORKER_INTERVAL = 12;
+
     private Config() {
     }
 

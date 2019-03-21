@@ -1,5 +1,7 @@
 package com.jacknic.glut;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,9 +16,9 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
-import android.widget.Toast;
 
 import com.jacknic.glut.page.StartPage;
+import com.jacknic.glut.service.YueWarningWorker;
 import com.jacknic.glut.util.Config;
 import com.jacknic.glut.util.PageManager;
 import com.jacknic.glut.util.PreferManager;
@@ -24,9 +26,19 @@ import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
 
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import es.dmoral.toasty.Toasty;
+
 public class MainActivity extends AppCompatActivity {
 
     public PageManager manager;
+    public static final String WORKER_ID = "worker_request_id";
+    public static final String CHANNEL_NAME = "notification_channel_name";
+    public static final String CHANNEL_ID = "notification_channel_id";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         setStatusView();
         SnackbarTool.init(this);
         manager.setAnim(R.anim.push_right_in, R.anim.push_left_out, R.anim.push_left_in, R.anim.push_right_out);
+
+        createNotificationChannel();
+
+        initWarningWorker();
     }
 
     /**
@@ -171,7 +187,13 @@ public class MainActivity extends AppCompatActivity {
         }, 2000);
         if (manager.getPages().size() <= 1) {
             if (!exit) {
-//                Toast.makeText(MainActivity.this, "再次返回退出应用", Toast.LENGTH_SHORT).show();
+                int index = PreferManager.getPrefer().getInt(Config.SETTING_THEME_INDEX, 4);
+
+                Toasty.custom(this, "再次点击返回退出", null,
+                        getResources().getColor(Config.COLORS[index]),
+                        getResources().getColor(R.color.white), Toasty.LENGTH_SHORT,
+                        false, true).show();
+
                 exit = true;
             } else {
                 OkGo.getInstance().cancelAll();
@@ -179,6 +201,51 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             manager.onBackPressed();
+        }
+    }
+
+    /**
+     * 处理在后台检查一卡通余额的worker
+     */
+    public static void initWarningWorker() {
+        boolean isWorkerEnqueued =
+                !PreferManager.getPrefer().getString(MainActivity.WORKER_ID, "").equals("");
+        boolean isWarning =
+                PreferManager.getPrefer().getBoolean(Config.KEY_MONEY_WARNING, true);
+
+        //提交worker
+        if (isWarning && !isWorkerEnqueued) {
+            PeriodicWorkRequest request =
+                    new PeriodicWorkRequest.Builder(
+                            YueWarningWorker.class, Config.WARNING_WORKER_INTERVAL, TimeUnit.HOURS)
+                            .build();
+
+            PreferManager.getPrefer()
+                    .edit().putString(MainActivity.WORKER_ID, request.getId().toString()).apply();
+            WorkManager.getInstance().enqueue(request);
+        }
+
+        //移除worker
+        if (!isWarning && isWorkerEnqueued) {
+            WorkManager.getInstance()
+                    .cancelWorkById(
+                            UUID.fromString(
+                                    PreferManager.getPrefer().getString(MainActivity.WORKER_ID, "")));
+            PreferManager.getPrefer().edit().putString(MainActivity.WORKER_ID, "").apply();
+        }
+
+    }
+
+    /**
+     * 适配8.0，添加通知channel
+     */
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
+            channel.setDescription("");
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

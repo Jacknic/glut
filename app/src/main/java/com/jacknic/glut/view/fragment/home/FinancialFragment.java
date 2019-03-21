@@ -334,7 +334,7 @@ public class FinancialFragment extends Fragment implements View.OnClickListener 
                         boolean success = json.getBoolean("success");
                         if (success) {
                             JSONObject data = json.getJSONObject("data");
-                            findAndSetText(R.id.cw_tv_yktye, data.getString("Balance"));
+                            findAndSetText(R.id.cw_tv_yktye, data.getString(Config.URL_CW_API_BALANCE));
                         } else {
                             findAndSetText(R.id.cw_tv_yktye, "获取失败");
                         }
