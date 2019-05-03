@@ -69,7 +69,7 @@ public class LoginModel {
 
     public static void loginTs(final String sid, final String password, final AbsCallback callback) {
         //  登录操作
-        OkGo.post("http://202.193.80.181:8080/opac/reader/doLogin")
+        OkGo.post("http://libopac.glut.edu.cn:8080/opac/reader/doLogin")
                 .params("rdid", sid)
                 //实际提交的密码是经MD5加密后的
                 .params("rdPasswd", Util.md5Hex(password))

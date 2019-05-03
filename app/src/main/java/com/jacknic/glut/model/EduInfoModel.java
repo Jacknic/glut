@@ -96,14 +96,14 @@ public class EduInfoModel {
                 callback.onAfter(file, e);
             }
         };
-        OkGo.get("http://202.193.80.58:81/academic/manager/studentinfo/showStudentImage.jsp").execute(fileCallback);
+        OkGo.get("http://jw.glut.edu.cn/academic/manager/studentinfo/showStudentImage.jsp").execute(fileCallback);
     }
 
     /**
      * 获取学业进度
      */
     public void getStudyProcess(@NonNull final AbsCallback callback) {
-        OkGo.get("http://202.193.80.58:81/academic/manager/score/studentStudyProcess.do").execute(new StringCallback() {
+        OkGo.get("http://jw.glut.edu.cn/academic/manager/score/studentStudyProcess.do").execute(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Document document = Jsoup.parse(s);

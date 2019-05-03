@@ -119,7 +119,7 @@ public class LibraryFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_search_book:
-                    String url = "http://202.193.80.181:8081/search?xc=3&kw=" + et_search_book.getText().toString();
+                    String url = "http://libopac.glut.edu.cn:8080/opac/search?q=" + et_search_book.getText().toString();
                     PageTool.openWebPage(getActivity(), url);
                     break;
                 case R.id.tv_change_tag_list:
@@ -140,7 +140,7 @@ public class LibraryFragment extends Fragment {
      * 获取标签
      */
     private void getTags() {
-        OkGo.get("http://202.193.80.181:8080/opac/hotsearch").execute(new StringCallback() {
+        OkGo.get("http://libopac.glut.edu.cn:8080/opac/hotsearch").execute(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Document document = Jsoup.parse(s);

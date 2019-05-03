@@ -93,7 +93,7 @@ public final class Func {
      * @param callback 回调
      */
     public static void checkLoginStatus(@NonNull final AbsCallback callback) {
-        OkGo.get("http://202.193.80.58:81/academic/showHeader.do").execute(new StringCallback() {
+        OkGo.get("http://jw.glut.edu.cn/academic/showHeader.do").execute(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 callback.onSuccess(s, call, response);

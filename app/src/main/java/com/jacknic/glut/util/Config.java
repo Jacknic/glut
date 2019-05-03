@@ -15,24 +15,24 @@ public final class Config {
     /**
      * 教务处登录验证码
      */
-    public static final String URL_JW_CAPTCHA = "http://202.193.80.58:81/academic/getCaptcha.do";
+    public static final String URL_JW_CAPTCHA = "http://jw.glut.edu.cn/academic/getCaptcha.do";
     /**
      * 教务处登录表单地址
      */
-    public static final String URL_JW_LOGIN_CHECK = "http://202.193.80.58:81/academic/j_acegi_security_check";
+    public static final String URL_JW_LOGIN_CHECK = "http://jw.glut.edu.cn/academic/j_acegi_security_check";
     /**
      * 课表链接
      */
-    public static final String URL_JW_COURSE = "http://202.193.80.58:81/academic/student/currcourse/currcourse.jsdo";
+    public static final String URL_JW_COURSE = "http://jw.glut.edu.cn/academic/student/currcourse/currcourse.jsdo";
     /**
      * 教务处登录验证码检验
      */
-    public static final String URL_JW_CAPTCHA_CHECK = "http://202.193.80.58:81/academic/checkCaptcha.do?captchaCode=";
+    public static final String URL_JW_CAPTCHA_CHECK = "http://jw.glut.edu.cn/academic/checkCaptcha.do?captchaCode=";
 
     /**
      * 教务运行周地址
      */
-    public static final String URL_JW_CALENDAR = "http://202.193.80.58:81/academic/calendarinfo/viewCalendarInfo.do";
+    public static final String URL_JW_CALENDAR = "http://jw.glut.edu.cn/academic/calendarinfo/viewCalendarInfo.do";
 
 
     /**
@@ -83,7 +83,7 @@ public final class Config {
     /**
      * 教务学生信息
      */
-    public static final String URL_JW_STUDENT_INFO = "http://202.193.80.58:81/academic/student/studentinfo/studentInfoModifyIndex.do?frombase=0&wantTag=0&groupId=&moduleId=2060";
+    public static final String URL_JW_STUDENT_INFO = "http://jw.glut.edu.cn/academic/student/studentinfo/studentInfoModifyIndex.do?frombase=0&wantTag=0&groupId=&moduleId=2060";
     /**
      * 财务sid
      */

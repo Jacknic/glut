@@ -55,7 +55,7 @@ public class ExamListPage extends BasePage {
      * 获取数据
      */
     private void getData() {
-        OkGo.get("http://202.193.80.58:81/academic/manager/examstu/studentQueryAllExam.do?pagingNumberPerVLID=1000").tag(this).execute(new StringCallback() {
+        OkGo.get("http://jw.glut.edu.cn/academic/manager/examstu/studentQueryAllExam.do?pagingNumberPerVLID=1000").tag(this).execute(new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Document document = Jsoup.parse(s);
@@ -77,7 +77,7 @@ public class ExamListPage extends BasePage {
     private void getDataPre() {
         if (!isGot) {
             SnackbarTool.showShort("数据获取中...");
-            OkGo.get("http://202.193.80.58:81/academic/student/currcourse/currcourse.jsdo").tag(this).execute(
+            OkGo.get("http://jw.glut.edu.cn/academic/student/currcourse/currcourse.jsdo").tag(this).execute(
                     new StringCallback() {
                         @Override
                         public void onSuccess(String s, Call call, Response response) {

@@ -76,7 +76,7 @@ public class BorrowPage extends BasePage {
      * 获取借书列表
      */
     private void getRenewList() {
-        OkGo.get("http://202.193.80.181:8080/opac/loan/renewList").tag(this)
+        OkGo.get("http://libopac.glut.edu.cn:8080/opac/loan/renewList").tag(this)
                 .execute(new StringCallback() {
 
                     @Override

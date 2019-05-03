@@ -101,7 +101,7 @@ public class BorrowListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
          */
         private void renew(String book_no) {
 
-            OkGo.post("http://202.193.80.181:8080/opac/loan/doRenew")
+            OkGo.post("http://libopac.glut.edu.cn:8080/opac/loan/doRenew")
                     .params("barcodeList", book_no)
                     .params("furl", "/opac/loan/renewList")
                     .execute(new StringCallback() {

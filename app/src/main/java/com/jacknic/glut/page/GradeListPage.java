@@ -141,7 +141,7 @@ public class GradeListPage extends BasePage {
 
     //获取所有成绩
     private void getAllGrade() {
-        OkGo.get("http://202.193.80.58:81/academic/manager/score/studentOwnScore.do?year=&term=&para=0&sortColumn=&Submit=%E6%9F%A5%E8%AF%A2")
+        OkGo.get("http://jw.glut.edu.cn/academic/manager/score/studentOwnScore.do?year=&term=&para=0&sortColumn=&Submit=%E6%9F%A5%E8%AF%A2")
                 .tag(this)
                 .execute(new StringCallback() {
                     @Override
