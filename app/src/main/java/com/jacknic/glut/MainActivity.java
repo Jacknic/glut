@@ -1,10 +1,14 @@
 package com.jacknic.glut;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
@@ -23,9 +27,14 @@ import com.jacknic.glut.util.SnackbarTool;
 import com.jacknic.glut.util.ViewUtil;
 import com.lzy.okgo.OkGo;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.READ_PHONE_STATE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class MainActivity extends AppCompatActivity {
 
     public PageManager manager;
+    private final String[] PERMISSIONS = {WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE, ACCESS_FINE_LOCATION};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +55,31 @@ public class MainActivity extends AppCompatActivity {
         setStatusView();
         SnackbarTool.init(this);
         manager.setAnim(R.anim.push_right_in, R.anim.push_left_out, R.anim.push_left_in, R.anim.push_right_out);
+        int status = ActivityCompat.checkSelfPermission(this, PERMISSIONS[0]);
+        if (status != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, 0);
+        }
+        boolean rationale = ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSIONS[0]);
+        if (rationale) {
+            showRation();
+        }
+    }
+
+    /**
+     * 权限申请说明
+     */
+    private void showRation() {
+        AlertDialog rationDialog = new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle("权限申请提示")
+                .setMessage("应用在使用过程中会读写文件，确定当前设备状态。为了确保应用正常运行，建议授予相应的权限")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, 0);
+                    }
+                }).create();
+        rationDialog.show();
     }
 
     /**
