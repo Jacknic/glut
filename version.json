@@ -2,7 +2,7 @@
   "date": "2019-5-3",
   "versionCode": 53,
   "versionName": "5.3",
-  "downloadUrl": "https://github.com/Jacknic/glut/releases/download/v5.3/app-github-release.apk",
-  "info": "1. 修复教务登录失败问题\n2. 更新依赖库版本\n3. 新增权限动态申请",
+  "downloadUrl": "https://f94abde6e1ae12b8fc752652cdfe39ec.dd.cdntips.com/imtt.dd.qq.com/16891/A6AE08474A64D4FAA4B4C25B6FE81AAF.apk?fsname=com.jacknic.glut.apk",
+  "info": "1. 修复教务登录失败问题\n2. 更新依赖库版本\n3. 新增权限动态申请\n注意：请到应用宝下载更新",
   "remark": "/*该文件用于应用版本检测更新！*/"
 }

@@ -56,6 +56,13 @@ public class UpdateUtil {
                                         + "\n发布时间：" + versionBean.getDate()
                                         + "\n更新描述：" + versionBean.getInfo()
                                 ).setNegativeButton(android.R.string.cancel, null)
+                                .setNeutralButton("浏览器下载", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl));
+                                        activity.startActivity(intent);
+                                    }
+                                })
                                 .setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
