@@ -1,8 +1,8 @@
 ﻿{
-  "date": "2018-9-10",
-  "versionCode": 52,
-  "versionName": "5.2",
-  "downloadUrl": "https://imtt.dd.qq.com/16891/E28C48B51A2F11AC037BAA80AF7393AA.apk?fsname=com.jacknic.glut.apk",
-  "info": "1. 修复财务登录失败问题\n2. 更新依赖库版本",
+  "date": "2019-5-3",
+  "versionCode": 53,
+  "versionName": "5.3",
+  "downloadUrl": "https://github.com/Jacknic/glut/releases/download/v5.3/app-github-release.apk",
+  "info": "1. 修复教务登录失败问题\n2. 更新依赖库版本\n3. 新增权限动态申请",
   "remark": "/*该文件用于应用版本检测更新！*/"
 }

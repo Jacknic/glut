@@ -8,10 +8,10 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         resConfigs 'zh', 'hdpi'
-        versionCode 52
+        versionCode 53
         flavorDimensions "default"
         manifestPlaceholders = [MTA_CHANNEL: "测试", MTA_APPKEY: "debug"]
-        versionName "5.2"
+        versionName "53"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
 //            abiFilters 'armeabi-v7a'
@@ -56,6 +56,9 @@ android {
         // 应用宝
         yyb {
             manifestPlaceholders = [MTA_CHANNEL: "应用宝"]
+        }
+        github {
+            manifestPlaceholders = [MTA_CHANNEL: "GitHub"]
         }
     }
 }
