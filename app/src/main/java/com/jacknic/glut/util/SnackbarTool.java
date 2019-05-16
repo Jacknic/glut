@@ -3,6 +3,8 @@ package com.jacknic.glut.util;
 import android.app.Activity;
 import android.support.design.widget.Snackbar;
 
+import com.jacknic.glut.R;
+
 /**
  * 提示条管理工具
  */
@@ -17,7 +19,7 @@ public class SnackbarTool {
      * 调用前必须进行初始化
      */
     public static void init(Activity activity) {
-        snackbar = Snackbar.make(activity.getWindow().getDecorView(), "", Snackbar.LENGTH_SHORT);
+        snackbar = Snackbar.make(activity.findViewById(R.id.frame_container), "", Snackbar.LENGTH_SHORT);
     }
 
     public static Snackbar getSnackBar() {
