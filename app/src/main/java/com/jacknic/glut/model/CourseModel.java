@@ -15,10 +15,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +28,7 @@ public class CourseModel {
     private Document document;
     private ArrayList<CourseInfoEntity> courseInfoList = new ArrayList<>();
     private boolean read = false;//表示是否已解析过DOM
+    private final Pattern patternWeek = Pattern.compile("(\\d+)(-)?(\\d+)?(\\D)?");
 
     public CourseModel(String dom) {
         document = Jsoup.parse(dom);
@@ -81,7 +80,7 @@ public class CourseModel {
                 course.setCourseName(name);
                 courseList.add(course);
             } else {
-            /*有教学时间地点的情况*/
+                /*有教学时间地点的情况*/
                 for (Element tr : info) {
                     course = new CourseEntity();
                     course.setSchoolStartYear(year);
@@ -91,35 +90,39 @@ public class CourseModel {
                     String week = tr.child(0).text();
                     course.setWeek(week);
                     String dayOfWeek = tr.child(1).text();
-                    switch (dayOfWeek.charAt(dayOfWeek.length() - 1)) {
-                        case '一':
-                            dayOf = 1;
-                            break;
-                        case '二':
-                            dayOf = 2;
-                            break;
-                        case '三':
-                            dayOf = 3;
-                            break;
-                        case '四':
-                            dayOf = 4;
-                            break;
-                        case '五':
-                            dayOf = 5;
-                            break;
-                        case '六':
-                            dayOf = 6;
-                            break;
-                        case '日':
-                            dayOf = 7;
-                            break;
+                    if (!TextUtils.isEmpty(dayOfWeek)) {
+                        switch (dayOfWeek.charAt(dayOfWeek.length() - 1)) {
+                            case '一':
+                                dayOf = 1;
+                                break;
+                            case '二':
+                                dayOf = 2;
+                                break;
+                            case '三':
+                                dayOf = 3;
+                                break;
+                            case '四':
+                                dayOf = 4;
+                                break;
+                            case '五':
+                                dayOf = 5;
+                                break;
+                            case '六':
+                                dayOf = 6;
+                                break;
+                            case '日':
+                                dayOf = 7;
+                                break;
+                            default:
+                                dayOf = -1;
+                        }
+
                     }
                     course.setDayOfWeek(dayOf);
-                    Pattern p = Pattern.compile("(\\d+)(-)?(\\d+)?(\\D)?");
                     String[] week_details = week.split(",");
                     StringBuilder smp = new StringBuilder(" ");
                     for (String week_detail : week_details) {
-                        Matcher m = p.matcher(week_detail);
+                        Matcher m = patternWeek.matcher(week_detail);
                         if (m.find()) {
                             String start = m.group(1);
                             System.out.println("开始周：" + start);

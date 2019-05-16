@@ -16,6 +16,7 @@ android {
         ndk {
 //            abiFilters 'armeabi-v7a'
         }
+        setProperty("archivesBaseName", "$applicationId-v$versionName")
     }
     packagingOptions {
         exclude 'project.properties'
