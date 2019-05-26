@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path
-        name="files_root"
-        path="Android/data/com.jacknic.glut/" />
+    <!--分享内部cache文件-->
+    <cache-path
+        name="cache"
+        path="/" />
 </paths>

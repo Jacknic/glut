@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -99,7 +100,7 @@ public class UpdateUtil {
      *
      * @param url 更新包下载地址
      */
-    public static void downloadApk(String url, final Activity activity) {
+    public static void downloadApk(final String url, final Activity activity) {
         final AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setTitle("更新包下载中")
                 .setMessage("下载进度... 0%")
@@ -111,10 +112,21 @@ public class UpdateUtil {
                 })
                 .setPositiveButton("后台下载", null)
                 .create();
-        OkGo.get(url).execute(new FileCallback(activity.getExternalCacheDir().toString(), "glut_update.apk") {
+        OkGo.get(url).execute(new FileCallback(activity.getCacheDir().getAbsolutePath(), "glut_update.apk") {
             @Override
             public void onBefore(BaseRequest request) {
                 dialog.show();
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                super.onError(call, response, e);
+                if (response != null && response.isRedirect()) {
+                    String location = response.header("Location");
+                    if (!TextUtils.isEmpty(location)) {
+                        downloadApk(location, activity);
+                    }
+                }
             }
 
             @Override
@@ -123,7 +135,7 @@ public class UpdateUtil {
                 String type = "application/vnd.android.package-archive";
                 //判断是否是AndroidN以及更高的版本
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     Uri contentUri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".fileProvider", file);
                     intent.setDataAndType(contentUri, type);
                 } else {
