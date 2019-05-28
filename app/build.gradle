@@ -8,10 +8,10 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         resConfigs 'zh', 'hdpi'
-        versionCode 53
+        versionCode 54
         flavorDimensions "default"
         manifestPlaceholders = [MTA_CHANNEL: "测试", MTA_APPKEY: "debug"]
-        versionName "5.3"
+        versionName "5.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
 //            abiFilters 'armeabi-v7a'
@@ -46,6 +46,10 @@ android {
             manifestPlaceholders = [MTA_APPKEY: "Aqc1105763654"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+        }
+        debug {
+            versionNameSuffix = "-debug"
+            applicationIdSuffix ".debug"
         }
     }
     //配置数据库版本，版本升级为2
