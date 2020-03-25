@@ -25,6 +25,7 @@ jobs:
       run: |
         chmod +x ./gradlew
         ./gradlew reRe
+        ./gradlew :app:zipOutputs
 
     - name: 上传产出物
       uses: actions/upload-artifact@v2-preview
