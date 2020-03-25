@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.jacknic.glut.widget.ThemeSwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:enabled="false"
+        app:backgroundColor="?colorBackgroundFloating"
+        app:schemeColor="?colorPrimary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_round_bottom"
+                android:backgroundTint="?colorBackgroundFloating"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/school_year" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spYear"
+                    style="@style/SpinnerStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    tools:listitem="@android:layout/simple_list_item_1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/term" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spTerm"
+                    style="@style/SpinnerStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:entries="@array/terms"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/emptyView"
+                layout="@layout/layout_empty_view"
+                android:visibility="gone"
+                tools:visibility="gone" />
+
+            <ListView
+                android:id="@+id/lvItemList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/primary_offset"
+                android:background="@drawable/bg_round_all"
+                android:backgroundTint="?colorBackgroundFloating"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:nestedScrollingEnabled="true"
+                android:scrollbars="none"
+                tools:listitem="@layout/item_info_bar" />
+
+        </LinearLayout>
+    </com.jacknic.glut.widget.ThemeSwipeRefreshLayout>
+
+</layout>

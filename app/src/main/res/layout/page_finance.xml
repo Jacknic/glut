@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.jacknic.glut.widget.ThemeSwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:backgroundColor="?colorBackgroundFloating"
+        app:schemeColor="?colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvBalance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_round_bottom"
+                android:backgroundTint="?colorBackgroundFloating"
+                android:gravity="end|bottom"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="30dp"
+                android:text="@string/balance"
+                android:textColor="?colorPrimary"
+                android:textSize="50sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/itemsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvBalance"
+                android:layout_marginStart="@dimen/primary_offset"
+                android:layout_marginTop="-30dp"
+                android:layout_marginEnd="@dimen/primary_offset"
+                android:clipChildren="true"
+                app:cardBackgroundColor="?colorBackgroundFloating"
+                app:cardCornerRadius="@dimen/primary_radius"
+                app:cardElevation="1dp"
+                app:strokeColor="@android:color/transparent"
+                app:strokeWidth="0dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRecord"
+                        style="@style/FinanceTextIconStyle"
+                        android:text="@string/payment_record"
+                        app:drawableTint="@color/cyan"
+                        app:drawableTopCompat="@drawable/ic_receipt" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCostItems"
+                        style="@style/FinanceTextIconStyle"
+                        android:text="@string/tuition_items"
+                        app:drawableTint="@color/blue"
+                        app:drawableTopCompat="@drawable/ic_assignment" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHomeIndex"
+                        style="@style/FinanceTextIconStyle"
+                        android:text="@string/finance_center"
+                        app:drawableTint="@color/orange"
+                        app:drawableTopCompat="@drawable/ic_money" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetails"
+                        style="@style/FinanceTextIconStyle"
+                        android:text="@string/payment_details"
+                        app:drawableTint="@color/pink"
+                        app:drawableTopCompat="@drawable/ic_description" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCharge"
+                        style="@style/FinanceTextIconStyle"
+                        android:text="@string/card_charge"
+                        app:drawableTint="@color/green"
+                        app:drawableTopCompat="@drawable/ic_monetization" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <ListView
+                android:id="@+id/lvInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/itemsCard"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_round_all"
+                android:backgroundTint="?colorBackgroundFloating"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:listSelector="@android:color/transparent"
+                android:nestedScrollingEnabled="true"
+                android:scrollbars="none"
+                tools:listitem="@layout/item_info_bar" />
+
+            <include
+                android:id="@+id/emptyView"
+                layout="@layout/layout_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/itemsCard"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/primary_offset"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </RelativeLayout>
+
+    </com.jacknic.glut.widget.ThemeSwipeRefreshLayout>
+
+</layout>

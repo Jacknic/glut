@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/splashPage">
+
+    <fragment
+        android:id="@+id/splashPage"
+        android:name="com.jacknic.glut.ui.SplashPage"
+        tools:layout="@layout/layout_empty_view" />
+
+    <fragment
+        android:id="@+id/loginPage"
+        android:name="com.jacknic.glut.ui.LoginPage"
+        android:label="@string/login"
+        tools:layout="@layout/page_login" />
+
+    <fragment
+        android:id="@+id/homePage"
+        android:name="com.jacknic.glut.ui.HomePage"
+        android:label="@null"
+        tools:layout="@layout/page_home" />
+    <fragment
+        android:id="@+id/settingPage"
+        android:name="com.jacknic.glut.ui.SettingPage"
+        android:label="@string/settings"
+        tools:layout="@layout/page_setting" />
+
+    <fragment
+        android:id="@+id/browserPage"
+        android:name="com.jacknic.glut.ui.BrowserPage"
+        tools:layout="@layout/page_browser">
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
+    <action
+        android:id="@+id/nav_to_browserPage"
+        app:destination="@id/browserPage"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:launchSingleTop="true"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <action
+        android:id="@+id/nav_to_Add"
+        app:destination="@id/modifyCoursePage"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:launchSingleTop="true"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <fragment
+        android:id="@+id/financePage"
+        android:name="com.jacknic.glut.ui.FinancePage"
+        android:label="@string/finance"
+        tools:layout="@layout/page_finance" />
+    <fragment
+        android:id="@+id/examListPage"
+        android:name="com.jacknic.glut.ui.ExamListPage"
+        android:label="@string/examList"
+        tools:layout="@layout/page_base_list" />
+    <fragment
+        android:id="@+id/courseListPage"
+        android:name="com.jacknic.glut.ui.CourseListPage"
+        android:label="@string/courseList"
+        tools:layout="@layout/page_base_list" />
+    <fragment
+        android:id="@+id/termListPage"
+        android:name="com.jacknic.glut.ui.TermListPage"
+        android:label="@string/all_courses"
+        tools:layout="@layout/page_base_list" />
+    <fragment
+        android:id="@+id/modifyCoursePage"
+        android:name="com.jacknic.glut.ui.ModifyCoursePage"
+        android:label="@string/add_course"
+        tools:layout="@layout/page_modify_course">
+        <argument
+            android:name="courseNum"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="courseStart"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <argument
+            android:name="dayOfWeek"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
+    <fragment
+        android:id="@+id/gradePage"
+        android:name="com.jacknic.glut.ui.GradeListPage"
+        android:label="@string/fetch_grade"
+        tools:layout="@layout/page_grade" />
+    <fragment
+        android:id="@+id/processPage"
+        android:name="com.jacknic.glut.ui.ProcessPage"
+        android:label="@string/study_progress"
+        tools:layout="@layout/page_process" />
+    <fragment
+        android:id="@+id/infoPage"
+        android:name="com.jacknic.glut.ui.InfoPage"
+        android:label="@string/student_info"
+        tools:layout="@layout/page_info" />
+
+</navigation>

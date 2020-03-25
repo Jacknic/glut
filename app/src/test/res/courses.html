@@ -1,0 +1,2168 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+    <title>本学期课程安排</title>
+    <Meta http-equiv="Content-Type" Content="text/html; Charset=gbk">
+    <Meta http-equiv="Content-Language" Content="zh-CN">
+    <Meta http-equiv="MSThemeCompatible" Content="No">
+    <Meta name="Author" Content="Educational Technology Institute, Tsinghua University">
+    <Meta name="Copyright" Content="Copyright(c)2005 Educational Technology Institute, Tsinghua University">
+    <link href="../../styles/css/content.css" rel="stylesheet" type="text/css">
+    <script language="javascript" src="../../styles/js/common.js"></script>
+    <script language="javascript" src="../../styles/js/general.js"></script>
+    <script language="javascript" src="../../styles/js/jquery.js"></script>
+    <style type="text/css">
+        #bookInfo {
+            position: absolute;
+            z-index: 9999;
+            border: 1px solid #49b6e6;
+            width: 400px;
+            background: #fff;
+            margin: 0;
+            padding: 10px;
+            display: none;
+            text-align: left;
+        }
+    </style>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('.showBook').each(function () {
+                $(this).mouseover(function () {
+//                      $('#bookInfo').remove();
+                    if ($('#bookInfo').length == 0) {
+                        $(document.body).append('<p id="bookInfo"></p>');
+                    }
+                    var _top = $(this).offset().top;
+                    var _left = $(this).offset().left;
+                    var info = $(this).attr('rel');
+
+                    $('#bookInfo').html(info).css({
+                        top:_top - 10,
+                        left:_left - 400
+                    }).fadeIn(500);
+
+                });
+                $(document).click(function (e) {
+                    if (!$(e.target).is('#bookInfo')) {
+                        $('#bookInfo').fadeOut(500, function () {
+                            $('#bookInfo').remove();
+                        });
+                    }
+                });
+
+            });
+        });
+
+        function weekSchoolTimeTable(){
+            var year=$("select[name=year]").find(":selected");
+            var term=$("select[name=term]").find(":selected");
+            if(year.val()=="-2" || term.val()=="-2"){
+                alert("不能查询所有学年学期");
+            }else{
+                window.open("../../manager/coursearrange/studentWeeklyTimetable.do?yearid="+year.val()+"&termid="+term.val());
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+<table cellspacing="0" cellpadding="0" id="title">
+    <tr>
+        <td nowrap="nowrap">
+            <div>
+                2019秋 课程安排
+            </div>
+        </td>
+    </tr>
+</table>
+
+<p>
+
+    
+
+    <input type="button"
+           onClick="window.open('../../manager/coursearrange/showTimetable.do?id=394864&yearid=39&termid=2&timetableType=STUDENT&sectionType=BASE')"
+           class="button" value="个人课表">
+
+    
+    <input type="button" onclick="weekSchoolTimeTable()" class="button" value="周次课表"/>
+    
+    <input type="button"
+           onClick="openwindow('../../manager/coursearrange/showTimetable.do?id=26018&yearid=39&termid=2&timetableType=CLASSES&sectionType=BASE','')"
+           class="button" value="班级课表">
+    
+
+    <input type="button"
+           onClick="window.open('../../manager/electcourse/studentSelectCrgroupList.do?yearId=39&termId=2')"
+           class="button" value="选择课节分组">
+
+    
+
+    
+
+    
+
+
+    
+    <input type="button"
+           onClick="window.open('/academic/customPort/studentElectCoursePay.do')"
+           class="button" value="查看学分缴费详细">
+    
+
+</p>
+<table cellpadding="0" cellspacing="0" class="subtitle">
+    <tr>
+        <td class="subtitle">学年学期</td>
+    </tr>
+</table>
+<table cellpadding="0" cellspacing="0" class="broken_tab">
+    <form action="">
+        <tr>
+            <td>学年</td>
+            <td>
+                
+                <select name="year">
+                    
+                    <option value=39 selected>
+                        2019
+                    </option>
+                    
+                    <option value=30 >
+                        2010
+                    </option>
+                    
+                    <option value=31 >
+                        2011
+                    </option>
+                    
+                    <option value=32 >
+                        2012
+                    </option>
+                    
+                    <option value=33 >
+                        2013
+                    </option>
+                    
+                    <option value=34 >
+                        2014
+                    </option>
+                    
+                    <option value=35 >
+                        2015
+                    </option>
+                    
+                    <option value=36 >
+                        2016
+                    </option>
+                    
+                    <option value=37 >
+                        2017
+                    </option>
+                    
+                    <option value=38 >
+                        2018
+                    </option>
+                    
+                    <option value=40 >
+                        2020
+                    </option>
+                    
+                    <option value=41 >
+                        2021
+                    </option>
+                    
+                    <option value=42 >
+                        2022
+                    </option>
+                    
+                    <option value=43 >
+                        2023
+                    </option>
+                    
+                    <option value=44 >
+                        2024
+                    </option>
+                    
+                    <option value=45 >
+                        2025
+                    </option>
+                    
+                    <option value=46 >
+                        2026
+                    </option>
+                    
+                    <option value=47 >
+                        2027
+                    </option>
+                    
+                    <option value=48 >
+                        2028
+                    </option>
+                    
+                </select>
+            </td>
+            <td>学期</td>
+            <td>
+                
+                <select name="term">
+                    
+                    <option value=2 selected>
+                        秋
+                    </option>
+                    
+                    <option value=1 >
+                        春
+                    </option>
+                    
+                </select>
+            </td>
+            <td>
+                <input type="submit" value="查 询" class="button">
+            </td>
+        </tr>
+    </form>
+</table>
+
+
+<!--调课信息-->
+
+<eduaffair:CTRT studentid="394864" year="39"
+                term="2"
+                windowStyle="main"></eduaffair:CTRT>
+
+
+<br>
+<table cellpadding="0" cellspacing="0" class="infolist_tab">
+    <tr>
+        <th>课程号</th>
+        <th>课程<br>
+            序号
+        </th>
+        <th>课程名称</th>
+        <th>任课教师</th>
+        <th>学 分</th>
+        <th>选课属性</th>
+        <th>考核方式</th>
+        <th>考试<br>
+            性质
+        </th>
+        <th>是否<br>
+            缓考
+        </th>
+        <th>上课时间、地点</th>
+        <th>教材</th>
+        <th>教学记录</th>
+        
+        
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'" >
+        <td>371910
+        </td>
+        <td>2
+        </td>
+        <td>
+            <a href="../../manager/querycourse/course_detail.jsdo?cid=16347"
+               target="_blank" class="infolist">MATLAB程序设计
+            </a></td>
+        <td class="center">
+            <a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=335405'  class="infolist" target='_blank'>敬超</a><br>
+            
+        </td>
+        <td class="center">2
+        </td>
+        <td class="center">
+            限选
+        </td>
+        <td class="center">考查
+        </td>
+        <td class="center">正常考试
+        </td>
+        <td class="center">非缓考
+        </td>
+        <td>
+            
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="none">
+                
+                <tr>
+                    <td width="20%" nowrap>5-8周
+                    </td>
+                    <td width="20%" nowrap>星期四
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>05310D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>5-8周
+                    </td>
+                    <td width="20%" nowrap>星期五
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>05312D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>6-7周
+                    </td>
+                    <td width="20%" nowrap>星期五
+                    </td>
+                    <td width="20%" nowrap>第7、8节
+                    </td>
+                    <td width="40%" nowrap>05405J
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>第8周
+                    </td>
+                    <td width="20%" nowrap>星期五
+                    </td>
+                    <td width="20%" nowrap>第7、8节
+                    </td>
+                    <td width="40%" nowrap>05406J
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>第9周
+                    </td>
+                    <td width="20%" nowrap>星期三
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>06607D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>第9周
+                    </td>
+                    <td width="20%" nowrap>星期三
+                    </td>
+                    <td width="20%" nowrap>第7、8节
+                    </td>
+                    <td width="40%" nowrap>05406J
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>10-11周
+                    </td>
+                    <td width="20%" nowrap>星期四
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>05312D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>第10周
+                    </td>
+                    <td width="20%" nowrap>星期四
+                    </td>
+                    <td width="20%" nowrap>第1、2节
+                    </td>
+                    <td width="40%" nowrap>05405J
+                    </td>
+                </tr>
+                
+
+            </table>
+            
+        </td>
+
+        <td class="center">
+            &nbsp;
+        </td>
+        <td class="center">
+            
+
+            <a href="../../teacher/teachingtask/recordStudentIndex.do?epid=358587594"
+               target="_blank"><img src="../../styles/images/see.gif" alt="查看"/></a>
+            
+        </td>
+
+        
+
+        
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'" >
+        <td>371930
+        </td>
+        <td>1
+        </td>
+        <td>
+            <a href="../../manager/querycourse/course_detail.jsdo?cid=17093"
+               target="_blank" class="infolist">Oracle数据库
+            </a></td>
+        <td class="center">
+            <a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=43421'  class="infolist" target='_blank'>陈宫</a><br>
+            
+        </td>
+        <td class="center">3
+        </td>
+        <td class="center">
+            限选
+        </td>
+        <td class="center">考查
+        </td>
+        <td class="center">正常考试
+        </td>
+        <td class="center">非缓考
+        </td>
+        <td>
+            
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="none">
+                
+                <tr>
+                    <td width="20%" nowrap>5-12周
+                    </td>
+                    <td width="20%" nowrap>星期二
+                    </td>
+                    <td width="20%" nowrap>第3、4节
+                    </td>
+                    <td width="40%" nowrap>05207D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>5-8周
+                    </td>
+                    <td width="20%" nowrap>星期四
+                    </td>
+                    <td width="20%" nowrap>第7、8节
+                    </td>
+                    <td width="40%" nowrap>06206D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>6-8
+                    </td>
+                    <td width="20%" nowrap>星期一
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>02525J
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>9-12
+                    </td>
+                    <td width="20%" nowrap>星期二
+                    </td>
+                    <td width="20%" nowrap>中午
+                    </td>
+                    <td width="40%" nowrap>02525J
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>第9周
+                    </td>
+                    <td width="20%" nowrap>星期一
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>07614D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>10-12周
+                    </td>
+                    <td width="20%" nowrap>星期四
+                    </td>
+                    <td width="20%" nowrap>第7、8节
+                    </td>
+                    <td width="40%" nowrap>07318D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>13
+                    </td>
+                    <td width="20%" nowrap>星期三
+                    </td>
+                    <td width="20%" nowrap>第3、4节
+                    </td>
+                    <td width="40%" nowrap>02525J
+                    </td>
+                </tr>
+                
+
+            </table>
+            
+        </td>
+
+        <td class="center">
+            &nbsp;
+        </td>
+        <td class="center">
+            
+
+            <a href="../../teacher/teachingtask/recordStudentIndex.do?epid=358571785"
+               target="_blank"><img src="../../styles/images/see.gif" alt="查看"/></a>
+            
+        </td>
+
+        
+
+        
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'" >
+        <td>378140
+        </td>
+        <td>2
+        </td>
+        <td>
+            <a href="../../manager/querycourse/course_detail.jsdo?cid=16956"
+               target="_blank" class="infolist">网络安全
+            </a></td>
+        <td class="center">
+            <a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=439149'  class="infolist" target='_blank'>张攀峰</a><br>
+            
+        </td>
+        <td class="center">2.5
+        </td>
+        <td class="center">
+            限选
+        </td>
+        <td class="center">考查
+        </td>
+        <td class="center">正常考试
+        </td>
+        <td class="center">非缓考
+        </td>
+        <td>
+            
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="none">
+                
+                <tr>
+                    <td width="20%" nowrap>第9周
+                    </td>
+                    <td width="20%" nowrap>星期一
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>06207D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>10-13周
+                    </td>
+                    <td width="20%" nowrap>星期五
+                    </td>
+                    <td width="20%" nowrap>第1、2节
+                    </td>
+                    <td width="40%" nowrap>06509D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>10-11周
+                    </td>
+                    <td width="20%" nowrap>星期三
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>06207D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>第11周
+                    </td>
+                    <td width="20%" nowrap>星期一
+                    </td>
+                    <td width="20%" nowrap>第3、4节
+                    </td>
+                    <td width="40%" nowrap>06408D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>12-13周
+                    </td>
+                    <td width="20%" nowrap>星期二
+                    </td>
+                    <td width="20%" nowrap>第3、4节
+                    </td>
+                    <td width="40%" nowrap>07119D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>12-13周
+                    </td>
+                    <td width="20%" nowrap>星期五
+                    </td>
+                    <td width="20%" nowrap>第3、4节
+                    </td>
+                    <td width="40%" nowrap>05406J
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>14-16周
+                    </td>
+                    <td width="20%" nowrap>星期一
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>06201D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>14-16周
+                    </td>
+                    <td width="20%" nowrap>星期一
+                    </td>
+                    <td width="20%" nowrap>第7、8节
+                    </td>
+                    <td width="40%" nowrap>05406J
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>14-16周
+                    </td>
+                    <td width="20%" nowrap>星期四
+                    </td>
+                    <td width="20%" nowrap>第1、2节
+                    </td>
+                    <td width="40%" nowrap>07119D
+                    </td>
+                </tr>
+                
+
+            </table>
+            
+        </td>
+
+        <td class="center">
+            &nbsp;
+        </td>
+        <td class="center">
+            
+
+            <a href="../../teacher/teachingtask/recordStudentIndex.do?epid=358587733"
+               target="_blank"><img src="../../styles/images/see.gif" alt="查看"/></a>
+            
+        </td>
+
+        
+
+        
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'" >
+        <td>378160
+        </td>
+        <td>1
+        </td>
+        <td>
+            <a href="../../manager/querycourse/course_detail.jsdo?cid=17108"
+               target="_blank" class="infolist">网络工程设计
+            </a></td>
+        <td class="center">
+            <a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=6006'  class="infolist" target='_blank'>叶恒舟</a><br>
+            
+        </td>
+        <td class="center">2
+        </td>
+        <td class="center">
+            限选
+        </td>
+        <td class="center">考查
+        </td>
+        <td class="center">正常考试
+        </td>
+        <td class="center">非缓考
+        </td>
+        <td>
+            
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="none">
+                
+                <tr>
+                    <td width="20%" nowrap>14-19周
+                    </td>
+                    <td width="20%" nowrap>星期三
+                    </td>
+                    <td width="20%" nowrap>第7、8节
+                    </td>
+                    <td width="40%" nowrap>05311D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>14-18周
+                    </td>
+                    <td width="20%" nowrap>星期一
+                    </td>
+                    <td width="20%" nowrap>第5、6节
+                    </td>
+                    <td width="40%" nowrap>05301D
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>16-18周
+                    </td>
+                    <td width="20%" nowrap>星期一
+                    </td>
+                    <td width="20%" nowrap>第1、2节
+                    </td>
+                    <td width="40%" nowrap>05406J
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="20%" nowrap>17-18周
+                    </td>
+                    <td width="20%" nowrap>星期一
+                    </td>
+                    <td width="20%" nowrap>第7、8节
+                    </td>
+                    <td width="40%" nowrap>05406J
+                    </td>
+                </tr>
+                
+
+            </table>
+            
+        </td>
+
+        <td class="center">
+            &nbsp;
+        </td>
+        <td class="center">
+            
+
+            <a href="../../teacher/teachingtask/recordStudentIndex.do?epid=358571802"
+               target="_blank"><img src="../../styles/images/see.gif" alt="查看"/></a>
+            
+        </td>
+
+        
+
+        
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'" >
+        <td>428030
+        </td>
+        <td>1
+        </td>
+        <td>
+            <a href="../../manager/querycourse/course_detail.jsdo?cid=17245"
+               target="_blank" class="infolist">生产实习（二）
+            </a></td>
+        <td class="center">
+            <a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=12356'  class="infolist" target='_blank'>王宇</a><br><a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=6006'  class="infolist" target='_blank'>叶恒舟</a><br><a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=6038'  class="infolist" target='_blank'>吴名欢</a><br><a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=6008'  class="infolist" target='_blank'>陈晓辉</a><br><a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=12476'  class="infolist" target='_blank'>王爱学</a><br><a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=12477'  class="infolist" target='_blank'>徐红</a><br>
+            
+        </td>
+        <td class="center">4
+        </td>
+        <td class="center">
+            必修
+        </td>
+        <td class="center">实习考核
+        </td>
+        <td class="center">正常考试
+        </td>
+        <td class="center">非缓考
+        </td>
+        <td>
+            
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="none">
+                
+                <tr>
+                    <td width="20%" nowrap>1-4周
+                    </td>
+                    <td width="20%" nowrap>&nbsp;
+                    </td>
+                    <td width="20%" nowrap>&nbsp;
+                    </td>
+                    <td width="40%" nowrap>&nbsp;
+                    </td>
+                </tr>
+                
+
+            </table>
+            
+        </td>
+
+        <td class="center">
+            &nbsp;
+        </td>
+        <td class="center">
+            
+
+            <a href="../../teacher/teachingtask/recordStudentIndex.do?epid=358563161"
+               target="_blank"><img src="../../styles/images/see.gif" alt="查看"/></a>
+            
+        </td>
+
+        
+
+        
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'" >
+        <td>513647
+        </td>
+        <td>44
+        </td>
+        <td>
+            <a href="../../manager/querycourse/course_detail.jsdo?cid=13985"
+               target="_blank" class="infolist">形势与政策7
+            </a></td>
+        <td class="center">
+            <a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=362527'  class="infolist" target='_blank'>孟德</a><br>
+            
+        </td>
+        <td class="center">0.25
+        </td>
+        <td class="center">
+            必修
+        </td>
+        <td class="center">考查
+        </td>
+        <td class="center">正常考试
+        </td>
+        <td class="center">非缓考
+        </td>
+        <td>
+            
+        </td>
+
+        <td class="center">
+            &nbsp;
+        </td>
+        <td class="center">
+            
+
+            <a href="../../teacher/teachingtask/recordStudentIndex.do?epid=359038261"
+               target="_blank"><img src="../../styles/images/see.gif" alt="查看"/></a>
+            
+        </td>
+
+        
+
+        
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'" >
+        <td>513857
+        </td>
+        <td>14
+        </td>
+        <td>
+            <a href="../../manager/querycourse/course_detail.jsdo?cid=14040"
+               target="_blank" class="infolist">大学生安全教育7
+            </a></td>
+        <td class="center">
+            <a href='/academic/manager/teacherinfo/showTeacherInfoItem.do?userid=362527'  class="infolist" target='_blank'>孟德</a><br>
+            
+        </td>
+        <td class="center">0.25
+        </td>
+        <td class="center">
+            必修
+        </td>
+        <td class="center">考查
+        </td>
+        <td class="center">正常考试
+        </td>
+        <td class="center">非缓考
+        </td>
+        <td>
+            
+        </td>
+
+        <td class="center">
+            &nbsp;
+        </td>
+        <td class="center">
+            
+
+            <a href="../../teacher/teachingtask/recordStudentIndex.do?epid=358617024"
+               target="_blank"><img src="../../styles/images/see.gif" alt="查看"/></a>
+            
+        </td>
+
+        
+
+        
+    </tr>
+    
+</table>
+<br>
+<table width="92%" cellpadding="0" cellspacing="0" class="subtitle">
+    <tr>
+        <td>上课大节</td>
+        
+        <td id="rightbg">&nbsp;</td>
+    </tr>
+</table>
+<table cellpadding="0" cellspacing="0" class="infolist_tab">
+    <tr>
+        <th>序号</th>
+        <th>名称</th>
+        <th>包含小节</th>
+        
+        <th>时间</th>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">1
+        </td>
+        <td class="center">第1、2节
+        </td>
+        <td class="center">
+            第1节 第2节 
+
+        </td>
+        
+        <td class="center">
+            08:10
+            --
+            09:50
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">2
+        </td>
+        <td class="center">第1-8节
+        </td>
+        <td class="center">
+            第1节 第2节 第3节 第4节 中午1 中午2 第5节 第6节 第7节 第8节 
+
+        </td>
+        
+        <td class="center">
+            08:10
+            --
+            18:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">3
+        </td>
+        <td class="center">第1-4节
+        </td>
+        <td class="center">
+            第1节 第2节 第3节 第4节 
+
+        </td>
+        
+        <td class="center">
+            08:10
+            --
+            12:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">4
+        </td>
+        <td class="center">第1-3节
+        </td>
+        <td class="center">
+            第1节 第2节 第3节 
+
+        </td>
+        
+        <td class="center">
+            08:10
+            --
+            11:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">5
+        </td>
+        <td class="center">第1-6节
+        </td>
+        <td class="center">
+            第1节 第2节 第3节 第4节 中午1 中午2 第5节 第6节 
+
+        </td>
+        
+        <td class="center">
+            08:10
+            --
+            16:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">6
+        </td>
+        <td class="center">第1-12节
+        </td>
+        <td class="center">
+            第1节 第2节 第3节 第4节 中午1 中午2 第5节 第6节 第7节 第8节 第9节 第10节 第11节 第12节 
+
+        </td>
+        
+        <td class="center">
+            08:10
+            --
+            22:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">7
+        </td>
+        <td class="center">第1节-中午1
+        </td>
+        <td class="center">
+            第1节 第2节 第3节 第4节 中午1 
+
+        </td>
+        
+        <td class="center">
+            08:10
+            --
+            13:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">8
+        </td>
+        <td class="center">第1节-中午2
+        </td>
+        <td class="center">
+            第1节 第2节 第3节 第4节 中午1 中午2 
+
+        </td>
+        
+        <td class="center">
+            08:10
+            --
+            14:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">9
+        </td>
+        <td class="center">第1-10节
+        </td>
+        <td class="center">
+            第1节 第2节 第3节 第4节 中午1 中午2 第5节 第6节 第7节 第8节 第9节 第10节 
+
+        </td>
+        
+        <td class="center">
+            08:10
+            --
+            20:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">10
+        </td>
+        <td class="center">第2-7节
+        </td>
+        <td class="center">
+            第2节 第3节 第4节 中午1 中午2 第5节 第6节 第7节 
+
+        </td>
+        
+        <td class="center">
+            09:05
+            --
+            17:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">11
+        </td>
+        <td class="center">第2-4节
+        </td>
+        <td class="center">
+            第2节 第3节 第4节 
+
+        </td>
+        
+        <td class="center">
+            09:05
+            --
+            12:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">12
+        </td>
+        <td class="center">第2节-中午1
+        </td>
+        <td class="center">
+            第2节 第3节 第4节 中午1 
+
+        </td>
+        
+        <td class="center">
+            09:05
+            --
+            13:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">13
+        </td>
+        <td class="center">第3、4节
+        </td>
+        <td class="center">
+            第3节 第4节 
+
+        </td>
+        
+        <td class="center">
+            10:20
+            --
+            12:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">14
+        </td>
+        <td class="center">第3-6节
+        </td>
+        <td class="center">
+            第3节 第4节 中午1 中午2 第5节 第6节 
+
+        </td>
+        
+        <td class="center">
+            10:20
+            --
+            16:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">15
+        </td>
+        <td class="center">第3-8节
+        </td>
+        <td class="center">
+            第3节 第4节 中午1 中午2 第5节 第6节 第7节 第8节 
+
+        </td>
+        
+        <td class="center">
+            10:20
+            --
+            18:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">16
+        </td>
+        <td class="center">第3-10节
+        </td>
+        <td class="center">
+            第3节 第4节 中午1 中午2 第5节 第6节 第7节 第8节 第9节 第10节 
+
+        </td>
+        
+        <td class="center">
+            10:20
+            --
+            20:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">17
+        </td>
+        <td class="center">第3节-中午2
+        </td>
+        <td class="center">
+            第3节 第4节 中午1 中午2 
+
+        </td>
+        
+        <td class="center">
+            10:20
+            --
+            14:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">18
+        </td>
+        <td class="center">第3节-中午1
+        </td>
+        <td class="center">
+            第3节 第4节 中午1 
+
+        </td>
+        
+        <td class="center">
+            10:20
+            --
+            13:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">19
+        </td>
+        <td class="center">第3节
+        </td>
+        <td class="center">
+            第3节 
+
+        </td>
+        
+        <td class="center">
+            10:20
+            --
+            11:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">20
+        </td>
+        <td class="center">第4-6节
+        </td>
+        <td class="center">
+            第4节 中午1 中午2 第5节 第6节 
+
+        </td>
+        
+        <td class="center">
+            11:15
+            --
+            16:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">21
+        </td>
+        <td class="center">第4节
+        </td>
+        <td class="center">
+            第4节 
+
+        </td>
+        
+        <td class="center">
+            11:15
+            --
+            12:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">22
+        </td>
+        <td class="center">第4节-中午2
+        </td>
+        <td class="center">
+            第4节 中午1 中午2 
+
+        </td>
+        
+        <td class="center">
+            11:15
+            --
+            14:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">23
+        </td>
+        <td class="center">第4-5节
+        </td>
+        <td class="center">
+            第4节 中午1 中午2 第5节 
+
+        </td>
+        
+        <td class="center">
+            11:15
+            --
+            15:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">24
+        </td>
+        <td class="center">中午
+        </td>
+        <td class="center">
+            中午1 中午2 
+
+        </td>
+        
+        <td class="center">
+            12:30
+            --
+            14:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">25
+        </td>
+        <td class="center">中午1-第6节
+        </td>
+        <td class="center">
+            中午1 中午2 第5节 第6节 
+
+        </td>
+        
+        <td class="center">
+            12:30
+            --
+            16:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">26
+        </td>
+        <td class="center">中午1-第8节
+        </td>
+        <td class="center">
+            中午1 中午2 第5节 第6节 第7节 第8节 
+
+        </td>
+        
+        <td class="center">
+            12:30
+            --
+            18:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">27
+        </td>
+        <td class="center">中午1-第10节
+        </td>
+        <td class="center">
+            中午1 中午2 第5节 第6节 第7节 第8节 第9节 第10节 
+
+        </td>
+        
+        <td class="center">
+            12:30
+            --
+            20:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">28
+        </td>
+        <td class="center">中午1-第7节
+        </td>
+        <td class="center">
+            中午1 中午2 第5节 第6节 第7节 
+
+        </td>
+        
+        <td class="center">
+            12:30
+            --
+            17:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">29
+        </td>
+        <td class="center">中午1-第5节
+        </td>
+        <td class="center">
+            中午1 中午2 第5节 
+
+        </td>
+        
+        <td class="center">
+            12:30
+            --
+            15:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">30
+        </td>
+        <td class="center">中午1-第12节
+        </td>
+        <td class="center">
+            中午1 中午2 第5节 第6节 第7节 第8节 第9节 第10节 第11节 第12节 
+
+        </td>
+        
+        <td class="center">
+            12:30
+            --
+            22:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">31
+        </td>
+        <td class="center">中午1
+        </td>
+        <td class="center">
+            中午1 
+
+        </td>
+        
+        <td class="center">
+            12:30
+            --
+            13:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">32
+        </td>
+        <td class="center">中午2-第8节
+        </td>
+        <td class="center">
+            中午2 第5节 第6节 第7节 第8节 
+
+        </td>
+        
+        <td class="center">
+            13:20
+            --
+            18:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">33
+        </td>
+        <td class="center">中午2-第6节
+        </td>
+        <td class="center">
+            中午2 第5节 第6节 
+
+        </td>
+        
+        <td class="center">
+            13:20
+            --
+            16:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">34
+        </td>
+        <td class="center">中午2
+        </td>
+        <td class="center">
+            中午2 
+
+        </td>
+        
+        <td class="center">
+            13:20
+            --
+            14:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">35
+        </td>
+        <td class="center">第5、6节
+        </td>
+        <td class="center">
+            第5节 第6节 
+
+        </td>
+        
+        <td class="center">
+            14:30
+            --
+            16:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">36
+        </td>
+        <td class="center">第5-7节
+        </td>
+        <td class="center">
+            第5节 第6节 第7节 
+
+        </td>
+        
+        <td class="center">
+            14:30
+            --
+            17:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">37
+        </td>
+        <td class="center">第5-8节
+        </td>
+        <td class="center">
+            第5节 第6节 第7节 第8节 
+
+        </td>
+        
+        <td class="center">
+            14:30
+            --
+            18:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">38
+        </td>
+        <td class="center">第5-10节
+        </td>
+        <td class="center">
+            第5节 第6节 第7节 第8节 第9节 第10节 
+
+        </td>
+        
+        <td class="center">
+            14:30
+            --
+            20:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">39
+        </td>
+        <td class="center">第5-12节
+        </td>
+        <td class="center">
+            第5节 第6节 第7节 第8节 第9节 第10节 第11节 第12节 
+
+        </td>
+        
+        <td class="center">
+            14:30
+            --
+            22:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">40
+        </td>
+        <td class="center">第5节
+        </td>
+        <td class="center">
+            第5节 
+
+        </td>
+        
+        <td class="center">
+            14:30
+            --
+            15:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">41
+        </td>
+        <td class="center">第5-9节
+        </td>
+        <td class="center">
+            第5节 第6节 第7节 第8节 第9节 
+
+        </td>
+        
+        <td class="center">
+            14:30
+            --
+            19:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">42
+        </td>
+        <td class="center">第6-8节
+        </td>
+        <td class="center">
+            第6节 第7节 第8节 
+
+        </td>
+        
+        <td class="center">
+            15:25
+            --
+            18:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">43
+        </td>
+        <td class="center">第6节
+        </td>
+        <td class="center">
+            第6节 
+
+        </td>
+        
+        <td class="center">
+            15:25
+            --
+            16:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">44
+        </td>
+        <td class="center">第6-9节
+        </td>
+        <td class="center">
+            第6节 第7节 第8节 第9节 
+
+        </td>
+        
+        <td class="center">
+            15:25
+            --
+            19:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">45
+        </td>
+        <td class="center">第6-11节
+        </td>
+        <td class="center">
+            第6节 第7节 第8节 第9节 第10节 第11节 
+
+        </td>
+        
+        <td class="center">
+            15:25
+            --
+            21:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">46
+        </td>
+        <td class="center">第7、8节
+        </td>
+        <td class="center">
+            第7节 第8节 
+
+        </td>
+        
+        <td class="center">
+            16:20
+            --
+            18:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">47
+        </td>
+        <td class="center">第7-9节
+        </td>
+        <td class="center">
+            第7节 第8节 第9节 
+
+        </td>
+        
+        <td class="center">
+            16:20
+            --
+            19:15
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">48
+        </td>
+        <td class="center">第7-10节
+        </td>
+        <td class="center">
+            第7节 第8节 第9节 第10节 
+
+        </td>
+        
+        <td class="center">
+            16:20
+            --
+            20:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">49
+        </td>
+        <td class="center">第7-12节
+        </td>
+        <td class="center">
+            第7节 第8节 第9节 第10节 第11节 第12节 
+
+        </td>
+        
+        <td class="center">
+            16:20
+            --
+            22:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">50
+        </td>
+        <td class="center">第7-11节
+        </td>
+        <td class="center">
+            第7节 第8节 第9节 第10节 第11节 
+
+        </td>
+        
+        <td class="center">
+            16:20
+            --
+            21:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">51
+        </td>
+        <td class="center">第7节
+        </td>
+        <td class="center">
+            第7节 
+
+        </td>
+        
+        <td class="center">
+            16:20
+            --
+            17:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">52
+        </td>
+        <td class="center">第8-11节
+        </td>
+        <td class="center">
+            第8节 第9节 第10节 第11节 
+
+        </td>
+        
+        <td class="center">
+            17:15
+            --
+            21:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">53
+        </td>
+        <td class="center">第8-10节
+        </td>
+        <td class="center">
+            第8节 第9节 第10节 
+
+        </td>
+        
+        <td class="center">
+            17:15
+            --
+            20:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">54
+        </td>
+        <td class="center">第9、10节
+        </td>
+        <td class="center">
+            第9节 第10节 
+
+        </td>
+        
+        <td class="center">
+            18:30
+            --
+            20:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">55
+        </td>
+        <td class="center">第9-11节
+        </td>
+        <td class="center">
+            第9节 第10节 第11节 
+
+        </td>
+        
+        <td class="center">
+            18:30
+            --
+            21:05
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">56
+        </td>
+        <td class="center">第9-12节
+        </td>
+        <td class="center">
+            第9节 第10节 第11节 第12节 
+
+        </td>
+        
+        <td class="center">
+            18:30
+            --
+            22:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">57
+        </td>
+        <td class="center">第10-12节
+        </td>
+        <td class="center">
+            第10节 第11节 第12节 
+
+        </td>
+        
+        <td class="center">
+            19:25
+            --
+            22:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">58
+        </td>
+        <td class="center">第10节
+        </td>
+        <td class="center">
+            第10节 
+
+        </td>
+        
+        <td class="center">
+            19:25
+            --
+            20:10
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">59
+        </td>
+        <td class="center">第11、12节
+        </td>
+        <td class="center">
+            第11节 第12节 
+
+        </td>
+        
+        <td class="center">
+            20:20
+            --
+            22:00
+        </td>
+        
+
+    </tr>
+    
+    <tr class="infolist_common" onMouseOver="javascript:this.className='infolist_current'"
+        onMouseOut="javascript:this.className='infolist_common'">
+        <td class="center">60
+        </td>
+        <td class="center">第11节
+        </td>
+        <td class="center">
+            第11节 
+
+        </td>
+        
+        <td class="center">
+            20:20
+            --
+            21:05
+        </td>
+        
+
+    </tr>
+    
+</table>
+</body>
+</html>

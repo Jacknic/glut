@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--关于应用的信息-->
-    <string name="about_desc">1. 此应用为个人作品\n
-        2. 此应用在使用过程中直接与学校的相关系统对接，无任何盗取用户信息的行为\n
-        3. 欢迎在GitHub( https://github.com/jacknic/glut.git )查看源码\n
-        4. 如需重新导入相关信息可选择重新登录按钮，进行登录获取\n
-        5. 如更新后使用APP有异常，建议清除应用数据，重启应用即可；由于学校服务器的原因，可能会出现部分数据获取失败的问题\n
+    <string name="about_desc">
+        1. 此应用为个人作品
+        \n2. 此应用在使用过程中直接与学校的相关系统对接，无任何盗取用户信息的行为
+        \n3. 欢迎在GitHub( https://github.com/Jacknic/glut.git )查看源码
+        \n4. 如需重新导入相关信息可选择重新登录按钮，进行登录获取
+        \n5. 如更新后使用APP有异常，建议清除应用数据，重启应用即可；由于学校服务器的原因，可能会出现部分数据获取失败的问题\n
     </string>
 </resources>

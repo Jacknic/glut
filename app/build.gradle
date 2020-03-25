@@ -1,39 +1,66 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'AndResGuard'
+
+// 详细配置参数 | https://github.com/shwenzhang/AndResGuard/blob/master/doc/how_to_work.zh-cn.md
+andResGuard {
+    useSign = true
+    use7zip = true
+    fixedResName = "arg"
+    mergeDuplicatedRes = true
+    whiteList = ["R.mipmap.ic_launcher", "R.id.*"]
+    compressFilePattern = ["*.png", "*.jpg", "*.jpeg", "*.gif", "resources.arsc"]
+    digestalg = "SHA-256"
+    sevenzip {
+        artifact = 'com.tencent.mm:SevenZip:1.2.17'
+    }
+}
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion versions.compileSdk
     defaultConfig {
         applicationId "com.jacknic.glut"
-        minSdkVersion 16
-        targetSdkVersion 28
-        resConfigs 'zh', 'hdpi'
-        versionCode 54
-        flavorDimensions "default"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode 60
+        versionName "6.0"
+        resConfigs 'zh', 'xxxhdpi', "desk", "ldltr"
+        vectorDrawables.useSupportLibrary true
+        setProperty("archivesBaseName", "$applicationId")
         manifestPlaceholders = [MTA_CHANNEL: "测试", MTA_APPKEY: "debug"]
-        versionName "5.4"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        ndk {
-//            abiFilters 'armeabi-v7a'
-        }
-        setProperty("archivesBaseName", "$applicationId-v$versionName")
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
     packagingOptions {
         exclude 'project.properties'
         exclude 'proguard-project.txt'
-        exclude 'META-INF/CHANGES*'
-        exclude 'META-INF/LICENSE*'
-        exclude 'META-INF/README*'
-        exclude 'META-INF/*.txt'
-        // 忽略所有mta so文件
-        exclude 'lib/**/libMtaNativeCrash_v2.so'
+        exclude 'META-INF/**'
+        exclude 'okhttp3/**'
+        exclude 'kotlin*/**'
+        exclude 'lib/**'
     }
 
     // 个人签名配置
     signingConfigs {
-        def pwd = 'replace@@glut'
-        config {
-            storeFile file('glut_app.jks')
+        def pwd = System.getenv("PWD_GLUT")
+        release {
+            storeFile rootProject.file('glut_app.jks')
             keyAlias 'glut_app'
             keyPassword pwd
             storePassword pwd
@@ -43,47 +70,97 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            signingConfig signingConfigs.release
             manifestPlaceholders = [MTA_APPKEY: "Aqc1105763654"]
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug {
+    }
+
+    flavorDimensions "release"
+
+    productFlavors {
+
+        dev {
             versionNameSuffix = "-debug"
             applicationIdSuffix ".debug"
         }
-    }
-    //配置数据库版本，版本升级为2
-    greendao {
-        schemaVersion 2
-    }
-    //渠道打包
-    productFlavors {
-        // 应用宝
+
+        demo {
+            dimension = 'release'
+            versionNameSuffix = "-demo"
+            applicationIdSuffix ".debug"
+        }
+
+        github {
+            dimension = 'release'
+            manifestPlaceholders = [MTA_CHANNEL: "GitHub"]
+        }
+
         yyb {
+            dimension = 'release'
             manifestPlaceholders = [MTA_CHANNEL: "应用宝"]
         }
-        github {
-            manifestPlaceholders = [MTA_CHANNEL: "GitHub"]
+    }
+
+    // 变体过滤
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if (buildType.name == "debug" && !names.contains("dev")) {
+            variant.ignore = true
         }
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2')
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'org.greenrobot:eventbus:3.1.1'
-    implementation 'org.greenrobot:greendao:3.2.2'
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    api 'com.lzy.net:okgo:2.1.4'
-    implementation 'com.alibaba:fastjson:1.1.56.android'
-    implementation 'org.jsoup:jsoup:1.11.3'
-    implementation 'me.gujun.android.taggroup:library:1.4@aar'
-    implementation 'com.contrarywind:Android-PickerView:3.2.6'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+    implementation "androidx.appcompat:appcompat:${versions.appcompat}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
+    implementation "androidx.core:core-ktx:${versions.coreKtx}"
+    implementation "androidx.arch.core:core-runtime:${versions.androidxArch}"
+    implementation "androidx.room:room-runtime:${versions.room}"
+    implementation "androidx.room:room-ktx:${versions.room}"
+
+    // UI
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
+    implementation "androidx.recyclerview:recyclerview:${versions.recyclerView}"
+    implementation "androidx.webkit:webkit:1.2.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
+    implementation "androidx.preference:preference:${versions.preference}"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    //noinspection GradleDependency
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    // 功能
     implementation 'com.qq.mta:mta:3.4.7-release'
     implementation 'com.tencent.mid:mid:4.06-Release'
+    implementation 'com.orhanobut:logger:2.2.0'
+    kapt "androidx.room:room-compiler:${versions.room}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+    implementation "org.jsoup:jsoup:${versions.jsoup}"
+
+    // 测试
+    testImplementation "junit:junit:${versions.junit}"
+    androidTestImplementation "androidx.test.ext:junit:${versions.extJunit}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.espresso}"
+}
+
+task gitPush(type: Exec, dependsOn: "testDevDebugUnitTest") {
+    description('推送到Git仓库')
+    commandLine 'git', 'push'
+}
+
+task zipOutputs(type: Zip) {
+    description('打包产出物')
+    archiveName('outputs.zip')
+    destinationDirectory = file("${buildDir}/")
+    from("${buildDir}/outputs") {
+        // 排除 AndResGuard 过程文件
+        excludes = ['apk/**/AndResGuard_**/**']
+    }
 }

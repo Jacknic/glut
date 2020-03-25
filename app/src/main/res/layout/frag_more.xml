@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.jacknic.glut.widget.ThemeSwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:backgroundColor="?colorBackgroundFloating"
+        app:schemeColor="?colorPrimary">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ivCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_round_bottom"
+                android:backgroundTint="?colorBackgroundFloating"
+                android:clipChildren="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvFinance"
+                    style="@style/FinanceTextIconStyle"
+                    android:text="@string/title_cw"
+                    app:drawableTint="@color/green"
+                    app:drawableTopCompat="@drawable/ic_payment" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvJwc"
+                    style="@style/FinanceTextIconStyle"
+                    android:text="@string/title_jw"
+                    app:drawableTint="@color/blue"
+                    app:drawableTopCompat="@drawable/ic_assignment" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLib"
+                    style="@style/FinanceTextIconStyle"
+                    android:text="@string/title_ts"
+                    app:drawableTint="@color/orange"
+                    app:drawableTopCompat="@drawable/ic_local_library" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTodayCourses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/primary_offset"
+                android:layout_marginTop="@dimen/primary_offset"
+                android:drawableStart="@drawable/ic_event_note"
+                android:drawablePadding="@dimen/primary_offset"
+                android:gravity="center_vertical"
+                android:text="@string/today_courses"
+                android:textColor="?colorPrimary"
+                app:drawableTint="?colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivCard" />
+
+            <ListView
+                android:id="@+id/lvTodayCourseList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@id/tvTodayCourses"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:listSelector="@android:color/transparent"
+                android:nestedScrollingEnabled="true"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTodayCourses"
+                tools:listitem="@layout/item_course_today" />
+
+            <include
+                android:id="@+id/emptyView"
+                layout="@layout/layout_courses_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTodayCourses"
+                tools:visibility="visible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.jacknic.glut.widget.ThemeSwipeRefreshLayout>
+
+</layout>

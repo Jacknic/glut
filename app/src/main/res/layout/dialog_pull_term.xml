@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_round_top"
+        android:backgroundTint="?colorBackgroundFloating"
+        android:padding="@dimen/primary_offset">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPullTerm"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/pull_term_courses"
+            android:textColor="?colorPrimary"
+            app:drawableStartCompat="@drawable/ic_pull"
+            app:drawableTint="?colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spYear"
+            style="@style/SpinnerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toStartOf="@id/tvYearLabel"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPullTerm"
+            tools:entries="@array/theme_mode_array" />
+
+        <TextView
+            android:id="@+id/tvYearLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/year"
+            app:layout_constraintBottom_toBottomOf="@id/spYear"
+            app:layout_constraintEnd_toStartOf="@id/rgTerms"
+            app:layout_constraintStart_toEndOf="@id/spYear"
+            app:layout_constraintTop_toTopOf="@id/spYear" />
+
+        <RadioGroup
+            android:id="@+id/rgTerms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tvYearLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvYearLabel"
+            app:layout_constraintTop_toTopOf="@id/tvYearLabel">
+
+            <RadioButton
+                android:id="@+id/rbSpring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/selector_theme_primary"
+                android:checked="true"
+                android:text="@string/spring"
+                android:textColor="@color/selector_theme_primary" />
+
+            <RadioButton
+                android:id="@+id/rbAutumn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/selector_theme_primary"
+                android:text="@string/fall"
+                android:textColor="@color/selector_theme_primary" />
+        </RadioGroup>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPull"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/pull_now"
+            app:cornerRadius="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spYear" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

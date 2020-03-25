@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="info"
+            type="com.jacknic.glut.data.db.entity.CourseInfo" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_round_top"
+        android:backgroundTint="?colorBackgroundFloating"
+        android:orientation="vertical"
+        android:padding="@dimen/primary_offset">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCourseName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/primary_offset"
+                android:gravity="center_vertical"
+                android:text="@{info.courseName}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="?colorPrimary"
+                app:drawableStartCompat="@drawable/ic_event_note"
+                app:drawableTint="?colorPrimary"
+                tools:text="课程名称" />
+
+            <ImageView
+                android:id="@+id/ivEditCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?actionBarItemBackground"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_edit"
+                android:tint="?colorPrimary" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTeacherName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/primary_offset"
+            android:drawablePadding="@dimen/primary_offset"
+            android:gravity="center_vertical"
+            android:text="@{info.teacher.empty?`(未知)`:info.teacher}"
+            app:drawableStartCompat="@drawable/ic_perm_contact_calendar"
+            app:drawableTint="?colorButtonNormal"
+            tools:text="教师：易中天" />
+
+        <TextView
+            android:id="@+id/tvGrade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/primary_offset"
+            android:drawablePadding="@dimen/primary_offset"
+            android:gravity="center_vertical"
+            android:text="@{`学分 `+info.grade}"
+            app:drawableStartCompat="@drawable/ic_assignment_turned_in"
+            app:drawableTint="?colorButtonNormal"
+            tools:text="学分：0.5" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCourseArrange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/primary_offset"
+            android:minHeight="260dp"
+            android:nestedScrollingEnabled="true"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_course_arrange" />
+
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="260dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/empty_courses_tips"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+</layout>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/course_widget"
-    android:minHeight="110dp"
-    android:minWidth="250dp"
-    android:resizeMode="vertical"
+    android:minWidth="240dp"
+    android:minHeight="80dp"
+    android:resizeMode="vertical|horizontal"
     android:updatePeriodMillis="180000"
     android:widgetCategory="home_screen" />

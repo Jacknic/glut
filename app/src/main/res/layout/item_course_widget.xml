@@ -1,48 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_course_widget"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/round_border_bg_tran"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="5dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/item_tv_start_end"
-        android:layout_width="36dp"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/barDark"
-        tools:text="1-2" />
+    <data>
 
-    <TextView
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:background="@color/primaryBackgroundTran" />
+        <variable
+            name="course"
+            type="com.jacknic.glut.data.db.entity.Course" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="5dp">
+        <import
+            alias="tu"
+            type="com.jacknic.glut.util.TimeUtils" />
+    </data>
 
-        <TextView
-            android:id="@+id/item_tv_course_name"
-            android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/courseWidgetItem"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/barDark"
-            tools:text="课程名称" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="3dp"
+            android:alpha="0.9"
+            android:background="@drawable/bg_round_all"
+            android:clipChildren="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/primary_offset"
+            android:paddingBottom="@dimen/primary_offset"
+            tools:ignore="UselessParent">
 
-        <TextView
-            android:id="@+id/item_tv_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blueLight"
-            tools:text="上课地点" />
-    </LinearLayout>
-</LinearLayout>
+            <TextView
+                android:id="@+id/tvCourseArrange"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="@{tu.courseIndex2Text(course.startSection,``)+`-`+tu.courseIndex2Text(course.endSection,``)}"
+                android:textSize="14sp"
+                tools:text="中午1-中午2" />
+
+            <ImageView
+                android:layout_width="0.5dp"
+                android:layout_height="30dp"
+                android:background="@color/black_10p"
+                android:contentDescription="@null" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvCourseName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{`课程：` + course.courseName}"
+                    tools:text="课程：品三国" />
+
+                <TextView
+                    android:id="@+id/tvTeacherName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{`地点：` + course.classRoom}"
+                    tools:text="地点：6406" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

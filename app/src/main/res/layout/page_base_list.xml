@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.jacknic.glut.widget.ThemeSwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:enabled="false"
+        app:backgroundColor="?colorBackgroundFloating"
+        app:schemeColor="?colorPrimary">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lvItemList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:listSelector="@android:color/transparent"
+                android:nestedScrollingEnabled="true"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_course_info" />
+
+            <include
+                android:id="@+id/emptyView"
+                layout="@layout/layout_empty_view"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </FrameLayout>
+
+    </com.jacknic.glut.widget.ThemeSwipeRefreshLayout>
+
+</layout>

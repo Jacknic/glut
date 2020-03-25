@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="course"
+            type="com.jacknic.glut.data.db.entity.CourseInfo" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:foreground="?selectableItemBackground"
+            android:minHeight="60dp"
+            app:cardBackgroundColor="?colorBackgroundFloating"
+            app:cardCornerRadius="@dimen/primary_radius"
+            app:cardElevation="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:addStatesFromChildren="true"
+                android:clipChildren="false"
+                android:paddingTop="@dimen/primary_offset"
+                android:paddingBottom="@dimen/primary_offset">
+
+                <ImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/primary_offset"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_event_note"
+                    android:tint="?colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvCourseName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{`课程：` + course.courseName}"
+                    app:layout_constraintEnd_toStartOf="@+id/cbCheck"
+                    app:layout_constraintStart_toEndOf="@id/ivAvatar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="课程：品三国" />
+
+                <TextView
+                    android:id="@+id/tvTeacherName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{`教师：` + course.teacher}"
+                    app:layout_constraintEnd_toStartOf="@+id/cbCheck"
+                    app:layout_constraintStart_toEndOf="@id/ivAvatar"
+                    app:layout_constraintTop_toBottomOf="@id/tvCourseName"
+                    tools:text="教师：易中天" />
+
+                <CheckBox
+                    android:id="@+id/cbCheck"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="@dimen/primary_offset"
+                    android:button="@drawable/ic_check_circle"
+                    android:buttonTint="@color/selector_theme_primary"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:stateListAnimator="@animator/animator_check"
+                    android:text="@null"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+</layout>

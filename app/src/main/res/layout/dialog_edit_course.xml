@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="course"
+            type="com.jacknic.glut.data.db.entity.Course" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_round_top"
+        android:backgroundTint="?colorBackgroundFloating"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:padding="@dimen/primary_offset">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/course_arrange"
+            android:textColor="?colorPrimary" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/primary_offset"
+            android:autofillHints=""
+            android:background="@drawable/selector_input_box"
+            android:drawableStart="@drawable/ic_location_on"
+            android:drawablePadding="@dimen/primary_offset"
+            android:hint="@string/classroom_hit"
+            android:inputType="text"
+            android:maxLines="1"
+            android:minHeight="50dp"
+            android:paddingStart="@dimen/primary_offset"
+            android:paddingEnd="@dimen/primary_offset"
+            android:singleLine="true"
+            android:text="@={course.classRoom}"
+            app:drawableTint="?colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="50dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spWeekday"
+                style="@style/SpinnerStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/terms"
+                android:gravity="center" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spCourseStart"
+                style="@style/SpinnerStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/terms"
+                android:gravity="center"
+                android:padding="0dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/until" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spCourseEnd"
+                style="@style/SpinnerStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/terms"
+                android:gravity="center"
+                android:padding="0dp" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/week_arrange" />
+
+        <GridView
+            android:id="@+id/gvWeeks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/primary_offset"
+            android:background="@drawable/bg_round_all"
+            android:backgroundTint="?android:colorBackground"
+            android:horizontalSpacing="3dp"
+            android:numColumns="5"
+            android:padding="3dp"
+            android:verticalSpacing="3dp"
+            tools:listitem="@layout/item_table_side" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDelete"
+                style="@style/ActionButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:text="@string/delete"
+                app:backgroundTint="@color/red"
+                app:icon="@drawable/ic_delete"
+                app:iconGravity="textStart" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                style="@style/ActionButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/hold"
+                app:icon="@drawable/ic_save"
+                app:iconGravity="textStart" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

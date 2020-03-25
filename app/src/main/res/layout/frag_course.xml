@@ -1,114 +1,92 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:background="?attr/colorPrimary"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_school_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="学年"
-            android:textColor="@color/white" />
-
-
-        <TextView
-            android:id="@+id/tv_semester"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="16dp"
-            android:text="学期"
-            android:textColor="@color/white" />
-
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="-16dp"
-            android:src="@drawable/ic_event_note"
-            android:tint="@color/white" />
-
-        <TextView
-            android:id="@+id/tv_week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:padding="5dp"
-            android:text="周数"
-            android:textColor="@color/white" />
-
-        <ImageView
-            android:id="@+id/iv_toggle"
-            android:layout_width="42dp"
-            android:layout_height="match_parent"
-            android:padding="2dp"
-            android:src="@drawable/ic_add"
-            android:tint="@color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_select_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_select_week"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            app:tabGravity="center"
-            app:tabIndicatorColor="@color/white"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/cary" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/tv_month"
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center"
-            android:text="月份"
-            android:textSize="10sp" />
-
-        <GridView
-            android:id="@+id/gv_weekName"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:numColumns="7" />
-    </LinearLayout>
+            android:background="@android:color/transparent"
+            app:elevation="3dp"
+            app:expanded="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:liftOnScroll="true">
 
-    <ScrollView
-        android:id="@+id/course_table"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="ifContentScrolls"
-        android:scrollbars="none">
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/weekTabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?colorBackgroundFloating"
+                app:layout_scrollFlags="snap|scroll|enterAlwaysCollapsed"
+                app:tabIndicator="@drawable/scrollbar"
+                app:tabIndicatorAnimationDuration="@android:integer/config_shortAnimTime"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="3dp"
+                app:tabMode="scrollable"
+                app:tabRippleColor="?colorPrimary" />
 
-        <com.jacknic.glut.view.widget.CourseTableView
-            android:id="@+id/table_view"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?colorBackgroundFloating"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_scrollFlags="enterAlways">
+
+                <TextView
+                    android:id="@+id/tvMonth"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    tools:text="12\n月" />
+
+                <GridView
+                    android:id="@+id/gvWeekDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:horizontalSpacing="0dp"
+                    android:listSelector="@android:color/transparent"
+                    android:numColumns="7"
+                    android:scrollbars="none"
+                    android:verticalSpacing="0dp"
+                    tools:layout_height="30dp"
+                    tools:listitem="@layout/item_week_day" />
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollTable"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <com.jacknic.glut.widget.TimeTableView
+                android:id="@+id/timeTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabPinWeek"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_gravity="end|bottom"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_edit_location"
+            app:backgroundTint="?colorPrimary"
+            app:fabSize="auto"
+            app:rippleColor="?colorPrimary"
+            app:tint="@android:color/white"
+            app:tooltipText="设为当前周" />
 
-    </ScrollView>
-
-</LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

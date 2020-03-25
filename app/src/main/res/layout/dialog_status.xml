@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:minWidth="100dp"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables,UselessParent">
+
+        <ProgressBar
+            android:id="@+id/ivStatus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:indeterminateDrawable="@drawable/anim_loading"
+            android:indeterminateTint="?colorPrimary" />
+
+        <TextView
+            android:id="@+id/tvStatusMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/primary_offset"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            tools:text="正在登录..." />
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="course"
+            type="com.jacknic.glut.data.db.entity.Course" />
+
+        <import
+            alias="tu"
+            type="com.jacknic.glut.util.TimeUtils" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/primary_offset"
+            android:layout_marginBottom="@dimen/primary_offset"
+            android:alpha="0.9"
+            android:background="@drawable/bg_round_all"
+            android:backgroundTint="?android:colorBackground"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@{`周`+tu.getWeekDay(course.dayOfWeek)}"
+            tools:text="周一" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text="@{`教室：`+course.classRoom}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="教室：9501" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/primary_offset"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text="@{`节数：`+tu.courseIndex2Text(course.startSection,``)+`-`+tu.courseIndex2Text(course.endSection,``)}"
+            app:drawableTint="@color/cyan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="节数：3-4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/primary_offset"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text="@{`周数：`+course.week}"
+            app:drawableTint="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="周数：3-7单周" />
+    </LinearLayout>
+</layout>

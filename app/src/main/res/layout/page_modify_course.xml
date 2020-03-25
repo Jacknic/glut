@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="courseInfo"
+            type="com.jacknic.glut.data.db.entity.CourseInfo" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/tvCourseName"
+                style="@style/CourseEditTextViewStyle"
+                android:layout_marginTop="@dimen/primary_offset"
+                android:drawableStart="@drawable/ic_event_note"
+                android:hint="@string/course_name"
+                android:imeOptions="actionNext"
+                android:text="@={courseInfo.courseName}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/tvGrade"
+                style="@style/CourseEditTextViewStyle"
+                android:drawableStart="@drawable/ic_assignment_turned_in"
+                android:hint="@string/course_credit"
+                android:imeOptions="actionNext"
+                android:text="@={courseInfo.grade}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCourseName" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/tvTeacher"
+                style="@style/CourseEditTextViewStyle"
+                android:drawableStart="@drawable/ic_perm_contact_calendar"
+                android:hint="@string/teacher_name"
+                android:imeOptions="actionDone"
+                android:text="@={courseInfo.teacher}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvGrade" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvEditList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/primary_offset"
+                android:background="@drawable/bg_round_all"
+                android:backgroundTint="?colorBackgroundFloating"
+                android:nestedScrollingEnabled="true"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                android:padding="@dimen/primary_offset"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTeacher"
+                app:spanCount="2"
+                tools:itemCount="10"
+                tools:listitem="@layout/item_course_arrange" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAdd"
+                style="@style/ActionButtonStyle"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/ic_add"
+                android:text="@string/add_course_arrange"
+                android:layout_marginTop="30dp"
+                app:iconGravity="textStart"
+                android:tint="@android:color/white"
+                app:icon="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>

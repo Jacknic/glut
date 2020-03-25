@@ -1,0 +1,649 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+  <head>
+    <title>学籍信息</title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!-- Mimic Internet Explorer 7 -->
+      
+    <link href="/academic/styles/default/css/text.css" rel="stylesheet" type="text/css">
+    <link href="/academic/styles/default/css/main.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" language="javascript" src="/academic/styles/js/jquery.js" ></script>
+    <script type="text/javascript" language="javascript" src="/academic/styles/js/function.js" ></script>
+    <script type="text/javascript" language="javascript" src="/academic/styles/js/common.js" ></script>
+    <script type="text/javascript" language="javascript" src="/academic/styles/js/selectDate.js" ></script>
+    <script type="text/javascript" language="javascript" src="/academic/styles/js/selectTime.js" ></script>
+    <script type="text/javascript" language="javascript" src="/academic/styles/default/js/page.js" ></script>
+
+    <script type="text/javascript" language="javascript" src="/academic/styles/js/selectDateTime.js" ></script>
+       <script type="text/javascript" language="javascript" src="/academic/styles/js/j_common.js" ></script>
+      <script type="text/javascript" language="javascript" src="/academic/styles/js/depCommon.js" ></script>
+
+      
+
+      <!--[if lt IE 7]>
+
+      <script src="/academic/styles/js/jquery.bgiframe.min.js" type="text/javascript"></script>
+      <![endif]-->
+      <script type='text/javascript' src='/academic/dwr/engine.js'></script>
+      <script type='text/javascript' src='/academic/dwr/util.js'></script>
+      <script type='text/javascript' src='/academic/dwr/interface/pushStart.js'></script>
+      <script type="text/javascript">
+          function push(){
+              pushStart.sendMessageAuto("接收人ID","推送内容，可在java后台更改");
+          }
+      </script>
+  </head>                                
+  <body>
+    <center>
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+    span{color:gray;}
+    div#temp a:hover{cursor:pointer;background-color:#f7edd2;color:black;}
+    div#temp a{text-decoration: none;}
+    div#temp label{padding-right: 2px;float: right;}
+    div#temp{ text-align: left; background: #f7edd2;border:2px solid white;
+        overflow-y:scroll;height:150px;margin-bottom:10px;display:none;
+        position: absolute; z-index: 1; padding:10px; -moz-border-radius: 5px;
+        -webkit-border-radius: 5px; border-radius: 10px; -moz-box-shadow: 9px;
+        -webkit-box-shadow: 9px; box-shadow: 9px; -ms-box-shadow: 9px;
+    }
+</style>
+
+<script type="text/javascript">
+    var xmlhttp;
+    var xmlhttpd;
+    function changeClasses(majorId, gradeId, stusortId) {
+        if (window.ActiveXObject) {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } else  if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        var url = "changeClass.do?majorid=" + majorId + "&gradeid=" + gradeId + "&stusortid=" + stusortId;//提交参数
+        xmlhttp.open("POST", url);
+        xmlhttp.send(null);
+        xmlhttp.onreadystatechange = listClasses;//返回并执行相应js
+
+        var url1 = "changeDirection.do?majorid=" + majorId;
+        if (window.ActiveXObject) {
+            xmlhttpd = new ActiveXObject("Microsoft.XMLHTTP");
+        } else  if (window.XMLHttpRequest) {
+            xmlhttpd = new XMLHttpRequest();
+        }
+        xmlhttpd.open("POST", url1);
+        xmlhttpd.send(null);
+        xmlhttpd.onreadystatechange = listDirections;
+
+    }
+    function listClasses() {
+        if (xmlhttp.readyState == 4)
+            if (xmlhttp.status == 200) {
+                var mytext = xmlhttp.responseText;
+                document.getElementById("classChange").innerHTML = mytext;//替换span id为majorChange所包含的区域
+                document.getElementById("areaChange").innerHTML = "<select name='areaid'><option value=''>--请选择--</option></select><em class='error'>﹡</em><input type='hidden' name='required_areaid' value='0'/>";//替换span directionChange
+            }
+    }
+    function listDirections() {
+        if (xmlhttpd.readyState == 4)
+            if (xmlhttpd.status == 200) {
+                var mytext = xmlhttpd.responseText;
+                document.getElementById("directionChange").innerHTML = mytext;//替换span id为majorChange所包含的区域
+            }
+    }
+
+
+    function searchStop(z){
+        var stopObj=z=="start"?$("input[name=startStop]"):$("input[name=endStop]");
+        var info="";
+        if(stopObj.val()=="" || stopObj.val()==null)
+            return false;
+        var v= (stopObj.val().trim()).toLowerCase();
+        if(v!=""){
+            $(depotInfo).children("a[c*="+v+"],a[e*="+v+"],a[q*="+v+"]").each(function(){
+                info+="<a>"+$(this).html()+"</a><span>("+$(this).attr("p")+")</span><br>";
+            });
+            $("div#temp").css({"top":stopObj.position().top+18,
+                "left":stopObj.position().left-10, "width":stopObj.width()});
+            if(info.length==0)
+                $("div#temp").hide();
+            else{
+                $("div#temp").html("<label id='close_stop'>×</label>"+info).show();
+                $("div#temp a").bind('click',function(){
+                    stopObj.val($(this).text());
+                    $("div#temp").hide();
+                });
+            }
+        }
+    }
+
+    var depotInfo;
+    $(function(){
+        $.ajax({
+            url:'../../data/depot.xml',
+            dataType:'html',
+            async:false,
+            success:function(data){
+                depotInfo=data;
+            }
+        });
+        $("input[name=startStop]").bind("input focus",function(){searchStop('start');});
+        $("input[name=endStop]").bind("input focus",function(){searchStop('end');});
+        $("div#temp").bind("blur",function(){$("div#temp").hide();});
+        $("label#close_stop").live("click",function(){$("div#temp").hide();});
+    });
+
+    function checkForm(type_){
+        var mail=$("input[name=email]").val();
+        if(mail!=undefined && mail!=null && mail!=""){
+            var reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+            if(!reg.test(mail)){
+                alert("电子邮箱格式不正确");
+                return false;
+            }
+        }
+        var s=$("input[name=startStop]");
+        var e=$("input[name=endStop]");
+        if(s.val()!="" && e.val()!="" && s.val()==e.val()){
+            alert("乘车起始站和终点站不能相同");
+            return false;
+        }else{
+            if(s.val()!="" && $(depotInfo).children("a[c="+ s.val() +"]").length==0){
+                alert("乘车起始站输入错误");
+                return false;
+            }else if(e.val()!="" && $(depotInfo).children("a[c="+ e.val() +"]").length==0){
+                alert("乘车终点站输入错误");
+                return false;
+            }
+        }
+        if(type_=='add')
+            addSave();
+    }
+
+
+</script>
+
+<script type="text/javascript">
+    var xmlhttp;
+    var xmlhttpd;
+    function changeOnlyClasses(majorId, gradeId, stusortId) {
+        if (window.ActiveXObject) {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } else  if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        var url = "changeOnylClass.do?majorid=" + majorId + "&gradeid=" + gradeId + "&stusortid=" + stusortId;//提交参数
+        xmlhttp.open("POST", url);
+        xmlhttp.send(null);
+        xmlhttp.onreadystatechange = listClasses;//返回并执行相应js
+    }
+    function listClasses() {
+        if (xmlhttp.readyState == 4)
+            if (xmlhttp.status == 200) {
+                var mytext = xmlhttp.responseText;
+                document.getElementById("classChange").innerHTML = mytext;//替换span id为majorChange所包含的区域
+                document.getElementById("areaChange").innerHTML = "<select name='areaid'><option value=''>--请选择--</option></select><em class='error'>﹡</em><input type='hidden' name='required_areaid' value='0'/>";//替换span directionChange
+            }
+    }
+</script>
+
+<script type="text/javascript">
+    var xmlhttp;
+    var xmlhttpd;
+    function changeAreaes(classid) {
+        if (window.ActiveXObject) {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } else  if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        var url = "changeArea.do?classid=" + classid;//提交参数
+        xmlhttp.open("GET", url);
+        xmlhttp.send(null);
+        xmlhttp.onreadystatechange = listAreas;//返回并执行相应js
+
+
+    var url1 = "changeLeanStyle.do?classid=" + classid;
+    if (window.ActiveXObject) {
+        xmlhttpd = new ActiveXObject("Microsoft.XMLHTTP");
+    } else  if (window.XMLHttpRequest) {
+        xmlhttpd = new XMLHttpRequest();
+    }
+    xmlhttpd.open("POST", url1);
+    xmlhttpd.send(null);
+    xmlhttpd.onreadystatechange = listLearnStyles;
+
+
+    function listAreas() {
+        if (xmlhttp.readyState == 4)
+            if (xmlhttp.status == 200) {
+                var mytext = xmlhttp.responseText;
+                document.getElementById("areaChange").innerHTML = mytext;//替换span id为majorChange所包含的区域
+            }
+    }
+    function listLearnStyles() {
+        if (xmlhttp.readyState == 4)
+            if (xmlhttp.status == 200) {
+                var mytext = xmlhttp.responseText;
+                document.getElementById("learnStyleChange").innerHTML = mytext;//替换span id为learnStyleChange所包含的区域
+            }
+    }
+    }
+</script>
+<script type="text/javascript">
+    var xmlhttp;
+    function changeMajor(depId) {
+        if (window.ActiveXObject)
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        else  if (window.XMLHttpRequest)
+            xmlhttp = new XMLHttpRequest();
+        var url = "changeMajor.do?departmentid=" + depId;//提交参数
+        xmlhttp.onreadystatechange = listMajors;//返回并执行相应js
+        xmlhttp.open("GET", url);
+        xmlhttp.send(null);
+    }
+    function listMajors() {
+        if (xmlhttp.readyState == 4)
+            if (xmlhttp.status == 200) {
+                var mytext = xmlhttp.responseText;
+                document.getElementById("majorChange").innerHTML = mytext;//替换span id为majorChange所包含的区域
+                document.getElementById("classChange").innerHTML = "<select name='classid'><option value=''>--请选择--</option></select><em class='error'>﹡</em><input type='hidden' name='required_classid' value='0'/>";//替换span classChange
+                document.getElementById("directionChange").innerHTML = "<select name='directionId'><option value=''>--请选择--</option></select>";//替换span directionChange
+                document.getElementById("areaChange").innerHTML = "<select name='areaid'><option value=''>--请选择--</option></select><em class='error'>﹡</em><input type='hidden' name='required_areaid' value='0'/>";//替换span directionChange
+            }
+    }
+    function _viewphoto(mypic, imgSrc) {
+        var mp = document.getElementById(mypic);
+        if (imgSrc) {
+            mp.src = imgSrc;
+            mp.style.display = "";
+        }
+    }
+
+    function deletephoto() {
+        alert("删除或修改照片与其他信息一样需“保存”后生效!");
+        var mp = document.getElementById("showimg");
+        mp.src = "/academic/styles/images/defaultpic.jpg";
+        mp.style.display = "";
+        //document.getElementById("photo").insertAdjacentHTML("afterEnd", "<input type=\"hidden\" value=\"0\" name=\"dp\"/>");
+        $("input[name='photo']").after("<input type=\"hidden\" value=\"0\" name=\"dp\"/>");
+    }
+
+</script>
+<script type="text/javascript">
+    function addSave() {
+        document.forms[0].action = "/academic/manager/studentinfo/studentInfoAddDo.do";
+        document.forms[0].submit();
+    }
+</script>
+
+<div class="title">
+    <span class="left"><em>
+        
+            
+            学籍信息
+        
+    </em>
+    </span>
+    <span class="right">&nbsp;</span>
+</div>
+
+<form name="studentModifyInfoAcquireFillForm" method="post" action="/academic/student/studentinfo/studentInfoModifyDo.do" enctype="multipart/form-data">
+<input type="hidden" name="stuUserId" value="394864">
+<input type="hidden" name="frombase" value="0">
+<input type="hidden" name="wantTag" value="0">
+    <table cellspacing="0" cellpadding="0" class="form">
+        <tr>
+            <th width="12%" align="left">学号</th><td width="35%"><input type="hidden" name="username" value="3166666666666">3166666666666<em class="error"></em></td>
+            <th width="12%" align="left">曾用名</th><td ><input type="hidden" name="oldRealName" value="">&nbsp;<em class="error"></em></td>
+            <td width="7%" rowspan="8"><img src="/academic/manager/studentinfo/showStudentImage.jsp?id=0.03888275127200169" width="120" hight="150" name="showimg" id="showimg"><br></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">姓名</th><td ><input type="hidden" name="realname" value="尼古拉斯赵四">尼古拉斯赵四<em class="error"></em></td>
+            <th width="12%" align="left">姓名拼音</th><td ><input type="hidden" name="realNamePinYin" value="Nicolas">Nicolas<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">英文名</th><td ><input type="hidden" name="enname" value="">&nbsp;<em class="error"></em></td>
+            <th width="12%" align="left">性别</th><td ><input type="hidden" name="gender" value="男">男<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">出生日期</th><td ><input type="hidden" name="birthday" value="1998-04-03">1998-04-03<em class="error"></em></td>
+            <th width="12%" align="left">出生地</th><td ><input type="hidden" name="birthplace" value="">&nbsp;<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">国籍</th><td ><input type="hidden" name="nationalityId" value="1239">中国<em class="error"></em></td>
+            <th width="12%" align="left">籍贯</th><td ><input type="hidden" name="nativePlace" value="铁岭市 象牙县">铁岭市 象牙县<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">证件类型</th><td ><input type="hidden" name="cardtypeId" value="27">1-居民身份证<em class="error"></em></td>
+            <th width="12%" align="left">证件号码</th><td ><input type="hidden" name="idno" value="452626666666666666">452626666666666666<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">民族</th><td ><input type="hidden" name="folkid" value="1233">汉族<em class="error"></em></td>
+            <th width="12%" align="left">政治面貌</th><td ><input type="hidden" name="politicalStatusId" value="1254">共青团员<em class="error"></em></td>
+        </tr>
+
+
+        <tr>
+
+            <th width="12%" align="left">是否本市户籍</th><td ><input type="hidden" name="portId" value="">&nbsp;<em class="error"></em></td>
+
+            <th>&nbsp;</th>
+            <td>&nbsp;</td>
+        </tr>
+
+
+        <tr>
+            <th width="12%" align="left">婚姻状况</th><td ><input type="hidden" name="marrageStatusId" value="0">未知<em class="error"></em></td>
+            <th width="12%" align="left">文化程度</th><td  colspan="2"><input type="hidden" name="literacyId" value="189">高中毕业<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">外语语种</th><td ><input type="hidden" name="foreignLanguageId" value="1376">英语<em class="error"></em></td>
+            <th width="12%" align="left">外语水平</th><td  colspan="2"><input type="hidden" name="languageLevelId" value="0">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">健康状况</th><td ><input type="hidden" name="health" value="">&nbsp;<em class="error"></em></td>
+            <th width="12%" align="left">学生来源</th><td  colspan="2"><input type="hidden" name="stusourceId" value="757">农村应届<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">考区</th><td ><input type="hidden" name="regionid" value="1368">辽宁<em class="error"></em></td>
+            <th width="12%" align="left">考生号</th><td  colspan="2"><input type="hidden" name="examStuNo" value="16451023150000">16451023150000<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">考生特征</th><td ><input type="hidden" name="characteristicId" value="15161">应用型<em class="error"></em></td>
+            <th width="12%" align="left">录取类型</th><td  colspan="2"><input type="hidden" name="enrollTypeId" value="15162">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">录取年份</th><td ><input type="hidden" name="enrollYearId" value="36">&nbsp;</td>
+            <th width="12%" align="left">新生报到状态</th><td  colspan="2"><input type="hidden" name="freshmanCheckInId" value="0">&nbsp;</td>
+        </tr>
+
+        <tr>
+            <th width="12%" align="left">高考总分</th><td ><input type="hidden" name="entrExamScore" value="457">457<em class="error"></em></td>
+            <th width="12%" align="left">入学准考证号</th><td  colspan="2"><input type="hidden" name="entranceExamNo" value="16451023150000">&nbsp;</td>
+
+        </tr>
+        <tr>
+            <th width="12%" align="left">入学录取证号</th><td ><input type="hidden" name="entranceNo" value="">&nbsp;</td>
+            <th width="12%" align="left">中学名</th><td  colspan="2"><input type="hidden" name="highschool" value="乡村爱情高级中学">乡村爱情高级中学<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">中学代码</th><td ><input type="hidden" name="highschoolCode" value="">&nbsp;</td>
+            <th width="12%" align="left">中学毕业日期</th><td  colspan="2"><input type="hidden" name="highschoolGraDate" value="">&nbsp;<em class="error"></em></td>
+        </tr>
+        <tr>
+
+            <th width="12%" align="left">中学毕业证书编号</th><td ><input type="hidden" name="highschoolGraCode" value="">&nbsp;<em class="error"></em></td>
+            <th width="12%" align="left">入学年级</th><td  colspan="2"><input type="hidden" name="entranceGradeid" value="24258">2016级<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">入学日期</th><td ><input type="hidden" name="entranceDate" value="2016-09-01">2016-09-01<em class="error"></em></td>
+            <th width="12%" align="left">入学方式</th><td  colspan="2"><input type="hidden" name="entranceTypeId" value="72">民族班<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">培养方式</th><td ><input type="hidden" name="trainingModeId" value="1333">统招<em class="error"></em></td>
+            <th width="12%" align="left">授课类型</th><td  colspan="2"><input type="hidden" name="classTypeId" value="0">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">院系</th><td ><input type="hidden" name="departmentid" value="846">信息科学与工程学院<em class="error"></em></td>
+            <th width="12%" align="left">专业</th><td  colspan="2"><div id="majorChange"><input type="hidden" name="majorid" value="6382">网络工程</div><em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">年级</th><td ><div id="gradeChange"><input type="hidden" name="gradeid" value="24258">2016级</div><em class="error"></em></td>
+            <th width="12%" align="left">学生类别</th><td  colspan="2"><div id="stusortChange"><input type="hidden" name="stusortid" value="1137">本科4年</div><em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">班级</th><td ><div id="classChange"><input type="hidden" name="classid" value="26018">网络2016-2班</div><em class="error"></em></td>
+            <th width="12%" align="left">专业方向</th><td  colspan="2"><div id="directionChange"><input type="hidden" name="directionId" value="">&nbsp;</div><em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">校区</th><td ><div id="areaChange"><input type="hidden" name="areaid" value="3081">雁山校区</div><em class="error"></em></td>
+            <th width="12%" align="left">学籍表号</th><td  colspan="2"><input type="hidden" name="stuno" value="">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">是否有学籍</th><td ><input type="hidden" name="stuStatus" value="0">是<em class="error"></em></td>
+            <th width="12%" align="left">是否在校</th><td  colspan="2"><input type="hidden" name="schoolStatus" value="0">是<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">学生当前状态</th><td  colspan="4"><input type="hidden" name="currentStatus" value="0">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">银行卡号</th><td ><input type="hidden" name="bankNo" value="">&nbsp;</td>
+            <th width="12%" align="left">一卡通号</th><td  colspan="2"><input type="hidden" name="oneCardNo" value="">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">学习形式</th><td ><input type="hidden" name="learnStyleId" value="154">高等学校（学历教育）<em class="error"></em></td>
+            <th width="12%" align="left">学习方式</th><td  colspan="2"><input type="hidden" name="learnTypeId" value="0">未知<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">毕业类型</th><td ><input type="hidden" name="isgraduated" value="0">未毕业<em class="error"></em></td>
+            <th width="12%" align="left">毕业去向</th><td  colspan="2"><input type="hidden" name="postGraduateId" value="0">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">毕业证书编号</th><td ><input type="hidden" name="gdplm" value="">&nbsp;<em class="error"></em></td>
+            <th width="12%" align="left">毕业日期</th><td  colspan="2"><input type="hidden" name="graduateDate" value="2020-07-01">2020-07-01<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">未毕业原因</th><td ><input type="hidden" name="notGraduatedReasonId" value="">&nbsp;</td>
+            <th width="12%" align="left">学位状态</th><td  colspan="2"><input type="hidden" name="degreeStatus" value="0">未处理<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">学位</th><td ><input type="hidden" name="ddplmSortId" value="">&nbsp;<em class="error"></em></td>
+            <th width="12%" align="left">学位证书编号</th><td  colspan="2"><input type="hidden" name="ddplm" value="">&nbsp;<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">学位日期</th><td ><input type="hidden" name="degreeDate" value="">&nbsp;<em class="error"></em></td>
+            <th width="12%" align="left">未获学位原因</th><td  colspan="2"><input type="hidden" name="noDegreeReasonId" value="">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">电子邮箱</th><td ><input type="hidden" name="email" value="">&nbsp;<em class="error"></em></td>
+            <th width="12%" align="left">移动电话</th><td  colspan="2"><input type="hidden" name="moblePhone" value="">&nbsp;<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">乘车起始站</th><td ><input type="hidden" name="startStop" value="">&nbsp;</td>
+            <th width="12%" align="left">乘车终点站</th><td  colspan="2"><input type="hidden" name="endStop" value="">&nbsp;</td>
+        </tr>
+    </table>
+    <br>
+    <div id='temp'></div>
+    <table cellspacing="0" cellpadding="0" class="form">
+        <tr>
+            <th width="12%" align="left">联系电话</th><td ><input type="hidden" name="tel" value="18706666666">18706666666<em class="error"></em></td>
+            <th width="12%" align="left">邮政编码</th><td ><input type="hidden" name="postalcode" value="531400">531400<em class="error"></em></td>
+            <th width="12%" align="left">通讯地址</th><td  colspan="4"><input type="hidden" name="address" value="">&nbsp;<em class="error"></em></td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">参加工作时间</th><td width="15%"><input type="hidden" name="workTime" value="">&nbsp;</td>
+            <th width="12%" align="left">职称</th><td width="15%"><input type="hidden" name="rankId" value="0">&nbsp;</td>
+            <th width="12%" align="left">工作单位</th><td ><input type="hidden" name="workUnit" value="">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">工作单位电话</th><td ><input type="hidden" name="workUnitTel" value="">&nbsp;</td>
+            <th width="12%" align="left">工作单位邮政编码</th><td ><input type="hidden" name="workUnitPostalCode" value="">&nbsp;</td>
+            <th width="12%" align="left">工作单位地址</th><td ><input type="hidden" name="workUnitAdress" value="">&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="12%" align="left">家庭电话</th><td ><input type="hidden" name="familyTel" value="">&nbsp;<em class="error"></em></td>
+            <th width="12%" align="left">家庭邮政编码</th><td ><input type="hidden" name="familyPostalCode" value="">&nbsp;<em class="error"></em></td>
+            <th width="12%" align="left">家庭住址</th><td ><input type="hidden" name="familyAdress" value="">&nbsp;<em class="error"></em></td>
+        </tr>
+    </table>
+    <br>
+    <table cellspacing="0" cellpadding="0" class="form">
+        <tr>
+            <th width="12%" align="left">备注</th><td  colspan="4" row><input type="hidden" name="memo" value="">&nbsp;<em class="error"></em></td>
+        </tr>
+    </table>
+
+<br>
+
+
+
+
+
+
+
+
+
+    <div class="subtitle">
+        <div class="titletext">
+            异动信息
+        </div>
+    </div>
+    <table cellspacing="0" cellpadding="0" class="form">
+        <tr>
+            <th align="center">
+                异动类型
+            </th>
+            <th align="center">
+                异动日期
+            </th>
+            <th align="center">
+                异动原因
+            </th>
+            <th align="center">
+                异动前班级
+            </th>
+            <th align="center">
+                异动后班级
+            </th>
+            <th align="center">
+                最后修改时间
+            </th>
+            <th>
+            审批日期
+        </th>
+        <th>
+            审批文号
+        </th>
+            <th align="center">
+                备注
+            </th>
+        </tr>
+        
+            <tr class="infolist_hr_common">
+                <td class="center">转专业&nbsp;</td>
+                <td class="center">2017-12-12&nbsp;</td>
+                <td class="center">大专业分流&nbsp;</td>
+                <td class="center">计算机类2016-4班&nbsp;</td>
+                <td class="center">网络2016-2班&nbsp;</td>
+                <td class="center">2017-12-12&nbsp;</td>
+                <td class="center">&nbsp;</td>
+                <td class="center">&nbsp;</td>
+                <td class="center">&nbsp;</td>
+            </tr>
+        
+            <tr class="infolist_hr_common">
+                <td class="center">转专业&nbsp;</td>
+                <td class="center">2017-06-30&nbsp;</td>
+                <td class="center">未知&nbsp;</td>
+                <td class="center">电信类2016-5班&nbsp;</td>
+                <td class="center">计算机类2016-4班&nbsp;</td>
+                <td class="center">2017-06-30&nbsp;</td>
+                <td class="center">&nbsp;</td>
+                <td class="center">&nbsp;</td>
+                <td class="center">转专业&nbsp;</td>
+            </tr>
+        
+    </table>
+    <br>
+
+
+
+
+
+
+
+
+
+
+<br/>
+<table cellspacing="0" cellpadding="0" class="button_tab">
+    <tr>
+        <td>
+            
+                 
+                <input class="button" type="button" name="modify"
+                       value="修改"
+                       onClick="window.open('studentInfoModifyUpdateIndex.do?frombase=0&wantTag=2','_blank')">
+                
+                
+            
+
+            
+
+            
+            
+        </td>
+    </tr>
+</table>
+
+</form>
+
+
+
+<script type="text/javascript">
+    $(function() {
+        $('#realname').blur(function() {
+            var realname = document.getElementById("realname").value;
+            $.get('studentHanZI2PinYin.do', {realname:realname}, function(data) {
+                $('#realNamePinYin').val(data);
+            });
+
+        });
+
+    });
+</script>
+
+
+    </center>
+  </body>
+</html>

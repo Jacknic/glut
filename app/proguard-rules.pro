@@ -16,37 +16,10 @@
 #   public *;
 #}
 
-#保持所有
-#-keep class *.** { *; }
-
--dontwarn okio.**
-#-keep class android.** { *; }
-#-keep class com.android.support.** { *; }
-
-
-#保持bean以免注解被混淆
--keep class com.jacknic.glut.model.bean.** { *; }
--keep class com.jacknic.glut.model.dao.** { *; }
--keep class com.jacknic.glut.model.entity.** { *; }
-
 #第三方jar包不混淆
 -keep class com.tencent.** { *; }
--keep class com.lzy.okgo.** { *; }
--keep class okhttp3.** { *; }
--keep class okio.** { *; }
--keep class com.alibaba.fastjson.** { *; }
--keep class org.jsoup.** { *; }
--keep class me.gujun.** { *; }
--keep class org.greenrobot.eventbus.** { *; }
 
-
-### greenDAO 3
--keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
-public static java.lang.String TABLENAME;
-}
--keep class **$Properties
-# If you do not use SQLCipher:
--dontwarn org.greenrobot.greendao.database.**
-# If you do not use RxJava:
--dontwarn rx.**
+-keepnames class org.jsoup.nodes.Entities
+-keepattributes SourceFile, LineNumberTable
+-repackageclasses
 

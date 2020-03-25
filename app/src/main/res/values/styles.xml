@@ -1,114 +1,101 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="NewApi">
 
-    <!-- 默认黑色主题. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorAccent">?attr/colorPrimary</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowDisablePreview">true</item>
-        <!--<item name="android:windowIsTranslucent">true</item>-->
-    </style>
-    <!-- 蓝色主题. -->
-    <style name="AppTheme.blue" parent="AppTheme">
-        <item name="colorPrimary">@color/blue</item>
-    </style>
-    <!-- 橙色主题. -->
-    <style name="AppTheme.orange" parent="AppTheme">
-        <item name="colorPrimary">@color/orange</item>
-    </style>
-    <!-- 深橙色主题. -->
-    <style name="AppTheme.orangeDeep" parent="AppTheme">
-        <item name="colorPrimary">@color/orangeDeep</item>
-    </style>
-    <!-- 天蓝色主题. -->
-    <style name="AppTheme.blueLight" parent="AppTheme">
-        <item name="colorPrimary">@color/blueLight</item>
-    </style>
-    <!-- 红色主题. -->
-    <style name="AppTheme.red" parent="AppTheme">
-        <item name="colorPrimary">@color/red</item>
-    </style>
-    <!-- 粉红色主题. -->
-    <style name="AppTheme.pink" parent="AppTheme">
-        <item name="colorPrimary">@color/pink</item>
-    </style>
-    <!-- 绿色主题. -->
-    <style name="AppTheme.green" parent="AppTheme">
-        <item name="colorPrimary">@color/green</item>
-    </style>
-    <!-- 淡绿色主题. -->
-    <style name="AppTheme.greenLight" parent="AppTheme">
-        <item name="colorPrimary">@color/greenLight</item>
-    </style>
-    <!-- 棕色主题. -->
-    <style name="AppTheme.brown" parent="AppTheme">
-        <item name="colorPrimary">@color/brown</item>
-    </style>
-    <!-- 深黄色主题. -->
-    <style name="AppTheme.amber" parent="AppTheme">
-        <item name="colorPrimary">@color/amber</item>
-    </style>
-    <!-- 青色主题. -->
-    <style name="AppTheme.cyan" parent="AppTheme">
-        <item name="colorPrimary">@color/cyan</item>
-    </style>
-    <!-- 茶绿色主题. -->
-    <style name="AppTheme.teal" parent="AppTheme">
-        <item name="colorPrimary">@color/teal</item>
-    </style>
-    <!-- 紫色主题. -->
-    <style name="AppTheme.purple" parent="AppTheme">
-        <item name="colorPrimary">@color/purple</item>
-    </style>
-    <!-- 深紫色主题. -->
-    <style name="AppTheme.purpleDeep" parent="AppTheme">
-        <item name="colorPrimary">@color/purpleDeep</item>
-    </style>
-    <!-- 暗紫色主题. -->
-    <style name="AppTheme.indigo" parent="AppTheme">
-        <item name="colorPrimary">@color/indigo</item>
+    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">?colorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="popupTheme">@style/ToolbarPopupTheme</item>
     </style>
 
-    <!--财务处按钮文本控件样式-->
-    <style name="CwItemsTextViewStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">20dp</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-    <!--财务处按钮图片控件样式-->
-    <style name="CwItemsImageViewStyle">
-        <item name="android:clickable">true</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">64dp</item>
-        <item name="android:background">@drawable/selector_item_white</item>
-        <item name="android:paddingBottom">20dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:paddingTop">10dp</item>
-    </style>
-    <!--toolbar样式设置-->
-    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:actionMenuTextColor">@color/barDark</item>
+    <style name="ToolbarTintStyle" parent="ToolbarStyle">
+        <item name="colorControlNormal">@android:color/white</item>
     </style>
 
-    <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat.Light">
-        <item name="android:textColorPrimary">@color/barDark</item>
+    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat">
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <item name="android:colorBackground">?colorBackgroundFloating</item>
     </style>
-    <!--修改toolbar弹出菜单的位置-->
-    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="overlapAnchor">false</item>
-        <item name="android:dropDownHorizontalOffset">4dp</item>
+        <item name="android:dropDownVerticalOffset">6dp</item>
+        <item name="android:dropDownHorizontalOffset">-2dp</item>
     </style>
+
+    <style name="ActionButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">30dp</item>
+        <item name="android:layout_marginEnd">30dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">@dimen/primary_btn_height</item>
+        <item name="cornerRadius">30dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="rippleColor">@color/black_6p</item>
+    </style>
+
+    <style name="ItemButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">@dimen/primary_btn_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="android:backgroundTint">?colorBackgroundFloating</item>
+        <item name="iconPadding">10dp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="rippleColor">@color/selector_item_trans</item>
+    </style>
+
+    <style name="SpinnerStyle">
+        <item name="android:colorBackground">?colorBackgroundFloating</item>
+        <item name="android:popupBackground">@drawable/bg_round_all</item>
+    </style>
+
+    <style name="BottomSheetDialog" parent="ThemeOverlay.AppCompat">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+        <item name="bottomSheetStyle">@style/BottomSheetModalStyle</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+    </style>
+
+    <style name="BottomSheetModalStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <style name="FinanceTextIconStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/primary_offset</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CourseEditTextViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">?colorBackgroundFloating</item>
+        <item name="android:drawablePadding">@dimen/primary_offset</item>
+        <item name="android:importantForAutofill">no</item>
+        <item name="android:layout_marginTop">0.5dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColor">?colorControlActivated</item>
+        <item name="android:paddingStart">@dimen/primary_offset</item>
+        <item name="android:paddingEnd">@dimen/primary_offset</item>
+        <item name="android:textSize">16sp</item>
+        <item name="drawableTint">?colorButtonNormal</item>
+    </style>
+
 </resources>

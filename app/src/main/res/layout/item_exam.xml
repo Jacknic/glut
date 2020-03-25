@@ -1,98 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:gravity="center"
-    android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:id="@+id/rlTimeline"
-        android:layout_width="32dp"
-        android:layout_height="match_parent">
+    <data>
 
-        <TextView
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:background="?attr/colorPrimary" />
+        <variable
+            name="exam"
+            type="com.jacknic.glut.data.model.Exam" />
+    </data>
 
-        <ImageView
-            android:id="@+id/tv_exam_dot"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_centerHorizontal="true"
-            android:rotation="-90"
-            android:src="@drawable/ic_edit_location"
-            android:tint="?attr/colorPrimary" />
-
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/rlCenter"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="6dp"
-        android:paddingRight="10dp"
-        android:paddingTop="6dp">
+        android:descendantFocusability="blocksDescendants">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/primary_offset"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/primary_offset"
             android:layout_marginBottom="5dp"
-            android:gravity="center_vertical">
+            app:cardBackgroundColor="?colorBackgroundFloating"
+            app:cardCornerRadius="@dimen/primary_radius"
+            app:cardElevation="0dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="课程名称：" />
+                android:padding="@dimen/primary_offset">
 
-            <TextView
-                android:id="@+id/tv_exam_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/barDark" />
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/ivIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_border_color"
+                    android:tint="?colorPrimary"
+                    android:tintMode="src_in"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvExamName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@{`课程：` + exam.name}"
+                    android:textColor="?colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivIcon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="课程：易中天品三国" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="考试时间：" />
+                <TextView
+                    android:id="@+id/tvExamTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`考试时间：` + exam.time}"
+                    app:layout_constraintStart_toStartOf="@id/tvExamName"
+                    app:layout_constraintTop_toBottomOf="@id/tvExamName"
+                    tools:text="考试时间：2020-1-3 11:28:56" />
 
-            <TextView
-                android:id="@+id/tv_exam_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/barDark" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="地点：" />
-
-            <TextView
-                android:id="@+id/tv_exam_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/colorPrimary" />
-        </LinearLayout>
-
-        <include layout="@layout/div_line" />
-    </LinearLayout>
-
-
-</LinearLayout>
+                <TextView
+                    android:id="@+id/tvExamLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`考试地点：` + exam.location}"
+                    app:layout_constraintStart_toStartOf="@id/tvExamName"
+                    app:layout_constraintTop_toBottomOf="@id/tvExamTime"
+                    tools:text="考试地点：7601" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+</layout>

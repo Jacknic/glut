@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="terms">
+        <item>全部</item>
+        <item>春</item>
+        <item>秋</item>
+    </string-array>
+    <string-array name="theme_mode_array">
+        <item>白天</item>
+        <item>夜间</item>
+        <item>随时间</item>
+        <item>随系统</item>
+    </string-array>
+</resources>

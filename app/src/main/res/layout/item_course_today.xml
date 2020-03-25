@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="course"
+            type="com.jacknic.glut.data.db.entity.Course" />
+
+        <import
+            alias="tu"
+            type="com.jacknic.glut.util.TimeUtils" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/primary_offset"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/primary_offset"
+            android:layout_marginBottom="5dp"
+            android:foreground="?selectableItemBackground"
+            app:cardBackgroundColor="?colorBackgroundFloating"
+            app:cardCornerRadius="@dimen/primary_radius"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="3dp"
+                android:alpha="0.9"
+                android:clipChildren="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/primary_offset"
+                android:paddingBottom="@dimen/primary_offset"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/tvCourseArrange"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:text="@{tu.courseIndex2Text(course.startSection,``)+`-`+tu.courseIndex2Text(course.endSection,``)}"
+                    android:textSize="14sp"
+                    tools:text="中午1-中午2" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="30dp"
+                    android:background="@color/black_10p"
+                    android:contentDescription="@null" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCourseName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@{`课程：` + course.courseName}"
+                        tools:text="课程：品三国" />
+
+                    <TextView
+                        android:id="@+id/tvTeacherName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@{`地点：` + course.classRoom}"
+                        tools:text="地点：6406" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+</layout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_expand_less"
+        android:icon="@drawable/ic_expand_less"
+        android:title="@string/expand_less"
+        android:visible="false"
+        app:iconTint="?colorControlNormal"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_courses"
+        android:icon="@drawable/ic_select_all"
+        android:title="@string/current_term_courses"
+        app:iconTint="?colorControlNormal"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_all_term"
+        android:icon="@drawable/ic_view_module"
+        android:title="@string/all_term"
+        app:iconTint="?colorControlNormal"
+        app:showAsAction="ifRoom" />
+</menu>
