@@ -11,13 +11,20 @@ import android.view.View
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.jacknic.glut.R
 import com.jacknic.glut.base.BasePage
+import com.jacknic.glut.data.util.URL_GLUT_CW
+import com.jacknic.glut.data.util.URL_GLUT_JW
 import com.jacknic.glut.databinding.PageBrowserBinding
 import com.jacknic.glut.util.openLink
 import com.jacknic.glut.util.toast
+import com.jacknic.glut.viewmodel.WebBrowserViewModel
+import com.jacknic.glut.widget.CwcLoginDialogFragment
+import com.jacknic.glut.widget.JwcLoginDialogFragment
 
 
 /**
@@ -32,6 +39,9 @@ class BrowserPage : BasePage<PageBrowserBinding>() {
     private lateinit var backPressedCallback: OnBackPressedCallback
     private var mFilePathCallback: ValueCallback<Array<Uri>>? = null
     private val codeChoiceFile = 10000
+    private val vm by viewModels<WebBrowserViewModel>()
+    private var isJwSite = false
+    private var isCwSite = false
 
     @SuppressLint("RestrictedApi", "RequiresFeature")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,11 +64,35 @@ class BrowserPage : BasePage<PageBrowserBinding>() {
                 bind.webView.alpha = 0.8f
             }
         }
-        bind.webView.loadUrl(args.url)
+        val url = args.url
+        loadFirstUrl(url)
         activity?.apply {
             this.title = args.title
             onBackPressedDispatcher.addCallback(this@BrowserPage, backPressedCallback)
         }
+    }
+
+    private fun loadFirstUrl(url: String?) {
+        val loadUrlAction = Runnable { bind.webView.loadUrl(url) }
+        if (url?.startsWith(URL_GLUT_JW) == true) {
+            isJwSite = true
+            vm.checkJw()
+        }
+        if (url?.startsWith(URL_GLUT_CW) == true) {
+            isCwSite = true
+            vm.checkCw()
+        }
+        vm.apply {
+            needLogin.observe(viewLifecycleOwner, Observer {
+                if (it) {
+                    bind.webView.stopLoading()
+                    if (isJwSite) JwcLoginDialogFragment.show(childFragmentManager, loadUrlAction)
+                    if (isCwSite) CwcLoginDialogFragment.show(childFragmentManager, loadUrlAction)
+                    needLogin.postValue(false)
+                }
+            })
+        }
+        loadUrlAction.run()
     }
 
     /**
