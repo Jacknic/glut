@@ -38,7 +38,7 @@ const val KEY_PWD = "key_pwd"
 const val KEY_CW_SID = "key_cw_sid"
 const val KEY_CW_PWD = "key_cw_pwd"
 const val KEY_STUDENT = "key_student"
-const val KEY_DOWNLOAD_VERSION = "key_download_version"
+const val KEY_SHOW_HEAD = "key_show_head"
 const val KEY_DOWNLOAD_URL = "key_download_url"
 const val KEY_DOWNLOAD_SIZE = "key_download_size"
 
@@ -195,13 +195,6 @@ class Preferences(val app: Application) {
         set(value) = sharedPrefer.edit { putString(KEY_DOWNLOAD_URL, value) }
 
     /**
-     * 正在下载的版本
-     */
-    var downloadVersion: String?
-        get() = sharedPrefer.getString(KEY_DOWNLOAD_VERSION, null)
-        set(value) = sharedPrefer.edit { putString(KEY_DOWNLOAD_VERSION, value) }
-
-    /**
      * 已下载大小
      */
     var downloadSize: Long
@@ -217,6 +210,13 @@ class Preferences(val app: Application) {
             return null
         }
         set(value) = sharedPrefer.edit { putString(KEY_STUDENT, value?.let { toJSON(it) }) }
+
+    /**
+     * 头像显示
+     */
+    var showHead: Boolean
+        get() = sharedPrefer.getBoolean(KEY_SHOW_HEAD, true)
+        set(value) = sharedPrefer.edit { putBoolean(KEY_SHOW_HEAD, value) }
 
     fun registerListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
         sharedPrefer.registerOnSharedPreferenceChangeListener(listener)

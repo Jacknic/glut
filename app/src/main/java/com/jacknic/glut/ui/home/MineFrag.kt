@@ -30,7 +30,11 @@ class MineFrag : BaseFragment<FragMineBinding>() {
             }
             bind.tvUsername.apply {
                 setTextColor(Color.WHITE)
-                bind.tvClassName.setTextColor(textColors.withAlpha(127))
+                val whiteAlpha = textColors.withAlpha(127)
+                bind.tvClassName.setTextColor(whiteAlpha)
+                bind.ivAvatar.borderColor = whiteAlpha.defaultColor
+                bind.ivAvatar.backgroundTintList = whiteAlpha
+                bind.ivArrowRight.imageTintList = whiteAlpha
             }
         }
         bind.student = prefer.student
@@ -40,11 +44,21 @@ class MineFrag : BaseFragment<FragMineBinding>() {
         bind.btnExam.setOnClickListener { navCtrl.toPage(R.id.examListPage) }
         bind.btnGrade.setOnClickListener { navCtrl.toPage(R.id.gradePage) }
         bind.btnSettings.setOnClickListener { navCtrl.toPage(R.id.settingPage) }
-
-        val imgFile = File(requireContext().filesDir, FILE_NAME_HEAD_IMAGE)
-        if (imgFile.isFile) {
-            bind.ivAvatar.setImageURI(imgFile.toUri())
+        bind.ivAvatar.apply {
+            setOnClickListener {
+                prefer.showHead = !prefer.showHead
+                if (prefer.showHead) showHeadImg() else setImageDrawable(null)
+            }
         }
+        if (prefer.showHead) {
+            showHeadImg()
+        }
+    }
+
+    private fun showHeadImg() {
+        val imgFile = File(requireContext().filesDir, FILE_NAME_HEAD_IMAGE)
+        imgFile.isFile
+        bind.ivAvatar.setImageURI(imgFile.toUri())
     }
 }
 

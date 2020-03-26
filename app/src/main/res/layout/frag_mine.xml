@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="student"
             type="com.jacknic.glut.data.model.Student" />
@@ -67,13 +68,15 @@
                     tools:text="二人转2020-1班" />
 
                 <ImageView
+                    android:id="@+id/ivArrowRight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_arrow_right"
-                    android:tint="?colorButtonNormal" />
+                    android:tint="?colorButtonNormal"
+                    android:tintMode="src_in" />
 
             </RelativeLayout>
 
