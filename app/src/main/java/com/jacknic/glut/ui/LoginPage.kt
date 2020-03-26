@@ -10,6 +10,7 @@ import com.jacknic.glut.R
 import com.jacknic.glut.base.BasePage
 import com.jacknic.glut.databinding.DialogStatusBinding
 import com.jacknic.glut.databinding.PageLoginBinding
+import com.jacknic.glut.util.hideInput
 import com.jacknic.glut.util.topPage
 import com.jacknic.glut.viewmodel.JwcLoginViewModel
 
@@ -45,10 +46,11 @@ class LoginPage : BasePage<PageLoginBinding>() {
     private fun setObserves() {
         vm.captchaBitmap.observe(viewLifecycleOwner, Observer {
             bind.ivCaptcha.setImageBitmap(it)
-            bind.inputCaptcha.setText("")
+            bind.etCaptcha.setText("")
         })
         vm.loadState.observe(viewLifecycleOwner, Observer {
             if (it.first) {
+                bind.etCaptcha.hideInput()
                 statusDialogBind.tvStatusMsg.text = it.second
                 statusDialog.show()
             } else statusDialog.dismiss()

@@ -1,6 +1,5 @@
 package com.jacknic.glut.data.repository.remote
 
-import android.webkit.CookieManager
 import androidx.annotation.WorkerThread
 import com.google.gson.reflect.TypeToken
 import com.jacknic.glut.R
@@ -56,7 +55,6 @@ class JwcRepository {
         prefer.app.filesDir.deleteRecursively()
         prefer.logged = false
         prefer.student = null
-        CookieManager.getInstance().removeAllCookies { }
     }
 
     /**

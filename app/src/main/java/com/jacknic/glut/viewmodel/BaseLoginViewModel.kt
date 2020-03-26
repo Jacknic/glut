@@ -1,9 +1,7 @@
 package com.jacknic.glut.viewmodel
 
 import android.app.Application
-import android.content.Context
 import android.graphics.Bitmap
-import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.jacknic.glut.util.Preferences
@@ -48,12 +46,6 @@ abstract class BaseLoginViewModel(val app: Application) : AndroidViewModel(app) 
         if (captchaValue.isEmpty()) {
             app.toast("验证码不能为空！")
             return true
-        }
-        val imm = app.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.apply {
-            if (isActive) {
-                toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS)
-            }
         }
         return false
     }

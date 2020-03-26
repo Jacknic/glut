@@ -32,7 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputUsername"
+                android:id="@+id/etUsername"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
@@ -55,7 +55,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputPwd"
+                android:id="@+id/etPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -67,7 +67,7 @@
                 app:hintAnimationEnabled="false"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputUsername"
+                app:layout_constraintTop_toBottomOf="@+id/etUsername"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/selector_theme_primary">
 
@@ -93,7 +93,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputCaptcha"
+                android:id="@+id/etCaptcha"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
@@ -113,7 +113,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivCaptcha"
-                app:layout_constraintTop_toBottomOf="@id/inputPwd" />
+                app:layout_constraintTop_toBottomOf="@id/etPwd" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivCaptcha"
@@ -123,9 +123,9 @@
                 android:background="@drawable/selector_input_box"
                 android:contentDescription="@null"
                 android:onClick="@{()-> vm.loadCaptcha()}"
-                app:layout_constraintBottom_toBottomOf="@+id/inputCaptcha"
+                app:layout_constraintBottom_toBottomOf="@+id/etCaptcha"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/inputCaptcha" />
+                app:layout_constraintTop_toTopOf="@+id/etCaptcha" />
 
             <CheckBox
                 android:id="@+id/ivCaptchaPass"
@@ -138,9 +138,9 @@
                 android:enabled="false"
                 android:gravity="center"
                 android:padding="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/inputCaptcha"
-                app:layout_constraintEnd_toEndOf="@id/inputCaptcha"
-                app:layout_constraintTop_toTopOf="@id/inputCaptcha" />
+                app:layout_constraintBottom_toBottomOf="@id/etCaptcha"
+                app:layout_constraintEnd_toEndOf="@id/etCaptcha"
+                app:layout_constraintTop_toTopOf="@id/etCaptcha" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogin"
@@ -152,7 +152,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputCaptcha" />
+                app:layout_constraintTop_toBottomOf="@+id/etCaptcha" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

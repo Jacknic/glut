@@ -39,7 +39,7 @@ abstract class BaseLoginDialogFragment<VM : BaseLoginViewModel> : BottomSheetDia
         bind.vm = vm
         vm.captchaBitmap.observe(viewLifecycleOwner, Observer {
             bind.ivCaptcha.setImageBitmap(it)
-            bind.inputCaptcha.setText("")
+            bind.etCaptcha.setText("")
         })
         vm.loadState.observe(viewLifecycleOwner, Observer {
             if (it.first) {
