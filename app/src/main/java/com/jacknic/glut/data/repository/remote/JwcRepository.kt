@@ -1,6 +1,7 @@
 package com.jacknic.glut.data.repository.remote
 
-import androidx.annotation.WorkerThread
+import android.webkit.CookieManager
+import androidx.annotation.MainThread
 import com.google.gson.reflect.TypeToken
 import com.jacknic.glut.R
 import com.jacknic.glut.data.db.CourseDatabase
@@ -47,14 +48,14 @@ class JwcRepository {
     /**
      * 用户登出
      */
-    @WorkerThread
-    fun logout() {
-        Thread {
-            database.clearAllTables()
-        }.start()
-        prefer.app.filesDir.deleteRecursively()
+    @MainThread
+    fun logout(done: () -> Unit) {
         prefer.logged = false
         prefer.student = null
+        CookieManager.getInstance().removeAllCookies { }
+        database.clearAllTables()
+        prefer.app.filesDir.deleteRecursively()
+        done()
     }
 
     /**

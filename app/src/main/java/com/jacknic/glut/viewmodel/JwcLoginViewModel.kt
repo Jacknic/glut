@@ -70,16 +70,12 @@ class JwcLoginViewModel(app: Application) : BaseLoginViewModel(app) {
      * 用户登录
      **/
     override fun login() {
-        if (loginJob?.isActive == true) {
+        if (loginJob?.isActive == true || invalidInput()) {
             return
         }
         val sidValue = sid.value.orEmpty()
         val pwdValue = pwd.value.orEmpty()
         val captchaValue = captcha.value.orEmpty()
-        val invalidInput = invalidInput()
-        if (invalidInput) {
-            return
-        }
         prefer.sid = sidValue
         prefer.pwd = pwdValue
         val isLogged = prefer.logged

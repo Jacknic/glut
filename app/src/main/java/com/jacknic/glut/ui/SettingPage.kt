@@ -134,11 +134,13 @@ class SettingPage : BasePage<PageSettingBinding>(), SharedPreferences.OnSharedPr
     }
 
     private fun logout() {
-        val jwcRepo = JwcRepository()
-        jwcRepo.logout()
-        activity?.apply {
-            finish()
-            startActivity(Intent(this, MainActivity::class.java))
+        requireContext().toast("正在清除数据")
+        JwcRepository().logout {
+            cancelToast()
+            activity?.apply {
+                finish()
+                startActivity(Intent(this, MainActivity::class.java))
+            }
         }
     }
 }
