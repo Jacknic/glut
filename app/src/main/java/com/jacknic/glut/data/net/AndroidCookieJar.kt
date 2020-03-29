@@ -1,7 +1,6 @@
 package com.jacknic.glut.data.net
 
 import android.webkit.CookieManager
-import com.jacknic.glut.data.util.URL_GLUT_CW
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -16,15 +15,11 @@ class AndroidCookieJar : CookieJar {
     private val cookieManager = CookieManager.getInstance()
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
-        val cookieValue = StringBuilder()
-        cookies.joinTo(cookieValue, ";", transform = { "${it.name()}=${it.value()}" })
-        //Logger.d("存储：${url}->${cookieValue}")
-        // 简单处理财务 Cookie path 问题
-        var urlValue = url.toString()
-        if (urlValue.startsWith(URL_GLUT_CW)) {
-            urlValue = url.host()
+        cookies.forEach {
+            val cookieValue = it.toString()
+            //Logger.d("存储：${url}->${cookieValue}")
+            cookieManager.setCookie(url.toString(), cookieValue)
         }
-        cookieManager.setCookie(urlValue, cookieValue.toString())
         cookieManager.flush()
     }
 
