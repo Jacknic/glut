@@ -8,12 +8,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.jacknic.glut.MainNavDirections
 import com.jacknic.glut.R
 import com.jacknic.glut.base.BaseListPage
 import com.jacknic.glut.data.db.entity.CourseInfo
 import com.jacknic.glut.databinding.ItemCourseInfoBinding
 import com.jacknic.glut.util.getBinding
-import com.jacknic.glut.util.toPage
 import com.jacknic.glut.viewmodel.CourseInfoViewModel
 import com.jacknic.glut.widget.CourseDetailsDialog
 
@@ -139,7 +139,8 @@ class CourseListPage : BaseListPage<CourseInfo>() {
                 true
             }
             R.id.action_add -> {
-                navCtrl.toPage(R.id.modifyCoursePage)
+                val toAdd = MainNavDirections.navToAdd("")
+                navCtrl.navigate(toAdd)
                 true
             }
             else -> super.onOptionsItemSelected(item)
