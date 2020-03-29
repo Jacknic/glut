@@ -38,7 +38,9 @@ abstract class CourseDatabase : RoomDatabase() {
             return if (memoryOnly) {
                 Room.inMemoryDatabaseBuilder(context, CourseDatabase::class.java).build()
             } else {
-                Room.databaseBuilder(context, CourseDatabase::class.java, DB_NAME).build()
+                Room.databaseBuilder(context, CourseDatabase::class.java, DB_NAME)
+                    .allowMainThreadQueries()
+                    .build()
             }
         }
 
