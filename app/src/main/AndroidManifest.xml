@@ -30,8 +30,8 @@
 
         <activity
             android:name=".MainActivity"
+            android:configChanges="keyboardHidden|orientation|uiMode|screenSize"
             android:launchMode="singleInstance"
-            android:configChanges="orientation"
             android:theme="@style/AppThemeSplash"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
