@@ -1,8 +1,8 @@
 ﻿{
-  "date": "2019-5-28",
-  "versionCode": 54,
-  "versionName": "5.4",
-  "downloadUrl": "https://github.com/Jacknic/glut/releases/download/latest/app-github-release.apk",
-  "info": "1. 修复部分专业获取课表异常问题（无法登陆）\n2. 修复应用内更新异常\n注意：请到网页或应用宝下载更新，应用内更新在v5.4才修复",
+  "date": "2020-3-30",
+  "versionCode": 60,
+  "versionName": "6.0",
+  "downloadUrl": "https://github.com/Jacknic/glut/releases/download/v6.0/com.jacknic.glut-github-release.apk",
+  "info": "1.修复已知问题\n2.全新的用户界面\n3.适配深色模式",
   "remark": "/*该文件用于应用版本检测更新！*/"
 }
