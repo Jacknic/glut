@@ -41,6 +41,7 @@ const val KEY_STUDENT = "key_student"
 const val KEY_SHOW_HEAD = "key_show_head"
 const val KEY_DOWNLOAD_URL = "key_download_url"
 const val KEY_DOWNLOAD_SIZE = "key_download_size"
+const val KEY_AGREED = "key_agreed"
 
 class Preferences(val app: Application) {
 
@@ -61,6 +62,13 @@ class Preferences(val app: Application) {
     var logged: Boolean
         get() = sharedPrefer.getBoolean(KEY_LOGGED, false)
         set(value) = sharedPrefer.edit { putBoolean(KEY_LOGGED, value) }
+
+    /**
+     * 协议同意状态
+     */
+    var agreed: Boolean
+        get() = sharedPrefer.getBoolean(KEY_AGREED, false)
+        set(value) = sharedPrefer.edit { putBoolean(KEY_AGREED, value) }
 
     /**
      * 夜间主题

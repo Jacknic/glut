@@ -3,7 +3,6 @@ package com.jacknic.glut.ui
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
@@ -42,6 +41,7 @@ class BrowserPage : BasePage<PageBrowserBinding>() {
     private val vm by viewModels<WebBrowserViewModel>()
     private var isJwSite = false
     private var isCwSite = false
+    private val supportSchemes = listOf("http", "https", "file")
 
     @SuppressLint("RestrictedApi", "RequiresFeature")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,8 +116,17 @@ class BrowserPage : BasePage<PageBrowserBinding>() {
 
         // 内置浏览控件设置
         bind.webView.apply {
-            setBackgroundColor(Color.TRANSPARENT)
-            webViewClient = WebViewClient()
+            webViewClient = object : WebViewClient() {
+
+                override fun shouldOverrideUrlLoading(webView: WebView, request: WebResourceRequest): Boolean {
+                    val uri = request.url
+                    if (uri.scheme !in supportSchemes) {
+                        requireContext().openLink(uri.toString())
+                        return true
+                    }
+                    return super.shouldOverrideUrlLoading(webView, request)
+                }
+            }
             webChromeClient = object : WebChromeClient() {
                 override fun onReceivedTitle(view: WebView, title: String) {
                     if (title != view.url && isResumed) {
@@ -184,8 +193,13 @@ class BrowserPage : BasePage<PageBrowserBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_open_with -> {
-                val actionTitle = getString(R.string.action_title_choice_browser)
-                requireContext().openLink(bind.webView.url, actionTitle)
+                val url = bind.webView.url
+                if (url.startsWith("file")) {
+                    requireContext().toast(R.string.inner_page_tips)
+                } else {
+                    val actionTitle = getString(R.string.action_title_choice_browser)
+                    requireContext().openLink(url, actionTitle)
+                }
                 return true
             }
             R.id.action_refresh -> {

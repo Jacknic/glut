@@ -62,11 +62,15 @@ class SettingPage : BasePage<PageSettingBinding>(), SharedPreferences.OnSharedPr
             btnThemeMode.setOnClickListener { themeModeDialog.show() }
             btnLogout.setOnClickListener { exitDialog.show() }
             btnUpdateCheck.setOnClickListener {
-                requireContext().toast("正在检查版本更新...")
+                requireContext().toast(R.string.checking_version)
                 appVm.checkUpdate(true)
             }
             btnReleaseLog.setOnClickListener { navCtrl.toBrowser(URL_RELEASE_LOG, getString(R.string.release_log)) }
             btnFeedback.setOnClickListener { navCtrl.toBrowser(URL_FEEDBACK, getString(R.string.feedback)) }
+            btnPrivacy.setOnClickListener {
+                val userPrivacyUrl = "file:////android_asset/user_privacy.html"
+                navCtrl.toBrowser(userPrivacyUrl, getString(R.string.user_privacy))
+            }
             btnAbout.setOnClickListener { aboutDialog.show() }
         }
     }
@@ -134,7 +138,7 @@ class SettingPage : BasePage<PageSettingBinding>(), SharedPreferences.OnSharedPr
     }
 
     private fun logout() {
-        requireContext().toast("正在清除数据")
+        requireContext().toast(R.string.clean_data)
         JwcRepository().logout {
             cancelToast()
             activity?.apply {

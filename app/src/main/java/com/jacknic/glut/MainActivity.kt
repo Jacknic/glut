@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -38,10 +39,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupToolbar()
+        checkAgree()
         if (prefer.autoCheck && appVm.version.value == null) {
             appVm.checkUpdate()
         }
         appVm.version.observe(this, Observer { showUpdateDialog(it) })
+    }
+
+    private fun checkAgree() {
+        if (!prefer.agreed) {
+            val html = assets.open("user_privacy.html").bufferedReader().readText()
+            AlertDialog.Builder(this)
+                .setMessage(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT))
+                .setPositiveButton(R.string.agree) { dialog, _ ->
+                    prefer.agreed = true
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.reject) { dialog, _ ->
+                    finish()
+                    dialog.dismiss()
+                }.show()
+        }
     }
 
     private fun showUpdateDialog(version: Version) {

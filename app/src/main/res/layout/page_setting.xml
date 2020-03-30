@@ -109,6 +109,16 @@
                 app:layout_constraintTop_toBottomOf="@id/btnUpdateCheck" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPrivacy"
+                style="@style/ItemButtonStyle"
+                android:layout_marginTop="0.5dp"
+                android:text="@string/user_privacy"
+                app:icon="@drawable/ic_verified_user"
+                app:iconTint="@color/green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnFeedback" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAbout"
                 style="@style/ItemButtonStyle"
                 android:layout_marginTop="0.5dp"
@@ -116,7 +126,7 @@
                 app:icon="@drawable/ic_help_outline"
                 app:iconTint="@color/teal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnFeedback" />
+                app:layout_constraintTop_toBottomOf="@id/btnPrivacy" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"

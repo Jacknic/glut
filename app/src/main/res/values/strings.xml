@@ -88,4 +88,10 @@
     <string name="until">至</string>
     <string name="course_credit">课程学分</string>
     <string name="add_course_arrange">添加课程安排</string>
+    <string name="user_privacy">用户协议及隐私政策</string>
+    <string name="agree">同意</string>
+    <string name="reject">拒绝</string>
+    <string name="inner_page_tips">内置页面，无法在浏览器打开</string>
+    <string name="checking_version">正在检查版本更新…</string>
+    <string name="clean_data">正在清除数据</string>
 </resources>
