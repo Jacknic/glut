@@ -64,12 +64,12 @@ jobs:
         asset_name: com.jacknic.glut-yyb-release.apk
         asset_content_type: application/vnd.android.package-archive
 
-    - name: 上传渠道包（demo）
+    - name: 上传渠道包（dev）
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: app/build/outputs/apk/demo/release/com.jacknic.glut-demo-release.apk
-        asset_name: com.jacknic.glut-demo-release.apk
+        asset_path: app/build/outputs/apk/dev/release/com.jacknic.glut-dev-release.apk
+        asset_name: com.jacknic.glut-dev-release.apk
         asset_content_type: application/vnd.android.package-archive

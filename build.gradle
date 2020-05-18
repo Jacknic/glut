@@ -4,8 +4,9 @@ buildscript {
             'compileSdk'      : 29,
             'minSdk'          : 21,
             'targetSdk'       : 29,
-            'kotlin'          : '1.3.70',
+            'kotlin'          : '1.3.72',
             'coroutines'      : '1.3.3',
+            'AndResGuard'     : '1.2.17',
 
             // 测试
             'junit'           : '4.12',
@@ -38,10 +39,10 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
-        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.17'
+        classpath "com.tencent.mm:AndResGuard-gradle-plugin:${versions.AndResGuard}"
     }
 }
 

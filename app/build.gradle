@@ -15,7 +15,7 @@ andResGuard {
     compressFilePattern = ["*.png", "*.jpg", "*.jpeg", "*.gif", "resources.arsc"]
     digestalg = "SHA-256"
     sevenzip {
-        artifact = 'com.tencent.mm:SevenZip:1.2.17'
+        artifact = "com.tencent.mm:SevenZip:${versions.AndResGuard}"
     }
 }
 
@@ -85,20 +85,15 @@ android {
             applicationIdSuffix ".debug"
         }
 
-        demo {
-            dimension = 'release'
-            versionNameSuffix = "-demo"
-            applicationIdSuffix ".debug"
-        }
-
-        github {
-            dimension = 'release'
-            manifestPlaceholders = [MTA_CHANNEL: "GitHub"]
-        }
-
-        yyb {
-            dimension = 'release'
-            manifestPlaceholders = [MTA_CHANNEL: "应用宝"]
+        def channels = [
+                "github": "GitHub",
+                "yyb"   : "应用宝"
+        ]
+        channels.forEach { channel, channelName ->
+            "$channel" {
+                dimension = 'release'
+                manifestPlaceholders = [MTA_CHANNEL: channelName]
+            }
         }
     }
 
