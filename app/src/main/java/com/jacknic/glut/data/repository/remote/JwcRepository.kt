@@ -13,6 +13,9 @@ import com.jacknic.glut.data.net.safeApiCall
 import com.jacknic.glut.data.source.remote.JwcDataSource
 import com.jacknic.glut.data.util.*
 import com.jacknic.glut.util.Preferences
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.InputStream
 
@@ -53,8 +56,12 @@ class JwcRepository {
         prefer.logged = false
         prefer.student = null
         CookieManager.getInstance().removeAllCookies { }
-        database.clearAllTables()
-        prefer.app.filesDir.deleteRecursively()
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                database.clearAllTables()
+                prefer.app.filesDir.deleteRecursively()
+            }
+        }
         done()
     }
 
