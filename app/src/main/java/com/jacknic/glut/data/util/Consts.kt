@@ -10,7 +10,7 @@ const val URL_GLUT_CW = "http://cwjf.glut.edu.cn/"
 const val URL_GLUT_LIB = "http://libopac.glut.edu.cn/"
 
 // 应用更新检测
-const val URL_APP_UPDATE = "https://raw.githubusercontent.com/Jacknic/glut/master/version.json"
+const val URL_APP_UPDATE = "https://cdn.jsdelivr.net/gh/Jacknic/glut@master/version.json"
 
 // 反馈
 const val URL_FEEDBACK = "https://support.qq.com/product/65253"
