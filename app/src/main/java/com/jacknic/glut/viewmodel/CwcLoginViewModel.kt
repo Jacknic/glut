@@ -1,6 +1,7 @@
 package com.jacknic.glut.viewmodel
 
 import android.app.Application
+import android.util.Base64
 import androidx.lifecycle.MediatorLiveData
 import com.jacknic.glut.data.repository.remote.CwcRepository
 import com.jacknic.glut.util.request
@@ -46,8 +47,10 @@ class CwcLoginViewModel(app: Application) : BaseLoginViewModel(app) {
         prefer.cwSid = sidValue
         prefer.cwPwd = pwdValue
         loadingStatus(true, "正在登录")
+        val pwdBytes = Base64.encode(pwdValue.toByteArray(), Base64.DEFAULT)
+        val encodedPwd = String(pwdBytes)
         loginJob = request(
-            { cwcRepo.login(sidValue, pwdValue, captchaValue) },
+            { cwcRepo.login(sidValue, encodedPwd, captchaValue) },
             { user.postValue(it.data) },
             { app.toastOnMain(it.exception.message) },
             { loadingStatus(false) }
