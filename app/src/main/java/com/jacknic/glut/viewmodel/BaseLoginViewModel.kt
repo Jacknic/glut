@@ -51,7 +51,6 @@ abstract class BaseLoginViewModel(val app: Application) : AndroidViewModel(app) 
     }
 
     fun postCaptcha(data: Bitmap) {
-        captchaBitmap.value?.recycle()
         captchaBitmap.postValue(data)
     }
 
