@@ -3,6 +3,7 @@ package com.jacknic.glut.ui
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
@@ -59,6 +60,7 @@ class BrowserPage : BasePage<PageBrowserBinding>() {
         if (prefer.nightTheme) {
             val supported = WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)
             if (supported) {
+                bind.webView.setBackgroundColor(Color.TRANSPARENT)
                 WebSettingsCompat.setForceDark(bind.webView.settings, WebSettingsCompat.FORCE_DARK_ON)
             } else {
                 bind.webView.alpha = 0.8f
