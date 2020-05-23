@@ -1,5 +1,7 @@
 package com.jacknic.glut.util
 
+import android.content.Context
+import androidx.annotation.StyleRes
 import com.jacknic.glut.R
 
 /**
@@ -24,43 +26,29 @@ val THEME_COLOR_RES = arrayOf(
 )
 
 /**
- * 亮色主题样式
+ * 获取主题配色列表
  */
-val THEME_LIST = intArrayOf(
-    R.style.AppTheme_black,
-    R.style.AppTheme_purple,
-    R.style.AppTheme_purpleDeep,
-    R.style.AppTheme_indigo,
-    R.style.AppTheme_blue,
-    R.style.AppTheme_blueLight,
-    R.style.AppTheme_cyan,
-    R.style.AppTheme_teal,
-    R.style.AppTheme_green,
-    R.style.AppTheme_greenLight,
-    R.style.AppTheme_brown,
-    R.style.AppTheme_amber,
-    R.style.AppTheme_orangeDeep,
-    R.style.AppTheme_red,
-    R.style.AppTheme_pink
-)
+fun getPaletteColors(context: Context): MutableList<Int> {
+    val ta = context.resources.obtainTypedArray(R.array.primary_palettes)
+    val colors = mutableListOf<Int>()
+    for (index in 0 until ta.length()) {
+        val overlay = ta.peekValue(index)
+        val overlayTa = context.obtainStyledAttributes(overlay.resourceId, intArrayOf(R.attr.colorPrimary))
+        val color = overlayTa.getColor(0, 0)
+        colors.add(color)
+        overlayTa.recycle()
+    }
+    ta.recycle()
+    return colors
+}
 
 /**
- * 暗色主题样式
+ * 获取主题配色样式表ID
  */
-val THEME_LIST_NIGHT = intArrayOf(
-    R.style.AppThemeNight_black,
-    R.style.AppThemeNight_purple,
-    R.style.AppThemeNight_purpleDeep,
-    R.style.AppThemeNight_indigo,
-    R.style.AppThemeNight_blue,
-    R.style.AppThemeNight_blueLight,
-    R.style.AppThemeNight_cyan,
-    R.style.AppThemeNight_teal,
-    R.style.AppThemeNight_green,
-    R.style.AppThemeNight_greenLight,
-    R.style.AppThemeNight_brown,
-    R.style.AppThemeNight_amber,
-    R.style.AppThemeNight_orangeDeep,
-    R.style.AppThemeNight_red,
-    R.style.AppThemeNight_pink
-)
+@StyleRes
+fun getPaletteStyle(context: Context, themeIndex: Int): Int {
+    val ta = context.resources.obtainTypedArray(R.array.primary_palettes)
+    val paletteStyle = ta.getResourceId(themeIndex, 0)
+    ta.recycle()
+    return paletteStyle
+}

@@ -90,7 +90,6 @@
                 android:id="@+id/btnUpdateCheck"
                 style="@style/ItemButtonStyle"
                 android:layout_marginTop="0.5dp"
-                android:background="@android:color/transparent"
                 android:text='@{@string/check_update + BuildConfig.VERSION_NAME}'
                 app:icon="@drawable/ic_update"
                 app:iconTint="@color/green"
@@ -131,7 +130,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
                 style="@style/ActionButtonStyle"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/logout"
                 app:backgroundTint="?colorError"
                 app:layout_constraintEnd_toEndOf="parent"

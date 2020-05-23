@@ -7,7 +7,6 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -16,7 +15,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.jacknic.glut.data.model.Version
 import com.jacknic.glut.data.util.URL_RELEASE_LOG
 import com.jacknic.glut.service.UpdateService
-import com.jacknic.glut.util.*
+import com.jacknic.glut.util.Preferences
+import com.jacknic.glut.util.getPaletteStyle
+import com.jacknic.glut.util.openLink
 import com.jacknic.glut.viewmodel.AppViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private val appBarConfiguration = AppBarConfiguration.Builder(topIds).build()
     private val keyTitle = "key_title"
     private val prefer = Preferences.getInstance()
-    // private val permissions = arrayOf(WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE, ACCESS_COARSE_LOCATION)
     private val appVm by viewModels<AppViewModel>()
     private var updateDialog: AlertDialog? = null
 
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setupTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupWindow()
         setupToolbar()
         checkAgree()
         if (prefer.autoCheck && appVm.version.value == null) {
@@ -85,31 +86,36 @@ class MainActivity : AppCompatActivity() {
         updateDialog = builder.show()
     }
 
+    /**
+     * 设置主题样式
+     */
     private fun setupTheme() {
-        prefer.apply {
-            if (nightTheme) {
-                setTheme(THEME_LIST_NIGHT[themeIndex])
-            } else {
-                setTheme(THEME_LIST[themeIndex])
-            }
-        }
+        val themeStyle = if (prefer.nightTheme) R.style.AppThemeNight else R.style.AppThemeDay
+        val paletteStyle = getPaletteStyle(this, prefer.themeIndex)
+        val overlays = mutableListOf<Int>()
+        overlays.add(themeStyle)
+        overlays.add(R.style.AppThemeOverlay_Theme)
+        overlays.add(paletteStyle)
+        if (prefer.tintToolbar) overlays.add(R.style.AppThemeOverlay_ToolbarTint)
+        overlays.forEach { setTheme(it) }
+    }
+
+    /**
+     * 设置窗口属性
+     **/
+    private fun setupWindow() {
+        val decorView = window.decorView
+        val suv = decorView.systemUiVisibility or
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        decorView.systemUiVisibility = suv
     }
 
     private fun setupToolbar() {
-        val isTintToolbar = prefer.tintToolbar
-        val toolbar: Toolbar = if (isTintToolbar) toolbarTint else toolbarNormal
-        toolbar.fitsSystemWindows = true
-        toolbar.visibility = View.VISIBLE
-        setSupportActionBar(toolbar)
         val navCtrl = findNavController(R.id.pager)
-        val colorAttr = if (isTintToolbar) R.attr.colorPrimary else R.attr.colorBackgroundFloating
-        val themeColor = resolveColor(colorAttr)
-        window.statusBarColor = themeColor
-        /// window.navigationBarColor = themeColor
-        if (isTintToolbar) {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-        } else if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+        setSupportActionBar(toolbar)
+        if (!prefer.tintToolbar && Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
         toolbar.setupWithNavController(navCtrl, appBarConfiguration)
@@ -126,5 +132,4 @@ class MainActivity : AppCompatActivity() {
         val title = savedInstanceState.getCharSequence(keyTitle, "")
         setTitle(title)
     }
-
 }

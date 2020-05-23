@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="false"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppThemeDay"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute"
         tools:targetApi="m">
@@ -30,7 +30,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:configChanges="keyboardHidden|orientation|uiMode|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleInstance"
             android:theme="@style/AppThemeSplash"
             android:windowSoftInputMode="adjustPan">

@@ -12,45 +12,20 @@
         android:layout_height="0dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:navGraph="@navigation/main"
         tools:ignore="FragmentTagUsage" />
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="?toolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:elevation="0dp"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:title="@string/app_name" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarNormal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?colorBackgroundFloating"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:subtitleTextColor="?colorPrimary"
-            app:theme="@style/ToolbarStyle"
-            app:titleTextColor="?colorPrimary"
-            tools:title="@string/app_name"
-            tools:visibility="visible" />
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarTint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?colorPrimary"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:subtitleTextColor="@android:color/white"
-            app:theme="@style/ToolbarTintStyle"
-            app:titleTextColor="@android:color/white" />
-
-    </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

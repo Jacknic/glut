@@ -113,22 +113,20 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDelete"
-                style="@style/ActionButtonStyle"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="@string/delete"
-                app:backgroundTint="@color/red"
+                app:iconTint="@color/red"
                 app:icon="@drawable/ic_delete"
                 app:iconGravity="textStart" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSave"
-                style="@style/ActionButtonStyle"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:text="@string/hold"
                 app:icon="@drawable/ic_save"

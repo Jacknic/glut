@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -34,7 +33,6 @@ abstract class BaseLoginDialogFragment<VM : BaseLoginViewModel> : BottomSheetDia
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = PageLoginBinding.inflate(inflater, container, false)
-        bind.ivInputBox.isVisible = false
         bind.root.setBackgroundResource(R.drawable.bg_round_top)
         bind.vm = vm
         vm.captchaBitmap.observe(viewLifecycleOwner, Observer {

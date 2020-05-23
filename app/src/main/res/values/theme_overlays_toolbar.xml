@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 默认工具栏 -->
+    <style name="AppWidget.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:textColorPrimary">?attr/colorPrimary</item>
+        <item name="titleTextColor">?attr/colorPrimary</item>
+        <item name="subtitleTextColor">?attr/colorPrimary</item>
+        <item name="theme">@style/AppWidgetOverlay.Toolbar</item>
+        <item name="android:theme">@style/AppWidgetOverlay.Toolbar</item>
+    </style>
+
+    <style name="AppWidgetOverlay.Toolbar" parent="">
+        <item name="colorControlNormal">?attr/colorPrimary</item>
+        <item name="actionMenuTextColor">?attr/colorPrimary</item>
+    </style>
+
+    <!-- 着色工具栏 -->
+    <style name="AppThemeOverlay.ToolbarTint" parent="">
+        <item name="toolbarStyle">@style/AppWidget.Toolbar.Tint</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+    </style>
+
+    <style name="AppWidget.Toolbar.Tint" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="subtitleTextColor">@android:color/white</item>
+        <item name="theme">@style/AppThemeOverlay.Toolbar.Primary</item>
+        <item name="android:theme">@style/AppThemeOverlay.Toolbar.Primary</item>
+    </style>
+
+    <style name="AppThemeOverlay.Toolbar.Primary" parent="">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+    </style>
+
+</resources>

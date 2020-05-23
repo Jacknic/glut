@@ -24,8 +24,7 @@
                 android:id="@+id/rlAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_round_bottom"
-                android:backgroundTint="?colorBackgroundFloating"
+                android:background="?colorBackgroundFloating"
                 android:padding="@dimen/primary_offset"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

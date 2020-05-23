@@ -1,83 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
-        <item name="android:colorBackground">@color/color_background_light</item>
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorError">@color/error</item>
+    <!-- 闪屏主题 -->
+    <style name="AppThemeSplash" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">?colorBackgroundFloating</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
+    <!-- 白天主题 -->
+    <style name="AppThemeDay" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@color/color_background_light</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
+    </style>
+
+    <!-- 夜间主题 -->
+    <style name="AppThemeNight" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <!-- 主题样式覆盖/通用样式 -->
+    <style name="AppThemeOverlay.Theme" parent="">
+        <!-- 窗口样式 -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <!-- 颜色 -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorSecondary">?colorPrimary</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorBackgroundFloating">?colorSurface</item>
+
+        <!-- 组件样式 -->
         <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar</item>
         <item name="dialogCornerRadius">@dimen/primary_radius</item>
-        <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@android:color/transparent</item>
-        <item name="actionMenuTextColor">?colorPrimary</item>
+        <item name="toolbarStyle">@style/AppWidget.Toolbar</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
     </style>
-
-    <style name="AppTheme" parent="BaseAppTheme" />
-
-    <style name="AppTheme.black">
-        <item name="colorPrimary">@color/black</item>
-    </style>
-
-    <style name="AppTheme.blue">
-        <item name="colorPrimary">@color/blue</item>
-    </style>
-
-    <style name="AppTheme.orangeDeep">
-        <item name="colorPrimary">@color/orangeDeep</item>
-    </style>
-
-    <style name="AppTheme.blueLight">
-        <item name="colorPrimary">@color/blueLight</item>
-    </style>
-
-    <style name="AppTheme.red">
-        <item name="colorPrimary">@color/red</item>
-    </style>
-
-    <style name="AppTheme.pink">
-        <item name="colorPrimary">@color/pink</item>
-    </style>
-
-    <style name="AppTheme.green">
-        <item name="colorPrimary">@color/green</item>
-    </style>
-
-    <style name="AppTheme.greenLight">
-        <item name="colorPrimary">@color/greenLight</item>
-    </style>
-
-    <style name="AppTheme.brown">
-        <item name="colorPrimary">@color/brown</item>
-    </style>
-
-    <style name="AppTheme.amber">
-        <item name="colorPrimary">@color/amber</item>
-    </style>
-
-    <style name="AppTheme.cyan">
-        <item name="colorPrimary">@color/cyan</item>
-    </style>
-
-    <style name="AppTheme.teal">
-        <item name="colorPrimary">@color/teal</item>
-    </style>
-
-    <style name="AppTheme.purple">
-        <item name="colorPrimary">@color/purple</item>
-    </style>
-
-    <style name="AppTheme.purpleDeep">
-        <item name="colorPrimary">@color/purpleDeep</item>
-    </style>
-
-    <style name="AppTheme.indigo">
-        <item name="colorPrimary">@color/indigo</item>
-    </style>
-
 </resources>

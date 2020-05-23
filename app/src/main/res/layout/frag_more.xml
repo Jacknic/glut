@@ -14,38 +14,47 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <com.google.android.material.circularreveal.cardview.CircularRevealCardView
                 android:id="@+id/ivCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_round_bottom"
-                android:backgroundTint="?colorBackgroundFloating"
-                android:clipChildren="true"
+                android:padding="0dp"
+                app:cardBackgroundColor="?colorBackgroundFloating"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/AppShapeAppearance.PrimaryRoundBottom"
+                app:strokeWidth="0dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvFinance"
-                    style="@style/FinanceTextIconStyle"
-                    android:text="@string/title_cw"
-                    app:drawableTint="@color/green"
-                    app:drawableTopCompat="@drawable/ic_payment" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvJwc"
-                    style="@style/FinanceTextIconStyle"
-                    android:text="@string/title_jw"
-                    app:drawableTint="@color/blue"
-                    app:drawableTopCompat="@drawable/ic_assignment" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvFinance"
+                        style="@style/FinanceTextIconStyle"
+                        android:text="@string/title_cw"
+                        app:drawableTint="@color/green"
+                        app:drawableTopCompat="@drawable/ic_payment" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvLib"
-                    style="@style/FinanceTextIconStyle"
-                    android:text="@string/title_ts"
-                    app:drawableTint="@color/orange"
-                    app:drawableTopCompat="@drawable/ic_local_library" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvJwc"
+                        style="@style/FinanceTextIconStyle"
+                        android:text="@string/title_jw"
+                        app:drawableTint="@color/blue"
+                        app:drawableTopCompat="@drawable/ic_assignment" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLib"
+                        style="@style/FinanceTextIconStyle"
+                        android:text="@string/title_ts"
+                        app:drawableTint="@color/orange"
+                        app:drawableTopCompat="@drawable/ic_local_library" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTodayCourses"

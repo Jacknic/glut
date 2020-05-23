@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 主题配色样式 -->
+
+    <style name="AppThemeOverlay.PrimaryPalette.Pink" parent="">
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorPrimaryDark">#B81B50</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Amber" parent="">
+        <item name="colorPrimary">@color/amber</item>
+        <item name="colorPrimaryDark">#B88C06</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.GreenLight" parent="">
+        <item name="colorPrimary">@color/greenLight</item>
+        <item name="colorPrimaryDark">#557630</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Cyan" parent="">
+        <item name="colorPrimary">@color/cyan</item>
+        <item name="colorPrimaryDark">#028495</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Teal" parent="">
+        <item name="colorPrimary">@color/teal</item>
+        <item name="colorPrimaryDark">#015F56</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Black" parent="">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">#242733</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Red" parent="">
+        <item name="colorPrimary">#e53935</item>
+        <item name="colorPrimaryDark">#ab000d</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.PurpleDeep" parent="">
+        <item name="colorPrimary">@color/purpleDeep</item>
+        <item name="colorPrimaryDark">#5c007a</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Purple" parent="">
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">#5c007a</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Indigo" parent="">
+        <item name="colorPrimary">@color/indigo</item>
+        <item name="colorPrimaryDark">#00227b</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Blue" parent="">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">#005bb2</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.BlueLight" parent="">
+        <item name="colorPrimary">#03A9F4</item>
+        <item name="colorPrimaryDark">#036FA0</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Green" parent="">
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryDark">#00701a</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Yellow" parent="">
+        <item name="colorPrimary">#fdd835</item>
+        <item name="colorPrimaryDark">#c6a700</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Orange" parent="">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">#c25e00</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Brown" parent="">
+        <item name="colorPrimary">#6d4c41</item>
+        <item name="colorPrimaryDark">#40241a</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.Grey" parent="">
+        <item name="colorPrimary">#757575</item>
+        <item name="colorPrimaryDark">#494949</item>
+    </style>
+
+    <style name="AppThemeOverlay.PrimaryPalette.BlueGrey" parent="">
+        <item name="colorPrimary">#546e7a</item>
+        <item name="colorPrimaryDark">#29434e</item>
+    </style>
+
+    <!-- 配色样式列表 -->
+    <array name="primary_palettes">
+        <item>@style/AppThemeOverlay.PrimaryPalette.Black</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Purple</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.PurpleDeep</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Indigo</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Blue</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.BlueLight</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Cyan</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Teal</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Green</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.GreenLight</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Yellow</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Amber</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Orange</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Red</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Pink</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Brown</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.Grey</item>
+        <item>@style/AppThemeOverlay.PrimaryPalette.BlueGrey</item>
+    </array>
+
+</resources>

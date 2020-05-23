@@ -2,12 +2,12 @@ package com.jacknic.glut.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jacknic.glut.MainActivity
@@ -21,6 +21,7 @@ import com.jacknic.glut.databinding.ItemColorChoiceBinding
 import com.jacknic.glut.databinding.PageSettingBinding
 import com.jacknic.glut.util.*
 import com.jacknic.glut.viewmodel.AppViewModel
+
 
 /**
  * 设置
@@ -47,15 +48,8 @@ class SettingPage : BasePage<PageSettingBinding>(), SharedPreferences.OnSharedPr
     }
 
     private fun setListeners() {
-        val modeArray = resources.getStringArray(R.array.theme_mode_array)
-        val mode = modeArray[prefer.themeMode]
-        bind.let {
-            it.prefer = prefer
-            it.btnThemeMode.append("($mode)")
-            if (prefer.nightTheme) {
-                it.btnThemeMode.setIconResource(R.drawable.ic_moon)
-            }
-        }
+        bind.prefer = prefer
+        showModeText()
         prefer.registerListener(this)
         bind.apply {
             btnThemeColor.setOnClickListener { colorListDialog.show() }
@@ -72,6 +66,15 @@ class SettingPage : BasePage<PageSettingBinding>(), SharedPreferences.OnSharedPr
                 navCtrl.toBrowser(userPrivacyUrl, getString(R.string.user_privacy))
             }
             btnAbout.setOnClickListener { aboutDialog.show() }
+        }
+    }
+
+    private fun showModeText() {
+        val modeArray = resources.getStringArray(R.array.theme_mode_array)
+        val mode = modeArray[prefer.themeMode]
+        bind.btnThemeMode.text = getString(R.string.mode_night, mode)
+        if (prefer.nightTheme) {
+            bind.btnThemeMode.setIconResource(R.drawable.ic_moon)
         }
     }
 
@@ -92,16 +95,17 @@ class SettingPage : BasePage<PageSettingBinding>(), SharedPreferences.OnSharedPr
     private fun buildColorChoiceDialog(): BottomSheetDialog {
         val binding = DialogColorChoiceBinding.inflate(layoutInflater)
         val selectedIndex = prefer.themeIndex
-        val dialog = BottomSheetDialog(requireContext())
+        val context = requireContext()
+        val dialog = BottomSheetDialog(context)
         dialog.setContentView(binding.root)
+        val colors = getPaletteColors(context)
         binding.gvColors.apply {
-            adapter = object : ArrayAdapter<Int>(context, 0, THEME_COLOR_RES) {
+            adapter = object : ArrayAdapter<Int>(context, 0, colors) {
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val itemBind: ItemColorChoiceBinding = convertView.getBinding(parent, R.layout.item_color_choice)
                     val selected = position == selectedIndex
                     val imgRes = if (selected) R.drawable.ic_check_circle else R.drawable.ic_lens
-                    val colorRes = getItem(position) ?: R.color.black
-                    val tintColor = ResourcesCompat.getColor(parent.resources, colorRes, null)
+                    val tintColor = getItem(position) ?: Color.TRANSPARENT
                     itemBind.ivColor.apply {
                         setImageResource(imgRes)
                         setColorFilter(tintColor)

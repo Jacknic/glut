@@ -4,6 +4,5 @@
     <color name="black_10p">#1A000000</color>
     <!--样式化颜色-->
     <color name="color_background_light">#ebebeb</color>
-    <color name="color_background_dark">#1c1c1e</color>
     <color name="error">#E53935</color>
 </resources>

@@ -12,6 +12,7 @@ import com.jacknic.glut.databinding.PageHomeBinding
 import com.jacknic.glut.ui.home.CourseFrag
 import com.jacknic.glut.ui.home.MineFrag
 import com.jacknic.glut.ui.home.MoreFrag
+import com.jacknic.glut.util.resolveColor
 import kotlinx.android.synthetic.main.page_home.*
 
 /**
@@ -47,6 +48,7 @@ class HomePage : BasePage<PageHomeBinding>() {
             })
         }
         bind.bnvHome.apply {
+            setBackgroundColor(context.resolveColor(R.attr.colorSurface))
             setOnNavigationItemSelectedListener {
                 menu.forEachIndexed { index, item ->
                     if (it == item) {

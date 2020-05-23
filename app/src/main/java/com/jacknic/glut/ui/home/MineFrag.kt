@@ -24,19 +24,6 @@ class MineFrag : BaseFragment<FragMineBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (prefer.tintToolbar) {
-            bind.rlAvatar.apply {
-                backgroundTintList = ColorStateList.valueOf(context.themeColor())
-            }
-            bind.tvUsername.apply {
-                setTextColor(Color.WHITE)
-                val whiteAlpha = textColors.withAlpha(127)
-                bind.tvClassName.setTextColor(whiteAlpha)
-                bind.ivAvatar.borderColor = whiteAlpha.defaultColor
-                bind.ivAvatar.backgroundTintList = whiteAlpha
-                bind.ivArrowRight.imageTintList = whiteAlpha
-            }
-        }
         bind.student = prefer.student
         bind.rlAvatar.setOnClickListener { navCtrl.toPage(R.id.infoPage) }
         bind.btnEduInfo.setOnClickListener { navCtrl.toPage(R.id.infoPage) }

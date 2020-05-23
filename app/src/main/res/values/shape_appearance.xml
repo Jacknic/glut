@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppShapeAppearance.PrimaryRoundTop" parent="ShapeAppearance.MaterialComponents">
+        <item name="cornerSizeTopLeft">@dimen/primary_radius</item>
+        <item name="cornerSizeTopRight">@dimen/primary_radius</item>
+    </style>
+
+    <style name="AppShapeAppearance.PrimaryRoundBottom" parent="ShapeAppearance.MaterialComponents">
+        <item name="cornerSizeBottomLeft">@dimen/primary_radius</item>
+        <item name="cornerSizeBottomRight">@dimen/primary_radius</item>
+    </style>
+
+    <style name="AppShapeAppearance.CircleRoundAll" parent="ShapeAppearance.MaterialComponents">
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>

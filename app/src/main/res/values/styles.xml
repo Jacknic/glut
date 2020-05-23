@@ -1,27 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="NewApi">
 
-    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">?colorPrimary</item>
-        <item name="android:textSize">14sp</item>
-        <item name="popupTheme">@style/ToolbarPopupTheme</item>
-    </style>
-
-    <style name="ToolbarTintStyle" parent="ToolbarStyle">
-        <item name="colorControlNormal">@android:color/white</item>
-    </style>
-
-    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat">
-        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
-        <item name="android:colorBackground">?colorBackgroundFloating</item>
-    </style>
-
-    <style name="OverflowMenuStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
-        <item name="overlapAnchor">false</item>
-        <item name="android:dropDownVerticalOffset">6dp</item>
-        <item name="android:dropDownHorizontalOffset">-2dp</item>
-    </style>
-
-    <style name="ActionButtonStyle">
+    <!-- 操作按钮样式 -->
+    <style name="ActionButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">30dp</item>
@@ -34,6 +14,7 @@
         <item name="rippleColor">@color/black_6p</item>
     </style>
 
+    <!-- 选项按钮样式 -->
     <style name="ItemButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -42,38 +23,35 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="cornerRadius">0dp</item>
-        <item name="android:backgroundTint">?colorBackgroundFloating</item>
+        <item name="android:backgroundTint">?colorSurface</item>
         <item name="iconPadding">10dp</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:textAllCaps">false</item>
         <item name="rippleColor">@color/selector_item_trans</item>
     </style>
 
+    <!-- 下拉选项控件样式 -->
     <style name="SpinnerStyle">
         <item name="android:colorBackground">?colorBackgroundFloating</item>
         <item name="android:popupBackground">@drawable/bg_round_all</item>
     </style>
 
-    <style name="BottomSheetDialog" parent="ThemeOverlay.AppCompat">
+    <!-- 底部弹出对话框样式 -->
+    <style name="BottomSheetDialog">
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
-        <item name="bottomSheetStyle">@style/BottomSheetModalStyle</item>
-        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:navigationBarColor">?colorSurface</item>
     </style>
 
-    <style name="BottomSheetModalStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:backgroundTint">@android:color/transparent</item>
-    </style>
-
+    <!-- 财务功能选项按钮样式 -->
     <style name="FinanceTextIconStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
         <item name="android:clickable">true</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:focusable">true</item>
@@ -96,6 +74,31 @@
         <item name="android:paddingEnd">@dimen/primary_offset</item>
         <item name="android:textSize">16sp</item>
         <item name="drawableTint">?colorButtonNormal</item>
+    </style>
+
+    <!-- 用户登录文本输入布局样式 -->
+    <style name="AppTextInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="boxBackgroundColor">@color/black_10p</item>
+        <item name="boxStrokeColor">@color/selector_theme_primary</item>
+        <item name="startIconTint">@color/selector_theme_primary</item>
+        <item name="endIconTint">@color/selector_theme_primary</item>
+        <item name="hintEnabled">false</item>
+        <item name="shapeAppearanceOverlay">@style/AppShapeAppearance.CircleRoundAll</item>
+    </style>
+
+    <!-- 用户登录文本输入控件样式 -->
+    <style name="AppTextInputEditText" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">?colorPrimary</item>
     </style>
 
 </resources>

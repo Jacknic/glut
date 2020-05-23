@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">桂工端</string>
     <string name="settings">设置</string>
-    <string name="mode_night">主题模式</string>
+    <string name="mode_night">主题模式(%s)</string>
     <string name="check_update">检查更新 v</string>
     <string name="about">关于</string>
     <string name="login">登录</string>

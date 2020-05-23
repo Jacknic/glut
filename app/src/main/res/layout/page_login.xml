@@ -11,85 +11,43 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?colorSurface">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="30dp">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/ivInputBox"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="10dp"
-                android:contentDescription="@null"
-                android:src="@drawable/bg_round_bottom"
-                android:tint="?colorBackgroundFloating"
-                app:layout_constraintBottom_toTopOf="@id/btnLogin"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etUsername"
+                style="@style/AppTextInputLayout"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:startIconDrawable="@drawable/ic_account_circle">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etUsername"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/selector_input_box"
-                android:gravity="center_vertical"
-                android:hint="@string/sid"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:maxLines="1"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:singleLine="true"
-                android:text="@={vm.sid}"
-                android:textColor="?colorPrimary"
-                android:textSize="16sp"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/AppTextInputEditText"
+                    android:hint="@string/sid"
+                    android:text="@={vm.sid}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etPwd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:gravity="center_vertical"
-                android:outlineProvider="none"
-                android:scrollbars="none"
-                app:hintAnimationEnabled="false"
-                app:hintEnabled="false"
-                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/AppTextInputLayout"
+                app:layout_constraintEnd_toEndOf="@id/etUsername"
+                app:layout_constraintStart_toStartOf="@id/etUsername"
                 app:layout_constraintTop_toBottomOf="@+id/etUsername"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/selector_theme_primary">
+                app:passwordToggleTint="@color/selector_theme_primary"
+                app:startIconDrawable="@drawable/ic_key">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/selector_input_box"
-                    android:gravity="center_vertical"
+                    style="@style/AppTextInputEditText"
                     android:hint="@string/password"
-                    android:imeOptions="actionNext"
                     android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:paddingStart="30dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="10dp"
-                    android:singleLine="true"
-                    android:text="@={vm.pwd}"
-                    android:textColor="?colorPrimary"
-                    android:textSize="16sp"
-                    app:hintAnimationEnabled="false" />
+                    android:text="@={vm.pwd}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputEditText
@@ -131,7 +89,7 @@
                 android:id="@+id/ivCaptchaPass"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="10dp"
                 android:button="@drawable/ic_check_circle"
                 android:buttonTint="@color/selector_pass"
                 android:buttonTintMode="src_in"
@@ -145,10 +103,11 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogin"
                 style="@style/ActionButtonStyle"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:onClick="@{()->vm.login()}"
                 android:text="@string/login_now"
-                app:backgroundTint="?colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
