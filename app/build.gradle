@@ -126,7 +126,6 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
     implementation "androidx.preference:preference:${versions.preference}"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    //noinspection GradleDependency
     implementation "com.google.android.material:material:${versions.material}"
     implementation 'de.hdodenhof:circleimageview:3.0.1'
 
