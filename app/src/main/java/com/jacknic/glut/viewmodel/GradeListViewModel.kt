@@ -36,6 +36,8 @@ class GradeListViewModel : BaseRequestViewModel() {
                 gradeList.postValue(Elements())
                 Logger.e(e, "解析成绩列表失败")
             }
+        } else {
+            fetchGrade()
         }
     }
 
