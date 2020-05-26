@@ -9,7 +9,7 @@ apply plugin: 'AndResGuard'
 andResGuard {
     useSign = true
     use7zip = true
-    fixedResName = "arg"
+    fixedResName = "a"
     mergeDuplicatedRes = true
     whiteList = ["R.mipmap.ic_launcher", "R.id.*"]
     compressFilePattern = ["*.png", "*.jpg", "*.jpeg", "*.gif", "resources.arsc"]
@@ -117,6 +117,7 @@ dependencies {
     implementation "androidx.arch.core:core-runtime:${versions.androidxArch}"
     implementation "androidx.room:room-runtime:${versions.room}"
     implementation "androidx.room:room-ktx:${versions.room}"
+    kapt "androidx.room:room-compiler:${versions.room}"
 
     // UI
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
@@ -124,7 +125,6 @@ dependencies {
     implementation "androidx.webkit:webkit:1.2.0"
     implementation "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
     implementation "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
-    implementation "androidx.preference:preference:${versions.preference}"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation "com.google.android.material:material:${versions.material}"
     implementation 'de.hdodenhof:circleimageview:3.0.1'
@@ -133,7 +133,6 @@ dependencies {
     implementation 'com.qq.mta:mta:3.4.7-release'
     implementation 'com.tencent.mid:mid:4.06-Release'
     implementation 'com.orhanobut:logger:2.2.0'
-    kapt "androidx.room:room-compiler:${versions.room}"
     implementation "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
     implementation "org.jsoup:jsoup:${versions.jsoup}"

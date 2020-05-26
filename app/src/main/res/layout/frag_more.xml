@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ivCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                         app:drawableTopCompat="@drawable/ic_local_library" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTodayCourses"
