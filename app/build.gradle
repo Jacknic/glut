@@ -26,7 +26,7 @@ android {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode 60
-        versionName "6.0"
+        versionName "6.1"
         resConfigs 'zh', 'xxxhdpi', "desk", "ldltr"
         vectorDrawables.useSupportLibrary true
         setProperty("archivesBaseName", "$applicationId")
