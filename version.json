@@ -1,8 +1,8 @@
 ﻿{
-  "date": "2020-3-30",
-  "versionCode": 60,
-  "versionName": "6.0",
-  "downloadUrl": "https://github.com/Jacknic/glut/releases/download/v6.0/com.jacknic.glut-github-release.apk",
-  "info": "1.修复已知问题\n2.全新的用户界面\n3.适配深色模式",
+  "date": "2020-5-28",
+  "versionCode": 61,
+  "versionName": "6.1",
+  "downloadUrl": "https://github.com/Jacknic/glut/releases/download/v6.1/com.jacknic.glut-github-release.apk",
+  "info": "\n1.修复财务登录问题\n2.调整界面UI",
   "remark": "/*该文件用于应用版本检测更新！*/"
 }
