@@ -2,7 +2,6 @@ package com.jacknic.glut
 
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -38,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         setupTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupWindow()
         setupToolbar()
         checkAgree()
         if (prefer.autoCheck && appVm.version.value == null) {
@@ -100,18 +98,6 @@ class MainActivity : AppCompatActivity() {
         overlays.forEach { setTheme(it) }
     }
 
-    /**
-     * 设置窗口属性
-     **/
-    private fun setupWindow() {
-        val decorView = window.decorView
-        val suv = decorView.systemUiVisibility or
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        decorView.systemUiVisibility = suv
-    }
-
     private fun setupToolbar() {
         val navCtrl = findNavController(R.id.pager)
         setSupportActionBar(toolbar)
@@ -132,4 +118,6 @@ class MainActivity : AppCompatActivity() {
         val title = savedInstanceState.getCharSequence(keyTitle, "")
         setTitle(title)
     }
+
+
 }

@@ -19,7 +19,7 @@
     <style name="AppThemeOverlay.ToolbarTint" parent="">
         <item name="toolbarStyle">@style/AppWidget.Toolbar.Tint</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
-        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+        <item name="android:statusBarColor">?colorPrimary</item>
     </style>
 
     <style name="AppWidget.Toolbar.Tint" parent="Widget.MaterialComponents.Toolbar.Primary">

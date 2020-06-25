@@ -26,8 +26,8 @@
     <!-- 主题样式覆盖/通用样式 -->
     <style name="AppThemeOverlay.Theme" parent="">
         <!-- 窗口样式 -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:navigationBarColor">?colorSurface</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
 
         <!-- 颜色 -->
