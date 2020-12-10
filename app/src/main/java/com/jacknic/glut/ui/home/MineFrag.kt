@@ -1,7 +1,5 @@
 package com.jacknic.glut.ui.home
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.net.toUri
@@ -9,7 +7,6 @@ import com.jacknic.glut.R
 import com.jacknic.glut.base.BaseFragment
 import com.jacknic.glut.data.util.FILE_NAME_HEAD_IMAGE
 import com.jacknic.glut.databinding.FragMineBinding
-import com.jacknic.glut.util.themeColor
 import com.jacknic.glut.util.toPage
 import java.io.File
 
@@ -44,8 +41,9 @@ class MineFrag : BaseFragment<FragMineBinding>() {
 
     private fun showHeadImg() {
         val imgFile = File(requireContext().filesDir, FILE_NAME_HEAD_IMAGE)
-        imgFile.isFile
-        bind.ivAvatar.setImageURI(imgFile.toUri())
+        if (imgFile.isFile) {
+            bind.ivAvatar.setImageURI(imgFile.toUri())
+        }
     }
 }
 
