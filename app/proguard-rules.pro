@@ -17,7 +17,8 @@
 #}
 
 #第三方jar包不混淆
--keep class com.tencent.** { *; }
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
 
 -keepnames class org.jsoup.nodes.Entities
 -keepattributes SourceFile, LineNumberTable

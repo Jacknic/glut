@@ -13,13 +13,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.jacknic.glut.data.model.Version
 import com.jacknic.glut.data.util.URL_RELEASE_LOG
+import com.jacknic.glut.databinding.ActivityMainBinding
 import com.jacknic.glut.service.UpdateService
 import com.jacknic.glut.util.Preferences
 import com.jacknic.glut.util.getPaletteStyle
 import com.jacknic.glut.util.openLink
 import com.jacknic.glut.viewmodel.AppViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-
 
 /**
  * 主界面
@@ -32,11 +31,13 @@ class MainActivity : AppCompatActivity() {
     private val prefer = Preferences.getInstance()
     private val appVm by viewModels<AppViewModel>()
     private var updateDialog: AlertDialog? = null
+    private lateinit var bind: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setupTheme()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        bind = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(bind.root)
         setupToolbar()
         checkAgree()
         if (prefer.autoCheck && appVm.version.value == null) {
@@ -100,11 +101,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupToolbar() {
         val navCtrl = findNavController(R.id.pager)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(bind.toolbar)
         if (!prefer.tintToolbar && Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
-        toolbar.setupWithNavController(navCtrl, appBarConfiguration)
+        bind.toolbar.setupWithNavController(navCtrl, appBarConfiguration)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

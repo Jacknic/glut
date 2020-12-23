@@ -26,7 +26,6 @@ import com.jacknic.glut.util.toPage
 import com.jacknic.glut.viewmodel.CourseViewModel
 import com.jacknic.glut.widget.CourseDetailsDialog
 import com.jacknic.glut.widget.TimeTableView
-import kotlinx.android.synthetic.main.frag_course.*
 import java.util.*
 
 /**
@@ -56,7 +55,7 @@ class CourseFrag : BaseFragment<FragCourseBinding>() {
     private fun setListeners() {
         bind.fabPinWeek.apply {
             setOnClickListener {
-                vm.setCurrWeek(weekTabs.selectedTabPosition + 1)
+                vm.setCurrWeek(bind.weekTabs.selectedTabPosition + 1)
                 setSubtitle(subtitle)
             }
             setOnLongClickListener {

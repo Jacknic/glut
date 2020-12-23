@@ -13,7 +13,6 @@ import com.jacknic.glut.ui.home.CourseFrag
 import com.jacknic.glut.ui.home.MineFrag
 import com.jacknic.glut.ui.home.MoreFrag
 import com.jacknic.glut.util.resolveColor
-import kotlinx.android.synthetic.main.page_home.*
 
 /**
  * 主界面
@@ -28,6 +27,12 @@ class HomePage : BasePage<PageHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
+        if (prefer.pinExplore) {
+            bind.bnvHome.apply {
+                selectedItemId = R.id.page_explore
+                menu.findItem(R.id.page_explore).setIcon(R.drawable.ic_amp_stories)
+            }
+        }
     }
 
     private fun setListeners() {
@@ -39,7 +44,7 @@ class HomePage : BasePage<PageHomeBinding>() {
             }
             addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageSelected(position: Int) {
-                    bnvHome.apply {
+                    bind.bnvHome.apply {
                         val item = menu.getItem(position)
                         selectedItemId = item.itemId
                         activity?.title = item.title
@@ -52,10 +57,20 @@ class HomePage : BasePage<PageHomeBinding>() {
             setOnNavigationItemSelectedListener {
                 menu.forEachIndexed { index, item ->
                     if (it == item) {
-                        vpHome.setCurrentItem(index, true)
+                        bind.vpHome.setCurrentItem(index, true)
                     }
                 }
                 return@setOnNavigationItemSelectedListener true
+            }
+            setOnNavigationItemReselectedListener {
+                when (it.itemId) {
+                    R.id.page_explore -> {
+                        val pin = !prefer.pinExplore
+                        prefer.pinExplore = pin
+                        val icoRes = if (pin) R.drawable.ic_amp_stories else R.drawable.ic_explore
+                        menu.findItem(R.id.page_explore).setIcon(icoRes)
+                    }
+                }
             }
         }
     }

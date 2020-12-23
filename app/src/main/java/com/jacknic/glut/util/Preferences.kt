@@ -39,6 +39,7 @@ const val KEY_CW_SID = "key_cw_sid"
 const val KEY_CW_PWD = "key_cw_pwd"
 const val KEY_STUDENT = "key_student"
 const val KEY_SHOW_HEAD = "key_show_head"
+const val KEY_PIN_EXPLORE = "key_pin_explore"
 const val KEY_DOWNLOAD_URL = "key_download_url"
 const val KEY_DOWNLOAD_SIZE = "key_download_size"
 const val KEY_AGREED = "key_agreed"
@@ -155,6 +156,7 @@ class Preferences(val app: Application) {
         set(value) {
             sharedPrefer.edit { putInt(KEY_SCHOOL_YEAR, value) }
         }
+
     /**
      * 学期
      * 1 春季，2 秋季
@@ -225,6 +227,13 @@ class Preferences(val app: Application) {
     var showHead: Boolean
         get() = sharedPrefer.getBoolean(KEY_SHOW_HEAD, true)
         set(value) = sharedPrefer.edit { putBoolean(KEY_SHOW_HEAD, value) }
+
+    /**
+     * 更多页固定
+     */
+    var pinExplore: Boolean
+        get() = sharedPrefer.getBoolean(KEY_PIN_EXPLORE, false)
+        set(value) = sharedPrefer.edit { putBoolean(KEY_PIN_EXPLORE, value) }
 
     fun registerListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
         sharedPrefer.registerOnSharedPreferenceChangeListener(listener)

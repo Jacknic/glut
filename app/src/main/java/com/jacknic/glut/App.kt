@@ -7,6 +7,7 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.FormatStrategy
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
+import com.tencent.bugly.crashreport.CrashReport
 
 class App : Application() {
 
@@ -16,6 +17,7 @@ class App : Application() {
         super.onCreate()
         Preferences.init(this)
         setLogger()
+        CrashReport.initCrashReport(this)
         NotifyChannelUtils.registerChannel(this)
     }
 

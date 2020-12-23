@@ -48,7 +48,7 @@ class BrowserPage : BasePage<PageBrowserBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args: BrowserPageArgs = try {
-            BrowserPageArgs.fromBundle(arguments!!)
+            BrowserPageArgs.fromBundle(requireArguments())
         } catch (e: Exception) {
             requireContext().toast(R.string.browser_argument_error)
             null
@@ -67,20 +67,20 @@ class BrowserPage : BasePage<PageBrowserBinding>() {
             }
         }
         val url = args.url
-        loadFirstUrl(url)
+        loadFirstUrl(url.orEmpty())
         activity?.apply {
             this.title = args.title
-            onBackPressedDispatcher.addCallback(this@BrowserPage, backPressedCallback)
+            onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressedCallback)
         }
     }
 
-    private fun loadFirstUrl(url: String?) {
+    private fun loadFirstUrl(url: String) {
         val loadUrlAction = Runnable { bind.webView.loadUrl(url) }
-        if (url?.startsWith(URL_GLUT_JW) == true) {
+        if (url.startsWith(URL_GLUT_JW)) {
             isJwSite = true
             vm.checkJw()
         }
-        if (url?.startsWith(URL_GLUT_CW) == true) {
+        if (url.startsWith(URL_GLUT_CW)) {
             isCwSite = true
             vm.checkCw()
         }
@@ -195,7 +195,7 @@ class BrowserPage : BasePage<PageBrowserBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_open_with -> {
-                val url = bind.webView.url
+                val url = bind.webView.url.orEmpty()
                 if (url.startsWith("file")) {
                     requireContext().toast(R.string.inner_page_tips)
                 } else {
