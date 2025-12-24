@@ -6,7 +6,7 @@ buildscript {
             'targetSdk'       : 30,
             'kotlin'          : '1.4.21',
             'coroutines'      : '1.3.3',
-            'AndResGuard'     : '1.2.20',
+            'AndResGuard'     : '1.2.21',
 
             // 测试
             'junit'           : '4.13',
@@ -34,7 +34,11 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven {
+            name = "tencentyun"
+            url = "http://mirrors.cloud.tencent.com/nexus/repository/maven-public/"
+        }
     }
 
     dependencies {
@@ -48,7 +52,11 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven {
+            name = "tencentyun"
+            url = "http://mirrors.cloud.tencent.com/nexus/repository/maven-public/"
+        }
     }
 }
 
