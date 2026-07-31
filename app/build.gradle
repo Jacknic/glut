@@ -2,21 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
-apply plugin: 'AndResGuard'
-
-// 详细配置参数 | https://github.com/shwenzhang/AndResGuard/blob/master/doc/how_to_work.zh-cn.md
-andResGuard {
-    useSign = true
-    use7zip = true
-    fixedResName = "a"
-    mergeDuplicatedRes = true
-    whiteList = ["R.mipmap.ic_launcher", "R.id.*"]
-    compressFilePattern = ["*.png", "*.jpg", "*.jpeg", "*.gif", "resources.arsc"]
-    digestalg = "SHA-256"
-    sevenzip {
-        artifact = "com.tencent.mm:SevenZip:${versions.AndResGuard}"
-    }
-}
 
 android {
     compileSdkVersion versions.compileSdk
@@ -150,8 +135,5 @@ task zipOutputs(type: Zip) {
     description('打包产出物')
     archiveName('outputs.zip')
     destinationDirectory = file("${buildDir}/")
-    from("${buildDir}/outputs") {
-        // 排除 AndResGuard 过程文件
-        excludes = ['apk/**/AndResGuard_**/**']
-    }
+    from("${buildDir}/outputs")
 }
